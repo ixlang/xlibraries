@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win32_static</QTDIR>
+    <LocalDebuggerCommand>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\test\tttqt\debug\tttqt.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\test\tttqt</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
+$(LocalDebuggerEnvironment)
+    </LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win64_static</QTDIR>
+    <LocalDebuggerCommand>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide\debug\XIde.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
+$(LocalDebuggerEnvironment)
+    </LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win32_static</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
+$(LocalDebuggerEnvironment)
+    </LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win64_static</QTDIR>
+    <LocalDebuggerCommand>D:\Programs\windows_x86_64\XStudio.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>D:\Programs\windows_x86_64</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
+$(LocalDebuggerEnvironment)
+    </LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_ICC|Win32'">
+    <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win32_static</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
+$(LocalDebuggerEnvironment)
+    </LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_ICC|x64'">
+    <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win64_static</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
+$(LocalDebuggerEnvironment)
+    </LocalDebuggerEnvironment>
+  </PropertyGroup>
+</Project>
