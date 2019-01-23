@@ -1,0 +1,373 @@
+//xlang 
+
+package Runtime{
+
+	class rtlp{
+		static int rtl_osid = _system_.getPlatformId();
+    };
+    
+	class UnixlikeApi : Library{
+		static bool loaded = false;
+		
+		static bool load(){
+			if (loaded == false){
+				try{
+					if (rtlp.rtl_osid == 1){
+						loadLibrary("libc.so.6");
+                    }else{
+						loadLibrary("libc.dylib");
+                    }
+					loaded = true;
+				}catch(Exception e){
+					_system_.output(e.getMessage());
+				}
+			}
+			return loaded;
+		}
+            
+		import{
+			 Pointer cdecl readlink (String __path,
+			 ObjectPtr __buf, Pointer __len);
+             int cdecl kill(int pid, int sig);
+        };
+    };
+	class Win32Api{
+    
+		static class Psapi32 : Library{
+        
+			static bool loaded = false;
+            
+            static bool load(){
+				if (loaded == false){
+					try{
+						loadLibrary("psapi.dll");
+						loaded = true;
+					}catch(Exception e){
+						
+					}
+                }
+                return loaded;
+            }
+            
+			import {
+				int
+				stdcall
+				GetProcessImageFileNameA(
+					Pointer hProcess,
+					ObjectPtr lpExeName,
+					ObjectPtr lpdwSize
+					);
+                    
+                bool stdcall EnumProcessModules(
+				  Pointer  hProcess,
+				  ObjectPtr lphModule,
+				  int   cb,
+				  ObjectPtr lpcbNeeded
+				);
+                
+                int stdcall GetModuleFileNameExA(
+				  Pointer  hProcess,
+				  Pointer hModule,
+				  ObjectPtr   lpFilename,
+				  int   nSize
+				);
+			};
+        };
+        
+		static class Kernel32 : Library{
+        
+			static bool loaded = false;
+            
+            static bool load(){
+				if (loaded == false){
+					try{
+						loadLibrary("kernel32.dll");
+						loaded = true;
+					}catch(Exception e){
+						
+					}
+                }
+                return loaded;
+            }
+            
+            static const int MAX_PATH = 260,
+            TH32CS_SNAPHEAPLIST     = 1,
+			TH32CS_SNAPPROCESS      = 2,
+			TH32CS_SNAPTHREAD       = 4,
+			TH32CS_SNAPMODULE       = 8,
+			TH32CS_SNAPALL          = TH32CS_SNAPHEAPLIST | TH32CS_SNAPPROCESS | TH32CS_SNAPTHREAD | TH32CS_SNAPMODULE;
+            
+            import {
+				Pointer stdcall CreateToolhelp32Snapshot(
+					int dwFlags,
+					int th32ProcessID
+				);
+				//结构体356个字节
+				bool stdcall Process32First(
+				  Pointer hSnapshot,
+				  ObjectPtr lppe
+				);
+				
+				bool stdcall Process32Next(
+				  Pointer           hSnapshot,
+				  ObjectPtr lppe
+				);
+                
+                int stdcall lstrlenA(
+				  ObjectPtr lpString
+				);
+                
+                bool stdcall CloseHandle(
+					ObjectPtr hObject
+				);
+                
+                bool stdcall QueryFullProcessImageNameA(
+				  ObjectPtr hProcess,
+				  int  dwFlags,
+				  ObjectPtr  lpExeName,
+				  ObjectPtr lpdwSize
+				);
+                
+                Pointer stdcall OpenProcess(
+					int dwDesiredAccess,
+					bool bInheritHandle,
+					int dwProcessId);
+                    
+                bool stdcall TerminateProcess(
+				  Pointer hProcess,
+				  int   uExitCode
+				);
+            };
+		};
+    };
+    
+    
+	class OSProcess{
+		OSProcess(){
+        }
+		OSProcess(byte[] data){
+			for (int i =0; i <4; i ++){
+				processId = (processId << 8) | data[8 + 3 -i];
+            }
+            
+            byte[] paths = new byte[Win32Api.Kernel32.MAX_PATH];
+            
+            _system_.arrayCopy(data,_system_.getOSBit() == 32 ? 36 : 44,paths,0,Win32Api.Kernel32.MAX_PATH);
+			int len = Win32Api.Kernel32.lstrlenA(paths);
+            name = new String(paths, 0, len);
+        }
+        
+        
+		int processId;
+        String name;
+        String exepath;
+        
+        int getId(){
+			return processId;
+        }
+        
+        String getName(){
+			return name;
+        }
+        
+        String getPath(){
+			//PROCESS_QUERY_INFORMATION 
+			if (exepath == nilptr){
+			
+				if (rtlp.rtl_osid == 0){
+					if (false == Win32Api.Psapi32.load()){
+						return nilptr;
+					}
+
+					long handle = open();
+					if (handle > 0){
+						byte [] path = new byte[Win32Api.Kernel32.MAX_PATH];
+						int [] pl = new int[1];
+						long [] hm = new long[1];
+						
+						pl[0] = Win32Api.Kernel32.MAX_PATH;
+						
+						if (Win32Api.Psapi32.EnumProcessModules(handle, hm, 8, 0)){
+							int len = Win32Api.Psapi32.GetModuleFileNameExA(handle, hm[0], path, Win32Api.Kernel32.MAX_PATH);
+							if (len > 0){
+								exepath = new String(path, 0, len);
+							}
+						}
+						closeHandle(handle);
+					}
+                }
+            }
+            return exepath;
+        }
+        
+        long open(){
+			return Win32Api.Kernel32.OpenProcess(0x001fffff, false, processId);
+        }
+        
+        void closeHandle(long handle){
+			Win32Api.Kernel32.CloseHandle(handle);
+        }
+        long open(int flag, bool bi){
+			return Win32Api.Kernel32.OpenProcess(flag, bi, processId);
+        }
+        
+        bool kill(int code){
+			bool r = false;
+			if (rtlp.rtl_osid == 0){
+				
+				long h = open();
+				if (h > 0){
+					r = Win32Api.Kernel32.TerminateProcess(h, code);
+					Win32Api.Kernel32.CloseHandle(h);
+				}
+            }else{
+				r = 0 == UnixlikeApi.kill(processId, 15);
+            }
+            return r;
+        }
+        
+        static 
+        List<OSProcess> listProcesses(){
+			int osid = _system_.getPlatformId();
+			if (osid == 0){
+				return getProcessListWin32();
+            }else
+			if (osid == 1 || osid == 2){
+				return getProcessListUnix();
+            }
+            return nilptr;
+        }
+        
+        static 
+        List<OSProcess> getProcessListUnix(){
+			List<OSProcess> plist = nilptr;
+            
+			if (false == UnixlikeApi.load()){
+				return nilptr;
+			}
+            
+            plist = new List<OSProcess>();
+            
+            FileSystem.File file = new FileSystem.File ("/proc");
+            
+            List<FileSystem.File> flist = file.listFiles();
+            
+            List.Iterator<FileSystem.File> iter = flist.iterator();
+            
+			while (iter.hasNext()){
+				OSProcess process = new OSProcess();
+                
+				FileSystem.File pf = iter.next();
+                String pname = pf.getFileName();
+                if (pname.isDigit()){
+					String namepath = pf.getPath().appendPath("status");
+                    
+                    try{
+						FileStream.FileInputStream fis = new FileStream.FileInputStream (namepath);
+						
+                        
+                        String txtstatus = "";
+                        
+                        byte []status = new byte[1024];
+                        int rd = 0;
+                        while ((rd = fis.read(status, 0, 1024)) > 0){
+							txtstatus = txtstatus + new String(status, 0, rd);
+                        }
+                        
+                        fis.close();
+
+                        int pos = txtstatus.indexOf("Name:");
+                        if (pos != -1){
+							int le = txtstatus.indexOf("\n", pos);
+                            if (le == -1){
+								le = txtstatus.length();
+                            }
+							process.name = txtstatus.substring(pos + 5, le).trim(true);
+                        }
+                    }catch(Exception e){
+                    
+                    }
+					String expath = pf.getPath().appendPath("exe");
+                    
+                    byte [] fullpath = new byte[320];
+                    long length = UnixlikeApi.readlink(expath,fullpath,(long)320);
+                    if (length != -1){
+						process.exepath = new String (fullpath, 0, length);
+                    }
+                    process.processId = pname.parseInt();
+                    plist.add(process);
+                }
+            }
+            return plist;
+        }
+        
+        static 
+        List<OSProcess> getProcessListWin32(){
+			List<OSProcess> plist = nilptr;
+		
+			if (false == Win32Api.Kernel32.load()){
+				return nilptr;
+			}
+ 
+			byte[] struct = new byte[356];
+			struct[0] = 08;
+			struct[1] = 12;
+			plist = new List<OSProcess>();
+			
+			long snopt = Win32Api.Kernel32.CreateToolhelp32Snapshot(
+				Win32Api.Kernel32.TH32CS_SNAPALL,
+				0);
+			
+			if (snopt > 0){
+				bool succ = Win32Api.Kernel32.Process32First(snopt,struct);
+				while (succ){
+					plist.add(new OSProcess(struct));
+					succ = Win32Api.Kernel32.Process32Next(snopt,struct);
+				}
+				
+				Win32Api.Kernel32.CloseHandle(snopt);
+			}
+		
+            return plist;     
+        }
+    };
+};
+
+package System{
+	class out{
+		static int println(String text){
+			return _system_.consoleWrite(text + "\n");
+		}
+		static int print(String text){
+			return _system_.consoleWrite(text);
+		}
+	};
+	
+	class Console{
+		Console(){
+			_system_.createConsole();
+		}
+	};
+};
+
+
+using { System; };
+
+
+int main(String [] args){
+
+	new Console();
+
+	List<Runtime.OSProcess> lists =  Runtime.OSProcess.listProcesses();
+
+	List.Iterator<Runtime.OSProcess> iter = lists.iterator();
+    
+    while (iter.hasNext()){
+		Runtime.OSProcess p = iter.next();
+        System.out.println(p.getName() + "[" + p.getId() +"] " + p.getPath());
+    }
+    
+	Thread.sleep(-1);
+
+	return 0;
+}
