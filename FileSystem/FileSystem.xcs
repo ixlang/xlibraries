@@ -645,7 +645,7 @@ package FileSystem{
     };
 };
 
-
+/*
 package System{
 	class out{
 		static int println(String text){
@@ -699,3 +699,4 @@ int main(String [] args){
 
 	return 0;
 }
+*/

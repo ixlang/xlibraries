@@ -16,6 +16,7 @@
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)",
 				"wtype":	"",
+				"ostype":	"",
 				"outname":	"$(ProjectName)$(Ext)",
 				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
 				"command":	"-lix -c",

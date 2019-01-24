@@ -145,6 +145,9 @@ package Runtime{
 	class OSProcess{
 		OSProcess(){
         }
+		OSProcess(int Id){
+			processId = Id;
+        }
 		OSProcess(byte[] data){
 			for (int i =0; i <4; i ++){
 				processId = (processId << 8) | data[8 + 3 -i];
@@ -332,7 +335,7 @@ package Runtime{
         }
     };
 };
-
+/*
 package System{
 	class out{
 		static int println(String text){
@@ -370,4 +373,4 @@ int main(String [] args){
 	Thread.sleep(-1);
 
 	return 0;
-}
+}*/
