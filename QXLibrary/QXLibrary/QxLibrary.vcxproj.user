@@ -27,9 +27,9 @@ $(LocalDebuggerEnvironment)
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win64_static</QTDIR>
-    <LocalDebuggerCommand>D:\Programs\windows_x86_64\XStudio.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>D:\home\XPlayer\x64\debug\XPlayer.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerWorkingDirectory>D:\Programs\windows_x86_64</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>D:\home\XPlayer\x64\debug</LocalDebuggerWorkingDirectory>
     <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
 $(LocalDebuggerEnvironment)
     </LocalDebuggerEnvironment>

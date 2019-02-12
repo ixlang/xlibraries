@@ -77,3 +77,4 @@ native_int4
 long_long_int9
 long_double2
 long_object_string
+pointer_intlong2

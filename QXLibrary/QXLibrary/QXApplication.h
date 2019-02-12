@@ -1183,6 +1183,243 @@ private slots:
 			}
 		}
 	}
+	void oncellPress(int row, int column) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					XObject * pos = gs_env->createObject();
+					gs_env->setValue(text, row);
+					gs_env->setValue(pos, column);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLPRESS].methodId, text, pos);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(pos);
+
+				}
+			}
+		}
+	}
+	void oncellItemPress(QTableWidgetItem * item) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)item);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLITEMPRESS].methodId, text);
+					gs_env->dereferenceObject(text);
+
+				}
+			}
+		}
+	}
+	void oncellClick(int row, int column) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					XObject * pos = gs_env->createObject();
+					gs_env->setValue(text, row);
+					gs_env->setValue(pos, column);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLCLICK].methodId, text, pos);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(pos);
+
+				}
+			}
+		}
+	}
+	void oncellItemClick(QTableWidgetItem * item) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)item);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLITEMCLICK].methodId, text);
+					gs_env->dereferenceObject(text);
+				}
+			}
+		}
+	}
+	void oncellDBClick(int row, int column) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					XObject * pos = gs_env->createObject();
+					gs_env->setValue(text, row);
+					gs_env->setValue(pos, column);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLDBCLICK].methodId, text, pos);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(pos);
+
+				}
+			}
+		}
+	}
+	void oncellItemDBClick(QTableWidgetItem * item) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)item);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLITEMDBCLICK].methodId, text);
+					gs_env->dereferenceObject(text);
+
+				}
+			}
+		}
+	}
+	void oncellEnter(int row, int column) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					XObject * pos = gs_env->createObject();
+					gs_env->setValue(text, row);
+					gs_env->setValue(pos, column);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLENTER].methodId, text, pos);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(pos);
+
+				}
+			}
+		}
+	}
+	void oncellItemEnter(QTableWidgetItem * item) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)item);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLITEMENTER].methodId, text);
+					gs_env->dereferenceObject(text);
+				}
+			}
+		}
+	}
+	void oncellActive(int row, int column) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					XObject * pos = gs_env->createObject();
+					gs_env->setValue(text, row);
+					gs_env->setValue(pos, column);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLACTIVE].methodId, text, pos);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(pos);
+
+				}
+			}
+		}
+	}
+	void oncellItemActive(QTableWidgetItem * item) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)item);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLITEMACTIVE].methodId, text);
+					gs_env->dereferenceObject(text);
+				}
+			}
+		}
+	}
+	void oncellChanged(int row, int column) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					XObject * pos = gs_env->createObject();
+					gs_env->setValue(text, row);
+					gs_env->setValue(pos, column);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLCHANGE].methodId, text, pos);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(pos);
+
+				}
+			}
+		}
+	}
+	void oncellItemChanged(QTableWidgetItem * item) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)item);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_CELLITEMCHANGE].methodId, text);
+					gs_env->dereferenceObject(text);
+				}
+			}
+		}
+	}
 	void eselectionChanged() {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
@@ -1246,6 +1483,26 @@ public:
 		XLINK(edit, SIGNAL(returnPressed()), this, SLOT(ereturnPressed()));
 		XLINK(edit, SIGNAL(editingFinished()), this, SLOT(eeditingFinished()));
 		XLINK(edit, SIGNAL(selectionChanged()), this, SLOT(eselectionChanged()));
+	}
+
+	void installTableCellChange(QTableWidget * t) {
+		XLINK(t, SIGNAL(cellChanged(int, int)), this, SLOT(oncellChanged(int,int)));
+		XLINK(t, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(oncellItemChanged(QTableWidgetItem *)));
+
+		XLINK(t, SIGNAL(cellEntered(int, int)), this, SLOT(oncellEnter(int, int)));
+		XLINK(t, SIGNAL(itemEntered(QTableWidgetItem *)), this, SLOT(oncellItemEnter(QTableWidgetItem *)));
+
+		XLINK(t, SIGNAL(cellActivated(int, int)), this, SLOT(oncellActive(int, int)));
+		XLINK(t, SIGNAL(itemActivated(QTableWidgetItem *)), this, SLOT(oncellItemActive(QTableWidgetItem *)));
+
+		XLINK(t, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(oncellDBClick(int, int)));
+		XLINK(t, SIGNAL(itemDoubleClicked(QTableWidgetItem *)), this, SLOT(oncellItemDBClick(QTableWidgetItem *)));
+
+		XLINK(t, SIGNAL(cellClicked(int, int)), this, SLOT(oncellClick(int, int)));
+		XLINK(t, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(oncellItemClick(QTableWidgetItem *)));
+
+		XLINK(t, SIGNAL(cellPressed(int, int)), this, SLOT(oncellPress(int, int)));
+		XLINK(t, SIGNAL(itemPressed(QTableWidgetItem *)), this, SLOT(oncellItemPress(QTableWidgetItem *)));
 	}
 
 	void installDialogAction(QDialog * dlg) {

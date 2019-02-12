@@ -239,6 +239,18 @@ megInfo megs[] = {
 	{ "ON_SELCHANGE" , 282 },
 	{ "ON_FILECHANGE" , 283 },
 	{ "ON_DIRCHANGE" , 284 },
+	{ "ON_CELLCHANGE" , 285 },
+	{ "ON_CELLITEMCHANGE", 286 },
+	{ "ON_CELLPRESS", 287 },
+	{ "ON_CELLITEMPRESS", 288 },
+	{ "ON_CELLCLICK", 289 },
+	{ "ON_CELLITEMCLICK", 290 },
+	{ "ON_CELLDBCLICK", 291 },
+	{ "ON_CELLITEMDBCLICK", 292 },
+	{ "ON_CELLENTER", 293 },
+	{ "ON_CELLITEMENTER", 294 },
+	{ "ON_CELLACTIVE", 295 },
+	{ "ON_CELLITEMACTIVE", 296 },
 };
 
 
@@ -490,4 +502,17 @@ XIDENT  methods [] =
 	{ "/void@/QXObject/onItemSelected(/int)" , 0 },
 	{ "/void@/QXObject/onFileChanged(/String)" , 0 },
 	{ "/void@/QXObject/onDirChange(/String)" , 0 },
+	{ "/void@/QXObject/onCellChange(/int,/int)" , 0 },
+	{ "/void@/QXObject/onItemChange(/long)" , 0 },
+	{ "/void@/QXObject/onCellPress(/int,/int)" , 0 },
+	{ "/void@/QXObject/onItemPress(/long)" , 0 },
+	{ "/void@/QXObject/onCellClick(/int,/int)" , 0 },
+	{ "/void@/QXObject/onItemClick(/long)" , 0 },
+	{ "/void@/QXObject/onCellDBClick(/int,/int)" , 0 },
+	{ "/void@/QXObject/onItemDBClick(/long)" , 0 },
+	{ "/void@/QXObject/onCellEnter(/int,/int)" , 0 },
+	{ "/void@/QXObject/onItemEnter(/long)" , 0 },
+	{ "/void@/QXObject/onCellActived(/int,/int)" , 0 },
+	{ "/void@/QXObject/onItemActived(/long)" , 0 },
+
 };

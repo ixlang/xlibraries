@@ -62,6 +62,9 @@ QXApplication::~QXApplication()
 		if (strcmp(type, "QLineEdit") == 0) {
 			ar.installEditAction(obj);
 		}
+		if (strcmp(type, "QTableWidget") == 0) {
+			ar.installTableCellChange((QTableWidget*)obj);
+		}
 		if (strcmp(type, "QDialog") == 0) {
 			QDialog * pm = (QDialog*)obj;
 			ar.installDialogAction(pm);
@@ -618,23 +621,109 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		break;
 
 	case QEvent::DragEnter:
-		//QDragEnterEvent
+	{
+		QDragEnterEvent *ge = (QDragEnterEvent *)evn;
+
+		XObject * l = createXObject(ge->answerRect().left());
+		XObject * t = createXObject(ge->answerRect().top());
+		XObject * r = createXObject(ge->answerRect().right());
+		XObject * b = createXObject(ge->answerRect().bottom());
+
+		XObject * res = gs_env->invoke(context, xobj, method, l, t, r ,b);
+
+		gs_env->dereferenceObject(l);
+		gs_env->dereferenceObject(t);
+		gs_env->dereferenceObject(r);
+		gs_env->dereferenceObject(b);
+
+		if (res != 0) {
+			bool bret = true;
+			if (gs_env->getBoolValue(res, &bret)) {
+				if (bret) {
+					ge->acceptProposedAction();
+				}
+			}
+			gs_env->dereferenceObject(res);
+		}
+	}
+		 
 		break;
 
 	case QEvent::DragMove:
-		//QDragMoveEvent
+	{
+		QDragMoveEvent *ge = (QDragMoveEvent *)evn;
+
+		XObject * l = createXObject(ge->answerRect().left());
+		XObject * t = createXObject(ge->answerRect().top());
+		XObject * r = createXObject(ge->answerRect().right());
+		XObject * b = createXObject(ge->answerRect().bottom());
+
+		XObject * res = gs_env->invoke(context, xobj, method, l, t, r, b);
+
+		gs_env->dereferenceObject(l);
+		gs_env->dereferenceObject(t);
+		gs_env->dereferenceObject(r);
+		gs_env->dereferenceObject(b);
+
+		if (res != 0) {
+			bool bret = true;
+			if (gs_env->getBoolValue(res, &bret)) {
+				if (bret) {
+					ge->acceptProposedAction();
+				}
+			}
+			gs_env->dereferenceObject(res);
+		}
+	}
 		break;
 
 	case QEvent::DragLeave:
-		//QDragLeaveEvent
+	{
+		
+
+		XObject * l = createXObject(0);
+		XObject * t = createXObject(0);
+		XObject * r = createXObject(0);
+		XObject * b = createXObject(0);
+
+		gs_env->void_invoke(context, xobj, method, l, t, r, b);
+
+		gs_env->dereferenceObject(l);
+		gs_env->dereferenceObject(t);
+		gs_env->dereferenceObject(r);
+		gs_env->dereferenceObject(b);
+
+	}
 		break;
 
 	case QEvent::Drop:
-		//QDropEvent
+	{
+		QDropEvent *ge = (QDropEvent *)evn;
+		QList<QUrl> urls = ge->mimeData()->urls();
+
+		XObject * strbjects = gs_env->createStringArray(urls.size());
+
+		XThread thread;
+
+		if (urls.isEmpty() == false) {
+			for (size_t i = 0; i < urls.size(); i++) {
+				const QUrl & surl = urls.at(i);
+				QByteArray str = surl.toLocalFile().toUtf8();
+				xstring xs = str.data();
+				int xl = str.length();
+				gs_env->setElementValue(thread.getThread(), strbjects, i, &xs, &xl, 1);
+			}
+		}
+
+		gs_env->void_invoke(context, xobj, method, strbjects);
+
+		gs_env->dereferenceObject(strbjects);
+	}
+		
 		break;
 
 	case QEvent::DragResponse:
-
+		gs_env->void_invoke(context, xobj, method);
 		break;
 
 	case QEvent::ChildAdded:

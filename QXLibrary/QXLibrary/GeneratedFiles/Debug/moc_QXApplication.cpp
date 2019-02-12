@@ -87,8 +87,8 @@ int QXApplication::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     return _id;
 }
 struct qt_meta_stringdata_ActionReceiver_t {
-    QByteArrayData data[100];
-    char stringdata0[1264];
+    QByteArrayData data[114];
+    char stringdata0[1464];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -196,7 +196,21 @@ QT_MOC_LITERAL(95, 1210, 1), // "a"
 QT_MOC_LITERAL(96, 1212, 1), // "b"
 QT_MOC_LITERAL(97, 1214, 14), // "ereturnPressed"
 QT_MOC_LITERAL(98, 1229, 16), // "eeditingFinished"
-QT_MOC_LITERAL(99, 1246, 17) // "eselectionChanged"
+QT_MOC_LITERAL(99, 1246, 11), // "oncellPress"
+QT_MOC_LITERAL(100, 1258, 3), // "row"
+QT_MOC_LITERAL(101, 1262, 15), // "oncellItemPress"
+QT_MOC_LITERAL(102, 1278, 17), // "QTableWidgetItem*"
+QT_MOC_LITERAL(103, 1296, 11), // "oncellClick"
+QT_MOC_LITERAL(104, 1308, 15), // "oncellItemClick"
+QT_MOC_LITERAL(105, 1324, 13), // "oncellDBClick"
+QT_MOC_LITERAL(106, 1338, 17), // "oncellItemDBClick"
+QT_MOC_LITERAL(107, 1356, 11), // "oncellEnter"
+QT_MOC_LITERAL(108, 1368, 15), // "oncellItemEnter"
+QT_MOC_LITERAL(109, 1384, 12), // "oncellActive"
+QT_MOC_LITERAL(110, 1397, 16), // "oncellItemActive"
+QT_MOC_LITERAL(111, 1414, 13), // "oncellChanged"
+QT_MOC_LITERAL(112, 1428, 17), // "oncellItemChanged"
+QT_MOC_LITERAL(113, 1446, 17) // "eselectionChanged"
 
     },
     "ActionReceiver\0ActionTriggered\0\0act\0"
@@ -232,7 +246,13 @@ QT_MOC_LITERAL(99, 1246, 17) // "eselectionChanged"
     "SCN_UPDATEUI\0updated\0SCN_USERLISTSELECTION\0"
     "SCN_ZOOM\0etextChanged\0etextEdited\0"
     "ecursorPositionChanged\0a\0b\0ereturnPressed\0"
-    "eeditingFinished\0eselectionChanged"
+    "eeditingFinished\0oncellPress\0row\0"
+    "oncellItemPress\0QTableWidgetItem*\0"
+    "oncellClick\0oncellItemClick\0oncellDBClick\0"
+    "oncellItemDBClick\0oncellEnter\0"
+    "oncellItemEnter\0oncellActive\0"
+    "oncellItemActive\0oncellChanged\0"
+    "oncellItemChanged\0eselectionChanged"
 };
 #undef QT_MOC_LITERAL
 
@@ -242,7 +262,7 @@ static const uint qt_meta_data_ActionReceiver[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      62,   14, // methods
+      74,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -250,68 +270,80 @@ static const uint qt_meta_data_ActionReceiver[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,  324,    2, 0x08 /* Private */,
-       4,    2,  327,    2, 0x08 /* Private */,
-       8,    2,  332,    2, 0x08 /* Private */,
-       9,    2,  337,    2, 0x08 /* Private */,
-      10,    2,  342,    2, 0x08 /* Private */,
-      11,    2,  347,    2, 0x08 /* Private */,
-      12,    2,  352,    2, 0x08 /* Private */,
-      13,    1,  357,    2, 0x08 /* Private */,
-      14,    1,  360,    2, 0x08 /* Private */,
-      15,    2,  363,    2, 0x08 /* Private */,
-      18,    0,  368,    2, 0x08 /* Private */,
-      19,    1,  369,    2, 0x08 /* Private */,
-      21,    1,  372,    2, 0x08 /* Private */,
-      22,    0,  375,    2, 0x08 /* Private */,
-      23,    0,  376,    2, 0x08 /* Private */,
-      24,    1,  377,    2, 0x08 /* Private */,
-      26,    1,  380,    2, 0x08 /* Private */,
-      28,    1,  383,    2, 0x08 /* Private */,
-      30,    1,  386,    2, 0x08 /* Private */,
-      32,    1,  389,    2, 0x08 /* Private */,
-      33,    1,  392,    2, 0x08 /* Private */,
-      34,    0,  395,    2, 0x08 /* Private */,
-      35,    0,  396,    2, 0x08 /* Private */,
-      36,    1,  397,    2, 0x08 /* Private */,
-      38,    0,  400,    2, 0x08 /* Private */,
-      39,    0,  401,    2, 0x08 /* Private */,
-      40,    4,  402,    2, 0x08 /* Private */,
-      46,    4,  411,    2, 0x08 /* Private */,
-      46,    2,  420,    2, 0x08 /* Private */,
-      47,    0,  425,    2, 0x08 /* Private */,
-      48,    1,  426,    2, 0x08 /* Private */,
-      50,    1,  429,    2, 0x08 /* Private */,
-      52,    3,  432,    2, 0x08 /* Private */,
-      55,    3,  439,    2, 0x08 /* Private */,
-      58,    3,  446,    2, 0x08 /* Private */,
-      59,    0,  453,    2, 0x08 /* Private */,
-      60,    0,  454,    2, 0x08 /* Private */,
-      61,    2,  455,    2, 0x08 /* Private */,
-      62,    2,  460,    2, 0x08 /* Private */,
-      63,    2,  465,    2, 0x08 /* Private */,
-      64,    2,  470,    2, 0x08 /* Private */,
-      65,    2,  475,    2, 0x08 /* Private */,
-      66,    3,  480,    2, 0x08 /* Private */,
-      70,    3,  487,    2, 0x08 /* Private */,
-      72,    3,  494,    2, 0x08 /* Private */,
-      73,   10,  501,    2, 0x08 /* Private */,
-      82,    0,  522,    2, 0x08 /* Private */,
-      83,    2,  523,    2, 0x08 /* Private */,
-      84,    0,  528,    2, 0x08 /* Private */,
-      85,    0,  529,    2, 0x08 /* Private */,
-      86,    0,  530,    2, 0x08 /* Private */,
-      87,    1,  531,    2, 0x08 /* Private */,
-      88,    1,  534,    2, 0x08 /* Private */,
-      90,    4,  537,    2, 0x08 /* Private */,
-      90,    2,  546,    2, 0x08 /* Private */,
-      91,    0,  551,    2, 0x08 /* Private */,
-      92,    1,  552,    2, 0x08 /* Private */,
-      93,    1,  555,    2, 0x08 /* Private */,
-      94,    2,  558,    2, 0x08 /* Private */,
-      97,    0,  563,    2, 0x08 /* Private */,
-      98,    0,  564,    2, 0x08 /* Private */,
-      99,    0,  565,    2, 0x08 /* Private */,
+       1,    1,  384,    2, 0x08 /* Private */,
+       4,    2,  387,    2, 0x08 /* Private */,
+       8,    2,  392,    2, 0x08 /* Private */,
+       9,    2,  397,    2, 0x08 /* Private */,
+      10,    2,  402,    2, 0x08 /* Private */,
+      11,    2,  407,    2, 0x08 /* Private */,
+      12,    2,  412,    2, 0x08 /* Private */,
+      13,    1,  417,    2, 0x08 /* Private */,
+      14,    1,  420,    2, 0x08 /* Private */,
+      15,    2,  423,    2, 0x08 /* Private */,
+      18,    0,  428,    2, 0x08 /* Private */,
+      19,    1,  429,    2, 0x08 /* Private */,
+      21,    1,  432,    2, 0x08 /* Private */,
+      22,    0,  435,    2, 0x08 /* Private */,
+      23,    0,  436,    2, 0x08 /* Private */,
+      24,    1,  437,    2, 0x08 /* Private */,
+      26,    1,  440,    2, 0x08 /* Private */,
+      28,    1,  443,    2, 0x08 /* Private */,
+      30,    1,  446,    2, 0x08 /* Private */,
+      32,    1,  449,    2, 0x08 /* Private */,
+      33,    1,  452,    2, 0x08 /* Private */,
+      34,    0,  455,    2, 0x08 /* Private */,
+      35,    0,  456,    2, 0x08 /* Private */,
+      36,    1,  457,    2, 0x08 /* Private */,
+      38,    0,  460,    2, 0x08 /* Private */,
+      39,    0,  461,    2, 0x08 /* Private */,
+      40,    4,  462,    2, 0x08 /* Private */,
+      46,    4,  471,    2, 0x08 /* Private */,
+      46,    2,  480,    2, 0x08 /* Private */,
+      47,    0,  485,    2, 0x08 /* Private */,
+      48,    1,  486,    2, 0x08 /* Private */,
+      50,    1,  489,    2, 0x08 /* Private */,
+      52,    3,  492,    2, 0x08 /* Private */,
+      55,    3,  499,    2, 0x08 /* Private */,
+      58,    3,  506,    2, 0x08 /* Private */,
+      59,    0,  513,    2, 0x08 /* Private */,
+      60,    0,  514,    2, 0x08 /* Private */,
+      61,    2,  515,    2, 0x08 /* Private */,
+      62,    2,  520,    2, 0x08 /* Private */,
+      63,    2,  525,    2, 0x08 /* Private */,
+      64,    2,  530,    2, 0x08 /* Private */,
+      65,    2,  535,    2, 0x08 /* Private */,
+      66,    3,  540,    2, 0x08 /* Private */,
+      70,    3,  547,    2, 0x08 /* Private */,
+      72,    3,  554,    2, 0x08 /* Private */,
+      73,   10,  561,    2, 0x08 /* Private */,
+      82,    0,  582,    2, 0x08 /* Private */,
+      83,    2,  583,    2, 0x08 /* Private */,
+      84,    0,  588,    2, 0x08 /* Private */,
+      85,    0,  589,    2, 0x08 /* Private */,
+      86,    0,  590,    2, 0x08 /* Private */,
+      87,    1,  591,    2, 0x08 /* Private */,
+      88,    1,  594,    2, 0x08 /* Private */,
+      90,    4,  597,    2, 0x08 /* Private */,
+      90,    2,  606,    2, 0x08 /* Private */,
+      91,    0,  611,    2, 0x08 /* Private */,
+      92,    1,  612,    2, 0x08 /* Private */,
+      93,    1,  615,    2, 0x08 /* Private */,
+      94,    2,  618,    2, 0x08 /* Private */,
+      97,    0,  623,    2, 0x08 /* Private */,
+      98,    0,  624,    2, 0x08 /* Private */,
+      99,    2,  625,    2, 0x08 /* Private */,
+     101,    1,  630,    2, 0x08 /* Private */,
+     103,    2,  633,    2, 0x08 /* Private */,
+     104,    1,  638,    2, 0x08 /* Private */,
+     105,    2,  641,    2, 0x08 /* Private */,
+     106,    1,  646,    2, 0x08 /* Private */,
+     107,    2,  649,    2, 0x08 /* Private */,
+     108,    1,  654,    2, 0x08 /* Private */,
+     109,    2,  657,    2, 0x08 /* Private */,
+     110,    1,  662,    2, 0x08 /* Private */,
+     111,    2,  665,    2, 0x08 /* Private */,
+     112,    1,  670,    2, 0x08 /* Private */,
+     113,    0,  673,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Bool, QMetaType::QObjectStar,    3,
@@ -375,6 +407,18 @@ static const uint qt_meta_data_ActionReceiver[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   95,   96,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
+    QMetaType::Void, 0x80000000 | 102,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
+    QMetaType::Void, 0x80000000 | 102,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
+    QMetaType::Void, 0x80000000 | 102,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
+    QMetaType::Void, 0x80000000 | 102,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
+    QMetaType::Void, 0x80000000 | 102,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
+    QMetaType::Void, 0x80000000 | 102,    6,
     QMetaType::Void,
 
        0        // eod
@@ -448,7 +492,19 @@ void ActionReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 58: _t->ecursorPositionChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 59: _t->ereturnPressed(); break;
         case 60: _t->eeditingFinished(); break;
-        case 61: _t->eselectionChanged(); break;
+        case 61: _t->oncellPress((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 62: _t->oncellItemPress((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 63: _t->oncellClick((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 64: _t->oncellItemClick((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 65: _t->oncellDBClick((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 66: _t->oncellItemDBClick((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 67: _t->oncellEnter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 68: _t->oncellItemEnter((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 69: _t->oncellActive((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 70: _t->oncellItemActive((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 71: _t->oncellChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 72: _t->oncellItemChanged((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 73: _t->eselectionChanged(); break;
         default: ;
         }
     }
@@ -479,13 +535,13 @@ int ActionReceiver::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 62)
+        if (_id < 74)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 62;
+        _id -= 74;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 62)
+        if (_id < 74)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 62;
+        _id -= 74;
     }
     return _id;
 }

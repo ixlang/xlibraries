@@ -263,7 +263,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         qobject = new QsciScintilla();
                 }
                 ar.installSciAction((QsciScintilla*)qobject);
-                ((QMdiSubWindow*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+                ((QsciScintilla*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
                 break;
         case qtPushButton:
                 if (parent != 0) {
@@ -320,7 +320,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         qobject = new QTreeWidget();
                 }
                 ar.installTreeAction(qobject);
-                ((QMdiSubWindow*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+                ((QTreeWidget*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
                 break;
         case qtListView:
                 if (parent != 0) {
@@ -329,8 +329,19 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 else {
                         qobject = new QListView();
                 }
-                ((QMdiSubWindow*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+                ((QListView*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
                 break;
+		case qtTableWidget:
+			if (parent != 0) {
+				qobject = new QTableWidget((QWidget*)parent);
+			}
+			else {
+				qobject = new QTableWidget();
+			}
+			ar.installTableCellChange((QTableWidget*)qobject);
+			((QTableWidget*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+			break;
+				
         case qtDialog:
                 if (parent != 0) {
                         qobject = new QDialog((QWidget*)parent);
@@ -339,7 +350,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         qobject = new QDialog();
                 }
                 ar.installDialogAction((QDialog*)qobject);
-                ((QMdiSubWindow*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+                ((QDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
                 break;
         case qtComboBox:
                 if (parent != 0) {
@@ -597,6 +608,9 @@ XNLEXPORT xint  XI_STDCALL XNLExit(XNLEnv * env){
 XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         switch (proid)
         {
+        case SETFOCUSPOLICY:
+                ((QWidget*)h)->setFocusPolicy((Qt::FocusPolicy)value);
+            break;
 		case SETCURSOR:
 				((QWidget*)h)->setCursor((Qt::CursorShape)value);
 			break;
@@ -668,6 +682,39 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         case QXPAINTBGMMODE:
                 ((QPainter*)h)->setBackgroundMode((Qt::BGMode)value);
                 break;
+		case TABLEREMOVEROW:
+				((QTableWidget*)h)->removeRow(value);
+				break;
+		case TABLEREMOVECOLUMN:
+			((QTableWidget*)h)->removeColumn(value);
+			break;
+		case TABLESETCOLUMNCNT:
+			((QTableWidget*)h)->setColumnCount(value);
+			break;
+		case TABLESETROWCNT:
+			((QTableWidget*)h)->setRowCount(value);
+			break;
+		case TABLESELECTROW:
+			((QTableWidget*)h)->selectColumn(value);
+			break;
+		case TABLESETVHRM:
+			((QTableWidget*)h)->verticalHeader()->setSectionResizeMode((QHeaderView::ResizeMode) value);
+			break;
+		case TABLESETVHDSS:
+			((QTableWidget*)h)->verticalHeader()->setDefaultSectionSize(value);
+			break;
+		case TABLESETSM:
+			((QTableWidget*)h)->setSelectionMode((QAbstractItemView::SelectionMode)value);
+			break;
+		case TABLESETSB:
+			((QTableWidget*)h)->setSelectionBehavior((QAbstractItemView::SelectionBehavior)value);
+			break;
+		case TABLESETET:
+			((QTableWidget*)h)->setEditTriggers((QAbstractItemView::EditTrigger)value);
+			break;
+		case TABLESETHHFH:
+			((QTableWidget*)h)->horizontalHeader()->setFixedHeight(value);
+			break;
         default:
                 break;
         }
@@ -697,6 +744,12 @@ XNLEXPORT xbool XI_CDECL widget_get_int_bool(xlong h, xint proid, xint v) {
                 return Qt::Checked == titem->checkState(v);
         }
         break;
+		case TABITEMGETCHECK:
+		{
+			QTableWidgetItem * titem = (QTableWidgetItem *)h;
+			return Qt::Checked == titem->checkState();
+		}
+		break;
         }
         return false;
 }
@@ -713,6 +766,12 @@ XNLEXPORT void XI_CDECL widget_set_int_bool_value(xlong h, xint proid, xint v, x
                 titem->setCheckState(v, v1 ? Qt::Checked : Qt::Unchecked);
         }
         break;
+		case TABITEMSETCHECK:
+		{
+			QTableWidgetItem * titem = (QTableWidgetItem *)h;
+			titem->setCheckState(v1 ? Qt::Checked : Qt::Unchecked);
+		}
+		break;
         case SETATTRIBUTE:
                 ((QWidget*)h)->setAttribute((Qt::WidgetAttribute)v, v1);
                 break;
@@ -838,6 +897,22 @@ XNLEXPORT XObject * XI_CDECL widget_get_object(xlong h, xint proid) {
                 }
         }
         break;
+		case TREEGETTOPITEMS:
+		{
+			size_t tc = ((QTreeWidget*)h)->topLevelItemCount();
+			XObject * objs = gs_env->createLongArray(tc);
+
+			xlong *lva = new xlong[tc];
+
+			for (size_t i = 0; i < tc; i++) {
+				lva[i] = (xlong)((QTreeWidget*)h)->topLevelItem(i);
+			}
+
+			gs_env->setElementValue(objs, 0, lva, tc);
+			delete[]lva;
+			return objs;
+		}
+			break;
         case TREEGETSELITEM:
         {
                 QList<QTreeWidgetItem*> items = ((QTreeWidget*)h)->selectedItems();
@@ -856,6 +931,50 @@ XNLEXPORT XObject * XI_CDECL widget_get_object(xlong h, xint proid) {
                 return objs;
         }
                 break;
+		case TABLEGETSELITEM:
+		{
+			QList<QTableWidgetItem*> items = ((QTableWidget*)h)->selectedItems();
+			XObject * objs = gs_env->createLongArray(items.size());
+
+			QList<QTableWidgetItem*>::iterator iter = items.begin();
+			int id = 0;
+			xlong * lva = new xlong[items.size()];
+
+			size_t i = 0;
+			while (iter != items.end()) {
+				lva[i++] = (xlong)*iter++;
+			}
+			gs_env->setElementValue(objs, 0, lva, items.size());
+			delete[]lva;
+			return objs;
+		}
+		break;
+		case TABLEGETSELRANGE:
+		{
+			QList<QTableWidgetSelectionRange> items = ((QTableWidget*)h)->selectedRanges();
+			XObject * objs = gs_env->createLongArray(items.size() * 2);
+
+			QList<QTableWidgetSelectionRange>::iterator iter = items.begin();
+			int id = 0;
+			xlong * lva = new xlong[items.size() * 2];
+
+			size_t i = 0;
+			while (iter != items.end()) {
+				QTableWidgetSelectionRange & wsr = *iter;
+				lva[i] = wsr.leftColumn();
+				lva[i] = (lva[i] << 32) | wsr.rightColumn();
+
+				lva[i + 1] = wsr.topRow();
+				lva[i + 1] = (lva[i + 1] << 32) | wsr.bottomRow();
+
+				iter++;
+				i += 2;
+			}
+			gs_env->setElementValue(objs, 0, lva, items.size() * 2);
+			delete[]lva;
+			return objs;
+		}
+		break;
         case TREEGETCHILDREN:
         {
                 size_t count = ((QTreeWidgetItem*)h)->childCount();
@@ -1015,8 +1134,22 @@ XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
                 QTreeWidgetItem * titem = (QTreeWidgetItem *)h;
                 titem->setHidden(v);
         }
+		break;
+		case TABLESETHHLS:
+		{
+			((QTableWidget*)h)->horizontalHeader()->setStretchLastSection(v);
+		}
         break;
-
+		case TABLESETSG:
+		{
+				((QTableWidget*)h)->setShowGrid(v);
+		}
+		break;
+		case TABLESETVHV:
+		{
+			((QTableWidget*)h)->verticalHeader()->setVisible(v);
+		}
+		break;
         }
 }
 
@@ -1027,6 +1160,9 @@ XNLEXPORT void XI_CDECL widget_set_bkrl(xlong h, xint r) {
 XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         switch (proid)
         {
+        case SETFOCUSPOLICY:
+            return ((QWidget*)h)->focusPolicy();
+            break;
         case MINIMUMHEIGHT:
                 return ((QWidget*)h)->minimumHeight();
                 break;
@@ -1118,7 +1254,9 @@ XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         case TREEITEMGETFLAG:
                 return ((QTreeWidgetItem*)h)->flags();
                 break;
-
+		case TABITEMGETFLAG:
+			return ((QTableWidgetItem*)h)->flags();
+			break;
         case SCREENCOUNT:
         {
                 QDesktopWidget * desktop = QApplication::desktop();
@@ -1185,6 +1323,14 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xin
                 ((QTreeWidgetItem*)h)->setFlags((Qt::ItemFlags)flag);
         }
         break;
+		case TABLEITEMFLAG:
+		{
+			int flag = ((QTableWidgetItem*)h)->flags();
+			flag &= ~yv;
+			flag |= xv;
+			((QTableWidgetItem*)h)->setFlags((Qt::ItemFlags)flag);
+		}
+		break;
         case SETBRUSH:
         {
                 QBrush brush;
@@ -1201,6 +1347,11 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xin
                 ((QPainter*)h)->setBackground(brush);
         }
         break;
+		case TABLESETHHRS:
+		{
+			((QTableWidget*)h)->horizontalHeader()->resizeSection(xv, yv);
+		}
+		break;
         case PALETTE:
         {
                 QPalette pal;
@@ -1585,6 +1736,12 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         case DELETEWIDGET:
                 delete ((QWidget*)h);
                 break;
+		case TABLECLEAR:
+			((QTableWidget*)h)->clear();
+			break;
+		case TABLECLEARCONTENT:
+			((QTableWidget*)h)->clearContents();
+			break;
         default:
                 break;
         }
@@ -1684,13 +1841,16 @@ XNLEXPORT xlong XI_CDECL attachControl(xlong h, XObject * x, xstring name) {
                                 }
                         }
                         if (strcmp(type, "QTreeWidget") == 0) {
-                                ar.installTreeAction(child);
+                            ar.installTreeAction(child);
                         }
+						if (strcmp(type, "QTableWidget") == 0) {
+							ar.installTableCellChange((QTableWidget*)child);
+						}
                         if (strcmp(type, "QPushButton") == 0 || strcmp(type, "QCheckBox") == 0) {
-                                ar.installButtonAction(child);
+                            ar.installButtonAction(child);
                         }
                         if (strcmp(type, "QLineEdit") == 0) {
-                                ar.installEditAction(child);
+                            ar.installEditAction(child);
                         }
 						if (strcmp(type, "QComboBox") == 0) {
 							ar.installComboBoxAction((QComboBox*)child);
@@ -1844,6 +2004,20 @@ XNLEXPORT XObject * XI_CDECL object_get_handle(xlong h, xint proid, xlong h1) {
 
 XNLEXPORT XObject * XI_CDECL object_get_handle2(xlong h, xint proid, xlong hv, xlong h1) {
 
+	switch (proid) {
+		case TABLEGETCELLWIDGET:
+		{
+			QTableWidget * qt = (QTableWidget*)h;
+			QWidget * pw = qt->cellWidget(hv, h1);
+			if (pw != 0) {
+				XObject * xobj = getObjectControl(pw);
+				if (xobj != NULL) {
+					return gs_env->referenceObject(xobj);
+				}
+			}
+		}
+		break;
+	}
 
         return 0;
 }
@@ -2099,6 +2273,22 @@ XNLEXPORT xlong XI_CDECL long_long_string2(xlong handle, xint proid, xlong l1, x
                 return (xlong)item;
         }
         break;
+		case TABLESETITEM:
+		{
+			int line = (l1 >> 32) & 0xffffffff;
+			int row = l1 & 0xffffffff;
+			QTableWidgetItem * pitem = 0;
+			
+			if (v1 != 0) {
+				pitem = new QTableWidgetItem(*loadIcon(QString::fromUtf8(v1)), QString::fromUtf8(v2));
+			}
+			else {
+				pitem = new QTableWidgetItem(QString::fromUtf8(v2));
+			}
+			((QTableWidget*)handle)->setItem(line, row, pitem);
+			return (xlong)pitem;
+		}
+			break;
         default:
                 break;
         }
@@ -2161,6 +2351,22 @@ XNLEXPORT void XI_CDECL widget_set_intlongstring_value(xlong h, xint proid, xlon
                 }
         }
         break;
+		case SETTABLEITEMTEXT:
+		{
+			QTableWidgetItem * parent = (QTableWidgetItem *)xv;
+			if (parent != 0) {
+				parent->setText(QString::fromUtf8(zv));
+			}
+		}
+		break;
+		case SETTABLEITEMICON:
+		{
+			QTableWidgetItem * parent = (QTableWidgetItem *)xv;
+			if (parent != 0) {
+				parent->setIcon(*loadIcon(QString::fromUtf8(zv)));
+			}
+		}
+		break;
         case SETITEMICON:
         {
                 QTreeWidgetItem * parent = (QTreeWidgetItem *)xv;
@@ -2181,18 +2387,20 @@ XNLEXPORT xstring XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1, 
 
         switch (proid)
         {
-
         case TRGETITEMTEXT:
-        {
-                QTreeWidgetItem * parent = (QTreeWidgetItem *)v1;
-                qba = parent->text(v2).toUtf8();
-        }
+            qba = ((QTreeWidgetItem *)v1)->text(v2).toUtf8();
         break;
         case QSCIGETRANGE:
-                qba = ((QsciScintilla*)h)->text(v1, v2).toUtf8();
-                break;
+            qba = ((QsciScintilla*)h)->text(v1, v2).toUtf8();
+            break;
+		case TABLEGETTEXTBYRC:
+			qba = ((QTableWidget*)h)->item(v1, v2)->text().toUtf8();
+			break;
+		case TABLEGETTEXTBYITEM:
+			qba = ((QTableWidgetItem*)h)->text().toUtf8();
+			break;
         default:
-                break;
+            break;
 
         }
 
@@ -2209,13 +2417,24 @@ XNLEXPORT void XI_CDECL widget_set_intlongint_value(xlong h, xint proid, xlong x
                 parent->setTextColor(yv, QMakeColor(zv));
         }
         break;
-
+		case SETTABLEITEMCOLOR:
+		{
+			QTableWidgetItem * parent = (QTableWidgetItem *)xv;
+			parent->setTextColor(QMakeColor(zv));
+		}
+		break;
         case SETBACKCOLOR:
         {
                 QTreeWidgetItem * parent = (QTreeWidgetItem *)xv;
                 parent->setBackgroundColor(yv, QMakeColor(zv));
         }
         break;
+		case SETTABLEITEMBACKCOLOR:
+		{
+			QTableWidgetItem * parent = (QTableWidgetItem *)xv;
+			parent->setBackgroundColor(QMakeColor(zv));
+		}
+		break;
         case ADDWIDGET:
         {
                 ((QStatusBar*)h)->addWidget((QWidget*)xv, yv);
@@ -2235,6 +2454,12 @@ XNLEXPORT void XI_CDECL widget_set_intlongint_value(xlong h, xint proid, xlong x
 		case TOOLBARADDWIDGET:
 			((QToolBar*)h)->addWidget((QWidget*)xv);
 			break;
+		case TABLESETCELLWIDGET:
+		{
+			((QTableWidget*)h)->setCellWidget(yv, zv, (QWidget*)xv);
+		}
+		break;
+
         default:
                 break;
         }
@@ -2369,6 +2594,52 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
                 }
         }
         break;
+		case SETTABHHCOLUMNS:
+		{
+			QTableWidget * twidget = (QTableWidget *)h;
+
+			if (gs_env->isArray(value)) {
+				QStringList columns;
+				xlong size = gs_env->getLengthOfArray(value);
+				const char ** text = new const char *[size];
+				size_t *length = new size_t[size];
+
+				if (gs_env->getElementValue(value, 0, text, length, size)) {
+					for (xlong i = 0; i < size; i++) {
+						columns.push_back(QString::fromUtf8(text[i], length[i]));
+					}
+				}
+				delete[] text;
+				delete[]length;
+
+				twidget->setHorizontalHeaderLabels(columns);
+				//
+			}
+		}
+		break;
+		case SETTABVHCOLUMNS:
+		{
+			QTableWidget * twidget = (QTableWidget *)h;
+
+			if (gs_env->isArray(value)) {
+				QStringList columns;
+				xlong size = gs_env->getLengthOfArray(value);
+				const char ** text = new const char *[size];
+				size_t *length = new size_t[size];
+
+				if (gs_env->getElementValue(value, 0, text, length, size)) {
+					for (xlong i = 0; i < size; i++) {
+						columns.push_back(QString::fromUtf8(text[i], length[i]));
+					}
+				}
+				delete[] text;
+				delete[]length;
+
+				twidget->setVerticalHeaderLabels(columns);
+				//twidget->setColumnCount(columns.size());
+			}
+		}
+		break;
         case ADDDEFACTION:
         {
                 QWidget * twidget = (QWidget *)h;
@@ -2545,6 +2816,12 @@ XNLEXPORT void XI_CDECL object_set_long_int_long(xlong h, xint proid, xlong hv,i
                 obj->setData(iv, Qt::UserRole, h1);
         }
                 break;
+		case TABLESETTAG:
+		{
+			QTableWidgetItem * obj = (QTableWidgetItem*)hv;
+			obj->setData(Qt::UserRole, h1);
+		}
+		break;
         default:
                 break;
         }
@@ -2587,6 +2864,13 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
                 return v.value<xlong>();
         }
         break;
+		case TABLEGETTAG:
+		{
+			QTableWidgetItem * obj = (QTableWidgetItem*)hv;
+			QVariant v = obj->data(Qt::UserRole);
+			return v.value<xlong>();
+		}
+		break;
         case MATRIXMUL:
         {
                 QMatrix * obj = (QMatrix*)h;
@@ -2640,6 +2924,18 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
                 return v;
         }
         break;
+		case GETTOPITEM:
+		{
+				QTreeWidget * obj = (QTreeWidget*)hv;
+				return (xlong)obj->topLevelItem(hv);
+		}
+			break;
+		case TABLEGETITEM:
+		{
+			QTableWidget * obj = (QTableWidget*)h;
+			return (xlong)obj->item(hv, iv);
+		}
+		break;
         default:
                 break;
         }
@@ -2725,8 +3021,16 @@ XNLEXPORT xlong XI_CDECL long_intlong2(xlong handle, xint proid, xlong value, xl
         {
                 int width = (value >> 32) & 0xffffffff;
                 int height = (value & 0xffffffff);
-                QImage * qm = new QImage(width, height, (QImage::Format)v1);
-                qm->fill(Qt::GlobalColor::transparent);
+
+				QImage * qm = 0;
+				if (handle == 0) {
+					qm = new QImage(width, height, (QImage::Format)v1);
+					qm->fill(Qt::GlobalColor::transparent);
+				}
+				else {
+					qm = new QImage((uchar*)handle, width, height, (QImage::Format)v1);
+				}
+                
                 return (xlong)qm;
         }
                 break;
@@ -2737,6 +3041,38 @@ XNLEXPORT xlong XI_CDECL long_intlong2(xlong handle, xint proid, xlong value, xl
         }
         return 0;
 }
+
+
+XNLEXPORT xlong XI_CDECL pointer_intlong2(void* handle, xint proid, xlong value, xlong v1) {
+
+	switch (proid)
+	{
+
+	case IMGLOAD:
+	{
+		int width = (value >> 32) & 0xffffffff;
+		int height = (value & 0xffffffff);
+
+		QImage * qm = 0;
+		if (handle == 0) {
+			qm = new QImage(width, height, (QImage::Format)v1);
+			qm->fill(Qt::GlobalColor::transparent);
+		}
+		else {
+			qm = new QImage((uchar*)handle, width, height, (QImage::Format)v1);
+		}
+
+		return (xlong)qm;
+	}
+	break;
+
+	default:
+		break;
+
+	}
+	return 0;
+}
+
 
 XNLEXPORT void XI_CDECL void_long2(xlong handle, xint proid, xlong value1, xlong v2) {
         switch (proid)

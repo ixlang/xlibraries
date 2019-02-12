@@ -10,10 +10,10 @@ TARGET = QXLibrary
 TEMPLATE = lib
 
 unix:!macx{
-    contains(TARGET_ARCH, x86_64) {
-        QTDIR = /home/cadaqs/Qt5.9.1/5.9.1/Qt5.9.1_linux_gcc_x64_static_fc
-    } else {
+    contains(QT_ARCH, x86_64) {
         QTDIR = /home/cadaqs/qt5.12/5.9.1/linux_gcc_x64_static
+    } else {
+        QTDIR = /home/cadaqs/Qt5.9.1/5.9.1/gcc_x86_static
 #/home/cadaqs/Qt5.12/5.9.1/gcc_x86_static
     }
 }

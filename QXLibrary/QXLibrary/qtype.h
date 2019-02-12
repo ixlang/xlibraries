@@ -46,5 +46,6 @@ enum QTypes {
 	qtIcon = 41,
 	qtMatrix = 42,
 	qtToolbar = 43,
-	qtFileWatch = 44
+	qtFileWatch = 44,
+	qtTableWidget = 45,
 };
