@@ -12,8 +12,13 @@
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 #elif defined(__linux__)
+#ifdef __arm__
+#include <QtPlugin>
+Q_IMPORT_PLUGIN(QLinuxFbIntegrationPlugin)
+#else
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
+#endif
 #elif defined(__APPLE__)
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
@@ -377,14 +382,15 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtBoolPropertyManager();
                         }
+						ar.installBoolPropertyChange((QtBoolPropertyManager*)qobject);
                         break;
                 case qtColorPropertyManager :// 17,
                         if (parent != 0) {
                                 qobject = new QtColorPropertyManager((QObject*)parent);
-                        }
-                        else {
+                        }else {
                                 qobject = new QtColorPropertyManager();
                         }
+						ar.installColorPropertyChange((QtColorPropertyManager*)qobject);
                         break;
                 case qtDatePropertyManager :// 18,
                         if (parent != 0) {
@@ -393,6 +399,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtDatePropertyManager();
                         }
+						ar.installDatePropertyChange((QtDatePropertyManager*)qobject);
                         break;
                 case qtDateTimePropertyManager :// 19,
                         if (parent != 0) {
@@ -401,6 +408,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtDateTimePropertyManager();
                         }
+						ar.installDateTimePropertyChange((QtDateTimePropertyManager*)qobject);
                         break;
                 case qtDoublePropertyManager :// 20,
                         if (parent != 0) {
@@ -409,6 +417,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtDoublePropertyManager();
                         }
+						ar.installDoublePropertyChange((QtDoublePropertyManager*)qobject);
                         break;
                 case qtEnumPropertyManager :// 21,
                         if (parent != 0) {
@@ -417,6 +426,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtEnumPropertyManager();
                         }
+						ar.installEnumPropertyChange((QtEnumPropertyManager*)qobject);
                         break;
                 case qtFlagPropertyManager :// 22,
                         if (parent != 0) {
@@ -425,6 +435,8 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtFlagPropertyManager();
                         }
+						ar.installFlagPropertyChange((QtFlagPropertyManager*)qobject);
+
                         break;
                 case qtFontPropertyManager :// 23,
                         if (parent != 0) {
@@ -433,6 +445,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtFontPropertyManager();
                         }
+						ar.installFontPropertyChange((QtFontPropertyManager*)qobject);
                         break;
                 case qtGroupPropertyManager :// 24,
                         if (parent != 0) {
@@ -441,6 +454,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtGroupPropertyManager();
                         }
+						ar.installGroupPropertyChange((QtGroupPropertyManager*)qobject);
                         break;
                 case qtIntPropertyManager :// 25,
                         if (parent != 0) {
@@ -449,6 +463,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtIntPropertyManager();
                         }
+						ar.installIntPropertyChange((QtIntPropertyManager*)qobject);
                         break;
                 case qtPointPropertyManager :// 26,
                         if (parent != 0) {
@@ -457,6 +472,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtPointPropertyManager();
                         }
+						ar.installPointPropertyChange((QtPointPropertyManager*)qobject);
                         break;
                 case qtRectPropertyManager :// 27,
                         if (parent != 0) {
@@ -465,6 +481,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtRectPropertyManager();
                         }
+						ar.installRectPropertyChange((QtRectPropertyManager*)qobject);
                         break;
                 case qtSizePropertyManager :// 28,
                         if (parent != 0) {
@@ -473,6 +490,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtSizePropertyManager();
                         }
+						ar.installSizePropertyChange((QtSizePropertyManager*)qobject);
                         break;
                 case qtSizePolicyPropertyManager :// 29,
                         if (parent != 0) {
@@ -481,6 +499,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtSizePolicyPropertyManager();
                         }
+						ar.installSizePolicyPropertyChange((QtSizePolicyPropertyManager*)qobject);
                         break;
                 case qtStringPropertyManager :// 30,
                         if (parent != 0) {
@@ -489,14 +508,16 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtStringPropertyManager();
                         }
+						ar.installStringPropertyChange((QtStringPropertyManager*)qobject);
                         break;
                 case qtTimePropertyManager :// 31,
                         if (parent != 0) {
                                 qobject = new QtTimePropertyManager((QObject*)parent);
                         }
                         else {
-                                qobject = new QtStringPropertyManager();
+                                qobject = new QtTimePropertyManager();
                         }
+						ar.installTimePropertyChange((QtTimePropertyManager*)qobject);
                         break;
                 case qtVariantPropertyManager :// 32,
                         if (parent != 0) {
@@ -505,6 +526,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                         else {
                                 qobject = new QtVariantPropertyManager();
                         }
+						ar.installVariantPropertyChange((QtVariantPropertyManager*)qobject);
                         break;
                 case qtProperty :// 33,
                         break;
@@ -626,6 +648,9 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         case FONTPTSIZE:
                 ((QFont*)h)->setPointSize(value);
                 break;
+		case SETSHRCUT:
+				((QAction*)h)->setShortcut((QKeySequence::StandardKey)value);
+			break;
         case FONTPXSIZE:
                 ((QFont*)h)->setPixelSize(value);
                 break;
@@ -668,7 +693,6 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
                 break;
         case TRELIDMODE:
                 ((QTreeWidget*)h)->setTextElideMode((Qt::TextElideMode)(value));
-
                 break;
 
         case TREESETCURROW:
@@ -682,6 +706,7 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         case QXPAINTBGMMODE:
                 ((QPainter*)h)->setBackgroundMode((Qt::BGMode)value);
                 break;
+
 		case TABLEREMOVEROW:
 				((QTableWidget*)h)->removeRow(value);
 				break;
@@ -715,7 +740,7 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 		case TABLESETHHFH:
 			((QTableWidget*)h)->horizontalHeader()->setFixedHeight(value);
 			break;
-        default:
+			default:
                 break;
         }
 }
@@ -1055,7 +1080,11 @@ XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
                         ((QWidget*)h)->showNormal();
                 }
                 break;
-
+		case QPBADJUST:
+		{
+			((QtTreePropertyBrowser*)h)->setResizeMode(v ? QtTreePropertyBrowser::ResizeMode::Interactive : QtTreePropertyBrowser::ResizeMode::Fixed);
+		}
+			break;
         case MINIMIZED:
                 if (v) {
                         ((QWidget*)h)->showMinimized();
@@ -1242,6 +1271,14 @@ XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         case TREEGETCURROW:
                 return ((QTreeWidget*)h)->currentIndex().row();
                 break;
+
+		case GETFONTPIXELSIZE:
+			return ((QFont*)h)->pixelSize();
+			break;
+
+		case GETFONTPTSIZE:
+			return ((QFont*)h)->pointSize();
+			break;
 
         case TREEGETCURCOL:
                 return ((QTreeWidget*)h)->currentIndex().column();
@@ -1568,13 +1605,18 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
         case ACTSETTEXT:
                 ((QAction*)h)->setText(QString::fromUtf8(value));
                 break;
+		case SETWHATSTHIS:
+				((QWidget*)h)->setWhatsThis(QString::fromUtf8(value));
+				break;
         case SHOWMESSAGE:
                 ((QStatusBar*)h)->showMessage(QString::fromUtf8(value));
                 break;
         case QPFORMAT:
                 ((QProgressBar*)h)->setFormat(QString::fromUtf8(value));
                 break;
-
+		case SETSHRCUT:
+				((QAction*)h)->setShortcut(QKeySequence::fromString(QString::fromUtf8(value)));
+				break;
         case STYLESHEET:
         {
 
@@ -1585,7 +1627,11 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
                 file.close();
         }
                 break;
-
+		case STYLESHEETSTRING:
+		{
+			((QApplication*)h)->setStyleSheet(QString::fromUtf8(value));
+		}
+		break;
         case PALETTECOLOR:
                 ((QApplication*)h)->setPalette(QPalette(QColor(value)));
 
@@ -1597,7 +1643,23 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
                 QDesktopServices::openUrl(QUrl::fromLocalFile((QString::fromUtf8(value))));
             break;
 		case SETSTYLESHEET:
-				((QWidget*)h)->setStyleSheet(QString::fromUtf8(value));
+		{
+			QFile file(QString::fromUtf8(value));
+			file.open(QFile::ReadOnly);
+			QString qss = QLatin1String(file.readAll());
+			((QWidget*)h)->setStyleSheet(qss);
+			file.close();
+		}
+			break;
+		case SETSTYLESHEETSTRING:
+			((QWidget*)h)->setStyleSheet(QString::fromUtf8(value));
+			break;
+		case SETWIDGETFONT:
+		{
+			QFont ft;
+			ft.fromString(QString::fromUtf8(value));
+			((QWidget*)h)->setFont(ft);
+		}
 			break;
 		case LOADTRANSLATE: 
 		{
@@ -1962,6 +2024,12 @@ XNLEXPORT xstring XI_CDECL core_getString(xlong h, xint proid) {
 		case GETSTYLESHEEY:
 				qba = ((QWidget*)h)->styleSheet().toUtf8();
 			break;
+		case GETFONTDESCRIPTION:
+				qba = ((QFont*)h)->toString().toUtf8();
+			break;
+		case GETFONTNAME:
+			qba = ((QFont*)h)->family().toUtf8();
+			break;
         }
         return qba.data();
 }
@@ -2076,7 +2144,20 @@ XNLEXPORT xstring XI_CDECL openfile_dlg_string3_obj(xint proid, xstring caption,
                         qba = file.toUtf8();
                 }
                 break;
+		case GETFONT:
+		{
+			bool bOk = false;
+			QFont deffont;
+			deffont.fromString(QString::fromUtf8(defaultPath));
+			QFont file = QFontDialog::getFont(&bOk, deffont, (QWidget*)parent, QString::fromUtf8(caption));
+			if (bOk == false) {
+				return 0;
+			}
+			qba = file.toString().toUtf8();
+		}
+			break;
         }
+
         return qba.data();
 }
 
@@ -2183,6 +2264,16 @@ XNLEXPORT xlong XI_CDECL long_string2(xlong handle, xint proid, xstring v1, xstr
 				return 1;
 			}
 			break;
+
+		case QPBSETLABELS:
+		{
+			QStringList ql;
+			ql.push_back(QString::fromUtf8(v1));
+			ql.push_back(QString::fromUtf8(v2));
+			((QtTreePropertyBrowser*)handle)->setHeaderLabels(ql);
+			return 1;
+		}
+			break;
         case TREEWIDGETADD:
         {
                 QTreeWidget * twidget = (QTreeWidget *)handle;
@@ -2225,6 +2316,13 @@ XNLEXPORT xlong XI_CDECL long_string2(xlong handle, xint proid, xstring v1, xstr
                 }
                 break;
         }
+		case LOADFONTDESCRIPTION:
+		{
+			QFont * ft = new QFont();
+			ft->fromString(QString::fromUtf8(v1));
+			return (xlong)ft;
+			break;
+		}
         default:
                 break;
         }
@@ -2250,6 +2348,9 @@ XNLEXPORT xint XI_CDECL long_string2_int2(xlong handle, xint proid, xstring v1, 
         case MESSAGEBOXQUE:
                 return (xint)QMessageBox::question((QWidget*)handle, QString::fromUtf8(v1), QString::fromUtf8(v2), (QMessageBox::StandardButton)flags, (QMessageBox::StandardButton)flags2);
                 break;
+		case SCICMD:
+				return ((QsciScintilla*)handle)->SendScintilla(flags, v1, v2);
+			break;
         default:
                 break;
         }
@@ -2926,7 +3027,7 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
         break;
 		case GETTOPITEM:
 		{
-				QTreeWidget * obj = (QTreeWidget*)hv;
+				QTreeWidget * obj = (QTreeWidget*)h;
 				return (xlong)obj->topLevelItem(hv);
 		}
 			break;

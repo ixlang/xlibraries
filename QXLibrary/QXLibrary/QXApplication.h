@@ -1434,6 +1434,97 @@ private slots:
 			}
 		}
 	}
+
+	void onValueChanged(QtProperty *property, int val) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * prop = gs_env->createObject();
+
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(prop, (xlong)property);
+					gs_env->setValue(text, (xint)val);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_ENUMCHANGED].methodId, prop, text);
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(prop);
+				}
+			}
+		}
+	}
+
+	void onValueChanged(QtProperty *property, const QVariant &val) {
+
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+
+					XObject * value = gs_env->createObject();
+					XObject * prop = gs_env->createObject();
+					XObject * text = gs_env->createObject();
+					QString str = val.toString();
+					QByteArray _data = str.toUtf8();
+
+					gs_env->setValue(thread.getThread(), value, _data.data(), _data.length());
+					gs_env->setValue(prop, (xlong)property);
+					gs_env->setValue(text, (xint)val.type());
+
+					val.toString();
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_VVALUECHANGE].methodId, prop, text, value);
+
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(prop);
+					gs_env->dereferenceObject(value);
+				}
+			}
+		}
+	}
+
+	void onAttributeChanged(QtProperty *property,const QString &attribute, const QVariant &val) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+
+					
+					XObject * prop = gs_env->createObject();
+					XObject * text = gs_env->createObject();
+
+					XObject * value = gs_env->createObject();
+					QString str = val.toString();
+					QByteArray _data = str.toUtf8();
+					gs_env->setValue(thread.getThread(), value, _data.data(), _data.length());
+
+					XObject * attr = gs_env->createObject();
+					_data = attribute.toUtf8();
+					gs_env->setValue(thread.getThread(), attr, _data.data(), _data.length());
+
+					gs_env->setValue(prop, (xlong)property);
+					gs_env->setValue(text, (xint)val.type());
+
+					val.toString();
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_VATTRCHANGE].methodId, prop, attr, text, value);
+
+					gs_env->dereferenceObject(text);
+					gs_env->dereferenceObject(prop);
+					gs_env->dereferenceObject(value);
+					gs_env->dereferenceObject(attr);
+				}
+			}
+		}
+	}
+
 private:
 	QSignalMapper *signalMapper;
 	bool setup;
@@ -1515,6 +1606,76 @@ public:
 		XLINK(cmb, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
 		XLINK(cmb, SIGNAL(editTextChanged(const QString &)), this, SLOT(onEditTextChanged(const QString &)));
 		XLINK(cmb, SIGNAL(activated(int)), this, SLOT(onActivated(int)));
+	}
+
+
+	void installColorPropertyChange(QtColorPropertyManager * p) {
+
+	}
+
+	void installBoolPropertyChange(QtBoolPropertyManager * p) {
+
+	}
+
+	void installDatePropertyChange(QtDatePropertyManager * p) {
+
+	}
+
+	void installDateTimePropertyChange(QtDateTimePropertyManager * p) {
+
+	}
+
+	void installDoublePropertyChange(QtDoublePropertyManager*qobject) {
+
+	}
+
+	void installEnumPropertyChange(QtEnumPropertyManager*qobject) {
+		XLINK(qobject, SIGNAL(valueChanged(QtProperty *, int )), this, SLOT(onValueChanged(QtProperty *, int)));
+	}
+
+	void installFlagPropertyChange(QtFlagPropertyManager*qobject) {
+
+	}
+
+	void installFontPropertyChange(QtFontPropertyManager*qobject) {
+
+	}
+
+	void installGroupPropertyChange(QtGroupPropertyManager*qobject) {
+
+	}
+
+	void installIntPropertyChange(QtIntPropertyManager*qobject) {
+
+	}
+
+	void installPointPropertyChange(QtPointPropertyManager*qobject) {
+
+	}
+
+	void installRectPropertyChange(QtRectPropertyManager*qobject) {
+
+	}
+
+	void installSizePropertyChange(QtSizePropertyManager*qobject) {
+
+	}
+
+	void installSizePolicyPropertyChange(QtSizePolicyPropertyManager*qobject) {
+
+	}
+
+	void installStringPropertyChange(QtStringPropertyManager*qobject) {
+
+	}
+
+	void installTimePropertyChange(QtTimePropertyManager*qobject) {
+
+	}
+
+	void installVariantPropertyChange(QtVariantPropertyManager*qobject) {
+		XLINK(qobject, SIGNAL(valueChanged(QtProperty *, const QVariant &)), this, SLOT(onValueChanged(QtProperty *, const QVariant &)));
+		XLINK(qobject, SIGNAL(attributeChanged(QtProperty *,const QString &, const QVariant &)), this, SLOT(onAttributeChanged(QtProperty *,const QString &, const QVariant &)));
 	}
 
 	void installFSWEvent(QFileSystemWatcher * fsw) {

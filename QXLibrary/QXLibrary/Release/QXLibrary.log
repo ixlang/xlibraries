@@ -1,5 +1,4 @@
-﻿  Moc'ing QXApplication.h...
-  QXApplication.cpp
+﻿  QXApplication.cpp
   QXLibrary.cpp
   xid.cpp
   moc_QXApplication.cpp
