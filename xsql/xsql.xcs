@@ -1,0 +1,296 @@
+//xlang 
+
+package Sql{
+
+	class SqlException : Exception{
+        SqlException(int err, String sqlmessage){
+			errcode = err;
+            message = sqlmessage;
+        }
+    };
+    
+    class Database{
+		static Map<String, ConnectionRegister> _database = new Map<String, ConnectionRegister>();
+        
+        static bool reigstry(String name, ConnectionRegister reg){
+			synchronized(_database){
+				if (_database.containsKey(name) == false){
+					_database.put(name, reg);
+					return true;
+				}
+            }
+            return false;
+        }
+        
+        static Connection getConnection(String driverName){
+			synchronized(_database){
+				try{
+					ConnectionRegister cr = _database.get(driverName);
+                    return cr.allocConnection(driverName);
+                }catch(Exception e){
+                
+                }
+            }
+            return nilptr;
+        }
+    };
+    
+    interface ConnectionRegister{
+		Connection allocConnection(String drivername);
+    };
+    
+	interface Connection{
+		/** 创建连接
+        * 
+        * @Exception : SqlException
+        */
+		void create(String uri, String username, String pwd);
+        
+		/** 设置参数
+        * 
+        * @Exception : SqlException
+        */
+        void setOption(int opt, Object option);
+        
+        Object getOption(int opt);
+        
+        PreparedStatement prepareStatement(String sql);
+        
+        Statement createStatement();
+        
+        bool isClosed();
+        
+        void close();
+    };
+    
+    
+    interface ResultSet{
+		bool first();
+		bool last();
+
+		bool next();
+		bool previous();
+
+		bool isFirst();
+		bool isLast();
+		bool isValid();
+        
+		int getInt(String columnlabel);
+		long getLong(String columnlabel);
+		double getDouble(String columnlabel);
+		byte getByte(String columnlabel);
+		bool getBoolean(String columnlabel);
+		String getString(String columnlabel);
+
+		int getInt(int columnIndex);
+		long getLong(int columnIndex);
+		double getDouble(int columnIndex);
+		byte getByte(int columnIndex);
+		bool getBoolean(int columnIndex);
+		String getString(int columnIndex);
+
+		int findColumn(String);
+		long getRowCount();
+		int getRow();
+		void close();
+    };
+    
+    interface Statement{
+		int execute(String sql);
+        
+        ResultSet executeQuery(String sql);
+        
+        int executeUpdate(String sql);
+        
+        ResultSet getResult();
+        
+        void close();
+    };
+    
+    static class PreparedStatement : Statement{
+    
+		String textSql;
+        
+		PreparedStatement(String sql){
+			textSql = sql;
+        }
+        
+        String safety(String str){
+			str = str.replace("\'", "\''");
+			str = str.replace("\"", "\"\"");
+			return "'" + str + "'";
+        }
+        
+		int execute(){
+			return execute(textSql);
+        }
+        
+        ResultSet executeQuery(){
+			return executeQuery(textSql);
+        }
+        
+        int executeUpdate(){
+			return executeUpdate(textSql);
+        }
+        
+        void setValue(String value){
+			int ofst = textSql.indexOf('?',0);
+            if (ofst == -1){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,safety(value));
+        }
+        
+        void setValue(int value){
+			int ofst = textSql.indexOf('?',0);
+            if (ofst == -1){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
+        }
+        
+        void setValue(long value){
+			int ofst = textSql.indexOf('?',0);
+            if (ofst == -1){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
+        }
+        
+        void setValue(byte value){
+			int ofst = textSql.indexOf('?',0);
+            
+            if (ofst == -1){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%02u",value & 0xff));
+        }
+        
+        void setValue(double value){
+			int ofst = textSql.indexOf('?',0);
+            if (ofst == -1){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%f",value));
+        }
+        
+        
+		void setValue(int id, String value){
+			int ofst = textSql.indexOf('?',0);
+            while (--id > 0 && ofst != -1){
+				ofst = textSql.indexOf('?', ofst + 1);
+            }
+            if (ofst == -1 || id != 0){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,safety(value));
+        }
+        
+        void setValue(int id, int value){
+			int ofst = textSql.indexOf('?',0);
+            while (--id > 0 && ofst != -1){
+				ofst = textSql.indexOf('?', ofst + 1);
+            }
+            if (ofst == -1 || id != 0){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
+        }
+        
+        void setValue(int id, long value){
+			int ofst = textSql.indexOf('?',0);
+            while (--id > 0 && ofst != -1){
+				ofst = textSql.indexOf('?', ofst + 1);
+            }
+            if (ofst == -1 || id != 0){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
+        }
+        
+        void setValue(int id, byte value){
+			int ofst = textSql.indexOf('?',0);
+            
+            while (--id > 0 && ofst != -1){
+				ofst = textSql.indexOf('?', ofst + 1);
+            }
+            if (ofst == -1 || id != 0){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%02u",value & 0xff));
+        }
+        
+        void setValue(int id, double value){
+			int ofst = textSql.indexOf('?',0);
+            while (--id > 0 && ofst != -1){
+				ofst = textSql.indexOf('?', ofst + 1);
+            }
+            if (ofst == -1 || id != 0){
+				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }
+            textSql = textSql.replace(ofst,ofst,String.format("%f",value));
+        }
+    };
+};
+
+
+int main(String [] args){
+	Sqlite.registry();
+	_system_.createConsole();
+    
+    /** 
+    * @param sqlite 通过数据库驱动名称获取对应的数据库引擎
+    */
+	Sql.Connection slite = Sql.Database.getConnection("sqlite");
+    
+    if (slite != nilptr){
+		/** * 创建 或者打开一个数据库， 注意免费版的不支持加密，  后面两个参数nilptr */
+		slite.create("sqlite.db", nilptr, nilptr);
+        // 创建表
+        Sql.PreparedStatement stmt = slite.prepareStatement("CREATE table member(name varchar(32),age int)");
+        
+        try{
+			stmt.execute();
+        }catch(Exception e){
+			_system_.consoleWrite(e.getMessage() + "\n");
+        }
+        
+        String [] names = {
+			"嘉懿","煜城","懿轩","烨伟","苑博","伟泽","熠彤","鸿煊","博涛","烨霖","烨华","煜祺","智宸","正豪",
+			"昊然","明杰","立诚","立轩","立辉","峻熙","弘文","熠彤","鸿煊","烨霖","哲瀚","鑫鹏","致远","俊驰"
+		};
+        
+		try{
+			//插入人名  年龄随机
+			for(int i =0; i < names.length; i ++){
+				stmt = slite.prepareStatement("insert into member (name,age)VALUES(?, ?)");
+				stmt.setValue(names[i]);
+				stmt.setValue((int)(Math.random() * 80));
+				stmt.execute();
+			}
+		}catch(Exception e){
+			_system_.consoleWrite(e.getMessage() + "\n");
+		}
+        
+        /**
+        * 选择年龄小于40岁的 
+        */
+        stmt = slite.prepareStatement("select * from member where age < ?");
+        stmt.setValue(40);
+        
+        try{
+			Sql.ResultSet rs = stmt.executeQuery();
+            /** 
+            *@next 判断有没有数据
+            */
+			while (rs.next()){
+				_system_.consoleWrite(new String(rs.getString("name").getBytes("GB18030//IGNORE")) + ":" + rs.getString("age") + "\n");
+			}
+        }catch(Exception e){
+			_system_.consoleWrite(e.getMessage() + "\n");
+        }
+    }
+    
+    Thread.sleep(-1);
+	return 0;
+}

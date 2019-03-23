@@ -1,0 +1,157 @@
+//xlang 
+
+static class CSTDNative : Library{
+	static bool loaded = false;
+	static bool load(){
+		if (loaded == false){
+			int cstd_os = _system_.getPlatformId();
+			try{
+				if (cstd_os == _system_.PLATFORM_WINDOWS){
+					loadLibrary("ntdll.dll");
+				}else
+				if (cstd_os == _system_.PLATFORM_LINUX){
+					loadLibrary("libc.so.6");
+				}else
+				if (cstd_os == _system_.PLATFORM_MACOSX){
+					loadLibrary("libc.dylib");
+				}
+				loaded = true;
+			}catch(Exception e){
+				_system_.output(e.getMessage());
+			}
+		}
+		return loaded;
+	}
+    
+    
+	import{
+		Pointer cdecl memcpy(ObjectPtr dest, Pointer src, Pointer n);
+		Pointer cdecl strcpy(ObjectPtr dest, ObjectPtr src);
+		Pointer cdecl strlen(Pointer);
+	};
+    
+    class DarwinApi : Library{
+		static bool loaded = false;
+        
+        static bool load(){
+			if (loaded == false){
+				try{
+					loadLibrary("libc.dylib");
+                    loaded = true;
+                }catch(Exception e){
+					_system_.output(e.getMessage());
+                }
+            }
+            return loaded;
+        }
+		import{
+			int cdecl stat64(String path, ObjectPtr buf);
+        };
+    };
+    
+    class LniuxApi : Library{
+		static bool loaded = false;
+        
+        static bool load(){
+			if (loaded == false){
+				try{
+					loadLibrary("libc.so.6");
+                    loaded = true;
+                }catch(Exception e){
+					_system_.output(e.getMessage());
+                }
+            }
+            return loaded;
+        }
+		import{
+			int cdecl __lxstat64(int ver, String path, ObjectPtr buf);
+        };
+    };
+    
+	class UnixlikeApi : Library{
+		static const int 	__S_IFDIR	= 0040000	/* Directory.  */,
+			__S_IFCHR =	0020000	/* Character device.  */,
+			__S_IFBLK =	0060000	/* Block device.  */,
+			__S_IFREG =	0100000	/* Regular file.  */,
+			__S_IFIFO =	0010000	/* FIFO.  */,
+			__S_IFLNK =	0120000	/* Symbolic link.  */,
+			__S_IFSOCK = 0140000	/* Socket.  */,
+            __S_ISUID =	04000	/* Set user ID on execution.  */,
+			__S_ISGID =	02000	/* Set group ID on execution.  */,
+			__S_ISVTX =	01000	/* Save swapped text after use (sticky).  */,
+			__S_IREAD =	0400	/* Read by owner.  */,
+			__S_IWRITE =	0200	/* Write by owner.  */,
+			__S_IEXEC =	0100	/* Execute by owner.  */;
+            
+		static bool loaded = false;
+        
+        static int stat64(String path, byte [] recv){
+			if (xfsp.fs_osid == 1){
+				return LniuxApi.__lxstat64(0, path,recv);
+            }
+			if (xfsp.fs_osid == 2){
+				return DarwinApi.stat64(path,recv);
+            }
+            return -1;
+        }
+        static bool load(){
+			if (loaded == false){
+				try{
+					if (xfsp.fs_osid == 1){
+						loadLibrary("libc.so.6");
+                        LniuxApi.load();
+                    }else
+                    if (xfsp.fs_osid == 2){
+						loadLibrary("libc.dylib");
+                        DarwinApi.load();
+                    }
+                    loaded = true;
+                }catch(Exception e){
+					_system_.output(e.getMessage());
+                }
+            }
+            return loaded;
+        }
+        
+		import{
+			Pointer cdecl opendir(String dir);
+			Pointer cdecl readdir(Pointer dir);
+			Pointer cdecl memcpy(ObjectPtr dest, Pointer src, Pointer n);
+			Pointer cdecl strcpy(ObjectPtr dest, ObjectPtr src);
+			Pointer cdecl strlen(Pointer);
+			int cdecl closedir(Pointer);
+        };
+    };
+};
+ 
+package System{
+	class out{
+		static int println(String text){
+			return _system_.consoleWrite(text + "\n");
+		}
+		static int print(String text){
+			return _system_.consoleWrite(text);
+		}
+	};
+	
+	class Console{
+		Console(){
+			_system_.createConsole();
+		}
+	};
+};
+
+
+using { System; };
+
+
+int main(String [] args){
+
+	new Console();
+
+	System.out.println("hello world");
+
+	Thread.sleep(3000);
+
+	return 0;
+}

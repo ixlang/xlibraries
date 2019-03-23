@@ -1,0 +1,375 @@
+//xlang Source, Name:Sqlite.xcsm 
+//Date: Wed Mar 00:26:43 2019 
+
+
+class Sqlite : Sql.Connection{
+	static const String DRIVERNAME = "sqlite";
+    
+	static bool registry(){
+		if (Native.init()){
+			Sql.Database.reigstry(DRIVERNAME, new SqliteRegister());
+            return true;
+        }
+        return false;
+    }
+      
+
+    static class SqliteRegister : Sql.ConnectionRegister{
+		Sql.Connection allocConnection(String drivername){
+			if (drivername.equals("sqlite")){
+				return new Sqlite();
+            }
+            return nilptr;
+        }
+    };
+    
+    
+    static class CSTDNative : Library{
+		static bool loaded = false;
+        static bool load(){
+			if (loaded == false){
+				int cstd_os = _system_.getPlatformId();
+				try{
+					if (cstd_os == _system_.PLATFORM_WINDOWS){
+						loadLibrary("ntdll.dll");
+                    }else
+					if (cstd_os == _system_.PLATFORM_LINUX){
+						loadLibrary("libc.so.6");
+                    }else
+                    if (cstd_os == _system_.PLATFORM_MACOSX){
+						loadLibrary("libc.dylib");
+                    }
+                    loaded = true;
+                }catch(Exception e){
+					_system_.output(e.getMessage());
+                }
+            }
+            return loaded;
+        }
+		import{
+			Pointer cdecl memcpy(ObjectPtr dest, Pointer src, Pointer n);
+			Pointer cdecl strcpy(ObjectPtr dest, ObjectPtr src);
+			Pointer cdecl strlen(Pointer);
+        };
+    };
+	static class Native : Library{
+		static bool bloaded = false;
+        
+        static bool init(){
+			if (bloaded == false){
+				if (CSTDNative.load()){
+					try{
+						loadLibrary("sqlite3.dll");
+						bloaded = true;
+					}catch(Exception e){
+						_system_.output(e.getMessage());
+					}
+                }
+            }
+            return bloaded;
+        }
+        
+        import {
+			int cdecl sqlite3_open(
+				  String filename,   /* Database filename (UTF-8) */
+				  ObjectPtr ppDb          /* OUT: SQLite db handle */
+				);
+                
+            /*int cdecl sqlite3_key(
+			  Pointer db,                   /* Database to be rekeyed * /
+			  String pKey, int nKey     /* The key * /
+			);*/
+            
+            int cdecl sqlite3_close(
+			  Pointer db);
+            int cdecl sqlite3_step(long pStmt);
+            int cdecl sqlite3_exec(
+			  Pointer db,                                  /* An open database */
+			  String sql,                           /* SQL to be evaluated */
+			  Pointer ,  /* Callback function */
+			  Pointer ,                                    /* 1st argument to callback */
+			  ObjectPtr msg                              /* Error msg written here */
+			);
+            int cdecl sqlite3_prepare(
+			  Pointer db,              /* Database handle. */
+			  String zSql,         /* UTF-8 encoded SQL statement. */
+			  int nBytes,               /* Length of zSql in bytes. */
+			  ObjectPtr ppStmt,    /* OUT: A pointer to the prepared statement */
+			  ObjectPtr pzTail       /* OUT: End of parsed string */
+			);
+            int cdecl sqlite3_column_int(Pointer pStmt, int i);
+            double cdecl sqlite3_column_double(Pointer pStmt, int i);
+            long cdecl sqlite3_column_int64(Pointer pStmt, int i);
+            String cdecl sqlite3_column_text(Pointer pStmt, int i);
+            int cdecl sqlite3_column_count(Pointer pStmt);
+            String cdecl sqlite3_column_name(Pointer pStmt, int N);
+            String cdecl sqlite3_column_decltype(Pointer pStmt, int N);
+            int cdecl sqlite3_finalize(Pointer pStmt);
+        };
+    };
+
+	long hdb = 0;
+    
+	void create(String uri, String username, String pwd){
+		int err = Native.sqlite3_open(uri, hdb);
+        if (err != 0){
+			throw new Sql.SqlException(err, "can not open database:" + uri);
+        }
+        /*if (pwd != nilptr){
+			err = Native.sqlite3_key(hdb, pwd, pwd.length());
+            if (err != 0){
+				throw new Sql.SqlException(err, "password incorrect");
+			}
+        }*/
+    }
+	
+	/** 设置参数
+	* 
+	* @Exception : SqlException
+	*/
+	void setOption(int opt, Object option){
+		throw new Sql.SqlException(-1, "Sqlite not support option");
+    }
+	
+	Object getOption(int opt){
+		throw new Sql.SqlException(-1, "Sqlite not support option");
+        return nilptr;
+    }
+	
+	Sql.PreparedStatement prepareStatement(String sql){
+		return new SqlitePreparedStatement(this, sql);
+    }
+	
+	Sql.Statement createStatement(){
+		return new SqlitePreparedStatement(this);
+    }
+	
+	bool isClosed(){
+		return hdb != 0;
+    }
+	
+	void close(){
+		if (hdb != 0){
+			Native.sqlite3_close(hdb);
+            hdb = 0;
+        }
+    }
+    
+    void finalize(){
+		close();
+    }
+    
+    String generateErrorText(long herr, String fallback){
+		if (herr != 0){
+			long len = CSTDNative.strlen(herr);
+			byte [] data = new byte[len + 1];
+			CSTDNative.memcpy(data, herr, len);
+			return new String(data, 0, len);
+		}
+        return fallback;
+    }
+    
+    int execute(String stmt){
+		if (hdb != 0){
+			long msg;
+			int err = Native.sqlite3_exec(hdb, stmt, (long)0, (long)0, msg);
+            if (err != 0){
+				throw new Sql.SqlException(err, "Sqlite execute error :" + generateErrorText(msg, "execute failed"));
+            }
+            return err;
+        }
+        throw new Sql.SqlException(-1, "database not opened");
+        return -1;
+    }
+    
+    long prepare(String sql){
+		long nstmt;
+		if (hdb != 0){
+			long msg;
+			int err = Native.sqlite3_prepare(hdb, sql, -1, nstmt, msg);
+			if (err != 0){
+				throw new Sql.SqlException(err, "Sqlite execute error :" +  generateErrorText(msg, "execute failed"));
+			}
+            return nstmt;
+		}
+        throw new Sql.SqlException(-1, "database not opened");
+        return nstmt;
+    }
+    
+	long getDb(){
+		return hdb;
+    }
+    
+
+    static class SqlitePreparedStatement : Sql.PreparedStatement{
+        Sqlite sqlite;
+        
+        SqlitePreparedStatement(Sqlite db, String sql){
+			super(sql);
+            sqlite = db;
+        }
+        
+        SqlitePreparedStatement(Sqlite db){
+			super(nilptr);
+            sqlite = db;
+        }
+        
+    	int execute(String sql){
+			
+			return sqlite.execute(sql);
+        }
+        
+        Sql.ResultSet executeQuery(String sql){
+			long nstmt = sqlite.prepare(sql);
+			return new SqliteResultSet(sqlite, nstmt);
+        }
+        
+        int executeUpdate(String sql){
+			return sqlite.execute(sql);
+        }
+        
+        Sql.ResultSet getResult(){
+			throw new Sql.SqlException(-1, "database can not support method");
+            return nilptr;
+        }
+        
+        void close(){
+			sqlite = nilptr;
+        }
+    };
+    
+    static class SqliteResultSet : Sql.ResultSet{
+		long hres;
+        Sqlite sqlite;
+        Map<String, int> __fields_Map = new Map<String, int>();
+        
+		SqliteResultSet(Sqlite db, long res){
+			sqlite = db;
+			hres = res;
+            parseResult();
+        }
+        
+        void parseResult(){
+			int ncolumn = Native.sqlite3_column_count(hres);
+            for (int i = 0; i < ncolumn; i++){
+				String colutext = Native.sqlite3_column_name(hres, i);
+                __fields_Map.put(colutext, i);
+            }
+        }
+        
+        int label2idx(String label){
+			return __fields_Map.get(label);
+        }
+        
+		bool first()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return false;
+        }
+        
+		bool last()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return false;
+        }
+
+		bool next()override{
+			return 100 == Native.sqlite3_step(hres);
+        }
+        
+		bool previous()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return false;
+        }
+        
+		bool isFirst()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return false;
+        }
+        
+		bool isLast()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return false;
+        }
+        
+		bool isValid()override{
+			return hres != 0;
+        }
+        
+        
+		int getInt(String columnlabel)override{
+			return Native.sqlite3_column_int(hres, label2idx(columnlabel));
+        }
+        
+		long getLong(String columnlabel)override{
+			return Native.sqlite3_column_int64(hres, label2idx(columnlabel));
+        }
+        
+		double getDouble(String columnlabel)override{
+			return Native.sqlite3_column_double(hres, label2idx(columnlabel));
+        }
+        
+		byte getByte(String columnlabel)override{
+			return Native.sqlite3_column_int(hres, label2idx(columnlabel));
+        }
+        
+		bool getBoolean(String columnlabel)override{
+			return Native.sqlite3_column_int(hres, label2idx(columnlabel)) != 0;
+        }
+        
+		String getString(String columnlabel)override{
+			return Native.sqlite3_column_text(hres, label2idx(columnlabel));
+        }
+        
+
+		int getInt(int columnIndex)override{
+			return Native.sqlite3_column_int(hres, columnIndex);
+        }
+        
+		long getLong(int columnIndex)override{
+			return Native.sqlite3_column_int64(hres, columnIndex);
+        }
+        
+		double getDouble(int columnIndex)override{
+			return Native.sqlite3_column_double(hres, columnIndex);
+        }
+        
+		byte getByte(int columnIndex)override{
+			return Native.sqlite3_column_int(hres, columnIndex);
+        }
+        
+		bool getBoolean(int columnIndex)override{
+			return Native.sqlite3_column_int(hres, columnIndex)!= 0;
+        }
+        
+		String getString(int columnIndex)override{
+			return Native.sqlite3_column_text(hres, columnIndex);
+        }
+        
+
+        
+		int findColumn(String label)override{
+			return label2idx(label);
+        }
+        
+		long getRowCount()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return 0;
+        }
+        
+		int getRow()override{
+			throw new Sql.SqlException(-1, "database can not support method");
+            return 0;
+        }
+        
+		void close()override{
+			if (hres != 0){
+				Native.sqlite3_finalize(hres);
+                hres = 0;
+            }
+        }
+        
+        void finalize(){
+			close();
+            sqlite = nilptr;
+        }
+    };
+};
