@@ -178,9 +178,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -210,9 +210,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

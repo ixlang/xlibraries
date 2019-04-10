@@ -1,5 +1,18 @@
 #include "qxlibrary_global.h"
 #include "QXApplication.h"
+
+#include<QtPlugin>  // for release
+
+Q_IMPORT_PLUGIN(QGifPlugin) //for releas
+Q_IMPORT_PLUGIN(QICNSPlugin) //for releas
+Q_IMPORT_PLUGIN(QICOPlugin) //for releas
+Q_IMPORT_PLUGIN(QJpegPlugin) //for releas
+
+Q_IMPORT_PLUGIN(QTgaPlugin) //for releas
+Q_IMPORT_PLUGIN(QTiffPlugin) //for releas
+Q_IMPORT_PLUGIN(QWbmpPlugin) //for releas
+Q_IMPORT_PLUGIN(QWebpPlugin) //for releas
+
 #ifdef WIN32
 #include <conio.h>
 #include <codecvt>
@@ -49,6 +62,10 @@ bool ui_release = false;
 Qt::HANDLE ui_thread_id = 0;
 
 QMap<QString, QIcon*> iconMap;
+
+void CleanupQImage(void* p) {
+	delete[](unsigned char *)p;
+}
 
 void extartStringArray(XObject * value, QStringList & enumNames) {
 	xlong size = gs_env->getLengthOfArray(value);
@@ -107,7 +124,7 @@ XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
         _xapplication = new QXApplication(global_argc, 0);
 
         //qapp->installEventFilter(new QFilter());
-
+		//qDebug() << "Supported formats:" << QImageReader::supportedImageFormats();
         return (xlong)_xapplication;
 }
 
@@ -2213,7 +2230,7 @@ XNLEXPORT xlong XI_CDECL long_object_string(xlong handle, xint proid, XObject * 
                             delete pimage;
                             pimage = 0;
                         }
-
+						
                         return (xlong)pimage;
                 }
 
@@ -2388,6 +2405,13 @@ XNLEXPORT xlong XI_CDECL long_long_string2(xlong handle, xint proid, xlong l1, x
 			}
 			((QTableWidget*)handle)->setItem(line, row, pitem);
 			return (xlong)pitem;
+		}
+			break;
+		case QIMGSAVE:
+		{
+			QImage * pimg = (QImage*)handle;
+			QString filename = QString::fromUtf8(v1);
+			return pimg->save(filename, v2, l1) ? 1: 0;
 		}
 			break;
         default:
@@ -3094,6 +3118,7 @@ XNLEXPORT xlong XI_CDECL long_intlong(xlong handle, xint proid, xlong value) {
 }
 
 
+
 XNLEXPORT xlong XI_CDECL long_intlong2(xlong handle, xint proid, xlong value, xlong v1) {
 
         switch (proid)
@@ -3129,7 +3154,9 @@ XNLEXPORT xlong XI_CDECL long_intlong2(xlong handle, xint proid, xlong value, xl
 					qm->fill(Qt::GlobalColor::transparent);
 				}
 				else {
-					qm = new QImage((uchar*)handle, width, height, (QImage::Format)v1);
+					uchar * pbuf = new uchar[width * height * 4];
+					memcpy(pbuf, (uchar*)handle, width * height * 4);
+					qm = new QImage(pbuf, width, height, (QImage::Format)v1, CleanupQImage, pbuf);
 				}
                 
                 return (xlong)qm;
@@ -3160,7 +3187,9 @@ XNLEXPORT xlong XI_CDECL pointer_intlong2(void* handle, xint proid, xlong value,
 			qm->fill(Qt::GlobalColor::transparent);
 		}
 		else {
-			qm = new QImage((uchar*)handle, width, height, (QImage::Format)v1);
+			uchar * pbuf = new uchar[width * height * 4];
+			memcpy(pbuf, (uchar*)handle, width * height * 4);
+			qm = new QImage(pbuf, width, height, (QImage::Format)v1, CleanupQImage, pbuf);
 		}
 
 		return (xlong)qm;

@@ -27,9 +27,9 @@ $(LocalDebuggerEnvironment)
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win64_static</QTDIR>
-    <LocalDebuggerCommand>D:\home\XPlayer\x64\debug\XPlayer.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>D:\home\SecretWatermark\x64\debug\SecretWatermark.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerWorkingDirectory>D:\home\XPlayer\x64\debug</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>D:\home\SecretWatermark\x64\debug</LocalDebuggerWorkingDirectory>
     <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
 $(LocalDebuggerEnvironment)
     </LocalDebuggerEnvironment>

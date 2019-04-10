@@ -1,0 +1,230 @@
+//xlang Source, Name:fftw.xcsm 
+//Date: Thu Apr 20:31:57 2019 
+
+class fftw : Library{
+
+	static bool bloaded = false;
+    
+    static bool load(){
+		try{
+			loadLibrary("xfftw.dll");
+			bloaded = true;
+        }catch(Exception e){
+			_system_.output(e.getMessage());
+        }
+        return bloaded;
+    }
+    
+    static class fftwComplex{
+		long native = 0;
+        int s = 0, w = 0, h = 0;
+        
+		fftwComplex(int size){
+			s = size;
+			native = alloc_complex(size);
+        }
+        
+        // 从复数创建FFTW复数
+        static fftwComplex from_complex(double[][] complex){
+			fftwComplex dat = new fftwComplex(complex[0].length);
+            dat.fill(complex[0], complex[1]);
+            return dat;
+        }
+        
+        // 创建二维复数
+		fftwComplex(int width, int height){
+			w = width;
+			h = height ;
+			native = alloc_complex(w * h);
+        }
+        
+        // 提取复数
+        double [][]extract(){
+			double[][] fo = nilptr;
+            int len = 0;
+            
+			if (s != 0){
+				len = s;
+            }else{
+				len = w * h;
+            }
+            
+            fo = new double[2][len];
+			extract_complex_double2(native, 0, len, 0, fo[0], fo[1]);
+			return fo;
+        }
+        
+        // 填充复数
+        void fill(double [] rd, double []id){
+            int len = 0;
+            
+			if (s != 0){
+				len = s;
+            }else{
+				len = w * h;
+            }
+			if (id != nilptr){
+				fill_complex_double2(native, 0, len, 0, rd, id);
+            }else{
+				fill_complex_double(native, 0, len, 0, rd);
+            }
+        }
+        
+        // 填充二维复数
+        void fill(double [][] rd, double [][] id){
+			int row = rd[0].length;
+            
+            if (id != nilptr){
+				for (int i = 0; i < rd.length; i++){
+					fill_complex_double2(native, i*row, s, 0, rd[i], id[i]);
+				}
+            }else{
+            	for (int i = 0; i < rd.length; i++){
+					fill_complex_double(native, i*row, s, 0, rd[i]);
+				}
+            }
+        }
+        
+        void finalize(){
+			if (native != 0){
+				free_complex(native);
+            }
+        }
+    };
+    
+    
+    static fftwComplex fft2d(fftwComplex in){
+		fftwComplex out = new fftwComplex(in.w, in.h);
+		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, -1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out;
+    }
+    
+    static fftwComplex ifft2d(fftwComplex in){
+		fftwComplex out = new fftwComplex(in.w, in.h);
+		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, 1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out;
+    }
+    
+    static fftwComplex fft2d(double [][] rd, double [][] id){
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+        
+        fftwComplex in = new fftwComplex(rd.length, rd[0].length);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(in.w, in.h);
+      
+		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, -1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out;
+    }
+    
+    static fftwComplex ifft2d(double [][] rd, double [][] id){
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+        
+        fftwComplex in = new fftwComplex(rd.length, rd[0].length);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(in.w, in.h);
+      
+		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, 1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out;
+    }
+    
+    static double[][] fft2(int n0, int n1, double [] rd, double [] id){
+        if (rd.length != (n0 * n1)){
+			throw new IllegalArgumentException("rd length != n0 *n1");
+            return nilptr;
+        }
+        
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+
+        fftwComplex in = new fftwComplex(n0, n1);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(in.w, in.h);
+      
+		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, -1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        
+
+        return out.extract();
+    }
+    
+    static double[][] ifft2(int n0, int n1,double [] rd, double [] id){
+        if (rd.length != (n0 * n1)){
+			throw new IllegalArgumentException("rd length != n0 *n1");
+            return nilptr;
+        }
+        
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+        
+        fftwComplex in = new fftwComplex(n0, n1);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(in.w, in.h);
+      
+		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, 1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out.extract();
+    }
+    
+	import {
+		Pointer cdecl alloc_complex(int size);
+		void cdecl free_complex(Pointer p);
+		void cdecl fill_complex_double(Pointer p,int offset, int size, int eoffset, ObjectPtr rnp);
+        void cdecl fill_complex_double2(Pointer p,int offset, int size, int eoffset, ObjectPtr rnp, ObjectPtr inp);
+		void cdecl extract_complex_double(Pointer p,int offset, int size, int eoffset, ObjectPtr rnp);
+        void cdecl extract_complex_double2(Pointer p,int offset, int size, int eoffset, ObjectPtr rnp, ObjectPtr inp);
+		double cdecl get_complex_double(Pointer p, int index, bool bi);
+		Pointer cdecl create_fftw_plan_dft_3d(int n0, int n1, int n2, Pointer in, Pointer out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_dft_2d(int n0, int n1, Pointer in, Pointer out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_dft_1d(int n, Pointer in, Pointer out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_c2r_1d(int n, Pointer in, ObjectPtr out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_r2c_1d(int n, ObjectPtr in, Pointer out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_c2r_2d(int n0, int n1, Pointer in, ObjectPtr out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_r2c_2d(int n0, int n1, ObjectPtr in, Pointer out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_c2r_3d(int n0, int n1, int n2, Pointer in, ObjectPtr out, int sign, int flag);
+		Pointer cdecl create_fftw_plan_r2c_3d(int n0, int n1, int n2, ObjectPtr in, Pointer out, int sign, int flag);
+		void cdecl execute_fftw(Pointer p);
+        void cdecl free_plan(Pointer p);
+    };
+};

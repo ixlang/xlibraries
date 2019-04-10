@@ -1,0 +1,21 @@
+LIBRARY "xfftw.dll"
+
+EXPORTS
+alloc_complex
+free_complex
+fill_complex_double
+fill_complex_double2
+extract_complex_double
+extract_complex_double2
+get_complex_double
+create_fftw_plan_dft_3d
+create_fftw_plan_dft_2d
+create_fftw_plan_dft_1d
+create_fftw_plan_c2r_1d
+create_fftw_plan_r2c_1d
+create_fftw_plan_c2r_2d
+create_fftw_plan_r2c_2d
+create_fftw_plan_c2r_3d
+create_fftw_plan_r2c_3d
+execute_fftw
+free_plan
