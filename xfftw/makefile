@@ -1,19 +1,8 @@
-.SUFFIXES:.c .o
+SUBDIRS = ./xnl
 
-CC=gcc
-
-CPPFLAGS=-I D:\Programs\windows_x64\xnl
-SRCS=<add sourcefiles here>
-
-OBJS=$(SRCS:.c=.o)
-
-EXEC=<type target here>
-
-start: $(OBJS)
-	$(CC) $(CPPFLAGS) -shared -o $(EXEC) $(OBJS) -fPIC
-
-.c.o:
-	$(CC) -fPIC -Wall -o $@ -c $<
-
-clean:
-	rm -rf $(EXEC) $(OBJS)
+all: $(SUBDIRS)  
+	for dir in $(SUBDIRS); do cd $$dir && make && cd ../../;done;
+  
+clean: $(SUBDIRS)  
+	for dir in $(SUBDIRS); do cd $$dir && make clean && cd ../../;done;  
+	rm -f `find -name "*~"` || /bin/true

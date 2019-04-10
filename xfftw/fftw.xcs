@@ -3,11 +3,19 @@
 
 class fftw : Library{
 
-	static bool bloaded = false;
+	static bool bloaded = load();
     
     static bool load(){
 		try{
-			loadLibrary("xfftw.dll");
+			if (_system_.getPlatformId() == 0){
+				loadLibrary("xfftw.dll");
+            }else
+            if (_system_.getPlatformId() == 1){
+				loadLibrary("xfftw.so");
+            }else
+            if (_system_.getPlatformId() == 2){
+				loadLibrary("xfftw.dylib");
+            }
 			bloaded = true;
         }catch(Exception e){
 			_system_.output(e.getMessage());

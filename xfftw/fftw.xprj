@@ -2,7 +2,6 @@
 	"fftw":	{
 		"version":	"1.2",
 		"language":	"xlang",
-		"icofile":	"",
 		"sources":	["fftw.xcs", ".\\makefile"],
 		"configures":	{
 			"debug":	{
@@ -10,15 +9,26 @@
 					"incpath":	[],
 					"libpath":	[]
 				},
-				"libs":	[],
 				"options":	"",
-				"command":	"-ce",
-				"debugable":	"-dbg",
-				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
-				"outname":	"$(ProjectName)$(Ext)",
 				"cmd":	"$(Output)",
 				"args":	"$(Output)",
-				"workdir":	"$(ProjectDir)"
+				"workdir":	"$(ProjectDir)",
+				"prebuild":	"",
+				"preclean":	"",
+				"makebuild":	"",
+				"makeclean":	"",
+				"afterbuild":	"",
+				"afterclean":	"",
+				"ignorewarning":	"",
+				"debugable":	"-dbg",
+				"debugdatabase":	"",
+				"libs":	[],
+				"wtype":	"",
+				"ostype":	"",
+				"outname":	"$(ProjectName)$(Ext)",
+				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
+				"command":	"-lix -c",
+				"uaclevel":	"默认"
 			},
 			"release":	{
 				"path":	{
@@ -35,6 +45,8 @@
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)"
 			}
-		}
+		},
+		"versioninc":	"0",
+		"icofile":	""
 	}
 }
