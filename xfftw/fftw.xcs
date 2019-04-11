@@ -3,7 +3,7 @@
 
 class fftw : Library{
 
-	static bool bloaded = load();
+	/*static bool bloaded = false;//load();
     
     static bool load(){
 		try{
@@ -18,10 +18,10 @@ class fftw : Library{
             }
 			bloaded = true;
         }catch(Exception e){
-			_system_.output(e.getMessage());
+			_system_.output("load fftw fatal:" + e.getMessage());
         }
         return bloaded;
-    }
+    }*/
     
     static class fftwComplex{
 		long native = 0;
@@ -215,7 +215,7 @@ class fftw : Library{
         return out.extract();
     }
     
-	import {
+	import "xfftw"{
 		Pointer cdecl alloc_complex(int size);
 		void cdecl free_complex(Pointer p);
 		void cdecl fill_complex_double(Pointer p,int offset, int size, int eoffset, ObjectPtr rnp);
