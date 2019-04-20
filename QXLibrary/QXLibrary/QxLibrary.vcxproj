@@ -184,6 +184,7 @@
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <QtMoc>
       <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
@@ -216,6 +217,7 @@
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <QtMoc>
       <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>

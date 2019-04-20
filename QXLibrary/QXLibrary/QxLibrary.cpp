@@ -203,6 +203,21 @@ XNLEXPORT xlong  XI_CDECL createNObject(xint type, xlong param) {
         case qtBuffer:
                 return (xlong)new QBuffer();
                 break;
+		case qtBrush:
+			if (param != 0) {
+				return (xlong)new QBrush(*(QGradient*)param);
+			}else {
+				return (xlong)new QBrush();
+			}
+			break;
+		case qtImgBrush:
+			if (param != 0) {
+				return (xlong)new QBrush(*(QImage*)param);
+			}
+			else {
+				return (xlong)new QBrush();
+			}
+			break;
         case qtIcon:
         {
                 QPixmap pixmap;
@@ -227,11 +242,53 @@ XNLEXPORT xlong  XI_CDECL createSObject(xint type, xstring param) {
         {
                 return (xlong)new QIcon(QString::fromUtf8(param));
         }
-        break;
+		break;
         default:
                 break;
         }
         return 0;
+}
+
+XNLEXPORT xlong  XI_CDECL createPObject(xint type, xptr param) {
+	switch (type)
+	{
+	case qtLineGradient:
+	{
+		double * fp = (double*)param;
+		return (xlong)new QLinearGradient(fp[0], fp[1], fp[2], fp[3]);
+	}
+		break;
+	case qtRadialGradient3:
+	{
+		double * fp = (double*)param;
+		return (xlong)new QRadialGradient(fp[0], fp[1], fp[2]);
+	}
+		break;
+
+	case qtRadialGradient5:
+	{
+		double * fp = (double*)param;
+		return (xlong)new QRadialGradient(fp[0], fp[1], fp[2], fp[3], fp[4]);
+	}
+	break;
+
+	case qtRadialGradient6:
+	{
+		double * fp = (double*)param;
+		return (xlong)new QRadialGradient(fp[0], fp[1], fp[2], fp[3], fp[4], fp[5]);
+	}
+	break;
+
+	case qtConicalGradient:
+	{
+		double * fp = (double*)param;
+		return (xlong)new QConicalGradient(fp[0], fp[1], fp[2]);
+	}
+		break;
+	default:
+		break;
+	}
+	return 0;
 }
 
 XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
@@ -263,6 +320,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			qobject = fsw;
 		}
 		break;
+
         case qtMainWindow:
         {
                 QWidget * qw = 0;
@@ -698,7 +756,9 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         case QPTEXTDIR:
                 ((QProgressBar*)h)->setTextDirection((QProgressBar::Direction)value);
                 break;
-
+		case SETSPREAD:
+				((QGradient*)h)->setSpread((QGradient::Spread)value);
+				break;
         case QPMININUM:
                 ((QProgressBar*)h)->setMinimum(value);
                 break;
@@ -882,6 +942,12 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
         case CHKGETCHECK:
                 return ((QAbstractButton*)h)->isChecked();
                 break;
+		case CHECKABLE:
+				return ((QAction*)h)->isCheckable();
+				break;
+		case CHECKED:
+				return ((QAction*)h)->isChecked();
+				break;
         case QPVISIBLE:
                 return ((QProgressBar*)h)->isTextVisible();
                 break;
@@ -1143,6 +1209,13 @@ XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
         case SETSEP:
                 ((QAction*)h)->setSeparator(v);
                 break;
+		case CHECKABLE:
+				((QAction*)h)->setCheckable(v);
+			break;
+
+		case CHECKED:
+				((QAction*)h)->setChecked(v);
+			break;
 
         case QPVISIBLE:
                 ((QProgressBar*)h)->setTextVisible(v);
@@ -1366,6 +1439,9 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xin
         case QPRANGE:
                 ((QProgressBar*)h)->setRange(xv, yv);
                 break;
+		case SETPROPWIDTHS:
+			((QtTreePropertyBrowser*)h)->setHeaderWidth(xv, yv);
+			break;
         case TREESETCURROW:
                 ((QTreeWidget*)h)->setCurrentIndex(((QTreeWidget*)h)->model()->index(xv, yv));
         break;
@@ -1373,7 +1449,7 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xin
         {
                 int flag = ((QTreeWidgetItem*)h)->flags();
                 flag &= ~yv;
-                flag |= xv;
+                flag |= (xv & 0xffffffff);
                 ((QTreeWidgetItem*)h)->setFlags((Qt::ItemFlags)flag);
         }
         break;
@@ -1381,7 +1457,7 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xin
 		{
 			int flag = ((QTableWidgetItem*)h)->flags();
 			flag &= ~yv;
-			flag |= xv;
+			flag |= (xv & 0xffffffff);
 			((QTableWidgetItem*)h)->setFlags((Qt::ItemFlags)flag);
 		}
 		break;
@@ -1429,6 +1505,10 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_double_value(xlong h, xint proid, xint 
                 ((QPainter*)h)->setPen(pen);
         }
                 break;
+
+		case SETCOLORAT:
+			((QGradient*)h)->setColorAt(w, xv);
+			break;
         }
         return 0;
 }
@@ -1442,6 +1522,12 @@ XNLEXPORT void XI_CDECL native_int4(xlong h, xint proid, xint v1, xint v2, xint 
 
         }
         break;
+		case QXPAINTDRAWRECT:
+		{
+			((QPainter*)h)->drawRect(v1, v2, v3, v4);
+
+		}
+		break;
 
         case DRAWELLIPSE:
         {
@@ -1518,6 +1604,10 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
         case SETWIDGET:
                 ((QDockWidget*)h)->setWidget((QWidget*)value);
                 break;
+
+		case SETBRUSH:
+				((QPainter*)h)->setBrush(*(QBrush*)value);
+				break;
 
         case SUBSETWIDGET:
                 ((QMdiSubWindow*)h)->setWidget((QWidget*)value);
@@ -1686,6 +1776,7 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
 			}
 		}
 			break;
+
         }
 }
 
@@ -1765,6 +1856,14 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
                 delete (QBuffer*)h;
         }
                 break;
+
+		case DELLOCGRADIENT:
+		{
+			delete (QGradient*)h;
+		}
+		break;
+
+
         case DELLOCICON:
         {
                 delete (QIcon*)h;
@@ -1793,7 +1892,10 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         case MATRIXDTOR:
                 delete ((QMatrix*)h);
                 break;
-
+		case DELLOCBRUSH:
+		
+				delete ((QBrush*)h);
+				break;
         case PAINTERSAVE:
                 ((QPainter*)h)->save();
                 break;
@@ -3009,7 +3111,7 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
                 QPoint pt = obj->map(QPoint(hv, iv));
                 xlong rt = pt.x();
                 rt <<= 32;
-                rt |= pt.y();
+                rt |= (pt.y() & 0xffffffff);
                 return rt;
         }
         break;
@@ -3027,7 +3129,7 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
                 QRect rect = desktop->screenGeometry(current_screen);
                 xlong v = rect.left();
                 v <<= 32;
-                v |= rect.top();
+                v |= (rect.top() & 0xffffffff);
                 return v;
         }
         break;
@@ -3045,7 +3147,7 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
                 QRect rect = desktop->screenGeometry(current_screen);
                 xlong v = rect.width();
                 v <<= 32;
-                v |= rect.height();
+                v |= (rect.height() & 0xffffffff);
                 return v;
         }
         break;
@@ -3138,7 +3240,7 @@ XNLEXPORT xlong XI_CDECL long_intlong2(xlong handle, xint proid, xlong value, xl
                 }
                 xlong ret = npt.x();
                 ret <<= 32;
-                ret |= npt.y();
+                ret |= (npt.y() & 0xffffffff);
                 return ret;
         }
                 break;

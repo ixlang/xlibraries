@@ -48,4 +48,11 @@ enum QTypes {
 	qtToolbar = 43,
 	qtFileWatch = 44,
 	qtTableWidget = 45,
+	qtBrush = 46,
+	qtLineGradient = 47,
+	qtRadialGradient3 = 48,
+	qtRadialGradient5 = 49,
+	qtRadialGradient6 = 50,
+	qtConicalGradient = 51,
+	qtImgBrush = 52
 };

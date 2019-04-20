@@ -288,9 +288,10 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		XObject * text = createXObject(((QKeyEvent*)evn)->text());
 		XObject * scanCode = createXObject((int)((QKeyEvent*)evn)->nativeScanCode());
 		XObject * virtualKey = createXObject((int)((QKeyEvent*)evn)->nativeVirtualKey());
+		XObject * modifier = createXObject((int)((QKeyEvent*)evn)->modifiers());
 
 		XContext * pContext = context;
-		XObject * res = gs_env->invoke(pContext, xobj, method, key, repeat, count, text, scanCode, virtualKey);
+		XObject * res = gs_env->invoke(pContext, xobj, method, key, repeat, count, text, scanCode, virtualKey, modifier);
 
 		gs_env->dereferenceObject(key);
 		gs_env->dereferenceObject(repeat);
@@ -298,7 +299,8 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		gs_env->dereferenceObject(text);
 		gs_env->dereferenceObject(scanCode);
 		gs_env->dereferenceObject(virtualKey);
-			
+		gs_env->dereferenceObject(modifier);
+
 		if (res != 0) {
 			bool bret = true;
 			if (gs_env->getBoolValue(res, &bret)) {
@@ -328,9 +330,10 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		XObject * text = createXObject(((QKeyEvent*)evn)->text());
 		XObject * scanCode = createXObject((int)((QKeyEvent*)evn)->nativeScanCode());
 		XObject * virtualKey = createXObject((int)((QKeyEvent*)evn)->nativeVirtualKey());
+		XObject * modifier = createXObject((int)((QKeyEvent*)evn)->modifiers());
 
 		XContext * pContext = context;
-		XObject * res = gs_env->invoke(pContext, xobj, method, key, repeat, count, text, scanCode, virtualKey);
+		XObject * res = gs_env->invoke(pContext, xobj, method, key, repeat, count, text, scanCode, virtualKey, modifier);
 
 		gs_env->dereferenceObject(key);
 		gs_env->dereferenceObject(repeat);
@@ -338,6 +341,7 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		gs_env->dereferenceObject(text);
 		gs_env->dereferenceObject(scanCode);
 		gs_env->dereferenceObject(virtualKey);
+		gs_env->dereferenceObject(modifier);
 
 		if (res != 0) {
 			bool bret = true;
