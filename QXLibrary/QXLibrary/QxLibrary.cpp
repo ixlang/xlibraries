@@ -67,6 +67,14 @@ void CleanupQImage(void* p) {
 	delete[](unsigned char *)p;
 }
 
+
+XObject * data2String(QByteArray & data) {
+	XObject * strobj = gs_env->createObject();
+	XThread thread;
+	gs_env->setValue(thread.getThread(), strobj, data.data(), data.size());
+	return strobj;
+}
+
 void extartStringArray(XObject * value, QStringList & enumNames) {
 	xlong size = gs_env->getLengthOfArray(value);
 	const char ** text = new const char *[size];
@@ -97,6 +105,9 @@ QIcon * loadIcon(QString file) {
     return *iter;
 }
 
+
+
+
 XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
 
         _application = gs_env->referenceObject(x);
@@ -122,7 +133,7 @@ XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
 		ui_thread = gs_env->getContext(&ui_release);
 		ui_thread_id = QThread::currentThreadId();
         _xapplication = new QXApplication(global_argc, 0);
-
+		//uithreadid = GetCurrentThreadId();
         //qapp->installEventFilter(new QFilter());
 		//qDebug() << "Supported formats:" << QImageReader::supportedImageFormats();
         return (xlong)_xapplication;
@@ -136,6 +147,7 @@ XNLEXPORT xlong  XI_CDECL locaUiFile(xstring path, XObject * x, xlong parent){
         file.open(QIODevice::ReadOnly);
 
         QWidget* getWidget = 0;
+		
         if (parent != 0) {
                 getWidget = uiLoader.load(&file, (QWidget*)parent);
         }else {
@@ -203,6 +215,9 @@ XNLEXPORT xlong  XI_CDECL createNObject(xint type, xlong param) {
         case qtBuffer:
                 return (xlong)new QBuffer();
                 break;
+		case qtPath:
+				return (xlong) new QPainterPath();
+			break;
 		case qtBrush:
 			if (param != 0) {
 				return (xlong)new QBrush(*(QGradient*)param);
@@ -290,6 +305,44 @@ XNLEXPORT xlong  XI_CDECL createPObject(xint type, xptr param) {
 	}
 	return 0;
 }
+
+
+
+/*class XCustomModel 
+	:public QAbstractItemModel {
+	
+public:
+
+	XCustomModel(QObject * parent) 
+	:QAbstractItemModel(parent){
+
+	}
+
+	XCustomModel(){
+
+	}
+
+	Q_INVOKABLE virtual QModelIndex index(int row, int column,
+		const QModelIndex &parent = QModelIndex()) const {
+		QStandardItemModel;
+	}
+
+	Q_INVOKABLE virtual QModelIndex parent(const QModelIndex &child) const {
+
+	}
+
+	Q_INVOKABLE virtual int rowCount(const QModelIndex &parent = QModelIndex()) const {
+
+	}
+
+	Q_INVOKABLE virtual int columnCount(const QModelIndex &parent = QModelIndex()) const {
+
+	}
+
+	Q_INVOKABLE virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const {
+
+	}
+};*/
 
 XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 
@@ -421,250 +474,246 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			ar.installTableCellChange((QTableWidget*)qobject);
 			((QTableWidget*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
 			break;
-				
-        case qtDialog:
-                if (parent != 0) {
-                        qobject = new QDialog((QWidget*)parent);
-                }
-                else {
-                        qobject = new QDialog();
-                }
-                ar.installDialogAction((QDialog*)qobject);
-                ((QDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
-                break;
-        case qtComboBox:
-                if (parent != 0) {
-                        qobject = new QComboBox((QWidget*)parent);
-                }
-                else {
-                        qobject = new QComboBox();
-                }
-				ar.installComboBoxAction((QComboBox*)qobject);
-                break;
-                case qtPropertyBrowser :// 15
-                        if (parent != 0) {
-                                qobject = new QtTreePropertyBrowser((QWidget*)parent);
-                        }
-                        else {
-                                qobject = new QtTreePropertyBrowser();
-                        }
-                        ((QtTreePropertyBrowser*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
-                        break;
-                case qtBoolPropertyManager :// 16,
-                        if (parent != 0) {
-                                qobject = new QtBoolPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtBoolPropertyManager();
-                        }
-						ar.installBoolPropertyChange((QtBoolPropertyManager*)qobject);
-                        break;
-                case qtColorPropertyManager :// 17,
-                        if (parent != 0) {
-                                qobject = new QtColorPropertyManager((QObject*)parent);
-                        }else {
-                                qobject = new QtColorPropertyManager();
-                        }
-						ar.installColorPropertyChange((QtColorPropertyManager*)qobject);
-                        break;
-                case qtDatePropertyManager :// 18,
-                        if (parent != 0) {
-                                qobject = new QtDatePropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtDatePropertyManager();
-                        }
-						ar.installDatePropertyChange((QtDatePropertyManager*)qobject);
-                        break;
-                case qtDateTimePropertyManager :// 19,
-                        if (parent != 0) {
-                                qobject = new QtDateTimePropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtDateTimePropertyManager();
-                        }
-						ar.installDateTimePropertyChange((QtDateTimePropertyManager*)qobject);
-                        break;
-                case qtDoublePropertyManager :// 20,
-                        if (parent != 0) {
-                                qobject = new QtDoublePropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtDoublePropertyManager();
-                        }
-						ar.installDoublePropertyChange((QtDoublePropertyManager*)qobject);
-                        break;
-                case qtEnumPropertyManager :// 21,
-                        if (parent != 0) {
-                                qobject = new QtEnumPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtEnumPropertyManager();
-                        }
-						ar.installEnumPropertyChange((QtEnumPropertyManager*)qobject);
-                        break;
-                case qtFlagPropertyManager :// 22,
-                        if (parent != 0) {
-                                qobject = new QtFlagPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtFlagPropertyManager();
-                        }
-						ar.installFlagPropertyChange((QtFlagPropertyManager*)qobject);
+		/*case qtStdModel:
+			if (parent != 0) {
+				qobject = new QStandardItemModel((QWidget*)parent);
+			}
+			else {
+				qobject = new QStandardItemModel();
+			}
+			break;
 
-                        break;
-                case qtFontPropertyManager :// 23,
-                        if (parent != 0) {
-                                qobject = new QtFontPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtFontPropertyManager();
-                        }
-						ar.installFontPropertyChange((QtFontPropertyManager*)qobject);
-                        break;
-                case qtGroupPropertyManager :// 24,
-                        if (parent != 0) {
-                                qobject = new QtGroupPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtGroupPropertyManager();
-                        }
-						ar.installGroupPropertyChange((QtGroupPropertyManager*)qobject);
-                        break;
-                case qtIntPropertyManager :// 25,
-                        if (parent != 0) {
-                                qobject = new QtIntPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtIntPropertyManager();
-                        }
-						ar.installIntPropertyChange((QtIntPropertyManager*)qobject);
-                        break;
-                case qtPointPropertyManager :// 26,
-                        if (parent != 0) {
-                                qobject = new QtPointPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtPointPropertyManager();
-                        }
-						ar.installPointPropertyChange((QtPointPropertyManager*)qobject);
-                        break;
-                case qtRectPropertyManager :// 27,
-                        if (parent != 0) {
-                                qobject = new QtRectPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtRectPropertyManager();
-                        }
-						ar.installRectPropertyChange((QtRectPropertyManager*)qobject);
-                        break;
-                case qtSizePropertyManager :// 28,
-                        if (parent != 0) {
-                                qobject = new QtSizePropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtSizePropertyManager();
-                        }
-						ar.installSizePropertyChange((QtSizePropertyManager*)qobject);
-                        break;
-                case qtSizePolicyPropertyManager :// 29,
-                        if (parent != 0) {
-                                qobject = new QtSizePolicyPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtSizePolicyPropertyManager();
-                        }
-						ar.installSizePolicyPropertyChange((QtSizePolicyPropertyManager*)qobject);
-                        break;
-                case qtStringPropertyManager :// 30,
-                        if (parent != 0) {
-                                qobject = new QtStringPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtStringPropertyManager();
-                        }
-						ar.installStringPropertyChange((QtStringPropertyManager*)qobject);
-                        break;
-                case qtTimePropertyManager :// 31,
-                        if (parent != 0) {
-                                qobject = new QtTimePropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtTimePropertyManager();
-                        }
-						ar.installTimePropertyChange((QtTimePropertyManager*)qobject);
-                        break;
-                case qtVariantPropertyManager :// 32,
-                        if (parent != 0) {
-                                qobject = new QtVariantPropertyManager((QObject*)parent);
-                        }
-                        else {
-                                qobject = new QtVariantPropertyManager();
-                        }
-						ar.installVariantPropertyChange((QtVariantPropertyManager*)qobject);
-                        break;
-                case qtProperty :// 33,
-                        break;
-                case qtVariantProperty :// 34;
-                        break;
-				case qtToolbar:
-					if (parent != 0) {
-						qobject = new QToolBar((QWidget*)parent);
-					}
-					else {
-						qobject = new QToolBar();
-					}
-					break;
-                case qtCheckBox:
-                        if (parent != 0) {
-                                qobject = new QCheckBox((QWidget*)parent);
-                        }else {
-                                qobject = new QCheckBox();
-                        }
-                        ar.installButtonAction(qobject);
-                        break;
-                case qtLabel:// 34;
-                        if (parent != 0) {
-                                qobject = new QLabel((QWidget*)parent);
-                        }
-                        else {
-                                qobject = new QLabel();
-                        }
-                        break;
-                case qtStatusBar:
-                        if (parent != 0) {
-                                qobject = new QStatusBar((QWidget*)parent);
-                        }
-                        else {
-                                qobject = new QStatusBar();
-                        }
-                        break;
-                case qtProgressBar:
-                        if (parent != 0) {
-                                qobject = new QProgressBar((QWidget*)parent);
-                        }
-                        else {
-                                qobject = new QProgressBar();
-                        }
-                        break;
-                        break;
-                case qtVariantEditorFactory:
-                        if (parent != 0) {
-                                qobject = new QtVariantEditorFactory((QObject*)parent);
-                        }else {
-                                qobject = new QtVariantEditorFactory();
-                        }
-                        break;
-        default:
+		case qtDataModel:
+			if (parent != 0) {
+				qobject = new XCustomModel((QWidget*)parent);
+			}
+			else {
+				qobject = new XCustomModel();
+			}
+			break;
+			*/
+        case qtDialog:
+            if (parent != 0) {
+               qobject = new QDialog((QWidget*)parent);
+            }else{
+               qobject = new QDialog();
+            }
+            ar.installDialogAction((QDialog*)qobject);
+            ((QDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+            break;
+        case qtComboBox:
+            if (parent != 0) {
+               qobject = new QComboBox((QWidget*)parent);
+            }else{
+               qobject = new QComboBox();
+            }
+			ar.installComboBoxAction((QComboBox*)qobject);
+            break;
+        case qtPropertyBrowser :// 15
+            if (parent != 0) {
+               qobject = new QtTreePropertyBrowser((QWidget*)parent);
+            }else{
+               qobject = new QtTreePropertyBrowser();
+            }
+            ((QtTreePropertyBrowser*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+            break;
+        case qtBoolPropertyManager :// 16,
+            if (parent != 0) {
+               qobject = new QtBoolPropertyManager((QObject*)parent);
+            }else{
+               qobject = new QtBoolPropertyManager();
+            }
+			ar.installBoolPropertyChange((QtBoolPropertyManager*)qobject);
+            break;
+        case qtColorPropertyManager :// 17,
+            if (parent != 0) {
+               qobject = new QtColorPropertyManager((QObject*)parent);
+            }else{
+               qobject = new QtColorPropertyManager();
+            }
+			ar.installColorPropertyChange((QtColorPropertyManager*)qobject);
+            break;
+        case qtDatePropertyManager :// 18,
+            if (parent != 0) {
+               qobject = new QtDatePropertyManager((QObject*)parent);
+            }else{
+               qobject = new QtDatePropertyManager();
+            }
+			ar.installDatePropertyChange((QtDatePropertyManager*)qobject);
+            break;
+        case qtDateTimePropertyManager :// 19,
+            if (parent != 0) {
+               qobject = new QtDateTimePropertyManager((QObject*)parent);
+            }else{
+               qobject = new QtDateTimePropertyManager();
+            }
+			ar.installDateTimePropertyChange((QtDateTimePropertyManager*)qobject);
+            break;
+        case qtDoublePropertyManager :// 20,
+            if (parent != 0) {
+               qobject = new QtDoublePropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtDoublePropertyManager();
+            }
+			ar.installDoublePropertyChange((QtDoublePropertyManager*)qobject);
+            break;
+        case qtEnumPropertyManager :// 21,
+            if (parent != 0) {
+               qobject = new QtEnumPropertyManager((QObject*)parent);
+            }else{
+               qobject = new QtEnumPropertyManager();
+            }
+			ar.installEnumPropertyChange((QtEnumPropertyManager*)qobject);
+            break;
+        case qtFlagPropertyManager :// 22,
+            if (parent != 0) {
+               qobject = new QtFlagPropertyManager((QObject*)parent);
+            } else {
+               qobject = new QtFlagPropertyManager();
+            }
+			ar.installFlagPropertyChange((QtFlagPropertyManager*)qobject);
+            break;
+        case qtFontPropertyManager :// 23,
+            if (parent != 0) {
+               qobject = new QtFontPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtFontPropertyManager();
+            }
+			ar.installFontPropertyChange((QtFontPropertyManager*)qobject);
+            break;
+        case qtGroupPropertyManager :// 24,
+            if (parent != 0) {
+               qobject = new QtGroupPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtGroupPropertyManager();
+            }
+			ar.installGroupPropertyChange((QtGroupPropertyManager*)qobject);
+            break;
+        case qtIntPropertyManager :// 25,
+            if (parent != 0) {
+               qobject = new QtIntPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtIntPropertyManager();
+            }
+			ar.installIntPropertyChange((QtIntPropertyManager*)qobject);
+            break;
+        case qtPointPropertyManager :// 26,
+            if (parent != 0) {
+               qobject = new QtPointPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtPointPropertyManager();
+            }
+			ar.installPointPropertyChange((QtPointPropertyManager*)qobject);
+            break;
+        case qtRectPropertyManager :// 27,
+            if (parent != 0) {
+               qobject = new QtRectPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtRectPropertyManager();
+            }
+			ar.installRectPropertyChange((QtRectPropertyManager*)qobject);
+            break;
+        case qtSizePropertyManager :// 28,
+            if (parent != 0) {
+               qobject = new QtSizePropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtSizePropertyManager();
+            }
+			ar.installSizePropertyChange((QtSizePropertyManager*)qobject);
+            break;
+        case qtSizePolicyPropertyManager :// 29,
+            if (parent != 0) {
+               qobject = new QtSizePolicyPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtSizePolicyPropertyManager();
+            }
+			ar.installSizePolicyPropertyChange((QtSizePolicyPropertyManager*)qobject);
+            break;
+        case qtStringPropertyManager :// 30,
+            if (parent != 0) {
+               qobject = new QtStringPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtStringPropertyManager();
+            }
+			ar.installStringPropertyChange((QtStringPropertyManager*)qobject);
+            break;
+        case qtTimePropertyManager :// 31,
+            if (parent != 0) {
+               qobject = new QtTimePropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtTimePropertyManager();
+            }
+			ar.installTimePropertyChange((QtTimePropertyManager*)qobject);
+            break;
+        case qtVariantPropertyManager :// 32,
+            if (parent != 0) {
+               qobject = new QtVariantPropertyManager((QObject*)parent);
+            }else {
+               qobject = new QtVariantPropertyManager();
+            }
+			ar.installVariantPropertyChange((QtVariantPropertyManager*)qobject);
+            break;
+        case qtProperty :// 33,
                 break;
+        case qtVariantProperty :// 34;
+                break;
+		case qtToolbar:
+			if (parent != 0) {
+				qobject = new QToolBar((QWidget*)parent);
+			}else {
+				qobject = new QToolBar();
+			}
+			break;
+        case qtCheckBox:
+            if (parent != 0) {
+               qobject = new QCheckBox((QWidget*)parent);
+            }else {
+               qobject = new QCheckBox();
+            }
+            ar.installButtonAction(qobject);
+            break;
+        case qtLabel:// 34;
+            if (parent != 0) {
+                    qobject = new QLabel((QWidget*)parent);
+            }
+            else {
+                    qobject = new QLabel();
+            }
+            break;
+        case qtStatusBar:
+            if (parent != 0) {
+                    qobject = new QStatusBar((QWidget*)parent);
+            }
+            else {
+                    qobject = new QStatusBar();
+            }
+            break;
+        case qtProgressBar:
+            if (parent != 0) {
+                    qobject = new QProgressBar((QWidget*)parent);
+            }
+            else {
+
+                    qobject = new QProgressBar();
+            }
+            break;
+        case qtVariantEditorFactory:
+            if (parent != 0) {
+                    qobject = new QtVariantEditorFactory((QObject*)parent);
+            }else {
+                    qobject = new QtVariantEditorFactory();
+            }
+            break;
+        default:
+            break;
         }
 
         if (qobject != NULL) {
-                XObjectData * objectData = new XObjectData();
-
-                objectData->setObject(x);
-                qobject->setUserData(Qt::UserRole, objectData);
+            XObjectData * objectData = new XObjectData();
+            objectData->setObject(x);
+            qobject->setUserData(Qt::UserRole, objectData);
         }
+
         return (xlong)qobject;
 }
 
@@ -723,12 +772,26 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         case FONTPTSIZE:
                 ((QFont*)h)->setPointSize(value);
                 break;
+		case PAINTFONTPTSIZE:
+		{
+			QFont copyfont(((QPainter*)h)->font());
+			copyfont.setPointSize(value);
+			((QPainter*)h)->setFont(copyfont);
+		}
+			break;
 		case SETSHRCUT:
-				((QAction*)h)->setShortcut((QKeySequence::StandardKey)value);
+			((QAction*)h)->setShortcut((QKeySequence::StandardKey)value);
 			break;
         case FONTPXSIZE:
-                ((QFont*)h)->setPixelSize(value);
-                break;
+            ((QFont*)h)->setPixelSize(value);
+            break;
+		case PAINTFONTPXSIZE:
+		{			
+			QFont copyfont(((QPainter*)h)->font());
+			copyfont.setPixelSize(value);
+			((QPainter*)h)->setFont(copyfont);
+		}
+			break;
         case MDIMODE:
                 ((QMdiArea*)h)->setViewMode((QMdiArea::ViewMode)value);
                 break;
@@ -892,6 +955,9 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
 
         switch (proid)
         {
+		case ENABLEDROG:
+				return ((QWidget*)h)->acceptDrops();
+				break;
         case VISIBLE:
                 return ((QWidget*)h)->isVisible();
                 break;
@@ -901,6 +967,9 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
         case MINIMIZED:
                 return ((QWidget*)h)->isMinimized();
                 break;
+		case UPDATEENABLE:
+			return ((QWidget*)h)->updatesEnabled();
+			break;
         case ENABLED:
                 return ((QWidget*)h)->isEnabled();
                 break;
@@ -1156,6 +1225,7 @@ XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
                 ((QWidget*)h)->setVisible(v);
                 break;
 
+
         case MAXIMIZED:
                 if (v) {
                         ((QWidget*)h)->showMaximized();
@@ -1178,6 +1248,9 @@ XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
         case SIZEGRIPENABLED:
                 ((QStatusBar*)h)->setSizeGripEnabled(v);
                 break;
+		case UPDATEENABLE:
+				((QWidget*)h)->setUpdatesEnabled(v);
+				break;
         case ENABLED:
                 ((QWidget*)h)->setEnabled(v);
                 break;
@@ -1269,6 +1342,9 @@ XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
 			((QTableWidget*)h)->verticalHeader()->setVisible(v);
 		}
 		break;
+		case ENABLEDROG:
+			((QWidget*)h)->setAcceptDrops(v);
+			break;
         }
 }
 
@@ -1279,6 +1355,26 @@ XNLEXPORT void XI_CDECL widget_set_bkrl(xlong h, xint r) {
 XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         switch (proid)
         {
+		case FONTASCENT: {
+			QFontMetrics fm(*(QFont*)h);
+			return fm.ascent();
+		}
+			break;
+		case FONTDESCENT: {
+			QFontMetrics fm(*(QFont*)h);
+			return fm.descent();
+		}
+		 break;
+		case PAINTFONTASCENT: {
+			QFontMetrics fm(((QPainter*)h)->font());
+			return fm.ascent();
+		}
+			break;
+		case PAINTFONTDESCENT: {
+			QFontMetrics fm(((QPainter*)h)->font());
+			return fm.descent();
+		}
+			break;
         case SETFOCUSPOLICY:
             return ((QWidget*)h)->focusPolicy();
             break;
@@ -1502,6 +1598,7 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_double_value(xlong h, xint proid, xint 
                 pen.setWidth(w);
                 pen.setColor(QMakeColor(xv));
                 pen.setStyle(Qt::PenStyle(yv));
+				
                 ((QPainter*)h)->setPen(pen);
         }
                 break;
@@ -1578,6 +1675,7 @@ XNLEXPORT xint XI_CDECL widget_set_intintstring_value(xlong h, xint proid, xint 
         case DRAWTEXT:
                 ((QPainter*)h)->drawText(QPoint(v1, v2), QString::fromUtf8(v3));
                 break;
+
         }
         return 0;
 }
@@ -1592,7 +1690,12 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
         case STYLE:
                 ((QWidget*)h)->setStyle((QStyle*)value);
                 break;
-
+		case DRAWPATH:
+		{
+			QPainterPath * buf = (QPainterPath *)value;
+			((QPainter*)h)->drawPath(*buf);
+		}
+		break;
         case SCIFONT:
                 ((QsciScintilla*)h)->setFont(*(QFont*)value);
                 break;
@@ -1653,7 +1756,11 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
                 break;
 
         case PAINTERSETFONT:
-                ((QPainter*)h)->setFont(*(QFont*)value);
+		{
+			QFont* pf = (QFont*)value;
+			((QPainter*)h)->setFont(*pf);
+		}
+                
                 break;
 
         case TREEWIDGETREM:
@@ -1749,6 +1856,9 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
         case OPENLOCAL:
                 QDesktopServices::openUrl(QUrl::fromLocalFile((QString::fromUtf8(value))));
             break;
+		case SETTOOLTIPS:
+			((QWidget*)h)->setToolTip(QString::fromUtf8(value));
+			break;
 		case SETSTYLESHEET:
 		{
 			QFile file(QString::fromUtf8(value));
@@ -1819,6 +1929,9 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         case FONTCTOR:
                 delete (QFont*)h;
                 break;
+		case PATHCTOR:
+			delete (QPainterPath*)h;
+			break;
         case NATIVEFINALIZE:
         {
                 QObject * pObj = (QObject*)h;
@@ -1942,6 +2055,7 @@ XNLEXPORT xbool XI_CDECL array_int2(xlong h, xint proid, XObject * obj, xint pos
                 return true;
         }
                 break;
+
         case QXPAINTDRAWLINE:
         {
 
@@ -2076,16 +2190,16 @@ XNLEXPORT XObject * XI_CDECL object_get_string(xlong h, xint proid, xstring name
         return getObjectControl(obj);
 }
 
-XNLEXPORT xstring XI_CDECL core_getName(xlong h) {
-        static QByteArray qba;
+XNLEXPORT XObject * XI_CDECL core_getName(xlong h) {
+        QByteArray qba;
         QObject * obj = (QObject *)h;
         if (obj != 0) {
                 qba = obj->objectName().toUtf8();
         }
-        return qba.data();
+        return data2String(qba);
 }
 
-XNLEXPORT xstring XI_CDECL core_getClassName(xlong h) {
+XNLEXPORT XObject *  XI_CDECL core_getClassName(xlong h) {
 
 
         return 0;
@@ -2106,8 +2220,8 @@ XNLEXPORT xint XI_CDECL core_getintlong(xlong h, xint proid, xlong v) {
         return 0;
 }
 
-XNLEXPORT xstring XI_CDECL core_getString(xlong h, xint proid) {
-        static QByteArray qba;
+XNLEXPORT XObject *  XI_CDECL core_getString(xlong h, xint proid) {
+        QByteArray qba;
         switch (proid)
         {
         case LINEEDITGETTEXT:
@@ -2149,8 +2263,11 @@ XNLEXPORT xstring XI_CDECL core_getString(xlong h, xint proid) {
 		case GETFONTNAME:
 			qba = ((QFont*)h)->family().toUtf8();
 			break;
+		case GETTOOLTIPS:
+			qba = ((QWidget*)h)->toolTip().toUtf8();
+			break;
         }
-        return qba.data();
+        return data2String(qba);
 }
 
 
@@ -2234,9 +2351,9 @@ XNLEXPORT XObject * XI_CDECL object_get_string2_handle_string_int(xlong h, xint 
 }
 
 
-XNLEXPORT xstring XI_CDECL openfile_dlg_string3_obj(xint proid, xstring caption, xstring defaultPath, xstring pattern, xlong parent) {
+XNLEXPORT XObject *  XI_CDECL openfile_dlg_string3_obj(xint proid, xstring caption, xstring defaultPath, xstring pattern, xlong parent) {
 
-        static QByteArray qba;
+        QByteArray qba;
 
         switch (proid) {
         case SAVE:
@@ -2277,7 +2394,7 @@ XNLEXPORT xstring XI_CDECL openfile_dlg_string3_obj(xint proid, xstring caption,
 			break;
         }
 
-        return qba.data();
+        return data2String(qba);
 }
 
 XNLEXPORT xlong XI_CDECL long_longstring(xlong handle, xint proid, xlong v1, xstring v2) {
@@ -2311,6 +2428,16 @@ XNLEXPORT xlong XI_CDECL long_longstring(xlong handle, xint proid, xlong v1, xst
                 return v | rc.height();
         }
                 break;
+
+		case PAINTMEASURETEXT:
+		{
+			QPainter * fm = (QPainter*)handle;
+			QRect rc = fm->fontMetrics().boundingRect(QString::fromUtf8(v2));
+			xlong v = rc.width();
+			v <<= 32;
+			return v | rc.height();
+		}
+		break;
         default:
                 break;
         }
@@ -2601,7 +2728,20 @@ XNLEXPORT void XI_CDECL widget_set_intlongstring_value(xlong h, xint proid, xlon
                         parent->setIcon(yv, *loadIcon(QString::fromUtf8(zv)));
                 }
         }
+
         break;
+		case SHOWTOOLTIPS:
+		{
+			if (zv == 0 && h != 0) {
+				QToolTip::showText(QPoint((xv >> 32) & 0xffffffff, xv & 0xffffffff), ((QWidget*)h)->toolTip(), (QWidget*)h, QRect(), yv);
+			}
+			else
+			if (zv != 0) {
+				QToolTip::showText(QPoint((xv >> 32) & 0xffffffff, xv & 0xffffffff), QString::fromUtf8(zv), (QWidget*)h, QRect(), yv);
+			}
+		}
+
+		break;
         default:
                 break;
 
@@ -2609,8 +2749,8 @@ XNLEXPORT void XI_CDECL widget_set_intlongstring_value(xlong h, xint proid, xlon
 }
 
 
-XNLEXPORT xstring XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1, xint v2) {
-        static QByteArray qba;
+XNLEXPORT XObject * XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1, xint v2) {
+        QByteArray qba;
 
         switch (proid)
         {
@@ -2618,7 +2758,9 @@ XNLEXPORT xstring XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1, 
             qba = ((QTreeWidgetItem *)v1)->text(v2).toUtf8();
         break;
         case QSCIGETRANGE:
-            qba = ((QsciScintilla*)h)->text(v1, v2).toUtf8();
+			if (v2 > v1) {
+				qba = ((QsciScintilla*)h)->text(v1, v2).toUtf8();
+			}
             break;
 		case TABLEGETTEXTBYRC:
 			qba = ((QTableWidget*)h)->item(v1, v2)->text().toUtf8();
@@ -2631,13 +2773,24 @@ XNLEXPORT xstring XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1, 
 
         }
 
-        return qba.data();
+        return data2String(qba);
 }
 
 XNLEXPORT void XI_CDECL widget_set_intlongint_value(xlong h, xint proid, xlong xv, xint yv, xint zv) {
         switch (proid)
         {
-
+		case TRSETFOREBR:
+		{
+			QTreeWidgetItem * parent = (QTreeWidgetItem *)h;
+			parent->setForeground(yv, *(QBrush*)xv);
+		}
+		break;
+		case TRSETBACKBR:
+		{
+			QTreeWidgetItem * parent = (QTreeWidgetItem *)h;
+			parent->setBackground(yv, *(QBrush*)xv);
+		}
+		break;
         case SETITEMCOLOR:
         {
                 QTreeWidgetItem * parent = (QTreeWidgetItem *)xv;
@@ -3297,6 +3450,63 @@ XNLEXPORT xlong XI_CDECL pointer_intlong2(void* handle, xint proid, xlong value,
 		return (xlong)qm;
 	}
 	break;
+
+
+	case PATHMOVETO: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->moveTo(pd[0], pd[1]);
+	}
+		break;
+
+	case PATHLINETO: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->lineTo(pd[0], pd[1]);
+	}
+		break;
+
+	case PATHARCMOVETO: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->arcMoveTo(pd[0], pd[1], pd[2] - pd[0], pd[3] - pd[1], pd[4]);
+	}
+		break;
+
+	case PATHARCTO:{
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->arcTo(pd[0], pd[1], pd[2] - pd[0], pd[3] - pd[1], pd[4], pd[5]);
+	}
+		break;
+
+	case CUBICTO: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->cubicTo(pd[0], pd[1], pd[2], pd[3], pd[4], pd[5]);
+	}
+		break;
+
+	case QUADTO: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->quadTo(pd[0], pd[1], pd[2], pd[3]);
+	}
+		break;
+
+	case ADDRECT: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->addRect(pd[0], pd[1], pd[2] - pd[0], pd[3] - pd[1]);
+	}
+		break;
+
+	case ADDELLIPSE: {
+		double * pd = (double *)handle;
+		QPainterPath * pp = (QPainterPath*)value;
+		pp->addEllipse(pd[0], pd[1], pd[2] - pd[0], pd[3] - pd[1]);
+	}
+		break;
 
 	default:
 		break;

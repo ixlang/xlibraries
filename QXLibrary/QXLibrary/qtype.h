@@ -54,5 +54,6 @@ enum QTypes {
 	qtRadialGradient5 = 49,
 	qtRadialGradient6 = 50,
 	qtConicalGradient = 51,
-	qtImgBrush = 52
+	qtImgBrush = 52,
+	qtPath = 53
 };

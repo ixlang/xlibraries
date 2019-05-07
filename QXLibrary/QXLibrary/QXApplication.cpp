@@ -139,7 +139,7 @@ bool QXApplication::notify(QObject * obj, QEvent * evn){
 		int tp = gs_env->getObjectType(xobj);
 		if (tp == XNLEnv::XDataType::t_object) {
 			if (false == TranslateEvent(obj, xobj, evn, thread.getThread())) {
-				return false;
+				return true;
 			}
 		}
 	}
@@ -200,9 +200,15 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 
 	case QEvent::MouseButtonPress:
 	{
-		XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
 
-		XObject * Button = createXObject((int)((QMouseEvent*)evn)->button());
+		gs_env->void_Invoke(context, xobj, method, 
+			(int)((QMouseEvent*)evn)->button(), 
+			(int)((QMouseEvent*)evn)->x(), 
+			(int)((QMouseEvent*)evn)->y(), 
+			(int)((QMouseEvent*)evn)->flags(), 
+			(int)((QMouseEvent*)evn)->source());
+
+		/*XObject * Button = createXObject((int)((QMouseEvent*)evn)->button());
 		XObject * x = createXObject((int)((QMouseEvent*)evn)->x());
 		XObject * y = createXObject((int)((QMouseEvent*)evn)->y());
 		XObject * flags = createXObject((int)((QMouseEvent*)evn)->flags());
@@ -214,69 +220,42 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		gs_env->dereferenceObject(x);
 		gs_env->dereferenceObject(y);
 		gs_env->dereferenceObject(flags);
-		gs_env->dereferenceObject(source);
+		gs_env->dereferenceObject(source);*/
 		
 	}
 		break;
 
 	case QEvent::MouseButtonRelease:
 	{
-		XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
 
-		XObject * Button = createXObject((int)((QMouseEvent*)evn)->button());
-		XObject * x = createXObject((int)((QMouseEvent*)evn)->x());
-		XObject * y = createXObject((int)((QMouseEvent*)evn)->y());
-		XObject * flags = createXObject((int)((QMouseEvent*)evn)->flags());
-		XObject * source = createXObject((int)((QMouseEvent*)evn)->source());
-
-
-		gs_env->void_invoke(context, xobj, method, Button, x, y, flags, source);
-		
-		gs_env->dereferenceObject(Button);
-		gs_env->dereferenceObject(x);
-		gs_env->dereferenceObject(y);
-		gs_env->dereferenceObject(flags);
-		gs_env->dereferenceObject(source);
-		
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QMouseEvent*)evn)->button(),
+			(int)((QMouseEvent*)evn)->x(),
+			(int)((QMouseEvent*)evn)->y(),
+			(int)((QMouseEvent*)evn)->flags(),
+			(int)((QMouseEvent*)evn)->source());
 	}
 		break;
 
 	case QEvent::MouseButtonDblClick:
 	{
-		XObject * Button = createXObject((int)((QMouseEvent*)evn)->button());
-		XObject * x = createXObject((int)((QMouseEvent*)evn)->x());
-		XObject * y = createXObject((int)((QMouseEvent*)evn)->y());
-		XObject * flags = createXObject((int)((QMouseEvent*)evn)->flags());
-		XObject * source = createXObject((int)((QMouseEvent*)evn)->source());
-
-		gs_env->void_invoke(context, xobj, method, Button, x, y, flags, source);
-		
-		gs_env->dereferenceObject(Button);
-		gs_env->dereferenceObject(x);
-		gs_env->dereferenceObject(y);
-		gs_env->dereferenceObject(flags);
-		gs_env->dereferenceObject(source);
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QMouseEvent*)evn)->button(),
+			(int)((QMouseEvent*)evn)->x(),
+			(int)((QMouseEvent*)evn)->y(),
+			(int)((QMouseEvent*)evn)->flags(),
+			(int)((QMouseEvent*)evn)->source());
 	}
 		break;
 
 	case QEvent::MouseMove:
 	{
-		XObject * Button = createXObject((int)((QMouseEvent*)evn)->button());
-		XObject * x = createXObject((int)((QMouseEvent*)evn)->x());
-		XObject * y = createXObject((int)((QMouseEvent*)evn)->y());
-		XObject * flags = createXObject((int)((QMouseEvent*)evn)->flags());
-		XObject * source = createXObject((int)((QMouseEvent*)evn)->source());
-
-		XObject * actionobj = 0;
-
-		gs_env->void_invoke(context, xobj, method, Button, x, y, flags, source);
-		
-
-		gs_env->dereferenceObject(Button);
-		gs_env->dereferenceObject(x);
-		gs_env->dereferenceObject(y);
-		gs_env->dereferenceObject(flags);
-		gs_env->dereferenceObject(source);
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QMouseEvent*)evn)->button(),
+			(int)((QMouseEvent*)evn)->x(),
+			(int)((QMouseEvent*)evn)->y(),
+			(int)((QMouseEvent*)evn)->flags(),
+			(int)((QMouseEvent*)evn)->source());
 	}
 		break;
 
@@ -365,50 +344,36 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 
 	case QEvent::FocusIn:
 	{
-		XObject * focus = createXObject(((QFocusEvent*)evn)->gotFocus());
-		XObject * reson = createXObject(((QFocusEvent*)evn)->reason());
 
-		gs_env->void_invoke(context, xobj, method, focus, reson);
-
-		gs_env->dereferenceObject(focus);
-		gs_env->dereferenceObject(reson);
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QFocusEvent*)evn)->gotFocus(),
+			(int)((QFocusEvent*)evn)->reason());
 	}
 		//QFocusEvent
 		break;
 
 	case QEvent::FocusOut:
 	{
-		XObject * focus = createXObject(((QFocusEvent*)evn)->gotFocus());
-		XObject * reson = createXObject(((QFocusEvent*)evn)->reason());
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QFocusEvent*)evn)->gotFocus(),
+			(int)((QFocusEvent*)evn)->reason());
 
-		gs_env->void_invoke(context, xobj, method, focus, reson);
-
-		gs_env->dereferenceObject(focus);
-		gs_env->dereferenceObject(reson);
 	}
 		break;
 
 	case QEvent::FocusAboutToChange:
 	{
-		XObject * focus = createXObject(((QFocusEvent*)evn)->gotFocus());
-		XObject * reson = createXObject(((QFocusEvent*)evn)->reason());
-
-		gs_env->void_invoke(context, xobj, method, focus, reson);
-
-		gs_env->dereferenceObject(focus);
-		gs_env->dereferenceObject(reson);
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QFocusEvent*)evn)->gotFocus(),
+			(int)((QFocusEvent*)evn)->reason());
 	}
 		break;
 
 	case QEvent::Enter:
 	{
-		XObject * x = createXObject(((QEnterEvent*)evn)->x());
-		XObject * y = createXObject(((QEnterEvent*)evn)->y());
-
-		gs_env->void_invoke(context, xobj, method, x, y);
-
-		gs_env->dereferenceObject(x);
-		gs_env->dereferenceObject(y);
+		gs_env->void_Invoke(context, xobj, method,
+			(int)((QEnterEvent*)evn)->x(),
+			(int)((QEnterEvent*)evn)->y());
 	}
 		//QEnterEvent
 		break;

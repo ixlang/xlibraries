@@ -1,4 +1,6 @@
-﻿  QXApplication.cpp
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : 文件“e:\developments\cadaqs\canamespace\castudio\xcross\xlang\xlang\xlibrarys\qxlibrary\qxlibrary\release\moc_qxapplication.obj”正由另一进程使用，因此该进程无法访问此文件。
+  Moc'ing QXApplication.h...
+  QXApplication.cpp
   QXLibrary.cpp
   xid.cpp
   moc_QXApplication.cpp
