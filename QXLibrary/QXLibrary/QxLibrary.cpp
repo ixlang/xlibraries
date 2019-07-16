@@ -996,7 +996,6 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
                 break;
         case TREEWIDGETCLEAR:
                 ((QTreeWidget*)h)->clear();
-
                 return true;
                 break;
         case COMBOXCLR:
@@ -1683,6 +1682,14 @@ XNLEXPORT xint XI_CDECL widget_set_intintstring_value(xlong h, xint proid, xint 
 XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value) {
         switch (proid)
         {
+		case CLIPBOARDIMAGE:
+		{
+			QClipboard * clipboard = QApplication::clipboard();
+			if (clipboard != 0) {
+				clipboard->setImage(*(QImage*)value);
+			}
+		}
+			break;
         case PALETTE:
                 ((QWidget*)h)->setPalette(*(QPalette*)value);
                 break;
@@ -1795,7 +1802,16 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
 XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
         switch (proid)
         {
+		case CLIPBOARDTEXT:
+		{
+			QClipboard * clipboard = QApplication::clipboard();
+			if (clipboard != 0) {
+				clipboard->setText(QString::fromUtf8(value));
+			}
+		}
+			break;
         case WINDOWTITLE:
+			
                 ((QWidget*)h)->setWindowTitle(QString::fromUtf8(value));
                 break;
         case WINDOWICON:
@@ -2224,6 +2240,14 @@ XNLEXPORT XObject *  XI_CDECL core_getString(xlong h, xint proid) {
         QByteArray qba;
         switch (proid)
         {
+		case CLIPBOARDTEXT:
+		{
+			QClipboard * clipboard = QApplication::clipboard();
+			if (clipboard != 0) {
+				qba = clipboard->text().toUtf8();
+			}
+		}
+			break;
         case LINEEDITGETTEXT:
                 qba = ((QLineEdit*)h)->text().toUtf8();
                 break;
@@ -2351,6 +2375,7 @@ XNLEXPORT XObject * XI_CDECL object_get_string2_handle_string_int(xlong h, xint 
 }
 
 
+
 XNLEXPORT XObject *  XI_CDECL openfile_dlg_string3_obj(xint proid, xstring caption, xstring defaultPath, xstring pattern, xlong parent) {
 
         QByteArray qba;
@@ -2369,7 +2394,23 @@ XNLEXPORT XObject *  XI_CDECL openfile_dlg_string3_obj(xint proid, xstring capti
                 qba = file.toUtf8();
         }
                 break;
-
+		case OPENMULTI:
+		{
+			QStringList files = QFileDialog::getOpenFileNames((QWidget*)parent, QString::fromUtf8(caption), QString::fromUtf8(defaultPath), QString::fromUtf8(pattern));
+			if (files.size() > 0) {
+				XObject * outs = gs_env->createStringArray(files.size());
+				XThread currentthread;
+				for (int i = 0; i < files.size(); i++) {
+					QByteArray charstr = files[i].toUtf8();
+					xstring p = charstr.data();
+					int pl = charstr.length();
+					gs_env->setElementValue(currentthread.getThread(), outs, i, &p, &pl, 1);
+				}
+				return outs;
+			}
+			return 0;
+		}
+		break;
         case FOLDER:
                 if (pattern != 0) {
                         QString file = QFileDialog::getExistingDirectory((QWidget*)parent, QString::fromUtf8(caption), QString::fromUtf8(defaultPath), (QFileDialog::Option)QString::fromUtf8(pattern).toInt());
@@ -3237,6 +3278,14 @@ XNLEXPORT xlong XI_CDECL long_double2(xlong h, xint proid, double v1, double v2)
 XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int iv) {
         switch (proid)
         {
+		case CLIPBOARDIMAGE:
+		{
+			QClipboard * clipboard = QApplication::clipboard();
+			if (clipboard != 0) {
+				return (xlong)new QImage(clipboard->image());
+			}
+		}
+		break;
         case GETTAG:
         {
                 QTreeWidgetItem * obj = (QTreeWidgetItem*)hv;

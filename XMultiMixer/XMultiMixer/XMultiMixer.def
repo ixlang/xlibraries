@@ -1,0 +1,8 @@
+LIBRARY "XMultiMixer.dll"
+
+EXPORTS
+closeMixer
+readData
+putData
+createMixer
+resetMixer

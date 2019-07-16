@@ -1,0 +1,17 @@
+﻿生成启动时间为 2019/5/9 20:26:20。
+     1>项目“E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\XMultiMixer\XMultiMixer.vcxproj”在节点 2 上(Build 个目标)。
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\Release\XMultiMixer.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" capool.lib caallocator.lib cathreadpool.lib catimer.lib caUtils.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"XMultiMixer.def" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\Release\XMultiMixer.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\Release\XMultiMixer.lib" /MACHINE:X86 /SAFESEH /DLL Release\caMediaStream.obj
+         Release\caStreamMixer.obj
+         Release\dllmain.obj
+         Release\stdafx.obj
+         Release\XMultiMixer.obj
+            正在创建库 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\Release\XMultiMixer.lib 和对象 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\Release\XMultiMixer.exp
+         正在生成代码
+         已完成代码的生成
+         XMultiMixer.vcxproj -> E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\Release\XMultiMixer.dll
+     1>已完成生成项目“E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\XMultiMixer\XMultiMixer.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.01

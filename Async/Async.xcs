@@ -1,0 +1,111 @@
+//xlang 
+
+class Async : Thread{
+	static Async loop;
+    bool bquit = false;
+    List<Procedure> tasks = new List<Procedure>();
+    
+    static void Start(){
+		if (loop == nilptr){
+			loop = new Async();
+            loop.bquit = false;
+            loop.start();
+        }
+    }
+    
+    static void Exit(){
+		if (loop != nilptr){
+			synchronized(loop.tasks){
+				loop.bquit = true;
+				loop.tasks.notify();
+            }
+			loop.quit();
+        }
+    }
+    static void async(Procedure p){
+		loop.add_task(p);
+    }
+    
+	interface Procedure{ void execute(); };
+	static class Task<T> : Procedure{
+		T result; bool success = false;
+		void execute()override{
+			synchronized(this){
+				result = function();
+                success = true;
+                this.notify();
+            }
+        }
+        
+        T await(){
+        	synchronized(this){
+				if (success == false){	this.wait(); }
+                return result;
+            }
+        }
+        
+        T function();
+    };
+    
+    
+    
+    void quit(){
+		synchronized(tasks){
+			bquit = true;
+			tasks.notify();
+		}
+    }
+    void add_task(Procedure p){
+		synchronized(tasks){ tasks.add(p);  tasks.notify();	}
+    }
+    
+    void run()override{
+		while (bquit == false){
+			Procedure p = nilptr;
+			synchronized(tasks){
+				while (tasks.size() == 0 && bquit == false){ tasks.wait(); }
+                if (bquit == false){
+					p = tasks.pollHead();
+                }else{
+					return ;
+                }
+			}
+			if (p != nilptr){
+				p.execute(); 
+            }
+        }
+    }
+};
+
+String getWebContent(){
+	HttpRequest req = new HttpRequest();
+	if (req.get("http://news.163.com", 100000, false)){
+		byte [] data = new byte[1024];
+		String content = "";
+		if (req.getResponseCode() >= 200){
+			while (req.available(true) > 0){
+				content = content + new String(data, 0, req.readData(data, 0, 1024));
+			}
+		}
+		return content;
+	}
+	return nilptr;
+}
+
+int main(String [] args){
+	Async.Start();
+
+	Async.Task<String> t ;
+    
+    Async.async(t = new Async.Task<String>(){
+		String function()override{
+			return getWebContent();
+        }
+    });
+    
+	
+	_system_.output(t.await());
+    
+    Async.Exit();
+	return 0;
+}

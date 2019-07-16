@@ -1,0 +1,21 @@
+﻿生成启动时间为 2019/5/9 21:15:32。
+     1>项目“E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\XMultiMixer\XMultiMixer.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D XMULTIMIXER_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\XMultiMixer.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt XMultiMixer.cpp
+         XMultiMixer.cpp
+     1>XMultiMixer.cpp(24): warning C4267: “=”: 从“size_t”转换到“xint”，可能丢失数据
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(1193,5): warning MSB8012: TargetPath(E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\x64\Debug\XMultiMixer.dll) does not match the Linker's OutputFile property value (E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\XPianist\x64\debug\XMultiMixer.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\XPianist\x64\debug\XMultiMixer.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win64" capool.lib caallocator.lib cathreadpool.lib catimer.lib caUtils.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"XMultiMixer.def" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\x64\Debug\XMultiMixer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\x64\Debug\XMultiMixer.lib" /MACHINE:X64 /DLL x64\Debug\caMediaStream.obj
+         x64\Debug\caStreamMixer.obj
+         x64\Debug\dllmain.obj
+         x64\Debug\stdafx.obj
+         x64\Debug\XMultiMixer.obj
+         LINK : 没有找到 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\XPianist\x64\debug\XMultiMixer.dll 或上一个增量链接没有生成它；正在执行完全链接
+            正在创建库 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\x64\Debug\XMultiMixer.lib 和对象 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\x64\Debug\XMultiMixer.exp
+         XMultiMixer.vcxproj -> E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\x64\Debug\XMultiMixer.dll
+     1>已完成生成项目“E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\XMultiMixer\XMultiMixer\XMultiMixer.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.77

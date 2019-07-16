@@ -1,0 +1,85 @@
+//xlang 
+
+class AudioOut : Library{  
+    long handle = 0;
+    static bool loaded = false;
+    static bool load(){
+		if (loaded == false){
+			try{
+				if (_system_.getPlatformId() == 0){
+					loadLibrary("codec.dll");
+                }
+				if (_system_.getPlatformId() == 1){
+					loadLibrary("codec.so");
+                }
+                loaded = true;
+            }catch(Exception e){
+            
+            }
+        }
+        return loaded;
+    }
+    
+	AudioOut(){
+		load();
+    }
+    bool create(int channel, int sample, int widebits, int buffer_ms){
+        handle = audio_create(channel, sample, widebits, buffer_ms);
+        return handle != 0;
+    }
+    
+    int write(short [] data, int size){
+        return audio_writeData(handle, data, size);
+    }
+    
+    bool play(){
+        return audio_play(handle);
+    }
+    
+    bool stop(){
+        return audio_stop(handle);
+    }
+    
+    bool pause(){
+        return audio_pause(handle);
+    }
+    
+    void reset(){
+        audio_cleanup(handle);
+    }
+    
+    void finalize(){
+        audio_destroy(handle);
+    }
+    
+    int getPosition(){
+        if (handle == 0){ 
+            return 0;
+        }
+        return audio_getPosition(handle);
+    }
+    
+    import {
+        long stdcall audio_create(int channel, int sample, int widebits, int buffersize);
+        int stdcall audio_writeData(long handle, ObjectPtr data, int size);
+        bool stdcall audio_play(long handle);
+        bool stdcall audio_stop(long handle);
+        bool stdcall audio_pause(long handle);
+        void stdcall audio_cleanup(long handle);
+        void stdcall audio_destroy(long handle);
+        int stdcall audio_getPosition(long handle);
+    };
+
+};
+
+/*int main(String [] args){
+
+	new Console();
+
+	System.out.println("hello world");
+
+	Thread.sleep(3000);
+
+	return 0;
+}
+*/

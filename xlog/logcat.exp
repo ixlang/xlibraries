@@ -1,0 +1,12 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xlog/x64/debug/xlog.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xlog/readme.md",
+	"icon":	"",
+	"comment":	"",
+	"archs":	{
+},
+	"package":	"Logcat",
+	"version":	"1.0.0.0",
+	"descr":	"用于调试时log的处理",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

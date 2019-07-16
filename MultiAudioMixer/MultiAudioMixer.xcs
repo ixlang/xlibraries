@@ -1,0 +1,70 @@
+//xlang 
+
+class MultiAudioMixer : Library{
+	long hm = 0;
+    static const int  MEDIA_STREAM_INVALID	=	0xf;
+	static const int  MEDIA_STREAM_BEGIN	=	0x0;
+	static const int  MEDIA_STREAM_DATA		=	0x1;
+	static const int  MEDIA_STREAM_END		=	0x2;
+	static const int  MEDIA_MARK_FILTER		=	0x3;
+
+    static bool loaded = false;
+    static bool load(){
+		if (loaded == false){
+			try{
+				if (_system_.getPlatformId() == 0){
+					loadLibrary("XMultiMixer.dll");
+                }
+				if (_system_.getPlatformId() == 1){
+					loadLibrary("XMultiMixer.so");
+                }
+				loaded = true;
+			}catch(Exception e){
+				_system_.output(e.getMessage());
+			}
+        }
+        return loaded;
+    }
+    
+	MultiAudioMixer(int sample, int bits, int channel, int bufferedSize){
+		if (load() == false){
+			throw new IllegalArgumentException("can not load native library XMultiMixer");
+        }
+		hm = createMixer(sample, bits, channel, bufferedSize);
+    }
+    
+    bool write(int id,long timestamp, short[] data,int offset, int countOfShort, int flags, int serial){
+		return putData(hm, id, timestamp, data, offset, countOfShort, flags, serial);
+    }
+    
+    int read(int[] flagOut, short[] data, int offset, int countOfShort){
+		return readData(hm, flagOut, flagOut.length, data, offset, countOfShort);
+    }
+    
+    
+    void close(){
+		closeMixer(hm);
+        hm = 0;
+    }
+    
+    void reset(){
+		resetMixer(hm);
+    }
+    
+    void finalize(){
+		closeMixer(hm);
+    }
+    
+	import {
+		 long stdcall createMixer(int sample, int bits, int channel, int bufferedSize);
+		 bool stdcall putData(long hm, int id,long timestamp, ObjectPtr data,int offset, int countOfShort, int flags, int serial);
+		 int stdcall readData(long hm, ObjectPtr flagOut, int flagCount, ObjectPtr data, int offset, int countOfShort);
+		 void stdcall closeMixer(long hpc);
+         void stdcall resetMixer(long hpc);
+    };
+};
+/*
+int main(String []args){
+	MultiAudioMixer _audioMixer = new MultiAudioMixer(44100, 16, 2, 20);
+    return 0;
+}*/

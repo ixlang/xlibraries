@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/QT&XLIB/QXLibrary/debug/QXLibrary.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/QT&XLIB/readme.md",
+	"icon":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xide/config/qt.png",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86/QXLibrary.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86/QXLibrary.so"],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86_64/QXLibrary.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86_64/QXLibrary.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86_64/QXLibrary.dylib"],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"Qt5.9.1",
+	"version":	"5.9.1.8",
+	"descr":	"优秀的跨平台界面库",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

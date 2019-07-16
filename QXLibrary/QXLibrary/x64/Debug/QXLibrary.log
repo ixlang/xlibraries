@@ -1,7 +1,2 @@
-﻿  Moc'ing QXApplication.h...
-  moc_QXApplication.cpp
-  QXApplication.cpp
-  QXLibrary.cpp
-  xid.cpp
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1189,5): warning MSB8012: TargetPath(E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\QXLibrary\x64\Debug\QXLibrary.dll) does not match the Linker's OutputFile property value (E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide\debug\QXLibrary.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1189,5): warning MSB8012: TargetPath(E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\QXLibrary\x64\Debug\QXLibrary.dll) does not match the Linker's OutputFile property value (E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide\debug\QXLibrary.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
 LINK : fatal error LNK1104: 无法打开文件“qscintilla2_qt5d.lib”

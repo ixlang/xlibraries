@@ -9,17 +9,36 @@ package Runtime{
 	class UnixlikeApi : Library{
 		static bool loaded = false;
 		
-		static bool load(){
-			if (loaded == false){
+        static bool load_linux(){
+			try{
+				loadLibrary("libc.so.6");
+				return true;
+			}catch(Exception e){
+				_system_.output(e.getMessage());
 				try{
-					if (rtlp.rtl_osid == 1){
-						loadLibrary("libc.so.6");
-                    }else{
-						loadLibrary("libc.dylib");
-                    }
-					loaded = true;
+					loadLibrary("libc.so");
+					return true;
 				}catch(Exception e){
 					_system_.output(e.getMessage());
+				}
+			}
+            return false;
+        }
+        
+		static bool load(){
+			if (loaded == false){
+				if (rtlp.rtl_osid == 1){
+					loaded = load_linux();
+					if (loaded == false){
+						_system_.output("can not load libc");
+					}
+				}else{
+					try{
+						loadLibrary("libc.dylib");
+						loaded = true;
+					}catch(Exception e){
+						_system_.output(e.getMessage());
+					}
 				}
 			}
 			return loaded;
@@ -118,7 +137,7 @@ package Runtime{
 				);
                 
                 bool stdcall CloseHandle(
-					ObjectPtr hObject
+					Pointer hObject
 				);
                 
                 bool stdcall QueryFullProcessImageNameA(
@@ -189,8 +208,8 @@ package Runtime{
 						long [] hm = new long[1];
 						
 						pl[0] = Win32Api.Kernel32.MAX_PATH;
-						
-						if (Win32Api.Psapi32.EnumProcessModules(handle, hm, 8, 0)){
+						int up = 0;
+						if (Win32Api.Psapi32.EnumProcessModules(handle, hm, 8, up)){
 							int len = Win32Api.Psapi32.GetModuleFileNameExA(handle, hm[0], path, Win32Api.Kernel32.MAX_PATH);
 							if (len > 0){
 								exepath = new String(path, 0, len);

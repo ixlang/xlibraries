@@ -1,0 +1,12 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/Runtime/x86/debug/Runtime.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/Runtime/readme.md",
+	"icon":	"",
+	"comment":	"",
+	"archs":	{
+},
+	"package":	"Runtime",
+	"version":	"1.0.0.3",
+	"descr":	"用于运行时进程相关的处理",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

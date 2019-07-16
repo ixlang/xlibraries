@@ -1,0 +1,334 @@
+//xlang Source, Name:avcodec.xcsm 
+//Date: Sun Jan 21:35:17 2019 
+
+class AVCodeC : Library{
+	interface IPlayerCallback{ 
+		void writeVideoData(byte [] data, int length, long timemillis);
+        void writeAudioData(short [] data, int length, long timemillis);
+        void stop();
+        bool create();
+        bool seek(long pos);
+        long getPosition();
+        bool isNeedBuffer();
+        void flush();
+        
+    };
+    
+    long seekRequst = -1;
+    
+    static const int AVEOF = -541478725;
+    
+    static bool loaded = false;
+    static bool load(){
+		if (loaded == false){
+			try{
+				if (_system_.getPlatformId() == 0){
+					loadLibrary("ffmpeghelper.dll");
+                }
+				if (_system_.getPlatformId() == 1){
+					loadLibrary("ffmpeghelper.so");
+                }
+				loaded = true;
+			}catch(Exception e){
+				_system_.output(e.getMessage());
+			}
+        }
+        return loaded;
+    }
+    
+    IPlayerCallback _player = nilptr;
+    
+    bool bStop = true;
+    bool bReady = false;
+    
+    AVCodeC(IPlayerCallback player){
+		load();
+        _player = player;
+    }
+	AVCodeC(){
+		load();
+    }
+    long hMedia = 0;
+    
+    bool bhasVideo = false, bhasAudio = false;
+    
+    long play_position = 0;
+    
+    bool open(String file){
+		if (bStop == true){
+			hMedia = openMedia(file);
+			if (hMedia != 0){
+				bStop = false;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    bool hasVideo(){
+		return bhasVideo;
+    }
+    
+    bool hasAudio(){
+		return bhasAudio;
+    }
+    
+    bool prepare(){
+		bhasVideo = bhasAudio = false;
+		int rt = prepareMedia(hMedia);
+        if ((rt & 1) == 1){
+			bhasVideo = true;
+        }
+        if ((rt & 2 )== 2){
+			bhasAudio = true;
+        }
+        return true;
+    }
+    
+    byte[] getPreview(long position){
+		long []lengths = new long[2];
+		byte [] video_data = new byte[getVideoBufferSize(hMedia)];
+		byte [] audio_data = new byte[getAudioBufferSize(hMedia)];
+		
+        byte [] dataout = nilptr;
+        bool bGet = false;
+        
+		int nSeek = 0;
+        
+		if (seekMedia(hMedia, position)){
+			nSeek = 5;
+		}
+                
+		while (readStream(hMedia)){
+			
+			int flags = readMedia(hMedia, lengths, video_data, audio_data);
+			
+			if (flags == 1 && nSeek > 0){
+				nSeek--;
+			}
+				
+			while (flags > 0){
+				if (nSeek == 0){
+					if (flags == 1 && bGet == false){
+						dataout = new byte[lengths[0]];
+                        _system_.arrayCopy(video_data,0,dataout,0,dataout.length);
+                        bGet = true;
+					}
+				}
+				
+				flags = readMedia(hMedia, lengths, video_data, audio_data);
+			}
+			
+			if (bGet){
+				break;
+			}
+		}
+        
+        return dataout;
+    }
+    
+    bool preparePreview(){
+		int pos = 78500;
+		long [] lengths = new long[2];
+    	byte [] video_data = new byte[getVideoBufferSize(hMedia)];
+		byte [] audio_data = new byte[getAudioBufferSize(hMedia)];
+        
+		if (readStream(hMedia)){
+			int f  = readMedia(hMedia, lengths, video_data, audio_data);
+			while (f > 0){
+				f  = readMedia(hMedia, lengths, video_data, audio_data);
+            }
+        }
+        
+        return false;
+    }
+    
+    bool begin(){
+		return bReady = beginDecode(hMedia);
+    }
+    
+    void decode(){
+		if (begin()){
+        
+			long []lengths = new long[2];
+			byte [] video_data = new byte[getVideoBufferSize(hMedia)];
+            short [] audio_data = new short[getAudioBufferSize(hMedia) / 2];
+            
+            int nSeek = 0;
+            
+			while (bStop == false){
+				int error_cnt = 0;
+                while (error_cnt < 100 && bStop == false){
+					if (readStream(hMedia)){
+						int flags = readMedia(hMedia, lengths, video_data, audio_data);
+						
+						if (flags > 0 && nSeek > 0){
+							nSeek--;
+							if (nSeek == 0 && flags > 0){
+								_player.seek(lengths[1]);
+							}
+						}
+							
+						while (bStop == false && flags > 0){
+							if (nSeek == 0){
+								play_position = lengths[1];
+                                
+								if (flags == 1){
+									_player.writeVideoData(video_data, lengths[0], lengths[1]);
+								}else
+								if (flags == 2){
+									_player.writeAudioData(audio_data, lengths[0] / 2, lengths[1]);
+								}
+							}
+							
+							flags = readMedia(hMedia, lengths, video_data, audio_data);
+						}
+						
+						if (seekRequst != -1){
+							if (seekMedia(hMedia, seekRequst)){
+								_player.flush();
+								//简单处理 跳过5个包
+								nSeek = 5;
+								seekRequst = -1;
+							}
+						}
+						
+						if (flags < 0){
+							break;
+						}
+                    }else
+                    {                 
+                        int err = getError(hMedia);
+                        
+                        if (AVEOF == err){
+							break;
+                        }
+                        
+						error_cnt++;
+                    }
+                }
+                
+                synchronized(this){
+					if (bStop == false){
+						this.wait();
+                    }
+                }
+                
+				if (seekRequst != -1){
+					if (seekMedia(hMedia, seekRequst)){
+						_player.flush();
+						//简单处理 跳过5个包
+						nSeek = 5;
+						seekRequst = -1;
+					}
+				}
+            }
+            
+            closeStream(hMedia);   
+            
+            synchronized(this){
+				this.notify();
+            }
+        }
+    }
+    
+    void close(){
+		closeMedia(hMedia);
+    }
+    
+    long getPosition(){
+		return play_position;
+    }
+    
+    void stop(){
+		synchronized(this){
+			if (bStop == false){
+				bStop = true;
+			}
+            this.notify();
+            this.wait();
+        }
+    }
+    
+    int getFps(){
+    	if (hMedia == 0){
+			return 0;
+        }
+		return getVideoFps(hMedia);
+    }
+    
+    int getWidth(){
+    	if (hMedia == 0){
+			return 0;
+        }
+		return getVideoWidth(hMedia);
+    }
+    
+    int getHeight(){
+		if (hMedia == 0){
+			return 0;
+        }
+		return getVideoHeight(hMedia);
+    }
+    
+    bool isReady(){
+		return bReady;
+    }
+    long getDuration(){
+		if (hMedia != 0){
+			return getDuration(hMedia);
+        }
+        return 0;
+    }
+    
+    bool seek(long position){
+		if (hMedia == 0){
+			return false;
+        }
+		if (position < 0){
+			position = 0;
+        }
+        long dura = getDuration();
+        if (position > dura){
+			position = dura;
+        }
+		seekRequst = position;
+        
+		synchronized(this){
+			this.notify();
+		}
+        return true;
+    }
+    
+    
+	import {
+		 long stdcall openMedia(String uri);
+		 int stdcall prepareMedia(long hpc);
+		 bool stdcall beginDecode(long hpc);
+		 bool stdcall readStream(long hpc);
+		 int stdcall readMedia(long hpc, ObjectPtr lengths, ObjectPtr video, ObjectPtr audio);
+		 void stdcall closeStream(long hpc);
+		 void stdcall closeMedia(long hpc);
+		 long stdcall getVideoBufferSize(long hpc);
+		 long stdcall getAudioBufferSize(long hpc);
+         int stdcall getVideoWidth(long hpc);
+		 int stdcall getVideoHeight(long hpc);
+         int stdcall getVideoFps(long hpc);
+         long stdcall getDuration(long hpc);
+         int stdcall getError(long hpc);
+         bool stdcall seekMedia(long hpc, long position);
+    };
+};
+
+/*
+int main(String [] args){
+
+	new Console();
+
+	System.out.println("hello world");
+
+	Thread.sleep(3000);
+
+	return 0;
+}
+*/

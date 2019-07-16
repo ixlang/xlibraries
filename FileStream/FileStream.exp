@@ -1,0 +1,12 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/FileStream/x64/debug/FileStream.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/FileStream/readme.md",
+	"icon":	"",
+	"comment":	"",
+	"archs":	{
+},
+	"package":	"FileStream",
+	"version":	"1.0.0.3",
+	"descr":	"用于文件读写, 支持在Windows的UTF8<->GB1080转换",
+	"author":	"https://github.com/ixlang/xlibraries"
+}
