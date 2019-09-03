@@ -2,7 +2,7 @@
 	"xsql":	{
 		"version":	"1.2",
 		"language":	"xlang",
-		"sources":	["xsql.xcs", ".\\Sqlite.xcsm"],
+		"sources":	["xsql.xcs", ".\\Sqlite.xcsm", ".\\Mysql.xcsm", ".\\mysql_helper.cpp"],
 		"configures":	{
 			"debug":	{
 				"path":	{
@@ -19,16 +19,16 @@
 				"cmd":	"$(Output)",
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)",
-				"wtype":	"",
-				"ostype":	"",
-				"outname":	"$(ProjectName)$(Ext)",
-				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
-				"command":	"-ce",
-				"uaclevel":	"默认",
 				"libs":	[],
 				"ignorewarning":	"",
 				"debugable":	"-dbg",
-				"debugdatabase":	""
+				"debugdatabase":	"",
+				"wtype":	"-arch:x86",
+				"ostype":	"-xcross-windows",
+				"outname":	"$(ProjectName)$(Ext)",
+				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
+				"command":	"-lix -c",
+				"uaclevel":	"默认"
 			},
 			"release":	{
 				"path":	{
@@ -46,7 +46,7 @@
 				"workdir":	"$(ProjectDir)"
 			}
 		},
-		"icofile":	"",
-		"versioninc":	"0"
+		"versioninc":	"0",
+		"icofile":	""
 	}
 }

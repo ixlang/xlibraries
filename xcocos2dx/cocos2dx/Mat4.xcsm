@@ -1,0 +1,9 @@
+//xlang Source, Name:cocos2dx/Mat4.xcsm 
+//Date: Mon Aug 16:54:50 2019 
+package Cocos2dx{
+    class Mat4 : CCCore{
+        Mat4(long h){
+            super(h);
+        }
+    };
+};

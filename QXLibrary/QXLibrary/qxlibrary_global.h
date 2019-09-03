@@ -6,11 +6,16 @@
 
 #include <QFile>
 #include <QtWidgets/QtWidgets>
+#include <QPrintDialog>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
 //高版本下要加
 //Qt5WindowsUIAutomationSupport.lib
 
 #ifdef WIN32
 #include <Qt4Qt5/Qsci/qsciscintilla.h>
+#include <Qt4Qt5/Qsci/qscicommandset.h>
+#include <Qt4Qt5/Qsci/qsciprinter.h>
 #include <QtUiTools/QUiLoader>
 #include "../../../../../../xcross/xcross/xnl.h"
 #include "../../../../../thirds/qtPropertyBrowser/QtPropertyBrowser-master/src/qtvariantproperty.h"
@@ -20,6 +25,8 @@
 #include "../../../../../thirds/qtPropertyBrowser/QtPropertyBrowser-master/src/qttreepropertybrowser.h"
 #elif defined(__linux__)
 #include <Qt4Qt5/Qsci/qsciscintilla.h>
+#include <Qt4Qt5/Qsci/qscicommandset.h>
+#include <Qt4Qt5/Qsci/qsciprinter.h>
 #include <QtUiTools/QUiLoader>
 #include "../../../../../../xcross/xcross/xnl.h"
 #include "../../../../../thirds/qtPropertyBrowser/QtPropertyBrowser-master/src/qtvariantproperty.h"
@@ -30,6 +37,8 @@
 #include <QtUiTools/QUiLoader>
 #include "../../../../../xcross/xnl.h"
 #include "../../../../../thirds/qScintilla_gpl-2.10.7/QScintilla_gpl-2.10.7/Qt4Qt5/Qsci/qsciscintilla.h"
+#include "../../../../../thirds/qScintilla_gpl-2.10.7/QScintilla_gpl-2.10.7/Qt4Qt5/Qsci/qscicommandset.h"
+#include "../../../../../thirds/qScintilla_gpl-2.10.7/QScintilla_gpl-2.10.7/Qt4Qt5/Qsci/qsciprinter.h"
 #include "../../../../../thirds/qtPropertyBrowser/QtPropertyBrowser-master/src/qtvariantproperty.h"
 #include "../../../../../thirds/qtPropertyBrowser/QtPropertyBrowser-master/src/qtpropertymanager.h"
 #include "../../../../../thirds/qtPropertyBrowser/QtPropertyBrowser-master/src/qteditorfactory.h"
@@ -462,6 +471,40 @@ enum QXProId {
 	OPENMULTI = 362,
 	CLIPBOARDTEXT = 363,
 	CLIPBOARDIMAGE = 364,
+	QSCIDISABLESHORTCUT = 365,
+	QSCIUPDATESHORTCUT = 366,
+	QSCIUNBINDSHORTCUT = 367,
+	OBJECTSETNAME = 368,
+	QPB_SETEXPAND = 369,
+	QPB_SETSELECT = 370,
+	QPB_SETVISIBLE = 371,
+	QPB_SETBACKCOLOR = 372,
+	ASSOCIATEEXT = 373,
+	CHECKASSOCIATED = 374,
+	PAINTDEVICEMETRICGET = 375,
+	PAINTDEVICEPRFS = 376,
+	PRTDLGEXEC = 377,
+	PAINTDEVICEMETRICGETPRF = 378,
+	PRTDLGDONE = 379,
+	PRTDLGSETOPT = 380,
+	PRTDLGTEST = 381,
+	PRTDLGSETOPTS = 382,
+	PRTDLGGETOPTS = 383,
+	PAINTERTYPE = 384,
+	PAINTDEVICETYPE = 385,
+	PAINTDEVICEACTIVE = 386,
+	PAINTERFROMDEVICE = 387,
+	PVWDLGEXEC = 388,
+	PVWDLGDONE = 389,
+	PRINTERDTOR = 390,
+	PRINTERSETOUTFMT = 391,
+	PRINTERGETOUTFMT= 392,
+	WIDGETRENDERF = 393,
+	WIDGETRENDER4 = 394,
+	WIDGETRENDER2 = 395,
+	WIDGETRENDER1 = 396,
+	PRINTSCIRANGE = 397,
+	SCIPRINTERDTOR = 398,
 };
 
 extern XNLEnv * gs_env;
@@ -629,3 +672,5 @@ extern XIDENT  methods[];
 #define ON_VVALUECHANGE 298
 
 #define ON_VATTRCHANGE 299
+
+#define ON_PRINTVIEWREQUEST 300

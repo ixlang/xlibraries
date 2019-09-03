@@ -1,0 +1,9 @@
+//xlang Source, Name:cocos2dx/EventDispatcher.xcsm 
+//Date: Mon Aug 16:51:53 2019 
+package Cocos2dx{
+    class EventDispatcher : Refable{
+        /*EventDispatcher(long h){
+            super(h);
+        }*/
+    };
+};

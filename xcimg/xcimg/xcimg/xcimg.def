@@ -1,0 +1,7 @@
+LIBRARY "xcimg.dll"
+
+EXPORTS
+alloc_vcode
+get_buffer_req
+get_data
+delloc_vcode

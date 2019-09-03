@@ -1,0 +1,66 @@
+//xlang 
+package XCImg{
+	class VCodeGen : Library{
+        long nativehandle;
+        static bool loaded;
+        static bool load(){
+            if (loaded == false){
+                try{
+                    int osid = _system_.getPlatformId();
+                    String module_name = "xcimg.dll";
+                    if (osid == 1){
+                        module_name = ("xcimg.so");
+                    }else
+                    if (osid == 2){
+                        module_name = ("xcimg.dylib");
+                    }
+                    loadLibrary(module_name);
+                    loaded = true;
+                }catch(Exception e){
+                    _system_.output(e.getMessage());
+                }
+            }
+            return loaded;
+        }
+        
+        import{
+            Pointer cdecl alloc_vcode(String text, int length,  int height);
+            int cdecl get_buffer_req(Pointer img);
+            int cdecl get_data(Pointer img, ObjectPtr, int length);
+            void cdecl delloc_vcode(Pointer img);
+        };
+        
+        VCodeGen(String text, int length,  int height){
+            if (load()){
+                nativehandle = alloc_vcode(text, length, height);
+            }else{
+                throw new IllegalArgumentException("can not load Native Module: xcimg");
+            }
+            
+        }
+        
+        void finalize(){
+            delloc_vcode(nativehandle);
+        }
+        
+        byte[] getData(){
+            int length = get_buffer_req(nativehandle);
+            byte[] data = new byte[length];
+            get_data(nativehandle, data, length);
+            return data;
+        }
+        
+        int length(){
+            return get_buffer_req(nativehandle);
+        }
+	};
+};
+
+/*
+int main(String[] args){
+    //TODO:...
+    XCImg.VCodeGen gen  = new XCImg.VCodeGen("dcsr", 160, 40);
+    byte[] data = gen.getData();
+    return 0;
+}
+*/

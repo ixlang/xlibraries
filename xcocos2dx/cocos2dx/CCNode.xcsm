@@ -1,0 +1,1709 @@
+//xlang Source, Name:CCNode.xcsm 
+//Date: Sun Aug 22:34:44 2019 
+
+package Cocos2dx{
+    class Node : Refable{
+        enum TextHAlignment
+        {
+            LEFT,
+            CENTER,
+            RIGHT
+        };
+        
+        enum TextVAlignment
+        {
+            TOP,
+            CENTER,
+            BOTTOM
+        };
+        Node(){
+        }
+        Node(long h){
+            super(h);
+        }
+        
+        bool onCreate(){
+            return true;
+        }
+                
+        void onClose(){
+            
+        }
+        /**
+         * Gets the description string. It makes debugging easier.
+         * @return A string
+         * @js NA
+         * @lua NA
+         */
+        String getDescription() {
+            return (String)CCNative.xcocox_string_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETDESCRIPTION);
+        }
+        /**
+         LocalZOrder is the 'key' used to sort the node relative to its siblings.
+
+         The Node's parent will sort all its children based on the LocalZOrder value.
+         If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
+         
+         Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
+         And Nodes that have LocalZOrder values < 0 are the "left" subtree
+         While Nodes with LocalZOrder >=0 are the "right" subtree.
+         
+         @see `setGlobalZOrder`
+         @see `setVertexZ`
+         *
+         * @param localZOrder The local Z order value.
+         */
+
+        void setZOrder(int  localZOrder) { 
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETLOCALZORDER, localZOrder);
+        }
+        /** !!! ONLY FOR INTERNAL USE
+        * Sets the arrival order when this node has a same ZOrder with other children.
+        *
+        * A node which called addChild subsequently will take a larger arrival order,
+        * If two children have the same Z order, the child with larger arrival order will be drawn later.
+        *
+        * @warning This method is used internally for localZOrder sorting, don't change this manually
+        *
+        * @param orderOfArrival   The arrival order.
+        */
+        void updateOrderOfArrival(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEUPDATEORDEROFARRIVAL);
+        }
+        /**
+         * Gets the local Z order of this node.
+         *
+         * @see `setLocalZOrder(int)`
+         *
+         * @return The local (relative to its siblings) Z order.
+         */
+        int  getZOrder()  { return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETLOCALZORDER); }
+
+        /**
+         Defines the order in which the nodes are renderer.
+         Nodes that have a Global Z Order lower, are renderer first.
+         
+         In case two or more nodes have the same Global Z Order, the order is not guaranteed.
+         The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
+         
+         By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
+         
+         Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
+         
+         Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.
+         And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
+
+         @see `setLocalZOrder()`
+         @see `setVertexZ()`
+
+         @since v3.0
+         *
+         * @param globalZOrder The global Z order value.
+         */
+        void setGlobalZOrder(double globalZOrder){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETGLOBALZORDER, globalZOrder);
+        }
+        /**
+         * Returns the Node's Global Z Order.
+         *
+         * @see `setGlobalZOrder(int)`
+         *
+         * @return The node's global Z order
+         */
+        double getGlobalZOrder()  { return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETGLOBALZORDER); }
+
+        /**
+         * Sets the scale (x) of the node.
+         *
+         * It is a scaling factor that multiplies the width of the node and its children.
+         *
+         * @param scaleX   The scale factor on X axis.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setScaleX(double scaleX){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSCALEX, scaleX); 
+        }
+        /**
+         * Returns the scale factor on X axis of this node
+         *
+         * @see setScaleX(double)
+         *
+         * @return The scale factor on X axis.
+         */
+        double getScaleX() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSCALEX);
+        }
+
+
+        /**
+         * Sets the scale (y) of the node.
+         *
+         * It is a scaling factor that multiplies the height of the node and its children.
+         *
+         * @param scaleY   The scale factor on Y axis.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setScaleY(double scaleY){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSCALEY, scaleY); 
+        }
+        /**
+         * Returns the scale factor on Y axis of this node
+         *
+         * @see `setScaleY(double)`
+         *
+         * @return The scale factor on Y axis.
+         */
+        double getScaleY() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSCALEY);
+        }
+
+        /**
+         * Changes the scale factor on Z axis of this node
+         *
+         * The Default value is 1.0 if you haven't changed it before.
+         *
+         * @param scaleZ   The scale factor on Z axis.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setScaleZ(double scaleZ){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSCALEZ, scaleZ); 
+        }
+        /**
+         * Returns the scale factor on Z axis of this node
+         *
+         * @see `setScaleZ(double)`
+         *
+         * @return The scale factor on Z axis.
+         */
+        double getScaleZ() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSCALEZ);
+        }
+
+
+        /**
+         * Sets the scale (x,y,z) of the node.
+         *
+         * It is a scaling factor that multiplies the width, height and depth of the node and its children.
+         *
+         * @param scale     The scale factor for both X and Y axis.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setScale(double scale){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSCALE, scale); 
+        }
+        /**
+         * Gets the scale factor of the node,  when X and Y have the same scale factor.
+         *
+         * @warning Assert when `_scaleX != _scaleY`
+         * @see setScale(double)
+         *
+         * @return The scale factor of the node.
+         */
+        double getScale() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSCALE);
+        }
+
+         /**
+         * Sets the scale (x,y) of the node.
+         *
+         * It is a scaling factor that multiplies the width and height of the node and its children.
+         *
+         * @param scaleX     The scale factor on X axis.
+         * @param scaleY     The scale factor on Y axis.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setScale(double scaleX, double scaleY){
+            double [] param = {scaleX, scaleY};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSCALE, param);
+        }
+
+        /**
+         * Sets the position (x,y) of the node in its parent's coordinate system.
+         *
+         * Usually we use `Vec2(x,y)` to compose Vec2 object.
+         * This code snippet sets the node in the center of screen.
+         @code
+         Size size = Director::getInstance()->getWinSize();
+         node->setPosition(size.width/2, size.height/2);
+         @endcode
+         *
+         * @param position  The position (x,y) of the node in OpenGL coordinates.
+         */
+        void setPosition(Vec2 position){
+            double [] param = {position.x, position.y};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITION, param);
+        }
+
+        /** Sets the position (x,y) using values between 0 and 1.
+         The positions in pixels is calculated like the following:
+         @code
+         // pseudo code
+         void setNormalizedPosition(Vec2 pos) {
+           Size s = getParent()->getContentSize();
+           _position = pos * s;
+         }
+         @endcode
+         *
+         * @param position The normalized position (x,y) of the node, using value between 0 and 1.
+         */
+        void setPositionNormalized( Vec2 position){
+            double [] param = {position.x, position.y};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITIONNORMALIZED, param);
+        }
+        // FIXME: should get deprecated in v4.0
+
+        /**
+         * Gets the position (x,y) of the node in its parent's coordinate system.
+         *
+         * @see setPosition( Vec2&)
+         *
+         * @return The position (x,y) of the node in OpenGL coordinates.
+         * @code
+         * In js and lua return value is table which contains x,y.
+         * @endcode
+         */
+             
+
+        /** Returns the normalized position.
+         * 
+         * @return The normalized position.
+         */
+         Vec2 getPositionNormalized() {
+             double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPOSITIONNORMALIZED);
+             return new Vec2(param[0], param[1]);
+         }
+        // FIXME: should get deprecated in v4.0
+
+        /**
+         * Sets the position (x,y) of the node in its parent's coordinate system.
+         *
+         * Passing two numbers (x,y) is much efficient than passing Vec2 object.
+         * This method is bound to Lua and JavaScript.
+         * Passing a number is 10 times faster than passing a object from Lua to c++.
+         *
+         @code
+         // sample code in Lua
+         local pos  = node::getPosition()  -- returns Vec2 object from C++.
+         node:setPosition(x, y)            -- pass x, y coordinate to C++.
+         @endcode
+         *
+         * @param x     X coordinate for position.
+         * @param y     Y coordinate for position.
+         */
+        void setPosition(double x, double y){
+            double [] param = {x, y};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITION, param);
+        }
+        /**
+         * Gets position in a more efficient way, returns two number instead of a Vec2 object.
+         *
+         * @see `setPosition(double, double)`
+         * In js,out value not return.
+         *
+         * @param x To receive x coordinate for position.
+         * @param y To receive y coordinate for position.
+         */
+        Vec2 getPosition() {
+            double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPOSITION);
+            return new Vec2(param[0], param[1]);
+        }
+        /**
+         * Gets/Sets x or y coordinate individually for position.
+         * These methods are used in Lua and Javascript Bindings
+         */
+        /** Sets the x coordinate of the node in its parent's coordinate system.
+         *
+         * @param x The x coordinate of the node.
+         */
+        void  setPositionX(double x){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITIONX, x); 
+        }
+        /** Gets the x coordinate of the node in its parent's coordinate system.
+         *
+         * @return The x coordinate of the node.
+         */
+        double getPositionX() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPOSITIONX);
+        }
+        /** Sets the y coordinate of the node in its parent's coordinate system.
+         *
+         * @param y The y coordinate of the node.
+         */
+        void  setPositionY(double y){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITIONY, y); 
+        }
+        /** Gets the y coordinate of the node in its parent's coordinate system.
+         *
+         * @return The y coordinate of the node.
+         */
+        double getPositionY() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPOSITIONY);
+        }
+
+        /**
+         * Sets the position (X, Y, and Z) in its parent's coordinate system.
+         * 
+         * @param position The position (X, Y, and Z) in its parent's coordinate system.
+         * @js NA
+         */
+        void setPosition3D(Vec3 position){
+            double [] param = {position.x, position.y, position.z};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITION3D, param);
+        }
+        /**
+         * Returns the position (X,Y,Z) in its parent's coordinate system.
+         *
+         * @return The position (X, Y, and Z) in its parent's coordinate system.
+         * @js NA
+         */
+        Vec3 getPosition3D() {
+           double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPOSITION3D);
+           return new Vec3(param[0], param[1], param[2]);
+        }
+
+        /**
+         * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
+         *
+         * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on.
+         * In order to use this property correctly.
+         *
+         * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
+         *
+         * @see `setGlobalZValue()`
+         *
+         * @param positionZ  OpenGL Z vertex of this node.
+         * @js setVertexZ
+         */
+        void setPositionZ(double positionZ){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPOSITIONZ, positionZ); 
+        }
+        
+
+        /**
+         * Gets position Z coordinate of this node.
+         *
+         * @see setPositionZ(double)
+         *
+         * @return The position Z coordinate of this node.
+         * @js getVertexZ
+         */
+        double getPositionZ() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPOSITIONZ);
+        }
+
+        /**
+         * Changes the X skew angle of the node in degrees.
+         *
+         * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+         * while the second one uses the real skew function.
+         *
+         * This angle describes the shear distortion in the X direction.
+         * Thus, it is the angle between the Y coordinate and the left edge of the shape
+         * The default skewX angle is 0. Positive values distort the node in a CW direction.
+         *
+         * @param skewX The X skew angle of the node in degrees.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setSkewX(double skewX){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSKEWX, skewX); 
+        }
+        /**
+         * Returns the X skew angle of the node in degrees.
+         *
+         * @see `setSkewX(double)`
+         *
+         * @return The X skew angle of the node in degrees.
+         */
+        double getSkewX() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSKEWX);
+        }
+
+
+        /**
+         * Changes the Y skew angle of the node in degrees.
+         *
+         * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+         * while the second one uses the real skew function.
+         *
+         * This angle describes the shear distortion in the Y direction.
+         * Thus, it is the angle between the X coordinate and the bottom edge of the shape.
+         * The default skewY angle is 0. Positive values distort the node in a CCW direction.
+         *
+         * @param skewY    The Y skew angle of the node in degrees.
+         *
+         * @warning The physics body doesn't support this.
+         */
+        void setSkewY(double skewY){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETSKEWY, skewY); 
+        }
+        /**
+         * Returns the Y skew angle of the node in degrees.
+         *
+         * @see `setSkewY(double)`
+         *
+         * @return The Y skew angle of the node in degrees.
+         */
+        double getSkewY() {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSKEWY);
+        }
+
+
+        /**
+         * Sets the anchor point in percent.
+         *
+         * anchorPoint is the point around which all transformations and positioning manipulations take place.
+         * It's like a pin in the node where it is "attached" to its parent.
+         * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
+         * But you can use values higher than (1,1) and lower than (0,0) too.
+         * The default anchorPoint is (0,0), so it starts in the lower left corner of the node.
+         * @note If node has a physics body, the anchor must be in the middle, you can't change this to other value.
+         *
+         * @param anchorPoint   The anchor point of node.
+         */
+        void setAnchorPoint( Vec2 anchorPoint){
+            double [] param = {anchorPoint.x, anchorPoint.y};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETANCHORPOINT, param);
+        }
+        /**
+         * Returns the anchor point in percent.
+         *
+         * @see `setAnchorPoint( Vec2&)`
+         *
+         * @return The anchor point of node.
+         */
+         Vec2 getAnchorPoint() {
+           double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETANCHORPOINT);
+           return new Vec2(param[0], param[1]);
+         }
+        /**
+         * Returns the anchorPoint in absolute pixels.
+         *
+         * @warning You can only read it. If you wish to modify it, use anchorPoint instead.
+         * @see `getAnchorPoint()`
+         *
+         * @return The anchor point in absolute pixels.
+         */
+         Vec2 getAnchorPointInPoints() {
+           double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETANCHORPOINTINPOINTS);
+           return new Vec2(param[0], param[1]);
+         }
+
+
+        /**
+         * Sets the untransformed size of the node.
+         *
+         * The contentSize remains the same no matter the node is scaled or rotated.
+         * All nodes has a size. Layer and Scene has the same size of the screen.
+         *
+         * @param contentSize   The untransformed size of the node.
+         */
+        void setContentSize( Size contentSize){
+            double [] param = {contentSize.width, contentSize.height};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETCONTENTSIZE, param);
+        }
+        /**
+         * Returns the untransformed size of the node.
+         *
+         * @see `setContentSize( Size&)`
+         *
+         * @return The untransformed size of the node.
+         */
+         Size getContentSize(){
+           double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETCONTENTSIZE);
+           return new Size(param[0], param[1]);
+         }
+
+
+        /**
+         * Sets whether the node is visible.
+         *
+         * The default value is true, a node is default to visible.
+         *
+         * @param visible   true if the node is visible, false if the node is hidden.
+         */
+        void setVisible(bool visible){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETVISIBLE, visible ? 1 : 0);
+        }
+        /**
+         * Determines if the node is visible.
+         *
+         * @see `setVisible(bool)`
+         *
+         * @return true if the node is visible, false if the node is hidden.
+         */
+        bool isVisible(){
+            return 0 != CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEISVISIBLE);
+        }
+
+
+        /**
+         * Sets the rotation (angle) of the node in degrees.
+         *
+         * 0 is the default rotation angle.
+         * Positive values rotate node clockwise, and negative values for anti-clockwise.
+         *
+         * @param rotation     The rotation of the node in degrees.
+         */
+        void setRotation(double rotation){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETROTATION, rotation); 
+        }
+        /**
+         * Returns the rotation of the node in degrees.
+         *
+         * @see `setRotation(double)`
+         *
+         * @return The rotation of the node in degrees.
+         */
+        double getRotation(){
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETROTATION);
+        }
+
+        /**
+         * Sets the rotation (X,Y,Z) in degrees.
+         * Useful for 3d rotations.
+         *
+         * @warning The physics body doesn't support this.
+         *
+         * @param rotation The rotation of the node in 3d.
+         * @js NA
+         */
+        void setRotation3D(Vec3 rotation){
+            double [] param = {rotation.x, rotation.y, rotation.z};
+            CCNative.xcocos_func_param_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETROTATION3D, param);
+        }
+        /**
+         * Returns the rotation (X,Y,Z) in degrees.
+         * 
+         * @return The rotation of the node in 3d.
+         * @js NA
+         */
+        Vec3 getRotation3D(){
+           double [] param = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETROTATION3D);
+           return new Vec3(param[0], param[1], param[2]);
+        }
+        
+        /**
+         * Set rotation by quaternion. You should make sure the quaternion is normalized.
+         *
+         * @param quat The rotation in quaternion, note that the quat must be normalized.
+         * @js NA
+         */
+        void setRotationQuat(Quaternion quat){
+            CCNative.xcocox_void_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETROTATIONQUAT, quat.hcore);
+        }
+        
+        /**
+         * Return the rotation by quaternion, Note that when _rotationZ_X == _rotationZ_Y, the returned quaternion equals to RotationZ_X * RotationY * RotationX,
+         * it equals to RotationY * RotationX otherwise.
+         *
+         * @return The rotation in quaternion.
+         * @js NA
+         */
+        Quaternion getRotationQuat() {
+            return nilptr;
+        }
+
+        /**
+         * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
+         *
+         * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality,
+         * while the second one uses the real skew function.
+         *
+         * 0 is the default rotation angle.
+         * Positive values rotate node clockwise, and negative values for anti-clockwise.
+         *
+         * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
+         *
+         * @warning The physics body doesn't support this.
+         * @js setRotationX
+         */
+
+        void setRotationX(double rotationX) { 
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETROTATIONX, rotationX);   
+        }
+
+        /**
+         * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
+         *
+         * @see `setRotationSkewX(double)`
+         *
+         * @return The X rotation in degrees.
+         * @js getRotationX 
+         */
+
+        double getRotationX()  { return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETROTATIONX); }
+
+        /**
+         * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+         *
+         * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality,
+         * while the second one uses the real skew function.
+         *
+         * 0 is the default rotation angle.
+         * Positive values rotate node clockwise, and negative values for anti-clockwise.
+         *
+         * @param rotationY    The Y rotation in degrees.
+         *
+         * @warning The physics body doesn't support this.
+         * @js setRotationY
+         */
+
+        void setRotationY(double rotationY) { 
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETROTATIONY, rotationY);   
+        }
+
+        /**
+         * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+         *
+         * @see `setRotationSkewY(double)`
+         *
+         * @return The Y rotation in degrees.
+         * @js getRotationY
+         */
+
+        
+        double getRotationY()  {
+            return CCNative.xcocox_get_double(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETROTATIONY);
+        }
+
+        /**
+         * Sets whether the anchor point will be (0,0) when you position this node.
+         *
+         * This is an internal method, only used by Layer and Scene. Don't call it outside framework.
+         * The default value is false, while in Layer and Scene are true.
+         *
+         * @param ignore    true if anchor point will be (0,0) when you position this node.
+         */
+        void setIgnoreAnchorPointForPosition(bool ignore){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETIGNOREANCHORPOINTFORPOSITION, ignore ? 1 : 0);
+        }
+
+        /**
+         * Gets whether the anchor point will be (0,0) when you position this node.
+         *
+         * @see `setIgnoreAnchorPointForPosition(bool)`
+         *
+         * @return true if the anchor point will be (0,0) when you position this node.
+         */
+        bool isIgnoreAnchorPointForPosition() {
+            return 0 != CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEISIGNOREANCHORPOINTFORPOSITION);
+        }
+
+
+        /**
+         * Adds a child to the container with z-order as 0.
+         *
+         * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+         *
+         * @param child A child node.
+         */
+        void addChild(Node child){
+            if (child == nilptr){
+                throw new NullPointerException("child is nilptr");
+            }
+            CCNative.xcocox_void_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEADDCHILD, child.hcore);
+        }
+        /**
+         * Adds a child to the container with a local z-order.
+         *
+         * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+         *
+         * @param child     A child node.
+         * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
+         */
+        void addChild(Node  child, int localZOrder){
+            if (child == nilptr){
+                throw new NullPointerException("child is nilptr");
+            }
+            CCNative.xcocox_void_func_int_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEADDCHILD, localZOrder, child.hcore);
+        }
+        /**
+         * Adds a child to the container with z order and tag.
+         *
+         * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+         *
+         * @param child         A child node.
+         * @param localZOrder   Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
+         * @param tag           An integer to identify the node easily. Please refer to `setTag(int)`.
+         * 
+         * Please use `addChild(Node* child, int localZOrder,  String &name)` instead.
+         */
+         void addChild(Node child, int localZOrder, int tag){
+            if (child == nilptr){
+                throw new NullPointerException("child is nilptr");
+            }
+             CCNative.xcocox_void_func_int_long_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEADDCHILD, localZOrder, child.hcore, tag);
+         }
+        /**
+         * Adds a child to the container with z order and tag
+         *
+         * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+         *
+         * @param child     A child node.
+         * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
+         * @param name      A string to identify the node easily. Please refer to `setName(int)`.
+         *
+         */
+        void addChild(Node child, int localZOrder,  String name){
+            if (child == nilptr){
+                throw new NullPointerException("child is nilptr");
+            }
+            CCNative.xcocox_void_func_int_long_int_string(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEADDCHILD, localZOrder, child.hcore, name);
+        }
+        /**
+         * Gets a child from the container with its tag.
+         *
+         * @param tag   An identifier to find the child node.
+         *
+         * @return a Node object whose tag equals to the input parameter.
+         *
+         * Please use `getChildByName()` instead.
+         */
+         Node getChildByTag(int tag) {
+            Node retobj = nilptr;
+            long hobj = CCNative.xcocox_long_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETCHILDBYTAG, tag);
+            if (hobj != 0){
+                return CCType<Node>.getObject(hobj);
+            }
+            return nilptr;
+         }
+        
+         /**
+         * Gets a child from the container with its tag that can be cast to Type T.
+         *
+         * @param tag   An identifier to find the child node.
+         *
+         * @return a Node with the given tag that can be cast to Type T.
+        */
+        
+        /**
+         * Gets a child from the container with its name.
+         *
+         * @param name   An identifier to find the child node.
+         *
+         * @return a Node object whose name equals to the input parameter.
+         *
+         * @since v3.2
+         */
+        Node getChildByName( String name) {
+            long hobj = CCNative.xcocox_long_string_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETCHILDBYNAME, name);
+            if (hobj != 0){
+                return CCType<Node>.getObject(hobj);
+            }
+            return nilptr;
+        }
+        /**
+         * Gets a child from the container with its name that can be cast to Type T.
+         *
+         * @param name   An identifier to find the child node.
+         *
+         * @return a Node with the given name that can be cast to Type T.
+        */
+       
+        interface NodeEnumerater{
+            void onBegin();
+            void onFound();
+            void onEnd();
+        };
+        
+        void enumerateChildren( String name, NodeEnumerater callback){
+            //CCNative.xcocos_func_param_long_objs(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEENUMERATECHILDREN, name, callback);
+        }
+        /**
+         * Returns the array of the node's children.
+         *
+         * @return the array the node's children.
+         */
+        Node[] getChildren() { 
+           // return (Node[])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETCHILDREN);
+           return nilptr;
+        }
+        
+        
+        /** 
+         * Returns the amount of children.
+         *
+         * @return The amount of children.
+         */
+        int  getChildrenCount() {
+            return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETCHILDRENCOUNT);
+        }
+
+        /**
+         * Sets the parent node.
+         *
+         * @param parent    A pointer to the parent node.
+         */
+        void setParent(Node parent){
+            CCNative.xcocox_void_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETPARENT, parent.hcore);
+        }
+        /**
+         * Returns a pointer to the parent node.
+         *
+         * @see `setParent(Node*)`
+         *
+         * @returns A pointer to the parent node.
+         */
+
+        Node getParent()  {
+            return CCType<Node>.getObject(CCNative.xcocox_long_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETPARENT));
+        }
+
+
+        ////// REMOVES //////
+
+        /**
+         * Removes this node itself from its parent node with a cleanup.
+         * If the node orphan, then nothing happens.
+         * @see `removeFromParentAndCleanup(bool)`
+         */
+        void removeFromParent(){
+           CCNative. xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVEFROMPARENT);
+        }
+        /**
+         * Removes this node itself from its parent node.
+         * If the node orphan, then nothing happens.
+         * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+         * @js removeFromParent
+         * @lua removeFromParent
+         */
+        void removeFromParentAndCleanup(bool cleanup){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVEFROMPARENTANDCLEANUP, cleanup ? 1 : 0);
+        }
+
+        /**
+         * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+         *
+         * @param child     The child node which will be removed.
+         * @param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.
+         */
+        void removeChild(Node child, bool cleanup){
+            CCNative.xcocox_void_func_int_long_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVECHILD,cleanup ? 1 : 0,  child.hcore, 0);
+        }
+
+        /**
+         * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
+         *
+         * @param tag       An integer number that identifies a child node.
+         * @param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.
+         *
+         * Please use `removeChildByName` instead.
+         */
+         void removeChildByTag(int tag, bool cleanup){
+             CCNative.xcocox_void_func_int_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVECHILDBYTAG,cleanup ? 1 : 0,  tag);
+         }
+        /**
+         * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
+         *
+         * @param name       A string that identifies a child node.
+         * @param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.
+         */
+        void removeChildByName( String name, bool cleanup){
+            CCNative.xcocox_void_func_int_long_int_string(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVECHILDBYNAME,cleanup ? 1 : 0, 0, name);
+        }
+        /**
+         * Removes all children from the container with a cleanup.
+         *
+         * @see `removeAllChildrenWithCleanup(bool)`
+         */
+        void removeAllChildren(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVEALLCHILDREN);
+        }
+        /**
+         * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+         *
+         * @param cleanup   True if all running actions on all children nodes should be cleanup, false otherwise.
+         * @js removeAllChildren
+         * @lua removeAllChildren
+         */
+        void removeAllChildrenWithCleanup(bool cleanup){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVEALLCHILDRENWITHCLEANUP, cleanup ? 1 : 0);
+        }
+
+        /**
+         * Reorders a child according to a new z value.
+         *
+         * @param child     An already added child node. It MUST be already added.
+         * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int).
+         */
+        void reorderChild(Node child, int localZOrder){
+            CCNative.xcocox_void_func_int_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREORDERCHILD, localZOrder, child.hcore);
+        }
+
+        /**
+         * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
+         * This approach can improve the performance massively.
+         * @note Don't call this manually unless a child added needs to be removed in the same frame.
+         */
+        void sortAllChildren(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESORTALLCHILDREN);
+        }
+
+        /**
+         * Returns a tag that is used to identify the node easily.
+         *
+         * @return An integer that identifies the node.
+         *
+         * Please use `getTag()` instead.
+         */
+         int getTag(){
+             return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETTAG);
+         }
+        /**
+         * Changes the tag that is used to identify the node easily.
+         *
+         * Please refer to getTag for the sample code.
+         *
+         * @param tag   A integer that identifies the node.
+         *
+         * Please use `setName()` instead.
+         */
+         void setTag(int tag){
+              CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETTAG, tag);
+         }
+        
+        /** Returns a string that is used to identify the node.
+         * @return A string that identifies the node.
+         * 
+         * @since v3.2
+         */
+         String getName() {
+            return (String)CCNative.xcocox_string_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETNAME);
+         }
+        /** Changes the name that is used to identify the node easily.
+         * @param name A string that identifies the node.
+         *
+         * @since v3.2
+         */
+        void setName(String name){
+           CCNative.xcocox_bool_func_string(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETNAME, name);
+        }
+
+        Object _userData;
+        /**
+         * Returns a custom user data pointer.
+         *
+         * You can set everything in UserData pointer, a data block, a structure or an object.
+         *
+         * @return A custom user data pointer.
+         * @lua NA
+         */
+        Object getUserData() { return _userData; }
+        /**
+        * @lua NA
+        */
+
+        /**
+         * Sets a custom user data pointer.
+         *
+         * You can set everything in UserData pointer, a data block, a structure or an object, etc.
+         * @warning Don't forget to release the memory manually,
+         *          especially before you change this data pointer, and before this node is autoreleased.
+         *
+         * @param userData  A custom user data pointer.
+         * @lua NA
+         */
+        void setUserData(Object userData){
+            _userData = userData;
+        }
+
+
+
+
+        bool isRunning() {
+            return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEISRUNNING) != 0;
+        }
+
+
+
+        void onEnter(){
+            
+        }
+
+        /** Event callback that is invoked when the Node enters in the 'stage'.
+         * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
+         * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
+         * @lua NA
+         */
+        void onEnterTransitionDidFinish(){
+            
+        }
+
+        /**
+         * Event callback that is invoked every time the Node leaves the 'stage'.
+         * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
+         * During onExit you can't access a sibling node.
+         * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
+         * @lua NA
+         */
+        void onExit(){
+            
+        }
+
+        /**
+         * Event callback that is called every time the Node leaves the 'stage'.
+         * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
+         * @lua NA
+         */
+        void onExitTransitionDidStart(){
+            
+        }
+
+        /**
+         * Stops all running actions and schedulers
+         */
+        void cleanup(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECLEANUP);
+        }
+
+        /**
+         * Override this method to draw your own node.
+         * The following GL states will be enabled by default:
+         * - `glEnableClientState(GL_VERTEX_ARRAY);`
+         * - `glEnableClientState(GL_COLOR_ARRAY);`
+         * - `glEnableClientState(GL_TEXTURE_COORD_ARRAY);`
+         * - `glEnable(GL_TEXTURE_2D);`
+         * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
+         * But if you enable any other GL state, you should disable it after drawing your node.
+         * 
+         * @param renderer A given renderer.
+         * @param transform A transform matrix.
+         * @param flags Renderer flag.
+         */
+
+        /**
+         * Visits this node's children and draw them recursively.
+         *
+         * @param renderer A given renderer.
+         * @param parentTransform A transform matrix.
+         * @param parentFlags Renderer flag.
+         */
+
+
+
+
+        /** Returns the Scene that contains the Node.
+         It returns `nullptr` if the node doesn't belong to any Scene.
+         This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+         *
+         * @return The Scene that contains the node.
+         */
+        Scene getScene(){
+            long hobj = CCNative.xcocox_long_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETSCENE);
+            if (hobj != 0){
+                return CCType<Scene>.getObject(hobj);
+            }
+            return nilptr;
+        }
+
+        /**
+         * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
+         *
+         * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
+         */
+        Rect getBoundingBox(){
+            double [] res = (double [])CCNative.xcocox_obj_get(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETBOUNDINGBOX);
+            return new Rect(res[0], res[1], res[2], res[3]);
+        }
+
+
+        /** Set event dispatcher for scene.
+         *
+         * @param dispatcher The event dispatcher of scene.
+         */
+         
+        EventDispatcher _eventDispatcher;
+        void setEventDispatcher(EventDispatcher dispatcher){
+            _eventDispatcher = dispatcher;
+        }
+        /** Get the event dispatcher of scene.
+         *
+         * @return The event dispatcher of scene.
+         */
+        EventDispatcher getEventDispatcher()  { return _eventDispatcher; }
+
+
+
+        /**
+         * Sets the ActionManager object that is used by all actions.
+         *
+         * @warning If you set a new ActionManager, then previously created actions will be removed.
+         *
+         * @param actionManager     A ActionManager object that is used by all actions.
+         */
+         
+        ActionManager _actionManager ;
+        void setActionManager(ActionManager actionManager){
+            _actionManager = actionManager;
+        }
+        /**
+         * Gets the ActionManager object that is used by all actions.
+         * @see setActionManager(ActionManager*)
+         * @return A ActionManager object.
+         */
+        ActionManager getActionManager() { return _actionManager; }
+
+        /**
+         * Executes an action, and returns the action that is executed.
+         *
+         * This node becomes the action's target. Refer to Action::getTarget().
+         * @warning Actions don't retain their target.
+         *
+         * @param action An Action pointer.
+         */
+        Action runAction(Action action){
+            return CCType<Action>.getObject(CCNative.xcocox_long_int_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODERUNACT, action.hcore));
+        }
+
+        /**
+         * Stops and removes all actions from the running action list .
+         */
+        void stopAllActions(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESTOPALLACTIONS);
+        }
+
+        /**
+         * Stops and removes an action from the running action list.
+         *
+         * @param action    The action object to be removed.
+         */
+        void stopAction(Action action){
+            CCNative.xcocox_void_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESTOPACTION, action.hcore);
+        }
+
+        /**
+         * Removes an action from the running action list by its tag.
+         *
+         * @param tag   A tag that indicates the action to be removed.
+         */
+        void stopActionByTag(int tag){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESTOPACTIONBYTAG, tag);
+        }
+        
+        /**
+         * Removes all actions from the running action list by its tag.
+         *
+         * @param tag   A tag that indicates the action to be removed.
+         */
+        void stopAllActionsByTag(int tag){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESTOPALLACTIONSBYTAG, tag);
+        }
+
+        /**
+         * Removes all actions from the running action list by its flags.
+         *
+         * @param flags   A flag field that removes actions based on bitwise AND.
+         */
+        void stopActionsByFlags(int flags){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESTOPACTIONSBYFLAGS, flags);
+        }
+
+        /**
+         * Gets an action from the running action list by its tag.
+         *
+         * @see `setTag(int)`, `getTag()`.
+         *
+         * @return The action object with the given tag.
+         */
+        Action getActionByTag(int tag){
+            long hobj = CCNative.xcocox_long_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETACTIONBYTAG, tag);
+            if (hobj != 0){
+                return CCType<Action>.getObject(hobj);
+            }
+            return nilptr;
+        }
+
+        /**
+         * Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
+         *
+         * Composable actions are counted as 1 action. Example:
+         *    If you are running 1 Sequence of 7 actions, it will return 1.
+         *    If you are running 7 Sequences of 2 actions, it will return 7.
+         *
+         * @return The number of actions that are running plus the ones that are schedule to run.
+         */
+        int  getNumberOfRunningActions() {
+            return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETNUMBEROFRUNNINGACTIONS);
+        }
+
+        /**
+         * Returns the numbers of actions that are running plus the ones that are
+         * schedule to run (actions in actionsToAdd and actions arrays) with a
+         * specific tag.
+         *
+         * Composable actions are counted as 1 action. Example:
+         *    If you are running 1 Sequence of 7 actions, it will return 1.
+         *    If you are running 7 Sequences of 2 actions, it will return 7.
+         *
+         * @param  tag The tag that will be searched.
+         *
+         * @return The number of actions that are running plus the
+         *         ones that are schedule to run with specific tag.
+         */
+        int  getNumberOfRunningActionsByTag(int tag) {
+            return CCNative.xcocox_long_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETNUMBEROFRUNNINGACTIONSBYTAG, tag);
+        }
+
+
+        /**
+         * Resumes all scheduled selectors, actions and event listeners.
+         * This method is called internally by onEnter.
+         */
+        void resume(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODERESUME);
+        }
+        /**
+         * Pauses all scheduled selectors, actions and event listeners.
+         * This method is called internally by onExit.
+         */
+        void pause(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEPAUSE);
+        }
+
+
+
+        /**
+         * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".
+         * @param delta In seconds.
+         */
+        void update(double delta){
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEUPDATE, delta);
+        }
+
+        /**
+         * Calls children's updateTransform() method recursively.
+         *
+         * This method is moved from Sprite, so it's no longer specific to Sprite.
+         * As the result, you apply SpriteBatchNode's optimization on your customed Node.
+         * e.g., `batchNode->addChild(myCustomNode)`, while you can only addChild(sprite) before.
+         */
+        void updateTransform(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEUPDATETRANSFORM);
+        }
+
+        /**
+         * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+         * The matrix is in Pixels.
+         *
+         * @return The transformation matrix.
+         */
+        /*Mat4 getNodeToParentTransform() {
+            
+        }
+        AffineTransform getNodeToParentAffineTransform() {
+            
+        }*/
+
+        /**
+         * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+         * The matrix is in Pixels.
+         * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
+         *
+         * @param ancestor The parent's node pointer.
+         * @since v3.7
+         * @return The transformation matrix.
+         */
+        /*Mat4 getNodeToParentTransform(Node ancestor) {
+            
+        }*/
+
+        /**
+         * Returns the affine transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+         * The matrix is in Pixels.
+         *
+         * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
+         *
+         * @param ancestor The parent's node pointer.
+         * @since v3.7
+         * @return The affine transformation matrix.
+         */
+        /*AffineTransform getNodeToParentAffineTransform(Node ancestor) {
+            
+        }*/
+
+        /** 
+         * Sets the transformation matrix manually.
+         *
+         * @param transform A given transformation matrix.
+         */
+        /*void setNodeToParentTransform( Mat4 transform){
+            
+        }*/
+
+        /** @deprecated use getNodeToParentTransform() instead */
+        //AffineTransform nodeToParentTransform()  { return getNodeToParentAffineTransform(); }
+
+        /**
+         * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
+         * The matrix is in Pixels.
+         *
+         * @return The transformation matrix.
+         */
+       /* Mat4 getParentToNodeTransform() {
+            
+        }
+        AffineTransform getParentToNodeAffineTransform(){
+            
+        }*/
+
+        /** @deprecated Use getParentToNodeTransform() instead */
+        //AffineTransform parentToNodeTransform()  { return getParentToNodeAffineTransform(); }
+
+        /**
+         * Returns the world affine transform matrix. The matrix is in Pixels.
+         *
+         * @return transformation matrix, in pixels.
+         */
+       /* Mat4 getNodeToWorldTransform(){
+            
+        }
+        AffineTransform getNodeToWorldAffineTransform(){
+            
+        }*/
+
+        /** @deprecated Use getNodeToWorldTransform() instead */
+        //AffineTransform nodeToWorldTransform()  { return getNodeToWorldAffineTransform(); }
+
+        /**
+         * Returns the inverse world affine transform matrix. The matrix is in Pixels.
+         *
+         * @return The transformation matrix.
+         */
+       /* Mat4 getWorldToNodeTransform() {
+            
+        }
+        AffineTransform getWorldToNodeAffineTransform(){
+            
+        }*/
+
+        /** @deprecated Use getWorldToNodeTransform() instead */
+        //AffineTransform worldToNodeTransform()  { return getWorldToNodeAffineTransform(); }
+
+
+        /**
+         * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+         *
+         * @param worldPoint A given coordinate.
+         * @return A point in node (local) space coordinates.
+         */
+        Vec2 convertToNodeSpace(Vec2 worldPoint) {
+            double [] param = {worldPoint.x, worldPoint.y};
+            double [] res = (double [])CCNative.xcocox_obj_get_obj(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECONVERTTONODESPACE, param);
+            return new Vec2(res[0], res[1]);
+        }
+
+        /**
+         * Converts a Vec2 to world space coordinates. The result is in Points.
+         *
+         * @param nodePoint A given coordinate.
+         * @return A point in world space coordinates.
+         */
+        Vec2 convertToWorldSpace(Vec2 nodePoint){
+            double [] param = {nodePoint.x, nodePoint.y};
+            double [] res = (double [])CCNative.xcocox_obj_get_obj(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECONVERTTOWORLDSPACE, param);
+            return new Vec2(res[0], res[1]);
+        }
+
+        /**
+         * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+         * treating the returned/received node point as anchor relative.
+         *
+         * @param worldPoint A given coordinate.
+         * @return A point in node (local) space coordinates, anchor relative.
+         */
+        Vec2 convertToNodeSpaceAR(Vec2 worldPoint) {
+            double [] param = {worldPoint.x, worldPoint.y};
+            double [] res = (double [])CCNative.xcocox_obj_get_obj(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECONVERTTONODESPACEAR, param);
+            return new Vec2(res[0], res[1]);
+        }
+
+        /**
+         * Converts a local Vec2 to world space coordinates.The result is in Points.
+         * treating the returned/received node point as anchor relative.
+         *
+         * @param nodePoint A given coordinate.
+         * @return A point in world space coordinates, anchor relative.
+         */
+        Vec2 convertToWorldSpaceAR(Vec2 nodePoint) {
+            double [] param = {nodePoint.x, nodePoint.y};
+            double [] res = (double [])CCNative.xcocox_obj_get_obj(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECONVERTTOWORLDSPACEAR, param);
+            return new Vec2(res[0], res[1]);
+        }
+
+        /**
+         * convenience methods which take a Touch instead of Vec2.
+         *
+         * @param touch A given touch.
+         * @return A point in world space coordinates.
+         */
+        Vec2 convertTouchToNodeSpace(Touch  touch) {
+            double [] res = (double [])CCNative.xcocox_obj_get_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECONVERTTOUCHTONODESPACE, touch.hcore);
+            return new Vec2(res[0], res[1]);
+        }
+
+        /**
+         * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
+         *
+         * @param touch A given touch.
+         * @return A point in world space coordinates, anchor relative.
+         */
+        Vec2 convertTouchToNodeSpaceAR(Touch  touch) {
+            double [] res = (double [])CCNative.xcocox_obj_get_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODECONVERTTOUCHTONODESPACEAR, touch.hcore);
+            return new Vec2(res[0], res[1]); 
+        }
+
+        /**
+         *  Sets an additional transform matrix to the node.
+         *
+         *  In order to remove it, call it again with the argument `nullptr`.
+         *
+         * @note The additional transform will be concatenated at the end of getNodeToParentTransform.
+         *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
+         *
+         * @param additionalTransform An additional transform matrix.
+         */
+       /* void setAdditionalTransform( Mat4 additionalTransform){
+            
+        }
+
+        void setAdditionalTransform( AffineTransform additionalTransform){
+            
+        }*/
+
+        /**
+         * Gets a component by its name.
+         *
+         * @param name A given name of component.
+         * @return The Component by name.
+         */
+        Component getComponent( String name){
+            long hobj = CCNative.xcocox_long_string_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETCOMPONENT, name);
+            if (hobj != 0){
+                return CCType<Component>.getObject(hobj);
+            }
+            return nilptr;
+        }
+
+        /**
+         * Adds a component.
+         *
+         * @param component A given component.
+         * @return True if added success.
+         */
+        bool addComponent(Component component){
+            return 0 != CCNative.xcocox_long_int_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEADDCOMPONENT, component.hcore);
+        }
+
+        /**
+         * Removes a component by its name.
+         *
+         * @param name A given name of component.
+         * @return True if removed success.
+         */
+        bool removeComponent( String name){
+            return CCNative.xcocox_bool_func_string(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVECOMPONENT,name );
+        }
+
+        /** 
+         * Removes a component by its pointer.
+         *
+         * @param component A given component.
+         * @return True if removed success.
+         */
+        bool removeComponent(Component component){
+            return 0 != CCNative.xcocox_long_int_func_long(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVECOMPONENT, component.hcore);
+        }
+        /**
+         * Removes all components
+         */
+        void removeAllComponents(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEREMOVEALLCOMPONENTS);
+        }
+        /// @} end of component functions
+        
+        // overrides
+        /**
+         * Return the node's opacity.
+         * @return A byte value.
+         */
+        byte getOpacity() {
+            return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETOPACITY);
+        }
+        /**
+         * Return the node's display opacity.
+         * The difference between opacity and displayedOpacity is:
+         * The displayedOpacity is what's the final rendering opacity of node.
+         * @return A byte value.
+         */
+        byte getDisplayedOpacity() {
+            return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEGETDISPLAYEDOPACITY);
+        }
+        /**
+         * Change node opacity.
+         * @param opacity A byte opacity value.
+         */
+        void setOpacity(byte opacity){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETOPACITY, opacity);
+        }
+        /**
+         * Update the displayed opacity of node with it's parent opacity;
+         * @param parentOpacity The opacity of parent node.
+         */
+        void updateDisplayedOpacity(byte parentOpacity){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEUPDATEDISPLAYEDOPACITY, parentOpacity);
+        }
+        /**
+         * Whether cascadeOpacity is enabled or not.
+         * @return A boolean value.
+         */
+        bool isCascadeOpacityEnabled() {
+            return 0 != CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEISCASCADEOPACITYENABLED);
+        }
+        /**
+         * Change node's cascadeOpacity property.
+         * @param cascadeOpacityEnabled True to enable cascadeOpacity, false otherwise.
+         */
+        void setCascadeOpacityEnabled(bool cascadeOpacityEnabled){
+           CCNative. xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETCASCADEOPACITYENABLED, cascadeOpacityEnabled ? 1 : 0);
+        }
+
+        /**
+         * Query node's color value.
+         * @return A Color3B color value.
+         */
+         /*Color3B getColor() {
+             
+         }*/
+        /**
+         * Query node's displayed color.
+         * @return A Color3B color value.
+         */
+        /* Color3B getDisplayedColor() {
+             
+         }*/
+        /**
+         * Change the color of node.
+         * @param color A Color3B color value.
+         */
+        /*void setColor(Color3B color){
+            
+        }*/
+        /**
+         * Update node's displayed color with its parent color.
+         * @param parentColor A Color3B color value.
+         */
+        /*void updateDisplayedColor( Color3B parentColor){
+            
+        }*/
+        /**
+         * Query whether cascadeColor is enabled or not.
+         * @return Whether cascadeColor is enabled or not.
+         */
+        bool isCascadeColorEnabled() {
+            return 0 != CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEISCASCADECOLORENABLED);
+        }
+        /**
+         * If you want node's color affect the children node's color, then set it to true.
+         * Otherwise, set it to false.
+         * @param cascadeColorEnabled A boolean value.
+         */
+        void setCascadeColorEnabled(bool cascadeColorEnabled){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETCASCADECOLORENABLED, cascadeColorEnabled ? 1 : 0);
+        }
+
+        /**
+         *  If you want the opacity affect the color property, then set to true.
+         * @param value A boolean value.
+         */
+        void setOpacityModifyRGB(bool value){
+            CCNative.xcocox_void_func_int(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODESETOPACITYMODIFYRGB, value ? 1 : 0);
+        }
+        /**
+         * If node opacity will modify the RGB color value, then you should override this method and return true.
+         * @return A boolean value, true indicates that opacity will modify color; false otherwise.
+         */
+        bool isOpacityModifyRGB() {
+            return 0 != CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_NODEISOPACITYMODIFYRGB);
+        }
+
+        /**
+         * Set the callback of event onEnter.
+         * @param callback A std::function<void()> callback.
+         */
+         interface onEnterListener{
+             
+         };
+         interface onExitListener{
+             
+         };
+         interface onEnterTransitionDidFinishListener{
+             
+         };
+         interface onExitTransitionDidStart{
+             
+         };
+        onEnterListener _onEnterCallback ;
+        onExitListener _onExitCallback;
+        onEnterTransitionDidFinishListener _onEnterTransitionDidFinishCallback;
+        onExitTransitionDidStart _onExitTransitionDidStartCallback;
+        
+        void setOnEnterCallback( onEnterListener callback) { _onEnterCallback = callback; }
+        /**
+         * Get the callback of event onEnter.
+         * @return A std:function<void()> callback.
+         */
+        onEnterListener getOnEnterCallback()  { return _onEnterCallback; }
+        /**
+         * Set the callback of event onExit.
+         * @param callback A std::function<void()> callback.
+         */
+        void setOnExitCallback(onExitListener callback) { _onExitCallback = callback; }
+        /**
+         * Get the callback of event onExit.
+         * @return A std::function<void()>.
+         */
+         onExitListener getOnExitCallback()  { return _onExitCallback; }
+        /**
+         * Set the callback of event EnterTransitionDidFinish.
+         * @param callback A std::function<void()> callback.
+         */
+        void setonEnterTransitionDidFinishCallback(onEnterTransitionDidFinishListener callback) { _onEnterTransitionDidFinishCallback = callback; }
+        /**
+         * Get the callback of event EnterTransitionDidFinish.
+         * @return std::function<void()>
+         */
+        onEnterTransitionDidFinishListener getonEnterTransitionDidFinishCallback()  { return _onEnterTransitionDidFinishCallback; }
+        /**
+         * Set the callback of event ExitTransitionDidStart.
+         * @param callback A std::function<void()> callback.
+         */
+        void setonExitTransitionDidStartCallback( onExitTransitionDidStart callback) { _onExitTransitionDidStartCallback = callback; }
+        /**
+         * Get the callback of event ExitTransitionDidStart.
+         * @return std::function<void()>
+         */
+        onExitTransitionDidStart getonExitTransitionDidStartCallback()  { return _onExitTransitionDidStartCallback; }
+        
+        /**
+         * get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true
+         */
+        short getCameraMask()  {
+            return 0;
+        }
+        /**
+         * Modify the camera mask for current node.
+         * If applyChildren is true, then it will modify the camera mask of its children recursively.
+         * @param mask A unsigned short bit for mask.
+         * @param applyChildren A boolean value to determine whether the mask bit should apply to its children or not.
+         */
+        void setCameraMask(short mask, bool applyChildren){
+            
+        }
+    };
+};

@@ -1,0 +1,45 @@
+//xlang Source, Name:CCScene.xcsm 
+//Date: Mon Aug 14:22:17 2019 
+package Cocos2dx{
+    /**这个类较为特殊 需要使用create_xxobject_params 创建*/
+    class Scene : Node{
+        Scene(){
+            hcore = CCNative.create_xxobject_params(CC_OBJECT_TYPE.CC_OBJ_SCENE, this, nilptr);
+            if (hcore == 0){
+                throw new IllegalArgumentException("can not create Scene");
+            }else{
+                create();
+            }
+        }
+        
+        Scene(double w, double h){
+            double [] args = {w, h};
+            hcore = CCNative.create_xxobject_params(CC_OBJECT_TYPE.CC_OBJ_SCENE, this, args);
+            if (hcore == 0){
+                throw new IllegalArgumentException("can not create Scene");
+            }else{
+                create();
+            }
+        }
+        
+        Scene(long h){
+            super(h);
+        }
+        
+        bool create(){
+            return CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_SCENECREATE) != 0;
+        }
+        
+        void removeAllChildren(){
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_SCENERMALLCHLD);
+        }
+        
+        void onEnter(){
+            
+        }
+        
+        bool init(){
+            return 0 != CCNative.xcocox_int_func(hcore, CCNative.NATIVE_SYSCALL_ID.CC_SCENEINIT);
+        }
+    };
+};

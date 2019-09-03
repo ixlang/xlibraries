@@ -3,8 +3,9 @@
 
 
 class Sqlite : Sql.Connection{
+
 	static const String DRIVERNAME = "sqlite";
-    
+        	
 	static bool registry(){
 		if (Native.init()){
 			Sql.Database.reigstry(DRIVERNAME, new SqliteRegister());
@@ -131,6 +132,14 @@ class Sqlite : Sql.Connection{
 		throw new Sql.SqlException(-1, "Sqlite not support option");
     }
 	
+    int getErrorCode()override{
+        return 0;
+    }
+    
+    String getError()override{
+        return nilptr;
+    }
+    
 	Object getOption(int opt){
 		throw new Sql.SqlException(-1, "Sqlite not support option");
         return nilptr;
@@ -147,7 +156,8 @@ class Sqlite : Sql.Connection{
 	bool isClosed(){
 		return hdb != 0;
     }
-	
+
+    
 	void close(){
 		if (hdb != 0){
 			Native.sqlite3_close(hdb);
@@ -158,6 +168,8 @@ class Sqlite : Sql.Connection{
     void finalize(){
 		close();
     }
+    
+
     
     String generateErrorText(long herr, String fallback){
 		if (herr != 0){

@@ -1,0 +1,89 @@
+//xlang 
+
+using {
+    Cocos2dx;
+};
+
+class MyScene : Scene{    
+	bool onCreate()override{
+		//TODO 
+        if (super.init() == false){
+            return false;
+        }
+        Sprite sp = new Sprite("E:\\HelloWorld.png");
+        Label lab = new Label(true, "欢迎来到 Cocos2d-x 的世界", "微软雅黑", 30);
+        addChild(sp);
+        addChild(lab);
+        lab.setPosition(720, 700);
+        Button btn = new Button("E:\\button.png", "E:\\buttonh.png", "E:\\buttond.png", Widget.TextureResType.LOCAL);
+        btn.setPosition(720, 800);
+        btn.setTitleText("点我");
+        SimpleAudioEngine ae = SimpleAudioEngine.getInstance();
+        ae.preloadEffect("e:\\73-a3.wav");
+        btn.setClickListener(new Widget.ClickListener(){
+            void onClick(Widget w){
+                sp.setPosition(220, 450);
+                sp.stopAllActions();
+                ae.playEffect("e:\\73-a3.wav");
+                sp.runAction(new EaseIn(new JumpBy(1, 1000, 0, 50, 10), 0.5));
+            }
+        });
+        
+        Director pdir = Director.getInstance();
+        
+        /*new Timer().schedule(new TimerTask(){
+            void run(){
+                pdir.runOnUi(new Runnable(){
+                    void run(){
+                        sp.setPosition(720, 450);
+                        sp.stopAllActions();
+                        ae.playEffect("e:\\73-a3.wav");
+                        sp.runAction(new JumpBy(1, 100, -100, 50, 5));
+                    }
+                });
+            }
+        },100, -1);*/
+        btn.ignoreContentAdaptWithSize(false);
+        btn.setContentSize(new Size(120, 45));
+        addChild(btn);
+        return true;
+	}
+};
+
+class MyApplication : Application{
+    void initGLContextAttrs(){
+        int [] attrs = {8, 8, 8, 8, 24, 8, 0 };
+        GLView.setGLContextAttrs(attrs);
+    }
+    
+    bool applicationDidFinishLaunching(){
+        Director pdir = Director.getInstance();
+        GLView glview = pdir.getOpenGLView();
+        
+        if (glview == nilptr){
+            glview = new GLView("hello",0, 0, 1440, 900);
+            pdir.setOpenGLView(glview);
+        }
+        
+        pdir.setDisplayStats(true);
+        pdir.setAnimationInterval(1.0f / 120);
+        pdir.runWithScene(new MyScene());
+        
+        return true;
+    }
+    
+    void applicationDidEnterBackground(){
+        _system_.output("applicationDidEnterBackground");
+    }
+    
+    void applicationWillEnterForeground(){
+        _system_.output("applicationWillEnterForeground");
+    }
+};
+
+int main(String [] args){
+    CCNative.load();
+	MyApplication app = new MyApplication();
+    app.run();
+	return 0;
+}

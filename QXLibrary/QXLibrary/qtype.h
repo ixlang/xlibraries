@@ -55,5 +55,9 @@ enum QTypes {
 	qtRadialGradient6 = 50,
 	qtConicalGradient = 51,
 	qtImgBrush = 52,
-	qtPath = 53
+	qtPath = 53,
+	qtPrintDialog = 54,
+	qtPrintViewDialog = 55,
+	qtPrinter = 56,
+	qtSciPrinter = 57
 };

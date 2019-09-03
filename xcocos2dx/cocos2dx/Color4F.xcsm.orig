@@ -1,0 +1,40 @@
+//xlang Source, Name:cocos2dx/Color4F.xcsm 
+//Date: Mon Aug 16:48:47 2019 
+package Cocos2dx{
+   class Color4F{
+        double r, g, b, a;
+        Color4F(){
+            
+        }
+        Color4F(double _r, double _g, double _b, double _a){
+            r = _r;
+            g = _g;
+            b = _b;
+            a = _a;
+        }
+        Color4F(double [] rgba){
+            r = rgba[0];
+            g = rgba[1];
+            b = rgba[2];
+            a = rgba[3];
+        }
+        bool operator==(Color4F right) {
+            return (r == right.r && g == right.g && b == right.b && a == right.a);
+        }
+
+        bool operator!=(Color4F right) {
+            return !(this == right);
+        }
+
+        
+        static Color4F WHITE  = new Color4F(    1,     1,     1, 1);
+        static Color4F YELLOW = new Color4F(    1,     1,     0, 1);
+        static Color4F GREEN  = new Color4F(    0,     1,     0, 1);
+        static Color4F BLUE   = new Color4F(    0,     0,     1, 1);
+        static Color4F RED    = new Color4F(    1,     0,     0, 1);
+        static Color4F MAGENTA= new Color4F(    1,     0,     1, 1);
+        static Color4F BLACK  = new Color4F(    0,     0,     0, 1);
+        static Color4F ORANGE = new Color4F(    1,  0.5f,     0, 1);
+        static Color4F GRAY   = new Color4F(0.65f, 0.65f, 0.65f, 1);
+   }; 
+};

@@ -254,6 +254,7 @@ megInfo megs[] = {
 	{ "ON_ENUMCHANGED", 297 },
 	{ "ON_VVALUECHANGE", 298 },
 	{ "ON_VATTRCHANGE", 299 },
+	{ "ON_PRINTPREVIEWREQ", 300 },
 };
 
 
@@ -520,4 +521,5 @@ XIDENT  methods [] =
 	{ "/void@/QXObject/onEnumPropertyValueChanged(/long,/int)" , 0 },
 	{ "/void@/QXObject/onVariantPropertyValueChanged(/long,/int,/String)" , 0 },
 	{ "/void@/QXObject/onVariantPropertyAttributeChanged(/long,/String,/int,/String)" , 0 },
+	{ "/void@/QPrintPreviewDialog/onPreviewRequest(/long)" , 0 },
 };

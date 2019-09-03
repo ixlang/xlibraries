@@ -1,0 +1,13 @@
+//xlang Source, Name:cocos2dx/CCRect.xcsm 
+//Date: Mon Aug 16:02:50 2019 
+package Cocos2dx{
+    class Rect{
+        double x, y, w, h;
+        Rect(double _x, double _y, double _w, double _h){
+            x = _x;
+            y = _y;
+            w = _w; 
+            h = _h;
+        }
+    };
+};

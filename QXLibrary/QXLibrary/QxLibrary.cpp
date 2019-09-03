@@ -8,6 +8,7 @@ Q_IMPORT_PLUGIN(QICNSPlugin) //for releas
 Q_IMPORT_PLUGIN(QICOPlugin) //for releas
 Q_IMPORT_PLUGIN(QJpegPlugin) //for releas
 
+
 Q_IMPORT_PLUGIN(QTgaPlugin) //for releas
 Q_IMPORT_PLUGIN(QTiffPlugin) //for releas
 Q_IMPORT_PLUGIN(QWbmpPlugin) //for releas
@@ -24,12 +25,14 @@ Q_IMPORT_PLUGIN(QWebpPlugin) //for releas
 #ifdef WIN32
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
+Q_IMPORT_PLUGIN(QWindowsPrinterSupportPlugin) //for releas
 #elif defined(__linux__)
 #ifdef __arm__
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QLinuxFbIntegrationPlugin)
 #else
 #include <QtPlugin>
+//Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #elif defined(__APPLE__)
@@ -44,7 +47,6 @@ QXApplication * _xapplication = 0;
 extern int onNotifyId;
 extern XMethod * onNotify;
 extern XMethod * createObject;
-
 extern ActionReceiver ar;
 
 int MAX_METHOD = 0;
@@ -67,6 +69,216 @@ void CleanupQImage(void* p) {
 	delete[](unsigned char *)p;
 }
 
+#ifdef WIN32
+#include <direct.h>
+#include <io.h>
+#include <conio.h>
+#else
+#include <sys/stat.h>
+#endif
+
+#ifdef WIN32
+
+bool CheckFileRelation(const char *strName, const char *strExt, const char *strAppKey) {
+
+	bool nRet = false;
+	HKEY hExtKey;
+	char szPath[_MAX_PATH];
+	DWORD dwSize = sizeof(szPath);
+
+	if (RegOpenKeyA(HKEY_CLASSES_ROOT, strExt, &hExtKey) == ERROR_SUCCESS) {
+		RegQueryValueExA(hExtKey, NULL, NULL, NULL, (LPBYTE)szPath, &dwSize);
+		if (_stricmp(szPath, strAppKey) == 0) {
+			nRet = true;
+		}
+		RegCloseKey(hExtKey);
+		return nRet;
+	}
+
+	return nRet;
+}
+
+bool RegisterFileRelation(const char *strName, const char *strExt, const  char *strAppName, const char * args, const char *strAppKey, const char *strDefaultIcon, const char *strDescribe) {
+
+	char strTemp[4096];
+	HKEY hKey;
+	int res = ERROR_SUCCESS;
+	if (ERROR_SUCCESS != RegCreateKeyA(HKEY_CLASSES_ROOT, strExt, &hKey)) {
+		return false;
+	}
+	res = RegSetValueA(hKey, "", REG_SZ, strAppKey, strlen(strAppKey) + 1);
+	RegCloseKey(hKey);
+	if (res != ERROR_SUCCESS) {
+		return false;
+	}
+
+	if (ERROR_SUCCESS != RegCreateKeyA(HKEY_CLASSES_ROOT, strAppKey, &hKey)) {
+		return false;
+	}
+	res = RegSetValueA(hKey, "", REG_SZ, strDescribe, strlen(strDescribe) + 1);
+	RegCloseKey(hKey);
+	if (res != ERROR_SUCCESS) {
+		return false;
+	}
+
+	if (strDefaultIcon != 0) {
+		sprintf(strTemp, "%s\\DefaultIcon", strAppKey);
+		if (ERROR_SUCCESS != RegCreateKeyA(HKEY_CLASSES_ROOT, strTemp, &hKey)) {
+			return false;
+		}
+
+		res = RegSetValueA(hKey, "", REG_SZ, strDefaultIcon, strlen(strDefaultIcon) + 1);
+		RegCloseKey(hKey);
+		if (res != ERROR_SUCCESS) {
+			return false;
+		}
+	}
+	if (strAppName != 0) {
+		sprintf(strTemp, "%s\\Shell", strAppKey);
+		if (ERROR_SUCCESS != RegCreateKeyA(HKEY_CLASSES_ROOT, strTemp, &hKey)) {
+			return false;
+		}
+		res = RegSetValueA(hKey, "", REG_SZ, "Open", strlen("Open") + 1);
+		RegCloseKey(hKey);
+		if (res != ERROR_SUCCESS) {
+			return false;
+		}
+
+		sprintf(strTemp, "%s\\Shell\\Open\\Command", strAppKey);
+		if (ERROR_SUCCESS != RegCreateKeyA(HKEY_CLASSES_ROOT, strTemp, &hKey)) {
+			return false;
+		}
+		if (args != 0) {
+			sprintf(strTemp, "%s %s \"%%1\"", strAppName, args);
+		}
+		else {
+			sprintf(strTemp, "%s \"%%1\"", strAppName);
+		}
+		res = RegSetValueA(hKey, "", REG_SZ, strTemp, strlen(strTemp) + 1);
+		RegCloseKey(hKey);
+		if (res != ERROR_SUCCESS) {
+			return false;
+		}
+	}
+	return true;
+}
+
+
+
+#elif defined(__linux__)
+#include<unistd.h>
+
+bool CheckFileRelation(const char *strName, const char *strExt, const char *strAppKey) {
+
+	char buffer[1024];
+	sprintf(buffer, "/usr/share/mime/packages/%s.xml", strName);
+	if (access(buffer, 0) < 0) {
+		return false;
+	}
+
+	sprintf(buffer, "/usr/share/applications/%s.desktop", strName);
+	if (access(buffer, 0) < 0) {
+		return false;
+	}
+
+	return true;
+}
+
+bool RegisterFileRelation(const char *strName, const char *strExt, const  char *strAppName, const char * args, const char *strAppKey, const char *strDefaultIcon, const char *strDescribe) {
+	char buffer[1024];
+	sprintf(buffer, "/usr/share/mime/packages/%s.xml", strName);
+	FILE * fp = fopen(buffer, "wb");
+	if (fp == 0) {
+		return false;
+	}
+
+	const char * content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	fwrite(content, strlen(content), 1, fp);
+
+	content = "<mime-info xmlns=\"http://www.freedesktop.org/standards/shared-mime-info\">\n";
+	fwrite(content, strlen(content), 1, fp);
+
+	sprintf(buffer, "  <mime-type type=\"%s\">\n", strAppKey);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "    <comment>%s</comment>\n", strDescribe);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "    <glob pattern=\"*%s\"/>\n", strExt);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "    <sub-class-of type=\"application/xml\"/>\n", strExt);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "  </mime-type>\n", strExt);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "</mime-info>\n", strExt);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	fclose(fp);
+
+
+	sprintf(buffer, "/usr/share/applications/%s.desktop", strName);
+	fopen(buffer, "wb");
+	if (fp == 0) {
+		return false;
+	}
+
+	sprintf(buffer, "%s\n", "[Desktop Entry]");
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "%s\n", "Version = 1.0");
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "%s\n", "Type=Application");
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "Name=%s\n", strName);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "GenericName=%s\n", strDescribe);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "Comment=%s\n", strDescribe);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	if (args != 0) {
+		sprintf(buffer, "Exec=\"%s\" %s %%F\n", strAppName, args);
+		fwrite(buffer, strlen(buffer), 1, fp);
+	}
+	else {
+		sprintf(buffer, "Exec=\"%s\" %%F\n", strAppName);
+		fwrite(buffer, strlen(buffer), 1, fp);
+	}
+
+	if (strDefaultIcon != 0) {
+		sprintf(buffer, "Icon=\"%s\"\n", strDefaultIcon);
+		fwrite(buffer, strlen(buffer), 1, fp);
+	}
+
+	sprintf(buffer, "%s\n", "Terminal=false");
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "%s\n", "X-MultipleArgs=false");
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	/*sprintf(buffer, "%s\n", "Categories=Development;IDE;GTK;");
+	fwrite(buffer, strlen(buffer), 1, fp);
+	*/
+	sprintf(buffer, "%s\n", "StartupNotify=true");
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	sprintf(buffer, "MimeType=%s;\n", strAppKey);
+	fwrite(buffer, strlen(buffer), 1, fp);
+
+	fclose(fp);
+
+	system("update-mime-database /usr/share/mime");
+	return true;
+
+}
+#endif
 
 XObject * data2String(QByteArray & data) {
 	XObject * strobj = gs_env->createObject();
@@ -233,6 +445,7 @@ XNLEXPORT xlong  XI_CDECL createNObject(xint type, xlong param) {
 				return (xlong)new QBrush();
 			}
 			break;
+
         case qtIcon:
         {
                 QPixmap pixmap;
@@ -344,6 +557,72 @@ public:
 	}
 };*/
 
+
+XNLEXPORT xlong  XI_CDECL createQPObject(xint type, XObject * x, xlong parent, xlong param1, xlong param2, xlong param3, xlong param4) {
+	QObject * qobject = 0;
+
+	switch (type){
+	case qtPrinter:
+	{
+		QPrinter * qw = new QPrinter((QPrinter::PrinterMode)param1);
+		return (xlong)qw;
+	}
+	break;
+	case qtSciPrinter:
+	{
+		QsciPrinter * qw = new QsciPrinter((QPrinter::PrinterMode)param1);
+		return (xlong)qw;
+	}
+	break;
+		case qtPrintDialog:
+			if (parent != 0) {
+				if (param1 != 0) {
+					qobject = new QPrintDialog((QPrinter*)param1, (QWidget*)parent);
+				}
+				else {
+					qobject = new QPrintDialog((QWidget*)parent);
+				}
+			}
+			else {
+				if (param1 != 0) {
+					qobject = new QPrintDialog((QPrinter*)param1);
+				}
+				else {
+					qobject = new QPrintDialog();
+				}
+			}
+
+			ar.installDialogAction((QPrintDialog*)qobject);
+			((QPrintDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+			break;
+
+		case qtPrintViewDialog:
+			if (parent != 0) {
+				if (param1 != 0) {
+					qobject = new QPrintPreviewDialog((QPrinter*)param1, (QWidget*)parent);
+				}
+				else {
+					qobject = new QPrintPreviewDialog((QWidget*)parent);
+				}
+			}
+			else {
+				qobject = new QPrintPreviewDialog();
+			}
+			ar.installDialogAction((QDialog*)qobject);
+			ar.installPrintViewDialogAction((QPrintPreviewDialog*)qobject);
+			((QPrintPreviewDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
+			break;
+	}
+
+	if (qobject != NULL) {
+		XObjectData * objectData = new XObjectData();
+		objectData->setObject(x);
+		qobject->setUserData(Qt::UserRole, objectData);
+	}
+
+	return (xlong)qobject;
+}
+
 XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 
         QObject * qobject = 0;
@@ -352,6 +631,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
         case None:
 
                 break;
+
         case qtWidget:
         {
                 QWidget * qw = 0;
@@ -407,6 +687,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 }
                 ar.installButtonAction(qobject);
                 break;
+
         case qtLineEdit:
                 if (parent != 0) {
                         qobject = new QLineEdit((QWidget*)parent);
@@ -501,6 +782,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             ar.installDialogAction((QDialog*)qobject);
             ((QDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
             break;
+
         case qtComboBox:
             if (parent != 0) {
                qobject = new QComboBox((QWidget*)parent);
@@ -754,6 +1036,60 @@ XNLEXPORT xint  XI_STDCALL XNLExit(XNLEnv * env){
 XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         switch (proid)
         {
+		case PRINTERSETOUTFMT:
+		{
+			QPrinter * pset = ((QPrinter*)h);
+			if (pset != 0) {
+				pset->setOutputFormat((QPrinter::OutputFormat)value);
+			}
+		}
+		break;
+		case PRTDLGSETOPTS:
+		{
+			QPrintDialog * pset = ((QPrintDialog*)h);
+			if (pset != 0) {
+				pset->setOptions((QPrintDialog::PrintDialogOptions)value);
+			}
+		}
+		break;
+		case PRTDLGDONE:
+		{
+			QPrintDialog * pset = ((QPrintDialog*)h);
+			if (pset != 0) {
+				pset->done(value);
+			}
+		}
+		break;
+		case PVWDLGDONE:
+		{
+			QPrintPreviewDialog * pset = ((QPrintPreviewDialog*)h);
+			if (pset != 0) {
+				pset->done(value);
+			}
+		}
+		break;
+		case QSCIDISABLESHORTCUT:
+		{
+			QsciCommandSet * pset = ((QsciScintilla*)h)->standardCommands();
+			if (pset != 0) {
+				QsciCommand * pcmd = pset->find((QsciCommand::Command)value);
+				if (pcmd != 0) {
+					pcmd->setKey(0);
+				}
+			}
+		}
+			break;
+		case QSCIUNBINDSHORTCUT:
+		{
+			QsciCommandSet * pset = ((QsciScintilla*)h)->standardCommands();
+			if (pset != 0) {
+				QsciCommand * pcmd = pset->boundTo(value);
+				if (pcmd != 0) {
+					pcmd->setKey(0);
+				}
+			}
+		}
+		break;
         case SETFOCUSPOLICY:
                 ((QWidget*)h)->setFocusPolicy((Qt::FocusPolicy)value);
             break;
@@ -903,6 +1239,12 @@ XNLEXPORT xbool XI_CDECL widget_get_int_bool(xlong h, xint proid, xint v) {
 
         switch (proid)
         {
+		case PRTDLGTEST:
+		{
+			QPrintDialog * titem = (QPrintDialog *)h;
+			return titem->testOption((QPrintDialog::PrintDialogOption)v);
+		}
+		break;
         case TRITEMGETCHECK:
         {
                 QTreeWidgetItem * titem = (QTreeWidgetItem *)h;
@@ -922,6 +1264,9 @@ XNLEXPORT xbool XI_CDECL widget_get_int_bool(xlong h, xint proid, xint v) {
 XNLEXPORT void XI_CDECL widget_set_int_bool_value(xlong h, xint proid, xint v, xbool v1) {
         switch (proid)
         {
+		case PRTDLGSETOPT:
+			((QPrintDialog*)h)->setOption((QPrintDialog::PrintDialogOption)v, v1);
+			break;
         case SETWINDOWFLAG:
                 ((QWidget*)h)->setWindowFlag((Qt::WindowType)v, v1);
                 break;
@@ -955,6 +1300,9 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
 
         switch (proid)
         {
+		case PAINTDEVICEACTIVE:
+			return ((QPaintDevice*)h)->paintingActive();
+			break;
 		case ENABLEDROG:
 				return ((QWidget*)h)->acceptDrops();
 				break;
@@ -1195,6 +1543,12 @@ XNLEXPORT double XI_CDECL widget_get_double_value(xlong h, xint proid) {
         case OPACITY:
                 return ((QWidget*)h)->windowOpacity();
                 break;
+		case PAINTDEVICEPRFS:
+			return ((QPaintDevice*)h)->devicePixelRatioFScale();
+			break;
+		case PAINTDEVICEMETRICGETPRF:
+			return ((QPaintDevice*)h)->devicePixelRatioF();
+			break;
         }
         return 0;
 }
@@ -1354,6 +1708,25 @@ XNLEXPORT void XI_CDECL widget_set_bkrl(xlong h, xint r) {
 XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         switch (proid)
         {
+		case PRINTERGETOUTFMT:
+			return ((QPrinter*)h)->outputFormat();
+			break;
+		case PAINTDEVICETYPE:
+			return ((QPaintDevice*)h)->devType();
+			break;
+		case PAINTERTYPE:
+			return ((QPrinter*)h)->devType();
+			break;
+		case PRTDLGGETOPTS:
+			return ((QPrintDialog*)h)->options();
+			break;
+		case PRTDLGEXEC:
+			return ((QPrintDialog*)h)->exec();
+			break;
+		case PVWDLGEXEC:
+			return ((QPrintPreviewDialog*)h)->exec();
+			break;
+
 		case FONTASCENT: {
 			QFontMetrics fm(*(QFont*)h);
 			return fm.ascent();
@@ -1505,6 +1878,17 @@ QColor QMakeColor(xint c) {
 XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xint yv) {
         switch (proid)
         {
+		case QSCIUPDATESHORTCUT:
+		{
+			QsciCommandSet * pset = ((QsciScintilla*)h)->standardCommands();
+			if (pset != 0) {
+				QsciCommand * pcmd = pset->find((QsciCommand::Command)xv);
+				if (pcmd != 0) {
+					pcmd->setKey(yv);
+				}
+			}
+		}
+		break;
         case RESIZE:
                 ((QWidget*)h)->resize(xv, yv);
                 break;
@@ -1802,6 +2186,9 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
 XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
         switch (proid)
         {
+		case OBJECTSETNAME:
+			((QObject*)h)->setObjectName(QString::fromUtf8(value));
+			break;
 		case CLIPBOARDTEXT:
 		{
 			QClipboard * clipboard = QApplication::clipboard();
@@ -1945,6 +2332,12 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         case FONTCTOR:
                 delete (QFont*)h;
                 break;
+		case SCIPRINTERDTOR:
+			delete (QsciPrinter*)h;
+			break;
+		case PRINTERDTOR:
+			delete (QPrinter*)h;
+			break;
 		case PATHCTOR:
 			delete (QPainterPath*)h;
 			break;
@@ -1954,7 +2347,7 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
                 XObjectData * objectData = (XObjectData *)pObj->userData(Qt::UserRole);
                 pObj->setUserData(Qt::UserRole, 0);
                 if (objectData != 0) {
-                        delete objectData;
+                    delete objectData;
                 }
         }
                 break;
@@ -2049,6 +2442,9 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
 		case TABLECLEAR:
 			((QTableWidget*)h)->clear();
 			break;
+		case TRIGGER:
+			((QAction*)h)->triggered();
+			break;
 		case TABLECLEARCONTENT:
 			((QTableWidget*)h)->clearContents();
 			break;
@@ -2058,8 +2454,53 @@ XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
 }
 
 XNLEXPORT xbool XI_CDECL array_int2(xlong h, xint proid, XObject * obj, xint pos, xint len) {
+		bool bret = false;
+
         switch (proid)
         {
+		case ASSOCIATEEXT:
+		{
+#if (defined(WIN32) || defined(__linux))
+			if (gs_env->isArray(obj)) {
+				QStringList columns;
+				xlong size = gs_env->getLengthOfArray(obj);
+				if (size == 7) {
+					const char ** text = new const char *[size];
+					size_t *length = new size_t[size];
+
+					if (gs_env->getElementValue(obj, 0, text, length, size)) {
+						bret = RegisterFileRelation(text[0], text[1], text[2], text[3], text[4], text[5], text[6]);
+					}
+					delete[] text;
+					delete[]length;
+				}
+			}
+#endif
+			return bret;
+		}
+		break;
+		case CHECKASSOCIATED:
+		{
+#if (defined(WIN32) || defined(__linux))
+			if (gs_env->isArray(obj)) {
+				QStringList columns;
+				xlong size = gs_env->getLengthOfArray(obj);
+				if (size == 3) {
+					const char ** text = new const char *[size];
+					size_t *length = new size_t[size];
+
+					if (gs_env->getElementValue(obj, 0, text, length, size)) {
+						bret = CheckFileRelation(text[0], text[1], text[2]);
+					}
+					delete[] text;
+					delete[]length;
+				}
+			}
+#endif
+			return bret;
+		}
+		break;
+
         case BUFFERSETDATA:
         {
                 QBuffer * buf = (QBuffer *)h;
@@ -2074,7 +2515,6 @@ XNLEXPORT xbool XI_CDECL array_int2(xlong h, xint proid, XObject * obj, xint pos
 
         case QXPAINTDRAWLINE:
         {
-
                 if (gs_env->isArray(obj)) {
                         for (int i = 2, c = gs_env->getLengthOfArray(obj); i < c; i += 2) {
                                 xint x, y, ex, ey;
@@ -2196,14 +2636,26 @@ XNLEXPORT xlong XI_CDECL core_attach(xlong h, XObject * x) {
 }
 
 XNLEXPORT XObject * XI_CDECL object_get_string(xlong h, xint proid, xstring name) {
+
         QObject * obj = 0;
         switch (proid) {
         case ADDACTION:
-                obj = ((QMenuBar*)h)->addAction(QString::fromUtf8(name));
-                break;
+            obj = ((QMenuBar*)h)->addAction(QString::fromUtf8(name));
+			ar.installAction((QAction*)obj);
+            break;
+		case ADDACT:
+			obj = ((QMenu*)h)->addAction(QString::fromUtf8(name));
+			ar.installAction((QAction*)obj);
+			break;
         }
 
-        return getObjectControl(obj);
+		if (obj != 0) {
+			XObject * output = getObjectControl(obj);
+			if (output != 0) {
+				return gs_env->referenceObject(output);
+			}
+		}
+		return 0;
 }
 
 XNLEXPORT XObject * XI_CDECL core_getName(xlong h) {
@@ -2232,6 +2684,38 @@ XNLEXPORT xint XI_CDECL core_getintlong(xlong h, xint proid, xlong v) {
         case PEORENUMVALUE:
                 return ((QtEnumPropertyManager*)h)->value((QtProperty*)v);
                 break;
+		case PAINTDEVICEMETRICGET:
+			{
+			QPaintDevice * device = (QPaintDevice*)h;
+				switch (v)
+				{
+				case QPaintDevice::PdmWidth:
+					return device->width();
+				case QPaintDevice::PdmHeight:
+					return device->height();
+				case QPaintDevice::PdmWidthMM:
+					return device->widthMM();
+				case QPaintDevice::PdmHeightMM:
+					return device->heightMM();
+				case QPaintDevice::PdmDpiX:
+					return device->logicalDpiX();
+				case QPaintDevice::PdmDpiY:
+					return device->logicalDpiY();
+				case QPaintDevice::PdmPhysicalDpiX:
+					return device->physicalDpiX();
+				case QPaintDevice::PdmPhysicalDpiY:
+					return device->physicalDpiY();
+				case QPaintDevice::PdmDevicePixelRatio:
+					return device->devicePixelRatio();
+				case QPaintDevice::PdmNumColors:
+					return device->colorCount();
+				case QPaintDevice::PdmDepth:
+					return device->depth();
+				default:
+					break;
+				}
+				break;
+			}
         }
         return 0;
 }
@@ -2302,9 +2786,23 @@ XNLEXPORT XObject * XI_CDECL object_get_handle_string(xlong h, xint proid, xlong
 }
 
 XNLEXPORT XObject * XI_CDECL object_get_string2(xlong h, xint proid, xstring v1, xstring v2) {
+	QObject * obj = 0;
+
+	switch (proid) {
+		case ADDACT:
+			obj = ((QMenu*)h)->addAction(*loadIcon(QString::fromUtf8(v1)), QString::fromUtf8(v2));
+			ar.installAction((QAction*)obj);
+			break;
+	}
 
 
-        return 0;
+	if (obj != 0) {
+		XObject * output = getObjectControl(obj);
+		if (output != 0) {
+			return gs_env->referenceObject(output);
+		}
+	}
+	return 0;
 }
 
 XNLEXPORT XObject * XI_CDECL object_get_handle(xlong h, xint proid, xlong h1) {
@@ -2351,7 +2849,6 @@ XNLEXPORT XObject * XI_CDECL object_get_handle2(xlong h, xint proid, xlong hv, x
 }
 
 XNLEXPORT XObject * XI_CDECL object_get_string_handle_string2(xlong h, xint proid, xstring text, xlong handle, xstring v1, xstring v2) {
-
 
         return 0;
 }
@@ -2535,6 +3032,26 @@ XNLEXPORT void XI_CDECL long_long_int9(xlong h, xint proid, xlong v1, xint x1, x
                 ((QPainter*)h)->drawRoundedRect(QRect(x1, x2, x3, x4), y1, y2);
         }
         break;
+		case WIDGETRENDERF:
+		{
+			((QWidget*)h)->render((QPainter*)v1, QPoint(x1, x2), QRegion(x3, x4, y1, y2, (QRegion::RegionType)y3), QWidget::RenderFlags(y4));
+		}
+		break;
+		case WIDGETRENDER4:
+		{
+			((QWidget*)h)->render((QPainter*)v1, QPoint(x1, x2), QRegion(), QWidget::RenderFlags(y4));
+		}
+		break;
+		case WIDGETRENDER2:
+		{
+			((QWidget*)h)->render((QPainter*)v1, QPoint(), QRegion(), QWidget::RenderFlags(y4));
+		}
+		break;
+		case WIDGETRENDER1:
+		{
+			((QWidget*)h)->render((QPainter*)v1);
+		}
+		break;
         }
 }
 
@@ -2727,6 +3244,12 @@ XNLEXPORT xlong XI_CDECL long_get(xlong handle, xint proid) {
                 return (xlong)new QPainter(pimg);
         }
         break;
+		case PAINTERFROMDEVICE:
+		{
+			QPaintDevice * pimg = (QPaintDevice *)handle;
+			return (xlong)new QPainter(pimg);
+		}
+		break;
         default:
                 break;
         }
@@ -2820,6 +3343,12 @@ XNLEXPORT XObject * XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1
 XNLEXPORT void XI_CDECL widget_set_intlongint_value(xlong h, xint proid, xlong xv, xint yv, xint zv) {
         switch (proid)
         {
+		case PRINTSCIRANGE:
+		{
+			QsciPrinter * printer = (QsciPrinter *)h;
+			printer->printRange((QsciScintilla*)xv, yv, zv);
+		}
+		break;
 		case TRSETFOREBR:
 		{
 			QTreeWidgetItem * parent = (QTreeWidgetItem *)h;
@@ -2945,7 +3474,6 @@ XNLEXPORT void XI_CDECL widget_set_long_object_value(xlong h, xint proid, xlong 
 }
 
 
-
 XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * value) {
         switch (proid)
         {
@@ -2992,6 +3520,7 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
                 }
         }
                 break;
+
         case SETCOLUMNS:
         {
                 QTreeWidget * twidget = (QTreeWidget *)h;
@@ -3278,6 +3807,18 @@ XNLEXPORT xlong XI_CDECL long_double2(xlong h, xint proid, double v1, double v2)
 XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int iv) {
         switch (proid)
         {
+		case QPB_SETEXPAND:
+			((QtTreePropertyBrowser*)h)->setExpanded((QtBrowserItem*)hv, iv != 0);
+			break;
+		case QPB_SETSELECT:
+			((QtTreePropertyBrowser*)h)->setSelected((QtBrowserItem*)hv, iv != 0);
+			break;
+		case QPB_SETVISIBLE:
+			((QtTreePropertyBrowser*)h)->setItemVisible((QtBrowserItem*)hv, iv != 0);
+			break;
+		case QPB_SETBACKCOLOR:
+			((QtTreePropertyBrowser*)h)->setBackgroundColor((QtBrowserItem*)hv, QColor(iv));
+			break;
 		case CLIPBOARDIMAGE:
 		{
 			QClipboard * clipboard = QApplication::clipboard();

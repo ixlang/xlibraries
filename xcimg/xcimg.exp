@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/x64/debug/xcimg.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/readme.md",
+	"icon":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xide/res/package64.png",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/xcimg/Release/xcimg.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/xcimg/xcimg/output/Linux/i686/xcimg.so"],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/xcimg/x64/Release/xcimg.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/xcimg/xcimg/output/Linux/x86_64/xcimg.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xcimg/xcimg/xcimg/output/Darwin/i386/xcimg.dylib"],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"XCImg",
+	"version":	"1.0.0.1",
+	"descr":	"提供动态验证码生成",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

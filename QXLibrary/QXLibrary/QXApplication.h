@@ -1205,6 +1205,23 @@ private slots:
 			}
 		}
 	}
+
+	void onPreviewRequested(QPrinter *printer) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * text = gs_env->createObject();
+					gs_env->setValue(text, (xlong)printer);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_PRINTVIEWREQUEST].methodId, text);
+					gs_env->dereferenceObject(text);
+				}
+			}
+		}
+	}
+
 	void oncellItemPress(QTableWidgetItem * item) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
@@ -1600,6 +1617,10 @@ public:
 		XLINK(dlg, SIGNAL(finished(int)), this, SLOT(onFinish(int)));
 		XLINK(dlg, SIGNAL(accepted()), this, SLOT(onAccept()));
 		XLINK(dlg, SIGNAL(rejected()), this, SLOT(onReject()));
+	}
+
+	void installPrintViewDialogAction(QPrintPreviewDialog * dlg) {
+		XLINK(dlg, SIGNAL(paintRequested(QPrinter *)), this, SLOT(onPreviewRequested(QPrinter *)));
 	}
 
 	void installComboBoxAction(QComboBox * cmb) {

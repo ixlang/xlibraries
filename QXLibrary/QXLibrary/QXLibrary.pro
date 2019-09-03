@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport
 
 TARGET = QXLibrary
 TEMPLATE = lib
@@ -74,11 +74,13 @@ DEPENDPATH += $$QTDIR/include
 unix: PRE_TARGETDEPS += $$QTDIR/lib/libQt5Widgets.a
 
 unix: LIBS += -L$$QTDIR/lib/ -lqscintilla2_qt5
+#unix: LIBS += -L$$QTDIR/lib/ -lfcitxplatforminputcontextplugin
 
 INCLUDEPATH += $$QTDIR/include
 DEPENDPATH += $$QTDIR/include
 
 unix: PRE_TARGETDEPS += $$QTDIR/lib/libqscintilla2_qt5.a
+#unix: PRE_TARGETDEPS += $$QTDIR/lib/libfcitxplatforminputcontextplugin.a
 
 win32:CONFIG(release, debug|release): LIBS += -L$$QTDIR/lib/release/ -lQtSolutions_PropertyBrowser-head
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$QTDIR/lib/debug/ -lQtSolutions_PropertyBrowser-head
@@ -121,3 +123,6 @@ DEPENDPATH += $$QTDIR/plugins/platforms
 
 unix: PRE_TARGETDEPS += $$QTDIR/plugins/platforms/libqxcb.a
 }
+
+
+#unix:!macx: LIBS += -lxkbcommon

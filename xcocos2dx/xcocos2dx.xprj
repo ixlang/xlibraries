@@ -1,0 +1,49 @@
+{
+	"xcocos2dx":	{
+		"version":	"1.2",
+		"language":	"xlang",
+		"sources":	["xcocos2dx.xcs", ".\\cocos2dx\\CCNode.xcsm", ".\\cocos2dx\\Application.xcsm", ".\\cocos2dx\\CCCore.xcsm", ".\\cocos2dx\\CCNative.xcsm", ".\\cocos2dx\\Scene.xcsm", ".\\cocos2dx\\Director.xcsm", ".\\cocos2dx\\Size.xcsm", ".\\cocos2dx\\Vec2.xcsm", ".\\cocos2dx\\Rect.xcsm", ".\\cocos2dx\\Color4F.xcsm", ".\\cocos2dx\\Scheduler.xcsm", ".\\cocos2dx\\ActionManager.xcsm", ".\\cocos2dx\\EventDispatcher.xcsm", ".\\cocos2dx\\Renderer.xcsm", ".\\cocos2dx\\Mat4.xcsm", ".\\cocos2dx\\Color3B.xcsm", ".\\cocos2dx\\Vec3.xcsm", ".\\cocos2dx\\Quaternion.xcsm", ".\\cocos2dx\\Action.xcsm", ".\\cocos2dx\\AffineTransform.xcsm", ".\\cocos2dx\\Touch.xcsm", ".\\cocos2dx\\Component.xcsm", ".\\cocos2dx\\GLView.xcsm", ".\\cocos2dx\\Refable.xcsm", ".\\cocos2dx\\Sprite.xcsm", ".\\cocos2dx\\Animation.xcsm", ".\\cocos2dx\\Label.xcsm", ".\\Widget.xcsm", ".\\LayoutParameter.xcsm", ".\\Button.xcsm", ".\\SimpleAudioEngine.xcsm", ".\\Layout.xcsm", ".\\AbstractCheckButton.xcsm", ".\\ScrollView.xcsm", ".\\ListView.xcsm", ".\\EditBox.xcsm", ".\\Scale9Sprite.xcsm", ".\\EditBoxDelegate.xcsm", ".\\Color4B.xcsm"],
+		"configures":	{
+			"debug":	{
+				"path":	{
+					"incpath":	[],
+					"libpath":	[]
+				},
+				"options":	"",
+				"cmd":	"$(Output)",
+				"args":	"$(Output)",
+				"workdir":	"$(ProjectDir)",
+				"libs":	[],
+				"links":	[],
+				"wtype":	"-arch:x86",
+				"ostype":	"",
+				"outname":	"$(ProjectName)$(Ext)",
+				"outpath":	"E:\\cocos2d-x-3.17.2\\build\\Release.win32",
+				"command":	"-ce",
+				"uaclevel":	"默认",
+				"ignorewarning":	"",
+				"compdest":	"",
+				"ignorewl":	"",
+				"debugable":	"-dbg",
+				"debugdatabase":	""
+			},
+			"release":	{
+				"path":	{
+					"incpath":	[],
+					"libpath":	[]
+				},
+				"libs":	[],
+				"options":	"-nd",
+				"command":	"-ce",
+				"debugable":	"",
+				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
+				"outname":	"$(ProjectName)$(Ext)",
+				"cmd":	"$(Output)",
+				"args":	"$(Output)",
+				"workdir":	"$(ProjectDir)"
+			}
+		},
+		"icofile":	"",
+		"versioninc":	"0"
+	}
+}

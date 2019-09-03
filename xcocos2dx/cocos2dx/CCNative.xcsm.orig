@@ -1,0 +1,96 @@
+//xlang Source, Name:CCNative.xcsm 
+//Date: Mon Aug 14:18:16 2019 
+package Cocos2dx {
+    class CCNative : Library{
+        enum NATIVE_SYSCALL_ID{
+            APP_RUN,
+            APP_SETINTERVAL,
+            APP_GETPLARFORM,
+            APP_GETVERSION,
+            APP_OPENURL,
+            APP_SETSRCPATH,
+            APP_GETSRCPATH,
+            CC_CREATEOBJECT,
+            CC_GETINSTANCE,
+            CC_DIRGETVS,
+            CC_DIRGETVO,
+            CC_DIRGETSAR,
+            CC_DIRCVTGL,
+            CC_DIRCVTUI,
+            CC_DIRGETZE,
+            CC_DIRRUNSCENE,
+            CC_DIRPUSHSCENE,
+            CC_DIRPOPSCENE,
+            CC_DIRPOPTOROOTSCENE,
+            CC_DIRPOPTOROOTSCENESTACKLEVEL,
+            CC_DIRREPLACESCENE,
+            CC_DIREND,
+            CC_DIRPAUSE,
+            CC_DIRRESUME,
+            CC_DIRRESTART,
+            CC_DIRSTOPANI,
+            CC_DIRSTARTANI,
+            CC_DIRDRAWSCENE,
+            CC_DIRPURGECACHEDDATA,
+            CC_DIRSETDEFAULTVALUES,
+            CC_DIRSETGLDEFAULTVALUES,
+            CC_DIRSETALPHABLENDING,
+            CC_DIRSETCLEARCOLOR,
+            CC_DIRGETCLEARCOLOR,
+            CC_DIRSETDEPTHTEST,
+            CC_DIRMAINLOOP,
+            CC_DIRSETCONTENTSCALEFACTOR,
+            CC_DIRGETCONTENTSCALEFACTOR,
+            CC_DIRGETSCHEDULER,
+            CC_DIRSETSCHEDULER,
+            CC_DIRGETACTIONMANAGER,
+            CC_DIRSETACTIONMANAGER,
+            CC_DIRGETEVENTDISPATCHER,
+            CC_DIRSETEVENTDISPATCHER,
+            CC_DIRGETRENDERER,
+            CC_DIRGETDELTATIME,
+            CC_DIRGETFRAMERATE,
+            CC_DIRPUSHMATRIX,
+            CC_DIRPUSHPROJECTIONMATRIX,
+            CC_DIRPOPMATRIX,
+            CC_DIRPOPPROJECTIONMATRIX,
+            CC_DIRLOADIDENTITYMATRIX,
+            CC_DIRLOADPROJECTIONIDENTITYMATRIX,
+            CC_DIRLOADMATRIX,
+            CC_DIRLOADPROJECTIONMATRIX,
+            CC_DIRMULTIPLYMATRIX,
+            CC_DIRMULTIPLYPROJECTIONMATRIX,
+            CC_DIRGETMATRIX,
+            CC_DIRGETPROJECTIONMATRIX,
+            CC_DIRRESETMATRIXSTACK,
+            CC_DIRINITPROJECTIONMATRIXSTACK,
+            CC_DIRGETPROJECTIONMATRIXSTACKSIZE,
+            CC_DIRISVALID
+        };
+        
+        static bool loaded = false;
+        
+        static void load(){
+            if (loaded == false){
+                loadLibrary("libxcocos.dll");
+            }
+        }
+        
+        import{
+            void cdecl xcocox_void_func(long handle, int proid);
+            void cdecl xcocox_void_double_func(long handle, int proid, double);
+            int cdecl xcocox_int_func(long handle, int proid);
+            Object cdecl xcocox_string_func(long handle, int proid);
+            bool cdecl xcocox_bool_func_string(long handle, int proid, String);
+            long cdecl create_xxobject(int proid, Object obj,int type);
+            Object cdecl xcocox_obj_get(long handle, int proid);
+            Object cdecl xcocox_obj_get_obj(long handle, int proid, Object param);
+            double cdecl xcocox_get_double(long handle,  int proid);
+            void cdecl xcocox_void_func_long(long handle, int proid, long param);
+            void cdecl xcocox_void_func_int(long handle, int proid, int v);
+            long cdecl xcocox_long_func(long handle, int proid);
+            long cdecl xcocox_long_int_func(long handle, int proid, int v);
+            void cdecl xcocox_void_func_int_long(long handle, int proid, int v1, long param);
+        };
+    };
+};

@@ -1,0 +1,404 @@
+//xlang Source, Name:Mysql.xcsm 
+//Date: Tue Jul 16:06:32 2019 
+
+class Mysql : Sql.Connection{
+
+	static const String DRIVERNAME = "mysql";
+    byte [] _mysql ;
+    
+    int port = 3306;
+    int timeout = 0;
+    
+    enum MysqlOption{
+		PORT,
+        TIMEOUT,
+        CHARSET,
+        SELECTDB
+    };
+    
+    static class MysqlRegister : Sql.ConnectionRegister{
+		Sql.Connection allocConnection(String drivername){
+			if (drivername.equals("mysql")){
+				return new Mysql();
+            }
+            return nilptr;
+        }
+    };
+    
+	static bool registry(){
+		if (Helper.init()){
+			Sql.Database.reigstry(DRIVERNAME, new MysqlRegister());
+            return true;
+        }
+        return false;
+    }
+        
+    static class Helper :Library {
+    	static bool bloaded = false;
+        
+        static bool init(){
+			if (bloaded == false){
+                try{
+                    loadLibrary("mysql_helper");
+                    bloaded = true;
+                }catch(Exception e){
+                    _system_.output(e.getMessage());
+                }
+            }
+            return bloaded;
+        }
+        
+        import{
+            Pointer cdecl rs_create(Pointer);
+            void cdecl rs_free(Pointer);
+            bool cdecl rs_next(Pointer);
+            bool cdecl rs_first(Pointer);
+            int cdecl rs_label2Index(Pointer, String);
+            long cdecl rs_getRowCount(Pointer);
+            bool cdecl rs_last(Pointer);
+            bool cdecl rs_isValid(Pointer);
+            bool cdecl rs_isLast(Pointer);
+            String cdecl rs_getValue(Pointer, String);
+            int cdecl rs_getValueI(Pointer, String);
+            long cdecl rs_getValueL(Pointer, String);
+            double cdecl rs_getValueD(Pointer, String);
+            
+            String cdecl rs_getIValue(Pointer, int);
+            int cdecl rs_getIValueI(Pointer, int);
+            long cdecl rs_getIValueL(Pointer, int);
+            double cdecl rs_getIValueD(Pointer, int);
+            
+			Pointer cdecl x_mysql_init (ObjectPtr );
+                        
+            int cdecl x_mysql_options(ObjectPtr, int option, ObjectPtr );
+            
+            Pointer	cdecl x_mysql_real_connect(ObjectPtr , String host,
+					   String user,
+					   String passwd,
+					   String db,
+					   int port,
+					   String unix_socket,
+					   int clientflag);
+                       
+            int cdecl x_mysql_set_character_set(ObjectPtr , String csname);
+            
+            int	cdecl x_mysql_select_db(ObjectPtr , String db);
+            
+            int cdecl x_mysql_errno(ObjectPtr );
+            String cdecl x_mysql_info(ObjectPtr );
+            String cdecl x_mysql_state(ObjectPtr );
+            String cdecl x_mysql_error(ObjectPtr );
+            
+            int cdecl x_mysql_query(ObjectPtr , String );
+            
+            void cdecl x_mysql_close(ObjectPtr);
+            
+            Pointer     cdecl x_mysql_store_result(ObjectPtr);
+            
+            void		cdecl x_mysql_data_seek(Pointer result,
+					long offset);
+                    
+            Pointer		cdecl x_mysql_row_seek(Pointer result,
+					long offset);
+                    
+            Pointer cdecl x_mysql_row_tell(Pointer res);
+            
+            Pointer	cdecl x_mysql_fetch_row(Pointer result);
+            
+            long cdecl x_mysql_num_rows(Pointer res);
+            
+            void cdecl x_mysql_free_result(Pointer result);
+            
+            int cdecl x_mysql_num_fields(Pointer res);
+        };
+    };
+    
+    static class MysqlResultSet : Sql.ResultSet{
+        long hres;
+        
+        MysqlResultSet(long r){
+            hres = Helper.rs_create(r);
+        }
+        
+		bool first(){
+            return Helper.rs_first(hres);
+        }
+        
+		bool last(){
+            return Helper.rs_last(hres);
+        }
+
+		bool next(){
+            return Helper.rs_next(hres);
+        }
+        
+		bool previous(){
+            return false;
+        }
+
+		bool isFirst(){
+            return false;
+        }
+        
+		bool isLast(){
+            return Helper.rs_isLast(hres);
+        }
+        
+		bool isValid(){
+            return Helper.rs_isValid(hres);
+        }
+        
+		int getInt(String columnlabel){
+            return Helper.rs_getValueI(hres, columnlabel);
+        }
+        
+		long getLong(String columnlabel){
+            return Helper.rs_getValueL(hres, columnlabel);
+        }
+        
+		double getDouble(String columnlabel){
+            return Helper.rs_getValueD(hres, columnlabel);
+        }
+        
+		byte getByte(String columnlabel){
+            return Helper.rs_getValueI(hres, columnlabel);
+        }
+        
+		bool getBoolean(String columnlabel){
+            return Helper.rs_getValueI(hres, columnlabel) != 0;
+        }
+        
+		String getString(String columnlabel){
+            return Helper.rs_getValue(hres, columnlabel);
+        }
+
+		int getInt(int columnIndex){
+            return Helper.rs_getIValueI(hres, columnIndex);
+        }
+        
+		long getLong(int columnIndex){
+            return Helper.rs_getIValueL(hres, columnIndex);
+        }
+        
+		double getDouble(int columnIndex){
+            return Helper.rs_getIValueD(hres, columnIndex);
+        }
+        
+		byte getByte(int columnIndex){
+            return Helper.rs_getIValueI(hres, columnIndex);
+        }
+        
+		bool getBoolean(int columnIndex){
+            return Helper.rs_getIValueI(hres, columnIndex) != 0;
+        }
+        
+		String getString(int columnIndex){
+            return Helper.rs_getIValue(hres, columnIndex);
+        }
+
+		int findColumn(String){
+            return -1;
+        }
+        
+		long getRowCount(){
+            return Helper.rs_getRowCount(hres);
+        }
+        
+		int getRow(){
+            return 0;
+        }
+        
+		void close(){
+            if (hres != 0){
+                Helper.rs_free(hres);
+                hres = 0;
+            }
+        }
+        
+        void finalize(){
+            close();
+        }
+    };
+    
+    static class MysqlStatement : Sql.Statement{
+        Mysql mysql;
+        
+        MysqlStatement(Mysql m){
+            mysql = m;
+        }
+        
+        int execute(String sql){
+            if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
+                throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet executeQuery(String sql){
+            if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
+                throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
+            }
+            return getResult();
+        }
+        
+        int executeUpdate(String sql){
+            if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
+                throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet getResult(){
+            long res = Helper.x_mysql_store_result(mysql._mysql);
+            if (res != 0){
+                return new MysqlResultSet(res);
+            }
+            return nilptr;
+        }
+        
+        void close(){
+        
+        }
+    };
+    
+    
+    class MysqlPreparedStatement : Sql.PreparedStatement{
+        Mysql mysql;
+        
+        MysqlPreparedStatement(Mysql m, String sql){
+            super(sql);
+            mysql = m;
+        }
+        
+        int execute(String sql){
+            if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
+                throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet executeQuery(String sql){
+            if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
+                throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
+            }
+            return getResult();
+        }
+        
+        int executeUpdate(String sql){
+            if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
+                throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet getResult(){
+            long res = Helper.x_mysql_store_result(mysql._mysql);
+            if (res != 0){
+                return new MysqlResultSet(res);
+            }
+            return nilptr;
+        }
+        
+        void close(){
+        
+        }
+    };
+    
+    
+	void close() override {
+		//TODO:	
+        if (_mysql != nilptr){
+            Helper.x_mysql_close(_mysql);
+            _mysql = nilptr;
+        }
+	}
+
+    void finalize(){
+        close();
+    }
+    
+	void create(String uri, String username, String pwd) override {
+		//TODO:	
+        byte [] __mysql = new byte[2048];
+        
+
+        if (0l == Helper.x_mysql_init(__mysql)){
+            throw new Sql.SqlException(Helper.x_mysql_errno(__mysql), Helper.x_mysql_error(__mysql));
+        }
+        
+        if (timeout != 0){
+            if (0 == Helper.x_mysql_options(__mysql,0,timeout)){
+                throw new Sql.SqlException(Helper.x_mysql_errno(__mysql), Helper.x_mysql_error(__mysql));
+            }
+        }
+        
+        if (0l == Helper.x_mysql_real_connect(__mysql,uri,username,pwd,nilptr,port,nilptr,0)){
+            throw new Sql.SqlException(Helper.x_mysql_errno(__mysql), Helper.x_mysql_error(__mysql));
+        }
+        _mysql = __mysql;
+	}
+
+	bool isClosed() override {
+		//TODO:	
+        return _mysql != nilptr;
+	}
+
+
+    int getErrorCode()override{
+        return Helper.x_mysql_errno(_mysql);
+    }
+    
+    String getError()override{
+        return Helper.x_mysql_error(_mysql);
+    }
+    
+    String getSqlState(){
+        return Helper.x_mysql_state(_mysql);
+    }
+    
+    String getInfo(){
+        return Helper.x_mysql_info(_mysql);
+    }
+    
+	Object getOption(int opt) override {
+		//TODO:	
+        return nilptr;
+	}
+
+	void setOption(int opt, Object option) override {
+		switch(opt){
+			case MysqlOption.PORT:
+                port = (int)option;
+            break;
+            case MysqlOption.TIMEOUT:
+                timeout = (int)option;
+            break;
+            case MysqlOption.CHARSET:
+                if (_mysql == nilptr){
+                    throw new Sql.SqlException(-1, "mysql not connected!");
+                }
+                if (0 != Helper.x_mysql_set_character_set(_mysql, (String)option)){
+                    throw new Sql.SqlException(Helper.x_mysql_errno(_mysql), Helper.x_mysql_error(_mysql));
+                }
+            break;
+            case MysqlOption.SELECTDB:
+                if (_mysql == nilptr){
+                    throw new Sql.SqlException(-1, "mysql not connected!");
+                }
+                if (0 != Helper.x_mysql_select_db(_mysql, (String)option)){
+                    throw new Sql.SqlException(Helper.x_mysql_errno(_mysql), Helper.x_mysql_error(_mysql));
+                }
+            break;
+        }
+	}
+
+	Sql.Statement createStatement() override {
+		return new MysqlStatement(this);
+	}
+
+	Sql.PreparedStatement prepareStatement(String sql) override {
+		return new MysqlPreparedStatement(this, sql);
+	}
+
+
+};

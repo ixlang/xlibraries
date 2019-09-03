@@ -85,8 +85,21 @@ package FileStream {
 				throw new IllegalArgumentException("file " + path + " can not open");
 			}
 		}
+		FileOutputStream(String path, bool append){
+			filehandler = XPlatform.openSystemFile(path, append ? "a" : "w");
+			if (filehandler == 0){
+				throw new IllegalArgumentException("file " + path + " can not open");
+			}
+		}
+        
 		FileOutputStream(FileSystem.File file){
 			filehandler = XPlatform.openSystemFile(file.getPath(), "w");
+			if (filehandler == 0){
+				throw new IllegalArgumentException("file " + file.getPath() + " can not open");
+			}
+		}
+		FileOutputStream(FileSystem.File file, bool append){
+			filehandler = XPlatform.openSystemFile(file.getPath(), append ? "a" : "w");
 			if (filehandler == 0){
 				throw new IllegalArgumentException("file " + file.getPath() + " can not open");
 			}

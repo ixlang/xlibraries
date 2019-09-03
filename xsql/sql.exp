@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/x86/debug/xsql.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/readme.md",
+	"icon":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/Sql1.0.0.0.png",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/Release/mysql_helper.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Win32/x86/libmysql.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Win32/x86/SQLite3.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Linux/i686/libsqlite3.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Linux/i686/mysql_helper.so"],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/x64/Release/mysql_helper.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Win32/x64/libmysql.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Win32/x64/sqlite3.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Linux/x86_64/libsqlite3.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Linux/x86_64/mysql_helper.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Darwin/i386/libsqlite3.dylib", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xsql/mysql_helper/mysql_helper/output/Darwin/i386/mysql_helper.dylib"],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"Sql",
+	"version":	"1.0.0.1",
+	"descr":	"提供xlang的sqlite和mysql在 windows和linux下的数据库操作",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

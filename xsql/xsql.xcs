@@ -33,11 +33,9 @@ package Sql{
 
         Connection allocate(){
             Connection connector = callback.createConnection();
-
             if (connector != nilptr){
                 _active_cnt++;
             }
-
             return connector;
         }
 
@@ -47,13 +45,18 @@ package Sql{
 
             synchronized(_pool){
                 if (_maxConnect != 0){
-                    while (_active_cnt >= _maxConnect){
+                    while ((_pool.size() == 0) && (_active_cnt >= _maxConnect)){
                         _pool.wait();
                     }
                 }
 
                 do{
-                    connector = nilptr;
+                    if (connector != nilptr){
+                        _active_cnt--;
+                        connector.close();
+                        connector = nilptr;
+                    }
+                    
                     lastactive = 0;
 
                     List.Iterator<connectorMgr> iter = _pool.iterator();
@@ -69,7 +72,9 @@ package Sql{
                 } while (test(connector, lastactive) == false);
 
                 if (connector == nilptr){
-                    connector = allocate();
+                    if ((_maxConnect == 0) || (_active_cnt < _maxConnect)){
+                        connector = allocate();
+                    }
                 }
             }
             return connector;
@@ -83,6 +88,7 @@ package Sql{
         }
 
         void recycle(Connection connection){
+        
             int mysql_error = connection.getErrorCode();
 
             if (_error_map.containsKey(mysql_error) == false){
@@ -99,23 +105,30 @@ package Sql{
                             connectorMgr pmt = it.get();
                             
                             if ((mgr.timestamp - pmt.timestamp) > _maxIdleTime){
+                                pmt.pconnection.close();
                                 _pool.remove(it);
+                                _active_cnt--;
                             }
                             it = tmp;
                         }
                     }
 
-                    _pool.add(mgr);
+                    
 
                     if (_maxIdle != 0){
                         while (_pool.size() > _maxIdle){
-                            _pool.remove(_pool.iterator());
+                            List.Iterator<connectorMgr> tmp = _pool.iterator();
+                            connectorMgr pmt = tmp.get();
+                            pmt.pconnection.close();
+                            _pool.remove(tmp);
+                            _active_cnt--;
                         }
                     }
-
+                    _pool.add(mgr);
                     _pool.notify();
                 }
             } else{
+                connection.close();
                 synchronized(_pool){
                     _active_cnt--;
                 }
@@ -232,6 +245,8 @@ package Sql{
         
         int getErrorCode();
         
+        String getError();
+        
         bool isClosed();
         
         void close();
@@ -284,124 +299,127 @@ package Sql{
     static class PreparedStatement : Statement{
     
 		String textSql;
+        String []strsplit;
+        String []strparams;
+        int paramid = 0;
         
 		PreparedStatement(String sql){
-			textSql = sql;
+			textSql = " " + sql + " ";
+            strsplit = textSql.split('?');
+            if (strsplit.length == 0){
+                throw new IllegalArgumentException("invalid sql");
+            }
+            strparams = new String[strsplit.length - 1];
         }
         
         String safety(String str){
-			str = str.replace("\'", "\''");
-			str = str.replace("\"", "\"\"");
+			str = str.replace("\\", "\\\\");
+			str = str.replace("\"", "\\\"");
+            str = str.replace("\'", "\\\'");
+            str = str.replace("\`", "\\\`");
 			return "'" + str + "'";
         }
         
 		int execute(){
-			return execute(textSql);
+			return execute(getSql());
+        }
+        
+        String getSql(){
+            String sqlout = strsplit[0];
+            int i = 1, c = strsplit.length;
+            for (; i < c; i++){
+                sqlout = sqlout + (strparams[i - 1] + strsplit[i]);
+            }
+            return sqlout;
         }
         
         ResultSet executeQuery(){
-			return executeQuery(textSql);
+			return executeQuery(getSql());
         }
         
         int executeUpdate(){
-			return executeUpdate(textSql);
+			return executeUpdate(getSql());
         }
         
         void setValue(String value){
-			int ofst = textSql.indexOf('?',0);
-            if (ofst == -1){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            if (paramid < strparams.length){
+                strparams[paramid++] = safety(value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
             }
-            textSql = textSql.replace(ofst,ofst,safety(value));
         }
         
         void setValue(int value){
-			int ofst = textSql.indexOf('?',0);
-            if (ofst == -1){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            if (paramid < strparams.length){
+                strparams[paramid++] = String.format("%d",value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
             }
-            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
         }
         
         void setValue(long value){
-			int ofst = textSql.indexOf('?',0);
-            if (ofst == -1){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            if (paramid < strparams.length){
+                strparams[paramid++] = String.format("%d",value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
             }
-            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
         }
         
         void setValue(byte value){
-			int ofst = textSql.indexOf('?',0);
-            
-            if (ofst == -1){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            if (paramid < strparams.length){
+                strparams[paramid++] = String.format("%02u",value & 0xff);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
             }
-            textSql = textSql.replace(ofst,ofst,String.format("%02u",value & 0xff));
         }
         
         void setValue(double value){
-			int ofst = textSql.indexOf('?',0);
-            if (ofst == -1){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            if (paramid < strparams.length){
+                strparams[paramid++] = String.format("%f",value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
             }
-            textSql = textSql.replace(ofst,ofst,String.format("%f",value));
         }
         
         
 		void setValue(int id, String value){
-			int ofst = textSql.indexOf('?',0);
-            while (--id > 0 && ofst != -1){
-				ofst = textSql.indexOf('?', ofst + 1);
-            }
-            if (ofst == -1 || id != 0){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
-            }
-            textSql = textSql.replace(ofst,ofst,safety(value));            
+            if ((id > 0) && (id - 1 < strparams.length)){
+                strparams[id - 1] = safety(value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }      
         }
         
         void setValue(int id, int value){
-			int ofst = textSql.indexOf('?',0);
-            while (--id > 0 && ofst != -1){
-				ofst = textSql.indexOf('?', ofst + 1);
-            }
-            if (ofst == -1 || id != 0){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
-            }
-            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
+            if ((id > 0) && (id - 1 < strparams.length)){
+                strparams[id - 1] = String.format("%d",value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }  
         }
         
         void setValue(int id, long value){
-			int ofst = textSql.indexOf('?',0);
-            while (--id > 0 && ofst != -1){
-				ofst = textSql.indexOf('?', ofst + 1);
-            }
-            if (ofst == -1 || id != 0){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
-            }
-            textSql = textSql.replace(ofst,ofst,String.format("%d",value));
+            if ((id > 0) && (id - 1 < strparams.length)){
+                strparams[id - 1] = String.format("%d",value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }  
         }
         
         void setValue(int id, byte value){
-			int ofst = textSql.indexOf('?',0);
-            while (--id > 0 && ofst != -1){
-				ofst = textSql.indexOf('?', ofst + 1);
-            }
-            if (ofst == -1 || id != 0){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
-            }
-            textSql = textSql.replace(ofst,ofst,String.format("%02u",value & 0xff));
+            if ((id > 0) && (id - 1 < strparams.length)){
+                strparams[id - 1] = String.format("%02u",value & 0xff);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }  
         }
         
         void setValue(int id, double value){
-			int ofst = textSql.indexOf('?',0);
-            while (--id > 0 && ofst != -1){
-				ofst = textSql.indexOf('?', ofst + 1);
-            }
-            if (ofst == -1 || id != 0){
-				throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
-            }
-            textSql = textSql.replace(ofst,ofst,String.format("%f",value));
+            if ((id > 0) && (id - 1 < strparams.length)){
+                strparams[id - 1] = String.format("%f",value);
+            }else{
+                throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
+            }  
         }
     };
 };
@@ -417,7 +435,7 @@ void testSql(){
             //TODO 
             Sql.Connection conn = Sql.Database.getConnection("mysql");
             if (conn != nilptr){
-                conn.create("127.0.0.1", "root", "3062144722");
+                conn.create("127.0.0.1", "root", "123456");
                 conn.setOption(Mysql.MysqlOption.CHARSET,"utf8");
                 conn.setOption(Mysql.MysqlOption.SELECTDB, "test");
             }
@@ -492,7 +510,7 @@ for (int cx = 0; cx < 100;cx ++){
             
 			for(int i = 0,  c = names.length; i < c; i ++){
 				stmt = slite.prepareStatement("insert into member (name,age)VALUES(?, ?)");
-				stmt.setValue(names[i]); 
+				stmt.setValue(names[i]);
 				stmt.setValue((int)(Math.random() * 80));
 				stmt.execute();
 			}

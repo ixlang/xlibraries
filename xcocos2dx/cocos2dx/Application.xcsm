@@ -1,0 +1,68 @@
+//xlang Source, Name:Application.xcsm
+//Date: Mon Aug 14:07:17 2019
+package Cocos2dx{
+
+    class Application : CCCore{
+
+        enum Platform
+        {
+            OS_WINDOWS,     /**< Windows */
+            OS_LINUX,       /**< Linux */
+            OS_MAC,         /**< Mac OS X*/
+            OS_ANDROID,     /**< Android */
+            OS_IPHONE,      /**< iPhone */
+            OS_IPAD,        /**< iPad */
+            OS_BLACKBERRY,  /**< BlackBerry */
+            OS_NACL,        /**< Native Client in Chrome */
+            OS_EMSCRIPTEN,  /**< Emscripten */
+            OS_TIZEN,       /**< Tizen */
+            OS_WINRT,       /**< Windows Runtime Applications */
+            OS_WP8          /**< Windows Phone 8 Applications */
+        };
+        Application()
+        {
+            if (false == create(CC_OBJECT_TYPE.CC_OBJ_APPLICATION)) {
+                throw new IllegalArgumentException("can not new Application");
+            }
+        }
+        void run()
+        {
+            CCNative.xcocox_void_func(hcore, CCNative.NATIVE_SYSCALL_ID.APP_RUN);
+        }
+
+        void setAnimationInterval(double interval)
+        {
+            CCNative.xcocox_void_double_func(hcore, CCNative.NATIVE_SYSCALL_ID.APP_SETINTERVAL, interval);
+        }
+
+        Platform getTargetPlatform()
+        {
+            return (Platform)CCNative.xcocox_int_func(hcore,CCNative.NATIVE_SYSCALL_ID.APP_GETPLARFORM);
+        }
+
+        String getVersion()
+        {
+            return (String)CCNative.xcocox_string_func(hcore,CCNative.NATIVE_SYSCALL_ID.APP_GETVERSION);
+        }
+
+        bool openURL(String url)
+        {
+            return CCNative.xcocox_bool_func_string(hcore,CCNative.NATIVE_SYSCALL_ID.APP_OPENURL, url);
+        }
+
+        void setResourceRootPath(String rootResDir)
+        {
+            CCNative.xcocox_bool_func_string(hcore,CCNative.NATIVE_SYSCALL_ID.APP_SETSRCPATH, rootResDir);
+        }
+
+        String getResourceRootPath()
+        {
+            return (String)CCNative.xcocox_string_func(hcore,CCNative.NATIVE_SYSCALL_ID.APP_GETSRCPATH);
+        }
+
+        void initGLContextAttrs();
+        bool applicationDidFinishLaunching();
+        void applicationDidEnterBackground();
+        void applicationWillEnterForeground();
+    };
+};

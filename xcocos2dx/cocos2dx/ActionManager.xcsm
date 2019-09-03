@@ -1,0 +1,9 @@
+//xlang Source, Name:cocos2dx/ActionManager.xcsm 
+//Date: Mon Aug 16:51:09 2019 
+package Cocos2dx{
+    class ActionManager : Refable{
+        /*ActionManager(long h){
+            super(h);
+        }*/
+    };
+};

@@ -1,0 +1,608 @@
+//xlang Source, Name:cocos2dx/CCVec2.xcsm
+//Date: Mon Aug 16:01:39 2019
+package Cocos2dx{
+    class Vec2 {
+        static  double
+            MATH_double_SMALL = 1.0e-37f,
+            MATH_TOLERANCE   = 2e-37f;
+
+        double x, y;
+
+
+        /**
+         * Constructs a new vector initialized to all zeros.
+         */
+        Vec2()
+        {
+
+        }
+
+        /**
+         * Constructs a new vector initialized to the specified values.
+         *
+         * @param xx The x coordinate.
+         * @param yy The y coordinate.
+         */
+        Vec2(double xx, double yy)
+        {
+            x = xx;
+            y = yy;
+        }
+
+        /**
+         * Constructs a new vector from the values in the specified array.
+         *
+         * @param array An array containing the elements of the vector in the order x, y.
+         */
+        Vec2(double[] array)
+        {
+            x = array[0];
+            y = array[1];
+        }
+
+        /**
+         * Constructs a vector that describes the direction between the specified points.
+         *
+         * @param p1 The first point.
+         * @param p2 The second point.
+         */
+        Vec2(Vec2 p1, Vec2 p2)
+        {
+            x = p2.x - p1.x;
+            y = p2.y - p1.y;
+        }
+
+        /**
+         * Indicates whether this vector contains all zeros.
+         *
+         * @return true if this vector contains all zeros, false otherwise.
+         */
+        bool isZero()
+        {
+            return x == 0.0f && y == 0.0f;
+        }
+
+        /**
+         * Indicates whether this vector contains all ones.
+         *
+         * @return true if this vector contains all ones, false otherwise.
+         */
+        bool isOne()
+        {
+            return x == 1.0f && y == 1.0f;
+        }
+
+        /**
+         * Returns the angle (in radians) between the specified vectors.
+         *
+         * @param v1 The first vector.
+         * @param v2 The second vector.
+         *
+         * @return The angle between the two vectors (in radians).
+         */
+        static double angle(Vec2 v1, Vec2 v2)
+        {
+            double dz = v1.x * v2.y - v1.y * v2.x;
+            return Math.atan2(Math.abs(dz) + MATH_double_SMALL, dot(v1, v2));
+        }
+
+        /**
+         * Adds the elements of the specified vector to this one.
+         *
+         * @param v The vector to add.
+         */
+        void add(Vec2 v)
+        {
+            x += v.x;
+            y += v.y;
+        }
+
+        /**
+         * Adds the specified vectors and stores the result in dst.
+         *
+         * @param v1 The first vector.
+         * @param v2 The second vector.
+         * @param dst A vector to store the result in.
+         */
+        static void add(Vec2 v1, Vec2 v2, Vec2 dst)
+        {
+            dst.x = v1.x + v2.x;
+            dst.y = v1.y + v2.y;
+        }
+
+        /**
+         * Clamps this vector within the specified range.
+         *
+         * @param min The minimum value.
+         * @param max The maximum value.
+         */
+        void clamp(Vec2  min, Vec2  max)
+        {
+            // Clamp the x value.
+            if (x < min.x)
+                x = min.x;
+            if (x > max.x)
+                x = max.x;
+
+            // Clamp the y value.
+            if (y < min.y)
+                y = min.y;
+            if (y > max.y)
+                y = max.y;
+        }
+
+        /**
+         * Clamps the specified vector within the specified range and returns it in dst.
+         *
+         * @param v The vector to clamp.
+         * @param min The minimum value.
+         * @param max The maximum value.
+         * @param dst A vector to store the result in.
+         */
+        static void clamp(Vec2  v, Vec2  min, Vec2  max, Vec2  dst)
+        {
+            dst.x = v.x;
+            if (dst.x < min.x)
+                dst.x = min.x;
+            if (dst.x > max.x)
+                dst.x = max.x;
+
+            // Clamp the y value.
+            dst.y = v.y;
+            if (dst.y < min.y)
+                dst.y = min.y;
+            if (dst.y > max.y)
+                dst.y = max.y;
+        }
+
+        /**
+         * Returns the distance between this vector and v.
+         *
+         * @param v The other vector.
+         *
+         * @return The distance between this vector and v.
+         *
+         * @see distanceSquared
+         */
+        double distance(Vec2  v)
+        {
+            double dx = v.x - x;
+            double dy = v.y - y;
+
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        /**
+         * Returns the squared distance between this vector and v.
+         *
+         * When it is not necessary to get the exact distance between
+         * two vectors (for example, when simply comparing the
+         * distance between different vectors), it is advised to use
+         * this method instead of distance.
+         *
+         * @param v The other vector.
+         *
+         * @return The squared distance between this vector and v.
+         *
+         * @see distance
+         */
+        double distanceSquared(Vec2  v)
+        {
+            double dx = v.x - x;
+            double dy = v.y - y;
+            return (dx * dx + dy * dy);
+        }
+
+        /**
+         * Returns the dot product of this vector and the specified vector.
+         *
+         * @param v The vector to compute the dot product with.
+         *
+         * @return The dot product.
+         */
+        double dot(Vec2  v)
+        {
+            return (x * v.x + y * v.y);
+        }
+
+        /**
+         * Returns the dot product between the specified vectors.
+         *
+         * @param v1 The first vector.
+         * @param v2 The second vector.
+         *
+         * @return The dot product between the vectors.
+         */
+        static double dot(Vec2  v1, Vec2  v2)
+        {
+            return (v1.x * v2.x + v1.y * v2.y);
+        }
+
+        /**
+         * Computes the length of this vector.
+         *
+         * @return The length of the vector.
+         *
+         * @see lengthSquared
+         */
+        double length()
+        {
+            return Math.sqrt(x * x + y * y);
+        }
+
+        /**
+         * Returns the squared length of this vector.
+         *
+         * When it is not necessary to get the exact length of a
+         * vector (for example, when simply comparing the lengths of
+         * different vectors), it is advised to use this method
+         * instead of length.
+         *
+         * @return The squared length of the vector.
+         *
+         * @see length
+         */
+        double lengthSquared()
+        {
+            return (x * x + y * y);
+        }
+
+        /**
+         * Negates this vector.
+         */
+        void negate()
+        {
+            x = -x;
+            y = -y;
+        }
+
+        /**
+         * Normalizes this vector.
+         *
+         * This method normalizes this Vec2 so that it is of
+         * unit length (in other words, the length of the vector
+         * after calling this method will be 1.0f). If the vector
+         * already has unit length or if the length of the vector
+         * is zero, this method does nothing.
+         *
+         * @return This vector, after the normalization occurs.
+         */
+        void normalize()
+        {
+            double n = x * x + y * y;
+            // Already normalized.
+            if (n == 1.0f)
+                return;
+
+            n = Math.sqrt(n);
+            // Too close to zero.
+            if (n < MATH_TOLERANCE)
+                return;
+
+            n = 1.0f / n;
+            x *= n;
+            y *= n;
+        }
+
+        /**
+         Get the normalized vector.
+         */
+        Vec2 getNormalized()
+        {
+            Vec2 v = new Vec2(x, y);
+            v.normalize();
+            return v;
+        }
+
+        /**
+         * Scales all elements of this vector by the specified value.
+         *
+         * @param scalar The scalar value.
+         */
+        void scale(double scalar)
+        {
+            x *= scalar;
+            y *= scalar;
+        }
+
+        /**
+         * Scales each element of this vector by the matching component of scale.
+         *
+         * @param scale The vector to scale by.
+         */
+        void scale(Vec2  scale)
+        {
+            x *= scale.x;
+            y *= scale.y;
+        }
+
+        /**
+         * Rotates this vector by angle (specified in radians) around the given point.
+         *
+         * @param point The point to rotate around.
+         * @param angle The angle to rotate by (in radians).
+         */
+        void rotate(Vec2  point, double angle)
+        {
+            double sinAngle = Math.sin(angle);
+            double cosAngle = Math.cos(angle);
+
+            if (point.isZero()) {
+                double tempX = x * cosAngle - y * sinAngle;
+                y = y * cosAngle + x * sinAngle;
+                x = tempX;
+            } else {
+                double tempX = x - point.x;
+                double tempY = y - point.y;
+
+                x = tempX * cosAngle - tempY * sinAngle + point.x;
+                y = tempY * cosAngle + tempX * sinAngle + point.y;
+            }
+        }
+
+        /**
+         * Sets the elements of this vector to the specified values.
+         *
+         * @param xx The new x coordinate.
+         * @param yy The new y coordinate.
+         */
+        void set(double xx, double yy)
+        {
+            x = xx;
+            y = yy;
+        }
+
+        /**
+         * Sets the elements of this vector from the values in the specified array.
+         *
+         * @param array An array containing the elements of the vector in the order x, y.
+         */
+        void set(double[] array)
+        {
+            x = array[0];
+            y = array[1];
+        }
+
+        /**
+         * Sets the elements of this vector to those in the specified vector.
+         *
+         * @param v The vector to copy.
+         */
+        void set(Vec2  v)
+        {
+            x = v.x;
+            y = v.y;
+        }
+
+        /**
+         * Sets this vector to the directional vector between the specified points.
+         *
+         * @param p1 The first point.
+         * @param p2 The second point.
+         */
+        void set(Vec2  p1, Vec2  p2)
+        {
+            x = p2.x - p1.x;
+            y = p2.y - p1.y;
+        }
+
+        /**
+        * Sets the elements of this vector to zero.
+        */
+        void setZero()
+        {
+            x = y = 0.0f;
+        }
+
+        /**
+         * Subtracts this vector and the specified vector as (this - v)
+         * and stores the result in this vector.
+         *
+         * @param v The vector to subtract.
+         */
+        void subtract(Vec2  v)
+        {
+            x -= v.x;
+            y -= v.y;
+        }
+
+        /**
+         * Subtracts the specified vectors and stores the result in dst.
+         * The resulting vector is computed as (v1 - v2).
+         *
+         * @param v1 The first vector.
+         * @param v2 The second vector.
+         * @param dst The destination vector.
+         */
+        void subtract(Vec2  v1, Vec2  v2, Vec2  dst)
+        {
+            dst.x = v1.x - v2.x;
+            dst.y = v1.y - v2.y;
+        }
+
+        /**
+         * Updates this vector towards the given target using a smoothing function.
+         * The given response time determines the amount of smoothing (lag). A longer
+         * response time yields a smoother result and more lag. To force this vector to
+         * follow the target closely, provide a response time that is very small relative
+         * to the given elapsed time.
+         *
+         * @param target target value.
+         * @param elapsedTime elapsed time between calls.
+         * @param responseTime response time (in the same units as elapsedTime).
+         */
+        void smooth(Vec2  target, double elapsedTime, double responseTime)
+        {
+            if (elapsedTime > 0) {
+                this += (target - this) * (elapsedTime / (elapsedTime + responseTime));
+            }
+        }
+
+        /**
+         * Calculates the sum of this vector with the given vector.
+         *
+         * Note: this does not modify this vector.
+         *
+         * @param v The vector to add.
+         * @return The vector sum.
+         */
+        Vec2 operator+(Vec2  v)
+        {
+            Vec2 result = clone();
+            result.add(v);
+            return result;
+        }
+
+        /**
+         * Adds the given vector to this vector.
+         *
+         * @param v The vector to add.
+         * @return This vector, after the addition occurs.
+         */
+        Vec2 operator+=(Vec2  v)
+        {
+            add(v);
+            return this;
+        }
+
+        /**
+         * Calculates the sum of this vector with the given vector.
+         *
+         * Note: this does not modify this vector.
+         *
+         * @param v The vector to add.
+         * @return The vector sum.
+         */
+        Vec2 operator-(Vec2  v)
+        {
+            Vec2 result = clone();
+            result.subtract(v);
+            return result;
+        }
+
+        /**
+         * Subtracts the given vector from this vector.
+         *
+         * @param v The vector to subtract.
+         * @return This vector, after the subtraction occurs.
+         */
+        Vec2 operator-=(Vec2  v)
+        {
+            subtract(v);
+            return this;
+        }
+
+        /**
+         * Calculates the negation of this vector.
+         *
+         * Note: this does not modify this vector.
+         *
+         * @return The negation of this vector.
+         */
+        Vec2 operator-()
+        {
+            Vec2 result = clone();
+            result.negate();
+            return result;
+        }
+
+        Vec2 clone()
+        {
+            return new Vec2(x, y);
+        }
+        /**
+         * Calculates the scalar product of this vector with the given value.
+         *
+         * Note: this does not modify this vector.
+         *
+         * @param s The value to scale by.
+         * @return The scaled vector.
+         */
+        Vec2 operator*(double s)
+        {
+            Vec2 result = clone();
+            result.scale(s);
+            return result;
+        }
+
+        /**
+         * Scales this vector by the given value.
+         *
+         * @param s The value to scale by.
+         * @return This vector, after the scale occurs.
+         */
+        Vec2 operator*=(double s)
+        {
+            scale(s);
+            return this;
+        }
+
+        /**
+         * Returns the components of this vector divided by the given constant
+         *
+         * Note: this does not modify this vector.
+         *
+         * @param s the constant to divide this vector with
+         * @return a smaller vector
+         */
+        Vec2 operator/(double s)
+        {
+            return new Vec2(x / s, y / s);
+        }
+
+        /**
+         * Determines if this vector is less than the given vector.
+         *
+         * @param v The vector to compare against.
+         *
+         * @return True if this vector is less than the given vector, false otherwise.
+         */
+        bool operator<(Vec2  v)
+        {
+            if (x == v.x) {
+                return y < v.y;
+            }
+            return x < v.x;
+        }
+
+        /**
+         * Determines if this vector is greater than the given vector.
+         *
+         * @param v The vector to compare against.
+         *
+         * @return True if this vector is greater than the given vector, false otherwise.
+         */
+        bool operator>(Vec2  v)
+        {
+            if (x == v.x) {
+                return y > v.y;
+            }
+            return x > v.x;
+        }
+
+        /**
+         * Determines if this vector is equal to the given vector.
+         *
+         * @param v The vector to compare against.
+         *
+         * @return True if this vector is equal to the given vector, false otherwise.
+         */
+        bool operator==(Vec2  v)
+        {
+            return x==v.x && y==v.y;
+        }
+
+        /**
+         * Determines if this vector is not equal to the given vector.
+         *
+         * @param v The vector to compare against.
+         *
+         * @return True if this vector is not equal to the given vector, false otherwise.
+         */
+        bool operator!=(Vec2  v)
+        {
+            return x!=v.x || y!=v.y;
+        }
+
+    };
+};
