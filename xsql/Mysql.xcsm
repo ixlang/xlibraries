@@ -113,6 +113,8 @@ class Mysql : Sql.Connection{
         };
     };
     
+    static bool registried = registry();
+    
     static class MysqlResultSet : Sql.ResultSet{
         long hres;
         
@@ -132,11 +134,18 @@ class Mysql : Sql.Connection{
             return Helper.rs_next(hres);
         }
         
+        bool isEof(){
+            throw new Sql.DatabaseNotSupportException("isEof");
+            return false;
+        }
+        
 		bool previous(){
+            throw new Sql.DatabaseNotSupportException("previous");
             return false;
         }
 
 		bool isFirst(){
+            throw new Sql.DatabaseNotSupportException("isFirst");
             return false;
         }
         
@@ -197,6 +206,7 @@ class Mysql : Sql.Connection{
         }
 
 		int findColumn(String){
+            throw new Sql.DatabaseNotSupportException("findColumn");
             return -1;
         }
         
@@ -205,6 +215,7 @@ class Mysql : Sql.Connection{
         }
         
 		int getRow(){
+            throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         
@@ -362,6 +373,7 @@ class Mysql : Sql.Connection{
     
 	Object getOption(int opt) override {
 		//TODO:	
+        throw new Sql.DatabaseNotSupportException("getOption");
         return nilptr;
 	}
 
@@ -388,6 +400,9 @@ class Mysql : Sql.Connection{
                 if (0 != Helper.x_mysql_select_db(_mysql, (String)option)){
                     throw new Sql.SqlException(Helper.x_mysql_errno(_mysql), Helper.x_mysql_error(_mysql));
                 }
+            break;
+            default:
+                throw new Sql.DatabaseNotSupportException("setOption:" + opt);
             break;
         }
 	}

@@ -1,0 +1,8 @@
+LIBRARY "ZXingCore.dll"
+
+EXPORTS
+
+XNLMain
+XNLExit
+generator_qr
+read_qrcode

@@ -1,0 +1,380 @@
+//xlang Source, Name:SqlServer.xcsm 
+//Date: Sat Sep 12:06:04 2019 
+
+class AdoConnector : Sql.Connection{
+
+    long hAdo;
+    
+    int port = 1433;
+    int timeout = 0;
+    
+    enum MysqlOption{
+		PORT,
+        TIMEOUT,
+        CHARSET,
+        SELECTDB
+    };
+    
+    AdoConnector(){
+        if (_system_.getPlatformId() != 0){
+            throw new IllegalArgumentException("ADO not support this Operating System!");
+        }
+    }
+    /*static class MysqlRegister : Sql.ConnectionRegister{
+		Sql.Connection allocConnection(String drivername){
+			if (drivername.equals("mysql")){
+				return new AdoConnector();
+            }
+            return nilptr;
+        }
+    };
+    
+	static bool registry(){
+		if (Helper.init()){
+			Sql.Database.reigstry(DRIVERNAME, new MysqlRegister());
+            return true;
+        }
+        return false;
+    }
+       */ 
+    static class Helper :Library {
+    	static bool bloaded = false;
+        static bool init(){ 
+
+			if (bloaded == false){
+                try{
+                    loadLibrary("adohelper");
+                    bloaded = true;
+                }catch(Exception e){
+                    _system_.output(e.getMessage());
+                }
+            }
+            return bloaded;
+        }
+        
+        import{
+            Pointer cdecl ado_alloc(String driver, String host, int port, String name, String pwd, int timeout, ObjectPtr, ObjectRef);
+            void cdecl ado_delloc(Pointer);
+            Pointer cdecl ado_execute(Pointer, String sql, bool needrs, ObjectPtr, ObjectRef);
+            void cdecl ado_delloc_rs(Pointer);
+            
+            bool cdecl ado_rs_next(Pointer);
+            bool cdecl ado_rs_prev(Pointer);
+            
+            bool cdecl ado_rs_first(Pointer);
+            bool cdecl ado_rs_last(Pointer);
+            int cdecl ado_rs_count(Pointer);
+            bool cdecl ado_rs_iseof(Pointer);
+            
+            Object cdecl ado_rs_getValue(Pointer, String);
+            int cdecl ado_rs_getValueI(Pointer, String);
+            long cdecl ado_rs_getValueL(Pointer, String);
+            double cdecl ado_rs_getValueD(Pointer, String);
+            
+            Object cdecl ado_rs_getIValue(Pointer, int);
+            int cdecl ado_rs_getIValueI(Pointer, int);
+            long cdecl ado_rs_getIValueL(Pointer, int);
+            double cdecl ado_rs_getIValueD(Pointer, int);
+        };
+    };
+    
+    static class AdoResultSet : Sql.ResultSet{
+        long hres;
+        
+        AdoResultSet(long r){
+            hres = r;
+        }
+        
+		bool first(){
+            return Helper.ado_rs_first(hres);
+        }
+        
+		bool last(){
+            return Helper.ado_rs_last(hres);
+        }
+
+		bool next(){
+            return Helper.ado_rs_next(hres);
+        }
+        
+		bool previous(){
+            return Helper.ado_rs_prev(hres);
+        }
+
+		bool isFirst(){
+            throw new Sql.DatabaseNotSupportException("isFirst");
+            return false;
+        }
+        
+		bool isLast(){
+            throw new Sql.DatabaseNotSupportException("isLast");
+            return false;
+        }
+        
+        bool isEof(){
+            return Helper.ado_rs_iseof(hres);
+        }
+        
+		bool isValid(){
+            return hres != 0;
+        }
+        
+		int getInt(String columnlabel){
+            return Helper.ado_rs_getValueI(hres, columnlabel);
+        }
+        
+		long getLong(String columnlabel){
+            return Helper.ado_rs_getValueL(hres, columnlabel);
+        }
+        
+		double getDouble(String columnlabel){
+            return Helper.ado_rs_getValueD(hres, columnlabel);
+        }
+        
+		byte getByte(String columnlabel){
+            return Helper.ado_rs_getValueI(hres, columnlabel);
+        }
+        
+		bool getBoolean(String columnlabel){
+            return Helper.ado_rs_getValueI(hres, columnlabel) != 0;
+        }
+        
+		String getString(String columnlabel){
+            return (String)Helper.ado_rs_getValue(hres, columnlabel);
+        }
+
+		int getInt(int columnIndex){
+            return Helper.ado_rs_getIValueI(hres, columnIndex);
+        }
+        
+		long getLong(int columnIndex){
+            return Helper.ado_rs_getIValueL(hres, columnIndex);
+        }
+        
+		double getDouble(int columnIndex){
+            return Helper.ado_rs_getIValueD(hres, columnIndex);
+        }
+        
+		byte getByte(int columnIndex){
+            return Helper.ado_rs_getIValueI(hres, columnIndex);
+        }
+        
+		bool getBoolean(int columnIndex){
+            return Helper.ado_rs_getIValueI(hres, columnIndex) != 0;
+        }
+        
+		String getString(int columnIndex){
+            return (String)Helper.ado_rs_getIValue(hres, columnIndex);
+        }
+
+		int findColumn(String){
+            throw new Sql.DatabaseNotSupportException("findColumn");
+            return -1;
+        }
+        
+		long getRowCount(){
+            return Helper.ado_rs_count(hres);
+        }
+        
+		int getRow(){
+            throw new Sql.DatabaseNotSupportException("getRow");
+            return 0;
+        }
+        
+		void close(){
+            if (hres != 0){
+                Helper.ado_delloc_rs(hres);
+                hres = 0;
+            }
+        }
+        
+        void finalize(){
+            close();
+        }
+    };
+    
+    static class AdoStatement : Sql.Statement{
+        AdoConnector __ado;
+        
+        AdoStatement(AdoConnector m){
+            __ado = m;
+        }
+        
+        int execute(String sql){
+            int errcode = 0;
+            String errmsg;
+            
+            long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
+            if (0 == hrs){
+                throw new Sql.SqlException(errcode, errmsg);
+            }else{
+              Helper.ado_delloc_rs(hrs);  
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet executeQuery(String sql){
+            int errcode = 0;
+            String errmsg;
+            long hrs = Helper.ado_execute(__ado.hAdo,sql, true, errcode, errmsg);
+            if (0 == hrs){
+                throw new Sql.SqlException(errcode, errmsg);
+            }
+            return new AdoResultSet(hrs);
+        }
+        
+        int executeUpdate(String sql){
+            int errcode = 0;
+            String errmsg;
+            long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
+            if (0 == hrs){
+                throw new Sql.SqlException(errcode, errmsg);
+            }else{
+              Helper.ado_delloc_rs(hrs);  
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet getResult(){ throw new Sql.DatabaseNotSupportException("getResult"); return nilptr;     }
+        
+        void close(){ }
+    };
+    
+    
+    class AdoPreparedStatement : Sql.PreparedStatement{
+        AdoConnector __ado;
+        
+        AdoPreparedStatement(AdoConnector m, String sql){
+            super(sql);
+            __ado = m;
+        }
+        
+        int execute(String sql){
+            int errcode = 0;
+            String errmsg;
+            long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
+            if (0 == hrs){
+                throw new Sql.SqlException(errcode, errmsg);
+            }else{
+              Helper.ado_delloc_rs(hrs);  
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet executeQuery(String sql){
+            int errcode = 0;
+            String errmsg;
+            long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
+            if (0 == hrs){
+                throw new Sql.SqlException(errcode, errmsg);
+            }
+            return new AdoResultSet(hrs);
+        }
+        
+        int executeUpdate(String sql){
+            int errcode = 0;
+            String errmsg;
+            long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
+            if (0 == hrs){
+                throw new Sql.SqlException(errcode, errmsg);
+            }else{
+              Helper.ado_delloc_rs(hrs);  
+            }
+            return 0;
+        }
+        
+        Sql.ResultSet getResult(){           throw new Sql.DatabaseNotSupportException("getResult"); return nilptr;        }
+        
+        void close(){
+        
+        }
+    };
+    
+    
+	void close() override {
+		//TODO:	
+        if (hAdo != 0){
+            Helper.ado_delloc(hAdo);
+            hAdo = 0;
+        }
+	}
+
+    void finalize(){
+        close();
+    }
+    
+    String driver;
+ 
+    void setDriver(String strDrv){
+        driver = strDrv;
+    }
+    
+	void create(String uri, String username, String pwd) override {
+
+        if (driver == nilptr){
+            throw new Sql.SqlException(-1, "driver is nilptr");
+        }
+        int errcode = 0;
+        String errmsg;
+            
+        hAdo = Helper.ado_alloc(driver, uri, port, username, pwd, timeout, errcode, errmsg);
+        
+        if (0l == hAdo){
+            throw new Sql.SqlException(errcode, errmsg);
+        }
+	}
+
+	bool isClosed() override {
+		//TODO:	
+        return hAdo != 0;
+	}
+
+
+    int getErrorCode()override{
+        //throw new Sql.DatabaseNotSupportException("getErrorCode");
+        return 0;
+    }
+    
+    String getError()override{
+        throw new Sql.DatabaseNotSupportException("getError");
+        return nilptr;
+    }
+    
+    String getSqlState(){
+        throw new Sql.DatabaseNotSupportException("getSqlState");
+        return nilptr;
+    }
+    
+    String getInfo(){
+        throw new Sql.DatabaseNotSupportException("getInfo");
+        return nilptr;
+    }
+    
+	Object getOption(int opt) override {
+		//TODO:	
+        throw new Sql.DatabaseNotSupportException("getOption");
+        return nilptr;
+	}
+
+	void setOption(int opt, Object option) override {
+		switch(opt){
+			case MysqlOption.PORT:
+                port = (int)option;
+            break;
+            case MysqlOption.TIMEOUT:
+                timeout = (int)option;
+            break;
+            default:
+            throw new Sql.DatabaseNotSupportException("getOption");
+            break;
+        }
+	}
+
+	Sql.Statement createStatement() override {
+		return new AdoStatement(this);
+	}
+
+	Sql.PreparedStatement prepareStatement(String sql) override {
+		return new AdoPreparedStatement(this, sql);
+	}
+};

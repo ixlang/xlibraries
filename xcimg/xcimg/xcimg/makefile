@@ -10,10 +10,10 @@ $(shell mkdir -p $(OUTPUT))
 EXEC=$(OUTPUT)/xcimg.so
 
 start: $(OBJS)
-	$(CC) $(CPPFLAGS) -shared -o $(EXEC) $(OBJS) -fPIC
+	$(CC) $(CPPFLAGS) -shared -o $(EXEC) $(OBJS) -fPIC -static-libstdc++ 
 
 .cpp.o:
-	$(CC) $(CPPFLAGS) -O2 -fPIC -Wall -o $@ -c $<
+	$(CC) -std=c++11 $(CPPFLAGS) -O2 -fPIC -Wall -o $@ -c $<
 
 clean:
 	rm -rf $(EXEC) $(OBJS)

@@ -641,6 +641,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 else {
                         qw = new QWidget();
                 }
+		
                 qw->setAttribute(Qt::WA_DeleteOnClose, true);
                 qobject = qw;
 
@@ -697,6 +698,43 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 }
                 ar.installEditAction(qobject);
                 break;
+		case qtTextEdit:
+			if (parent != 0) {
+				qobject = new QTextEdit((QWidget*)parent);
+			}
+			else {
+				qobject = new QTextEdit();
+			}
+			ar.installTextEditAction(qobject);
+			break;
+		case qtDateEdit:
+			if (parent != 0) {
+				qobject = new QDateEdit((QWidget*)parent);
+			}
+			else {
+				qobject = new QDateEdit();
+			}
+			ar.installDateTimeEditAction(qobject);
+			break;
+		case qtDateTimeEdit:
+			if (parent != 0) {
+				qobject = new QDateTimeEdit((QWidget*)parent);
+			}
+			else {
+				qobject = new QDateTimeEdit();
+			}
+			ar.installDateTimeEditAction(qobject);
+			break;
+		case qtTimeEdit:
+			if (parent != 0) {
+				qobject = new QTimeEdit((QWidget*)parent);
+			}
+			else {
+				qobject = new QTimeEdit();
+			}
+			ar.installDateTimeEditAction(qobject);
+			break;
+
         case qtMenuBar:
                 if (parent != 0) {
                         qobject = new QMenuBar((QWidget*)parent);
@@ -986,6 +1024,14 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                     qobject = new QtVariantEditorFactory();
             }
             break;
+		case qtReportEngine:
+			if (parent != 0) {
+				qobject = new LimeReport::ReportEngine((QObject*)parent);
+			}else {
+				qobject = new LimeReport::ReportEngine();
+			}
+			ar.installReportView((LimeReport::ReportEngine*)qobject);
+			break;
         default:
             break;
         }
@@ -1036,6 +1082,78 @@ XNLEXPORT xint  XI_STDCALL XNLExit(XNLEnv * env){
 XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         switch (proid)
         {
+		case TESETLINEWRAPMODE:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setLineWrapMode((QTextEdit::LineWrapMode)value);
+			}
+		}
+		break;
+		case TEZOOMOUT:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->zoomOut(value);
+			}
+		}
+		break;
+		case TEZOOMIN:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->zoomIn(value);
+			}
+		}
+		break;
+		case TESETAUTOFORMATTING:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setAutoFormatting((QTextEdit::AutoFormatting)value);
+			}
+		}
+		break;
+		case TESETALIGNMENT:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setAlignment((Qt::Alignment)value);
+			}
+		}
+		break;
+		case TESETTEXTBACKGROUNDCOLOR:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setTextBackgroundColor(value);
+			}
+		}
+		break;
+		case TESETTEXTCOLOR:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setTextColor(value);
+			}
+		}
+		break;
+		case TESETFONTWEIGHT:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setFontWeight(value);
+			}
+		}
+		break;
+		case TESETWORDWRAPMODE:
+		{
+			QTextEdit * pset = ((QTextEdit*)h);
+			if (pset != 0) {
+				pset->setWordWrapMode((QTextOption::WrapMode)value);
+			}
+		}
+		break;
 		case PRINTERSETOUTFMT:
 		{
 			QPrinter * pset = ((QPrinter*)h);
@@ -1216,6 +1334,8 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 		case TABLESETHHFH:
 			((QTableWidget*)h)->horizontalHeader()->setFixedHeight(value);
 			break;
+		case SHOWREPORT:
+			return ((LimeReport::ReportEngine *)h)->previewReport(LimeReport::PreviewHint(value));
 			default:
                 break;
         }
@@ -1300,6 +1420,12 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
 
         switch (proid)
         {
+		case TETABCHANGESFOCUS:
+			return ((QTextEdit*)h)->tabChangesFocus();
+			break;
+		case TEGETREADONLY:
+			return ((QTextEdit*)h)->isReadOnly();
+			break;
 		case PAINTDEVICEACTIVE:
 			return ((QPaintDevice*)h)->paintingActive();
 			break;
@@ -1557,6 +1683,9 @@ XNLEXPORT void XI_CDECL widget_set_double_value(xlong h, xint proid, double v) {
 
         switch (proid)
         {
+		case TESETFONTPOINTSIZE:
+			((QTextEdit*)h)->setFontPointSize(v);
+			break;
         case OPACITY:
                 ((QWidget*)h)->setWindowOpacity(v);
                 break;
@@ -1570,6 +1699,18 @@ XNLEXPORT void XI_CDECL widget_set_double_value(xlong h, xint proid, double v) {
 XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
         switch (proid)
         {
+		case TESETTABCHANGESFOCUS:
+			((QTextEdit*)h)->setTabChangesFocus(v);
+			break;
+		case TESETFONTITALIC:
+			((QTextEdit*)h)->setFontItalic(v);
+			break;
+		case TESETFONTUNDERLINE:
+			((QTextEdit*)h)->setFontUnderline(v);
+			break;
+		case TESETREADONLY:
+			((QTextEdit*)h)->setReadOnly(v);
+			break;
         case FLATING:
                 ((QDockWidget*)h)->setFloating(v);
                 break;
@@ -1708,6 +1849,16 @@ XNLEXPORT void XI_CDECL widget_set_bkrl(xlong h, xint r) {
 XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         switch (proid)
         {
+
+		case TEGETAUTOFORMATTING:
+			return ((QTextEdit*)h)->autoFormatting();
+			break;
+		case TEGETWRAPMODE:
+			return ((QTextEdit*)h)->wordWrapMode();
+			break;
+		case TEGETALIGNMENT:
+			return ((QTextEdit*)h)->alignment();
+			break;
 		case PRINTERGETOUTFMT:
 			return ((QPrinter*)h)->outputFormat();
 			break;
@@ -2043,6 +2194,14 @@ XNLEXPORT xint XI_CDECL widget_set_intstring_value(xlong h, xint proid, xint xv,
 				return 1;
 			}
 			break;
+
+		case LOADREPORTFROMFILE:
+			return ((LimeReport::ReportEngine *)h)->loadFromFile(QString::fromUtf8(yv)) ? 1 : 0;
+			break;
+
+		case LOADREPORTFROMTEXT:
+			return ((LimeReport::ReportEngine *)h)->loadFromString(QString::fromUtf8(yv)) ? 1 : 0;
+			break;
         }
         return 0;
 }
@@ -2066,6 +2225,16 @@ XNLEXPORT xint XI_CDECL widget_set_intintstring_value(xlong h, xint proid, xint 
 XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value) {
         switch (proid)
         {
+		case TESETCURRENTFONT:
+		{
+			((QTextEdit*)h)->setCurrentFont(*(QFont*)(value));
+		}
+		break;
+		case SETDATETIME:
+		{
+			((QDateTimeEdit*)h)->setDateTime(QDateTime::fromMSecsSinceEpoch(value));
+		}
+		break;
 		case CLIPBOARDIMAGE:
 		{
 			QClipboard * clipboard = QApplication::clipboard();
@@ -2186,6 +2355,41 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
 XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
         switch (proid)
         {
+		case SETSTYLE: {
+			QStyle * style = QStyleFactory::create(QString::fromUtf8(value));
+			if (style != 0) {
+				((QWidget*)h)->setStyle(style);
+			}
+		}
+			
+			break;
+		case TESCROLLTOANCHOR:
+			((QTextEdit*)h)->scrollToAnchor(QString::fromUtf8(value));
+			break;
+		case TEAPPEND:
+			((QTextEdit*)h)->append(QString::fromUtf8(value));
+			break;
+		case TEINSERTHTML:
+			((QTextEdit*)h)->insertHtml(QString::fromUtf8(value));
+			break;
+		case TEINSERTPLAINTEXT:
+			((QTextEdit*)h)->insertPlainText(QString::fromUtf8(value));
+			break;
+		case TESETPLACEHOLDERTEXT:
+			((QTextEdit*)h)->setPlaceholderText(QString::fromUtf8(value));
+			break;
+		case TESETTEXT:
+			((QTextEdit*)h)->setText(QString::fromUtf8(value));
+			break;
+		case TESETHTML:
+			((QTextEdit*)h)->setHtml(QString::fromUtf8(value));
+			break;
+		case TESETPLAINTEXT:
+			((QTextEdit*)h)->setPlainText(QString::fromUtf8(value));
+			break;
+		case TESETFONTFAMILY:
+			((QTextEdit*)h)->setFontFamily(QString::fromUtf8(value));
+			break;
 		case OBJECTSETNAME:
 			((QObject*)h)->setObjectName(QString::fromUtf8(value));
 			break;
@@ -2296,6 +2500,27 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
 XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         switch (proid)
         {
+		case TESELECTALL:
+			((QTextEdit*)h)->selectAll();
+			break;
+		case TECLEAR:
+			((QTextEdit*)h)->clear();
+			break;
+		case TEREDO:
+			((QTextEdit*)h)->redo();
+			break;
+		case TEUNDO:
+			((QTextEdit*)h)->undo();
+			break;
+		case TEPASTE:
+			((QTextEdit*)h)->paste();
+			break;
+		case TECOPY:
+			((QTextEdit*)h)->copy();
+			break;
+		case TECUT:
+			((QTextEdit*)h)->cut();
+			break;
         case CLOSE:
                 ((QWidget*)h)->close();
                 break;
@@ -2724,6 +2949,15 @@ XNLEXPORT XObject *  XI_CDECL core_getString(xlong h, xint proid) {
         QByteArray qba;
         switch (proid)
         {
+		case TEGETPLACEHOLDERTEXT:
+			qba = ((QTextEdit*)h)->placeholderText().toUtf8();
+			break;
+		case TETOPLAINTEXT:
+			qba = ((QTextEdit*)h)->toPlainText().toUtf8();
+			break;
+		case TETOHTML:
+			qba = ((QTextEdit*)h)->toHtml().toUtf8();
+			break;
 		case CLIPBOARDTEXT:
 		{
 			QClipboard * clipboard = QApplication::clipboard();
@@ -2987,7 +3221,6 @@ XNLEXPORT xlong XI_CDECL long_object_string(xlong handle, xint proid, XObject * 
         switch (proid)
         {
         case IMGLOAD:
-
                 if (gs_env->isArray(v1)) {
                         QByteArray byteArray;
 						extartByteArray(v1, byteArray);
@@ -3002,6 +3235,27 @@ XNLEXPORT xlong XI_CDECL long_object_string(xlong handle, xint proid, XObject * 
                 }
 
                 break;
+
+		case REGDATASOURCE:
+		{
+			LimeReport::ICallbackDatasource * qobject = 0;
+			try {
+				qobject = ((LimeReport::ReportEngine*)handle)->dataManager()->createCallbackDatasource(QString::fromUtf8(v2));
+				if (qobject != NULL) {
+					XObjectData * objectData = new XObjectData();
+					objectData->setObject(v1);
+					qobject->setUserData(Qt::UserRole, objectData);
+					ar.installDatasourceCallback(qobject);
+				}
+			}
+			catch (LimeReport::ReportError &exception) {
+
+			}
+			
+			
+			return (xlong)qobject;
+		}
+			break;
         default:
                 break;
         }
@@ -3211,7 +3465,12 @@ XNLEXPORT xlong XI_CDECL long_long_string2(xlong handle, xint proid, xlong l1, x
 XNLEXPORT xlong XI_CDECL long_get(xlong handle, xint proid) {
         switch (proid)
         {
-
+		case GETDATETIME:
+		{
+			QDateTimeEdit * twidget = (QDateTimeEdit *)handle;
+			return (xlong)twidget->dateTime().toMSecsSinceEpoch();
+		}
+		break;
         case TREEWIDGETGETSEL:
         {
                 QTreeWidget * twidget = (QTreeWidget *)handle;
@@ -3752,6 +4011,53 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
                 }
         }
         break;
+
+		case SETDATE:// 133,
+		{
+
+			if (gs_env->isArray(value)) {
+				xint * pint = (xint *)gs_env->getPointerOfArray(value);
+				((QDateTimeEdit *)h)->setDate(QDate(pint[0], pint[1], pint[2]));
+			}
+		}
+		break;
+
+		case SETTIME:// 133,
+		{
+
+			if (gs_env->isArray(value)) {
+				xint * pint = (xint *)gs_env->getPointerOfArray(value);
+				((QDateTimeEdit *)h)->setTime(QTime(pint[0], pint[1], pint[2], pint[3]));
+			}
+		}
+		break;
+
+		case GETDATE:// 133,
+		{
+
+			if (gs_env->isArray(value)) {
+				xint * pint = (xint *)gs_env->getPointerOfArray(value);
+				QDate date = ((QDateTimeEdit *)h)->date();  
+				pint[0] = date.year();
+				pint[1] = date.month();
+				pint[2] = date.day();
+			}
+		}
+		break;
+
+		case GETTIME:// 133,
+		{
+
+			if (gs_env->isArray(value)) {
+				xint * pint = (xint *)gs_env->getPointerOfArray(value);
+				QTime time = ((QDateTimeEdit *)h)->time();
+				pint[0] = time.hour();
+				pint[1] = time.minute();
+				pint[2] = time.second();
+				pint[3] = time.msec();
+			}
+		}
+		break;
         default:
                 break;
         }

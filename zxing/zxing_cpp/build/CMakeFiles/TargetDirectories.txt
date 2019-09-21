@@ -1,0 +1,13 @@
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/CMakeFiles/install/local.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/CMakeFiles/install/strip.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/CMakeFiles/install.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/CMakeFiles/list_install_components.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/CMakeFiles/rebuild_cache.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/CMakeFiles/edit_cache.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/install/local.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/install/strip.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/install.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/list_install_components.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/ZXingCore.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/rebuild_cache.dir
+/Users/cadaqs/Development/cadaqs_vsylab/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/build/core/CMakeFiles/edit_cache.dir

@@ -1,0 +1,13 @@
+# CMake generation dependency list for this directory.
+D:/Cadaqs/Desktop/zxing-cpp-master/zxing-cpp-master/core/CMakeLists.txt
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/FindThreads.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CheckLibraryExists.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CheckSymbolExists.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CheckIncludeFile.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CheckIncludeFile.c.in
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/FindPackageHandleStandardArgs.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/FindPackageMessage.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CheckCXXCompilerFlag.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CheckCXXSourceCompiles.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+D:/Programs/cmake-3.8.0-rc1-win32-x86/share/cmake-3.8/Modules/GNUInstallDirs.cmake

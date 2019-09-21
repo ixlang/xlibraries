@@ -36,7 +36,7 @@
 		}
 	},
 	"package":	"XCImg",
-	"version":	"1.0.0.1",
+	"version":	"1.0.0.2",
 	"descr":	"提供动态验证码生成",
 	"author":	"https://github.com/ixlang/xlibraries"
 }

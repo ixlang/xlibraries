@@ -255,6 +255,19 @@ megInfo megs[] = {
 	{ "ON_VVALUECHANGE", 298 },
 	{ "ON_VATTRCHANGE", 299 },
 	{ "ON_PRINTPREVIEWREQ", 300 },
+	{ "ON_REPORTRENDERSTARTED", 301 },
+	{ "ON_REPORTRENDERPAGEFINISH", 302 },
+	{ "ON_REPORTRENDERFINISH", 303 },
+	{ "ON_DATASOURCEGETCALLBACKDATA", 304 },
+	{ "ON_DATASOURCECHANGEPOS", 305 },
+
+	{ "ON_DATETIMECHANGE", 306 },
+	{ "ON_DATECHANGE", 307 },
+	{ "ON_TIMECHANGE", 308 },
+
+	{ "ON_TEXTEDITCHANGE", 309 },
+	{ "ON_TEXTEDITPOSCHANGE", 310 },
+	{ "ON_TEXTEDITSELCHANGE", 311 },
 };
 
 
@@ -522,4 +535,15 @@ XIDENT  methods [] =
 	{ "/void@/QXObject/onVariantPropertyValueChanged(/long,/int,/String)" , 0 },
 	{ "/void@/QXObject/onVariantPropertyAttributeChanged(/long,/String,/int,/String)" , 0 },
 	{ "/void@/QPrintPreviewDialog/onPreviewRequest(/long)" , 0 },
+	{ "/void@/ReportEngine/renderStarted()" , 0 },
+	{ "/void@/ReportEngine/renderPageFinished(/int)" , 0 },
+	{ "/void@/ReportEngine/renderFinished()" , 0 },
+	{ "/*@/ReportEngine/ICallbackDatasource/getCallbackData(/ReportEngine/DataType,/int,/String)" , 0 },
+	{ "/bool@/ReportEngine/ICallbackDatasource/changePos(/ReportEngine/ChangePosType)" , 0 },
+	{ "/void@/QXDateTimeEdit/onDateTimeChange(/long)" , 0 },
+	{ "/void@/QXDateTimeEdit/onDateChange(/int,/int,/int)" , 0 },
+	{ "/void@/QXDateTimeEdit/onTimeChange(/int,/int,/int,/int)" , 0 },
+	{ "/void@/QXTextEdit/onTextChanged()" , 0 },
+	{ "/void@/QXTextEdit/onCursorPositionChanged()" , 0 },
+	{ "/void@/QXTextEdit/onSelectionChanged()" , 0 },
 };

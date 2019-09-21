@@ -4,6 +4,8 @@
 
 class Sqlite : Sql.Connection{
 
+    
+    
 	static const String DRIVERNAME = "sqlite";
         	
 	static bool registry(){
@@ -60,7 +62,7 @@ class Sqlite : Sql.Connection{
 			if (bloaded == false){
 				if (CSTDNative.load()){
 					try{
-						loadLibrary("sqlite3.dll");
+						loadLibrary("sqlite3");
 						bloaded = true;
 					}catch(Exception e){
 						_system_.output(e.getMessage());
@@ -109,6 +111,7 @@ class Sqlite : Sql.Connection{
         };
     };
 
+    static bool registried = registry();
 	long hdb = 0;
     
 	void create(String uri, String username, String pwd){
@@ -129,7 +132,7 @@ class Sqlite : Sql.Connection{
 	* @Exception : SqlException
 	*/
 	void setOption(int opt, Object option){
-		throw new Sql.SqlException(-1, "Sqlite not support option");
+		throw new Sql.DatabaseNotSupportException("setOption");
     }
 	
     int getErrorCode()override{
@@ -141,7 +144,7 @@ class Sqlite : Sql.Connection{
     }
     
 	Object getOption(int opt){
-		throw new Sql.SqlException(-1, "Sqlite not support option");
+		throw new Sql.DatabaseNotSupportException("getOption");
         return nilptr;
     }
 	
@@ -241,7 +244,7 @@ class Sqlite : Sql.Connection{
         }
         
         Sql.ResultSet getResult(){
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("getResult");
             return nilptr;
         }
         
@@ -274,12 +277,12 @@ class Sqlite : Sql.Connection{
         }
         
 		bool first()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("first");
             return false;
         }
         
 		bool last()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("last");
             return false;
         }
 
@@ -288,17 +291,17 @@ class Sqlite : Sql.Connection{
         }
         
 		bool previous()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("previous");
             return false;
         }
         
 		bool isFirst()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("isFirst");
             return false;
         }
         
 		bool isLast()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("isLast");
             return false;
         }
         
@@ -306,6 +309,10 @@ class Sqlite : Sql.Connection{
 			return hres != 0;
         }
         
+        bool isEof(){
+            throw new Sql.DatabaseNotSupportException("isEof");
+            return false;
+        }
         
 		int getInt(String columnlabel)override{
 			return Native.sqlite3_column_int(hres, label2idx(columnlabel));
@@ -363,12 +370,12 @@ class Sqlite : Sql.Connection{
         }
         
 		long getRowCount()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         
 		int getRow()override{
-			throw new Sql.SqlException(-1, "database can not support method");
+			throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         

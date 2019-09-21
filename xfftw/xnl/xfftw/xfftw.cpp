@@ -4,6 +4,13 @@
 #include "stdafx.h"
 #define XFFTW_EXPORT extern "C"
 
+#ifdef __linux__
+#ifndef ANDROID
+__asm__(".symver memcpy,memcpy@GLIBC_2.2.5");
+#endif
+#endif
+
+
 XNLEXPORT xptr XI_CDECL alloc_complex(xint size){
 	return fftw_malloc(sizeof(fftw_complex) * size);
 }

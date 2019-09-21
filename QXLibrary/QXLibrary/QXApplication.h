@@ -58,6 +58,7 @@ private slots:
 
 		return true;
 	}
+
 	void tritemPressed(QTreeWidgetItem *item, int column) {
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
@@ -490,6 +491,111 @@ private slots:
 					gs_env->setValue(dir, yes);
 					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SELCHANGED_ID].methodId, dir);
 					gs_env->dereferenceObject(dir);
+				}
+			}
+		}
+	}
+
+	void slotGetCallbackData(LimeReport::CallbackInfo info, QVariant& data) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+                    QByteArray btdata = info.columnName.toUtf8();
+					XObject * ret = gs_env->Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_DATASOURCEGETCALLBACKDATA].methodId, (xint)info.dataType, (xint)info.index, btdata.data());
+
+					XNLEnv::XDataType ntype =  gs_env->getObjectType(ret);
+
+					switch (ntype) {
+					case XNLEnv::t_nilptr:
+						data = QVariant();
+						break;
+					case XNLEnv::t_byte :
+					{
+						xbyte bv;
+						if (gs_env->getByteValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_char :
+					{
+						xchar bv;
+						if (gs_env->getCharValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_short:
+					{
+						short bv;
+						if (gs_env->getShortValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_int:
+					{
+						xint bv;
+						if (gs_env->getIntValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_long:
+					{
+						xlong bv;
+						if (gs_env->getLongValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_double:
+					{
+						double bv;
+						if (gs_env->getDoubleValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_bool:
+					{
+						bool bv;
+						if (gs_env->getBoolValue(ret, &bv)) {
+							data.setValue(bv);
+						}
+					}
+						break;
+					case XNLEnv::t_string:
+					{
+						xstring sv;
+						int slen;
+						if (gs_env->getStringValue(ret, &sv, &slen)) {
+							data.setValue(QString::fromUtf8(sv, slen));
+						}
+					}
+						break;
+					}
+					gs_env->dereferenceObject(ret);
+				}
+			}
+		}
+	}
+
+	void slotChangePos(const LimeReport::CallbackInfo::ChangePosType& type, bool& result) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					result = gs_env->bool_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_DATASOURCECHANGEPOS].methodId, (xint)type);
 				}
 			}
 		}
@@ -1098,6 +1204,46 @@ private slots:
 			}
 		}
 	}
+
+	void tetextChanged() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_TEXTEDITCHANGE].methodId);
+				}
+			}
+		}
+	}
+	void tecursorPositionChanged() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_TEXTEDITPOSCHANGE].methodId);
+				}
+			}
+		}
+	}
+	void teselectionChanged() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_TEXTEDITSELCHANGE].methodId);
+				}
+			}
+		}
+	}
+
 	void etextChanged(const QString & str) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
@@ -1542,6 +1688,90 @@ private slots:
 		}
 	}
 
+	void renderStarted() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_REPORTRENDERSTARTED].methodId);
+				}
+			}
+		}
+	}
+	void renderPageFinished(int renderedPageCount) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * prop = gs_env->createObject();
+					gs_env->setValue(prop, (xint)renderedPageCount);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_REPORTRENDERPAGEFINISH].methodId, prop);
+					gs_env->dereferenceObject(prop);
+				}
+			}
+		}
+	}
+	void renderFinished() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_REPORTRENDERFINISH].methodId);
+				}
+			}
+		}
+	}
+
+	void dateTimeChanged(const QDateTime &dateTime) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_DATETIMECHANGE].methodId, (xlong)dateTime.toMSecsSinceEpoch());
+				}
+			}
+		}
+	}
+
+	void timeChanged(const QTime &time) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_TIMECHANGE].methodId, (xint)time.hour(), (xint)time.minute(), (xint)time.second(), (xint)time.msec());
+				}
+			}
+		}
+	}
+
+	void dateChanged(const QDate &date) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_DATECHANGE].methodId, (xint)date.year(), (xint)date.month(), date.day());
+				}
+			}
+		}
+	}
 private:
 	QSignalMapper *signalMapper;
 	bool setup;
@@ -1584,6 +1814,12 @@ public:
 		XLINK(btn, SIGNAL(released()), this, SLOT(btnreleased()));
 	}
 
+	void installDateTimeEditAction(QObject * edit) {
+		XLINK(edit, SIGNAL(dateTimeChanged(const QDateTime &)), this, SLOT(ondateTimeChanged(const QDateTime &)));
+		XLINK(edit, SIGNAL(timeChanged(const QTime &)), this, SLOT(ontimeChanged(const QTime &)));
+		XLINK(edit, SIGNAL(dateChanged(const QDate &)), this, SLOT(ondateChanged(const QDate &)));
+	}
+
 	void installEditAction(QObject * edit) {
 		XLINK(edit, SIGNAL(textChanged(const QString &)), this, SLOT(etextChanged(const QString &)));
 		XLINK(edit, SIGNAL(textEdited(const QString &)), this, SLOT(etextEdited(const QString &)));
@@ -1591,6 +1827,12 @@ public:
 		XLINK(edit, SIGNAL(returnPressed()), this, SLOT(ereturnPressed()));
 		XLINK(edit, SIGNAL(editingFinished()), this, SLOT(eeditingFinished()));
 		XLINK(edit, SIGNAL(selectionChanged()), this, SLOT(eselectionChanged()));
+	}
+
+	void installTextEditAction(QObject * edit) {
+		XLINK(edit, SIGNAL(textChanged()), this, SLOT(tetextChanged()));
+		XLINK(edit, SIGNAL(cursorPositionChanged()), this, SLOT(tecursorPositionChanged()));
+		XLINK(edit, SIGNAL(selectionChanged()), this, SLOT(teselectionChanged()));
 	}
 
 	void installTableCellChange(QTableWidget * t) {
@@ -1611,6 +1853,11 @@ public:
 
 		XLINK(t, SIGNAL(cellPressed(int, int)), this, SLOT(oncellPress(int, int)));
 		XLINK(t, SIGNAL(itemPressed(QTableWidgetItem *)), this, SLOT(oncellItemPress(QTableWidgetItem *)));
+	}
+
+	void installDatasourceCallback(LimeReport::ICallbackDatasource * qobject) {
+		connect(qobject, SIGNAL(getCallbackData(LimeReport::CallbackInfo, QVariant&)), this, SLOT(slotGetCallbackData(LimeReport::CallbackInfo, QVariant&)));
+		connect(qobject, SIGNAL(changePos(const LimeReport::CallbackInfo::ChangePosType&, bool&)), this, SLOT(slotChangePos(const LimeReport::CallbackInfo::ChangePosType&, bool&)));
 	}
 
 	void installDialogAction(QDialog * dlg) {
@@ -1692,6 +1939,12 @@ public:
 
 	void installTimePropertyChange(QtTimePropertyManager*qobject) {
 
+	}
+
+	void installReportView(LimeReport::ReportEngine * qobject) {
+		XLINK(qobject, SIGNAL(renderStarted()), this, SLOT(renderStarted()));
+		XLINK(qobject, SIGNAL(renderPageFinished(int)),this, SLOT(renderPageFinished(int)));
+		XLINK(qobject, SIGNAL(renderFinished()), this, SLOT(renderFinished()));
 	}
 
 	void installVariantPropertyChange(QtVariantPropertyManager*qobject) {

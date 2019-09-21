@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/x64/debug/zxing.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/readme.md",
+	"icon":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/1568983427.png",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/win/build/Release/ZXingCore.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/output/Linux/i686/ZXingCore.so"],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/zxing_cpp/win/build/x64/Release/ZXingCore.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/output/Linux/x86_64/ZXingCore.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/zxing/output/Darwin/i386/ZXingCore.dylib"],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"ZXing",
+	"version":	"1.0.0.0",
+	"descr":	"提供二维码生成与识别",
+	"author":	"https://github.com/ixlang/xlibrarys"
+}

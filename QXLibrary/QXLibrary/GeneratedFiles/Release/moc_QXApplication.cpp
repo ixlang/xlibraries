@@ -87,8 +87,8 @@ int QXApplication::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     return _id;
 }
 struct qt_meta_stringdata_ActionReceiver_t {
-    QByteArrayData data[123];
-    char stringdata0[1570];
+    QByteArrayData data[146];
+    char stringdata0[1889];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -135,91 +135,114 @@ QT_MOC_LITERAL(34, 421, 8), // "onAccept"
 QT_MOC_LITERAL(35, 430, 8), // "onReject"
 QT_MOC_LITERAL(36, 439, 15), // "QSCN_SELCHANGED"
 QT_MOC_LITERAL(37, 455, 3), // "yes"
-QT_MOC_LITERAL(38, 459, 18), // "SCN_AUTOCCANCELLED"
-QT_MOC_LITERAL(39, 478, 20), // "SCN_AUTOCCHARDELETED"
-QT_MOC_LITERAL(40, 499, 18), // "SCN_AUTOCCOMPLETED"
-QT_MOC_LITERAL(41, 518, 11), // "const char*"
-QT_MOC_LITERAL(42, 530, 9), // "selection"
-QT_MOC_LITERAL(43, 540, 8), // "position"
-QT_MOC_LITERAL(44, 549, 2), // "ch"
-QT_MOC_LITERAL(45, 552, 6), // "method"
-QT_MOC_LITERAL(46, 559, 18), // "SCN_AUTOCSELECTION"
-QT_MOC_LITERAL(47, 578, 11), // "SCEN_CHANGE"
-QT_MOC_LITERAL(48, 590, 16), // "SCN_CALLTIPCLICK"
-QT_MOC_LITERAL(49, 607, 9), // "direction"
-QT_MOC_LITERAL(50, 617, 13), // "SCN_CHARADDED"
-QT_MOC_LITERAL(51, 631, 9), // "charadded"
-QT_MOC_LITERAL(52, 641, 15), // "SCN_DOUBLECLICK"
-QT_MOC_LITERAL(53, 657, 4), // "line"
-QT_MOC_LITERAL(54, 662, 9), // "modifiers"
-QT_MOC_LITERAL(55, 672, 12), // "SCN_DWELLEND"
-QT_MOC_LITERAL(56, 685, 1), // "x"
-QT_MOC_LITERAL(57, 687, 1), // "y"
-QT_MOC_LITERAL(58, 689, 14), // "SCN_DWELLSTART"
-QT_MOC_LITERAL(59, 704, 11), // "SCN_FOCUSIN"
-QT_MOC_LITERAL(60, 716, 12), // "SCN_FOCUSOUT"
-QT_MOC_LITERAL(61, 729, 16), // "SCN_HOTSPOTCLICK"
-QT_MOC_LITERAL(62, 746, 22), // "SCN_HOTSPOTDOUBLECLICK"
-QT_MOC_LITERAL(63, 769, 23), // "SCN_HOTSPOTRELEASECLICK"
-QT_MOC_LITERAL(64, 793, 18), // "SCN_INDICATORCLICK"
-QT_MOC_LITERAL(65, 812, 20), // "SCN_INDICATORRELEASE"
-QT_MOC_LITERAL(66, 833, 15), // "SCN_MACRORECORD"
-QT_MOC_LITERAL(67, 849, 3), // "msg"
-QT_MOC_LITERAL(68, 853, 6), // "wparam"
-QT_MOC_LITERAL(69, 860, 6), // "lparam"
-QT_MOC_LITERAL(70, 867, 15), // "SCN_MARGINCLICK"
-QT_MOC_LITERAL(71, 883, 6), // "margin"
-QT_MOC_LITERAL(72, 890, 20), // "SCN_MARGINRIGHTCLICK"
-QT_MOC_LITERAL(73, 911, 12), // "SCN_MODIFIED"
-QT_MOC_LITERAL(74, 924, 7), // "modType"
-QT_MOC_LITERAL(75, 932, 4), // "text"
-QT_MOC_LITERAL(76, 937, 6), // "length"
-QT_MOC_LITERAL(77, 944, 10), // "linesAdded"
-QT_MOC_LITERAL(78, 955, 12), // "foldLevelNow"
-QT_MOC_LITERAL(79, 968, 13), // "foldLevelPrev"
-QT_MOC_LITERAL(80, 982, 5), // "token"
-QT_MOC_LITERAL(81, 988, 20), // "annotationLinesAdded"
-QT_MOC_LITERAL(82, 1009, 19), // "SCN_MODIFYATTEMPTRO"
-QT_MOC_LITERAL(83, 1029, 13), // "SCN_NEEDSHOWN"
-QT_MOC_LITERAL(84, 1043, 11), // "SCN_PAINTED"
-QT_MOC_LITERAL(85, 1055, 17), // "SCN_SAVEPOINTLEFT"
-QT_MOC_LITERAL(86, 1073, 20), // "SCN_SAVEPOINTREACHED"
-QT_MOC_LITERAL(87, 1094, 15), // "SCN_STYLENEEDED"
-QT_MOC_LITERAL(88, 1110, 12), // "SCN_UPDATEUI"
-QT_MOC_LITERAL(89, 1123, 7), // "updated"
-QT_MOC_LITERAL(90, 1131, 21), // "SCN_USERLISTSELECTION"
-QT_MOC_LITERAL(91, 1153, 8), // "SCN_ZOOM"
-QT_MOC_LITERAL(92, 1162, 12), // "etextChanged"
-QT_MOC_LITERAL(93, 1175, 11), // "etextEdited"
-QT_MOC_LITERAL(94, 1187, 22), // "ecursorPositionChanged"
-QT_MOC_LITERAL(95, 1210, 1), // "a"
-QT_MOC_LITERAL(96, 1212, 1), // "b"
-QT_MOC_LITERAL(97, 1214, 14), // "ereturnPressed"
-QT_MOC_LITERAL(98, 1229, 16), // "eeditingFinished"
-QT_MOC_LITERAL(99, 1246, 11), // "oncellPress"
-QT_MOC_LITERAL(100, 1258, 3), // "row"
-QT_MOC_LITERAL(101, 1262, 18), // "onPreviewRequested"
-QT_MOC_LITERAL(102, 1281, 9), // "QPrinter*"
-QT_MOC_LITERAL(103, 1291, 7), // "printer"
-QT_MOC_LITERAL(104, 1299, 15), // "oncellItemPress"
-QT_MOC_LITERAL(105, 1315, 17), // "QTableWidgetItem*"
-QT_MOC_LITERAL(106, 1333, 11), // "oncellClick"
-QT_MOC_LITERAL(107, 1345, 15), // "oncellItemClick"
-QT_MOC_LITERAL(108, 1361, 13), // "oncellDBClick"
-QT_MOC_LITERAL(109, 1375, 17), // "oncellItemDBClick"
-QT_MOC_LITERAL(110, 1393, 11), // "oncellEnter"
-QT_MOC_LITERAL(111, 1405, 15), // "oncellItemEnter"
-QT_MOC_LITERAL(112, 1421, 12), // "oncellActive"
-QT_MOC_LITERAL(113, 1434, 16), // "oncellItemActive"
-QT_MOC_LITERAL(114, 1451, 13), // "oncellChanged"
-QT_MOC_LITERAL(115, 1465, 17), // "oncellItemChanged"
-QT_MOC_LITERAL(116, 1483, 17), // "eselectionChanged"
-QT_MOC_LITERAL(117, 1501, 14), // "onValueChanged"
-QT_MOC_LITERAL(118, 1516, 11), // "QtProperty*"
-QT_MOC_LITERAL(119, 1528, 8), // "property"
-QT_MOC_LITERAL(120, 1537, 3), // "val"
-QT_MOC_LITERAL(121, 1541, 18), // "onAttributeChanged"
-QT_MOC_LITERAL(122, 1560, 9) // "attribute"
+QT_MOC_LITERAL(38, 459, 19), // "slotGetCallbackData"
+QT_MOC_LITERAL(39, 479, 24), // "LimeReport::CallbackInfo"
+QT_MOC_LITERAL(40, 504, 4), // "info"
+QT_MOC_LITERAL(41, 509, 9), // "QVariant&"
+QT_MOC_LITERAL(42, 519, 4), // "data"
+QT_MOC_LITERAL(43, 524, 13), // "slotChangePos"
+QT_MOC_LITERAL(44, 538, 39), // "LimeReport::CallbackInfo::Cha..."
+QT_MOC_LITERAL(45, 578, 4), // "type"
+QT_MOC_LITERAL(46, 583, 5), // "bool&"
+QT_MOC_LITERAL(47, 589, 6), // "result"
+QT_MOC_LITERAL(48, 596, 18), // "SCN_AUTOCCANCELLED"
+QT_MOC_LITERAL(49, 615, 20), // "SCN_AUTOCCHARDELETED"
+QT_MOC_LITERAL(50, 636, 18), // "SCN_AUTOCCOMPLETED"
+QT_MOC_LITERAL(51, 655, 11), // "const char*"
+QT_MOC_LITERAL(52, 667, 9), // "selection"
+QT_MOC_LITERAL(53, 677, 8), // "position"
+QT_MOC_LITERAL(54, 686, 2), // "ch"
+QT_MOC_LITERAL(55, 689, 6), // "method"
+QT_MOC_LITERAL(56, 696, 18), // "SCN_AUTOCSELECTION"
+QT_MOC_LITERAL(57, 715, 11), // "SCEN_CHANGE"
+QT_MOC_LITERAL(58, 727, 16), // "SCN_CALLTIPCLICK"
+QT_MOC_LITERAL(59, 744, 9), // "direction"
+QT_MOC_LITERAL(60, 754, 13), // "SCN_CHARADDED"
+QT_MOC_LITERAL(61, 768, 9), // "charadded"
+QT_MOC_LITERAL(62, 778, 15), // "SCN_DOUBLECLICK"
+QT_MOC_LITERAL(63, 794, 4), // "line"
+QT_MOC_LITERAL(64, 799, 9), // "modifiers"
+QT_MOC_LITERAL(65, 809, 12), // "SCN_DWELLEND"
+QT_MOC_LITERAL(66, 822, 1), // "x"
+QT_MOC_LITERAL(67, 824, 1), // "y"
+QT_MOC_LITERAL(68, 826, 14), // "SCN_DWELLSTART"
+QT_MOC_LITERAL(69, 841, 11), // "SCN_FOCUSIN"
+QT_MOC_LITERAL(70, 853, 12), // "SCN_FOCUSOUT"
+QT_MOC_LITERAL(71, 866, 16), // "SCN_HOTSPOTCLICK"
+QT_MOC_LITERAL(72, 883, 22), // "SCN_HOTSPOTDOUBLECLICK"
+QT_MOC_LITERAL(73, 906, 23), // "SCN_HOTSPOTRELEASECLICK"
+QT_MOC_LITERAL(74, 930, 18), // "SCN_INDICATORCLICK"
+QT_MOC_LITERAL(75, 949, 20), // "SCN_INDICATORRELEASE"
+QT_MOC_LITERAL(76, 970, 15), // "SCN_MACRORECORD"
+QT_MOC_LITERAL(77, 986, 3), // "msg"
+QT_MOC_LITERAL(78, 990, 6), // "wparam"
+QT_MOC_LITERAL(79, 997, 6), // "lparam"
+QT_MOC_LITERAL(80, 1004, 15), // "SCN_MARGINCLICK"
+QT_MOC_LITERAL(81, 1020, 6), // "margin"
+QT_MOC_LITERAL(82, 1027, 20), // "SCN_MARGINRIGHTCLICK"
+QT_MOC_LITERAL(83, 1048, 12), // "SCN_MODIFIED"
+QT_MOC_LITERAL(84, 1061, 7), // "modType"
+QT_MOC_LITERAL(85, 1069, 4), // "text"
+QT_MOC_LITERAL(86, 1074, 6), // "length"
+QT_MOC_LITERAL(87, 1081, 10), // "linesAdded"
+QT_MOC_LITERAL(88, 1092, 12), // "foldLevelNow"
+QT_MOC_LITERAL(89, 1105, 13), // "foldLevelPrev"
+QT_MOC_LITERAL(90, 1119, 5), // "token"
+QT_MOC_LITERAL(91, 1125, 20), // "annotationLinesAdded"
+QT_MOC_LITERAL(92, 1146, 19), // "SCN_MODIFYATTEMPTRO"
+QT_MOC_LITERAL(93, 1166, 13), // "SCN_NEEDSHOWN"
+QT_MOC_LITERAL(94, 1180, 11), // "SCN_PAINTED"
+QT_MOC_LITERAL(95, 1192, 17), // "SCN_SAVEPOINTLEFT"
+QT_MOC_LITERAL(96, 1210, 20), // "SCN_SAVEPOINTREACHED"
+QT_MOC_LITERAL(97, 1231, 15), // "SCN_STYLENEEDED"
+QT_MOC_LITERAL(98, 1247, 12), // "SCN_UPDATEUI"
+QT_MOC_LITERAL(99, 1260, 7), // "updated"
+QT_MOC_LITERAL(100, 1268, 21), // "SCN_USERLISTSELECTION"
+QT_MOC_LITERAL(101, 1290, 8), // "SCN_ZOOM"
+QT_MOC_LITERAL(102, 1299, 13), // "tetextChanged"
+QT_MOC_LITERAL(103, 1313, 23), // "tecursorPositionChanged"
+QT_MOC_LITERAL(104, 1337, 18), // "teselectionChanged"
+QT_MOC_LITERAL(105, 1356, 12), // "etextChanged"
+QT_MOC_LITERAL(106, 1369, 11), // "etextEdited"
+QT_MOC_LITERAL(107, 1381, 22), // "ecursorPositionChanged"
+QT_MOC_LITERAL(108, 1404, 1), // "a"
+QT_MOC_LITERAL(109, 1406, 1), // "b"
+QT_MOC_LITERAL(110, 1408, 14), // "ereturnPressed"
+QT_MOC_LITERAL(111, 1423, 16), // "eeditingFinished"
+QT_MOC_LITERAL(112, 1440, 11), // "oncellPress"
+QT_MOC_LITERAL(113, 1452, 3), // "row"
+QT_MOC_LITERAL(114, 1456, 18), // "onPreviewRequested"
+QT_MOC_LITERAL(115, 1475, 9), // "QPrinter*"
+QT_MOC_LITERAL(116, 1485, 7), // "printer"
+QT_MOC_LITERAL(117, 1493, 15), // "oncellItemPress"
+QT_MOC_LITERAL(118, 1509, 17), // "QTableWidgetItem*"
+QT_MOC_LITERAL(119, 1527, 11), // "oncellClick"
+QT_MOC_LITERAL(120, 1539, 15), // "oncellItemClick"
+QT_MOC_LITERAL(121, 1555, 13), // "oncellDBClick"
+QT_MOC_LITERAL(122, 1569, 17), // "oncellItemDBClick"
+QT_MOC_LITERAL(123, 1587, 11), // "oncellEnter"
+QT_MOC_LITERAL(124, 1599, 15), // "oncellItemEnter"
+QT_MOC_LITERAL(125, 1615, 12), // "oncellActive"
+QT_MOC_LITERAL(126, 1628, 16), // "oncellItemActive"
+QT_MOC_LITERAL(127, 1645, 13), // "oncellChanged"
+QT_MOC_LITERAL(128, 1659, 17), // "oncellItemChanged"
+QT_MOC_LITERAL(129, 1677, 17), // "eselectionChanged"
+QT_MOC_LITERAL(130, 1695, 14), // "onValueChanged"
+QT_MOC_LITERAL(131, 1710, 11), // "QtProperty*"
+QT_MOC_LITERAL(132, 1722, 8), // "property"
+QT_MOC_LITERAL(133, 1731, 3), // "val"
+QT_MOC_LITERAL(134, 1735, 18), // "onAttributeChanged"
+QT_MOC_LITERAL(135, 1754, 9), // "attribute"
+QT_MOC_LITERAL(136, 1764, 13), // "renderStarted"
+QT_MOC_LITERAL(137, 1778, 18), // "renderPageFinished"
+QT_MOC_LITERAL(138, 1797, 17), // "renderedPageCount"
+QT_MOC_LITERAL(139, 1815, 14), // "renderFinished"
+QT_MOC_LITERAL(140, 1830, 15), // "dateTimeChanged"
+QT_MOC_LITERAL(141, 1846, 8), // "dateTime"
+QT_MOC_LITERAL(142, 1855, 11), // "timeChanged"
+QT_MOC_LITERAL(143, 1867, 4), // "time"
+QT_MOC_LITERAL(144, 1872, 11), // "dateChanged"
+QT_MOC_LITERAL(145, 1884, 4) // "date"
 
     },
     "ActionReceiver\0ActionTriggered\0\0act\0"
@@ -234,7 +257,11 @@ QT_MOC_LITERAL(122, 1560, 9) // "attribute"
     "str\0onActivated\0index\0onfswFileChanged\0"
     "path\0onfswDirectoryChanged\0"
     "onCurrentIndexChanged\0onAccept\0onReject\0"
-    "QSCN_SELCHANGED\0yes\0SCN_AUTOCCANCELLED\0"
+    "QSCN_SELCHANGED\0yes\0slotGetCallbackData\0"
+    "LimeReport::CallbackInfo\0info\0QVariant&\0"
+    "data\0slotChangePos\0"
+    "LimeReport::CallbackInfo::ChangePosType\0"
+    "type\0bool&\0result\0SCN_AUTOCCANCELLED\0"
     "SCN_AUTOCCHARDELETED\0SCN_AUTOCCOMPLETED\0"
     "const char*\0selection\0position\0ch\0"
     "method\0SCN_AUTOCSELECTION\0SCEN_CHANGE\0"
@@ -253,18 +280,24 @@ QT_MOC_LITERAL(122, 1560, 9) // "attribute"
     "SCN_PAINTED\0SCN_SAVEPOINTLEFT\0"
     "SCN_SAVEPOINTREACHED\0SCN_STYLENEEDED\0"
     "SCN_UPDATEUI\0updated\0SCN_USERLISTSELECTION\0"
-    "SCN_ZOOM\0etextChanged\0etextEdited\0"
-    "ecursorPositionChanged\0a\0b\0ereturnPressed\0"
-    "eeditingFinished\0oncellPress\0row\0"
-    "onPreviewRequested\0QPrinter*\0printer\0"
-    "oncellItemPress\0QTableWidgetItem*\0"
-    "oncellClick\0oncellItemClick\0oncellDBClick\0"
+    "SCN_ZOOM\0tetextChanged\0tecursorPositionChanged\0"
+    "teselectionChanged\0etextChanged\0"
+    "etextEdited\0ecursorPositionChanged\0a\0"
+    "b\0ereturnPressed\0eeditingFinished\0"
+    "oncellPress\0row\0onPreviewRequested\0"
+    "QPrinter*\0printer\0oncellItemPress\0"
+    "QTableWidgetItem*\0oncellClick\0"
+    "oncellItemClick\0oncellDBClick\0"
     "oncellItemDBClick\0oncellEnter\0"
     "oncellItemEnter\0oncellActive\0"
     "oncellItemActive\0oncellChanged\0"
     "oncellItemChanged\0eselectionChanged\0"
     "onValueChanged\0QtProperty*\0property\0"
-    "val\0onAttributeChanged\0attribute"
+    "val\0onAttributeChanged\0attribute\0"
+    "renderStarted\0renderPageFinished\0"
+    "renderedPageCount\0renderFinished\0"
+    "dateTimeChanged\0dateTime\0timeChanged\0"
+    "time\0dateChanged\0date"
 };
 #undef QT_MOC_LITERAL
 
@@ -274,7 +307,7 @@ static const uint qt_meta_data_ActionReceiver[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      78,   14, // methods
+      89,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -282,84 +315,95 @@ static const uint qt_meta_data_ActionReceiver[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,  404,    2, 0x08 /* Private */,
-       4,    2,  407,    2, 0x08 /* Private */,
-       8,    2,  412,    2, 0x08 /* Private */,
-       9,    2,  417,    2, 0x08 /* Private */,
-      10,    2,  422,    2, 0x08 /* Private */,
-      11,    2,  427,    2, 0x08 /* Private */,
-      12,    2,  432,    2, 0x08 /* Private */,
-      13,    1,  437,    2, 0x08 /* Private */,
-      14,    1,  440,    2, 0x08 /* Private */,
-      15,    2,  443,    2, 0x08 /* Private */,
-      18,    0,  448,    2, 0x08 /* Private */,
-      19,    1,  449,    2, 0x08 /* Private */,
-      21,    1,  452,    2, 0x08 /* Private */,
-      22,    0,  455,    2, 0x08 /* Private */,
-      23,    0,  456,    2, 0x08 /* Private */,
-      24,    1,  457,    2, 0x08 /* Private */,
-      26,    1,  460,    2, 0x08 /* Private */,
-      28,    1,  463,    2, 0x08 /* Private */,
-      30,    1,  466,    2, 0x08 /* Private */,
-      32,    1,  469,    2, 0x08 /* Private */,
-      33,    1,  472,    2, 0x08 /* Private */,
-      34,    0,  475,    2, 0x08 /* Private */,
-      35,    0,  476,    2, 0x08 /* Private */,
-      36,    1,  477,    2, 0x08 /* Private */,
-      38,    0,  480,    2, 0x08 /* Private */,
-      39,    0,  481,    2, 0x08 /* Private */,
-      40,    4,  482,    2, 0x08 /* Private */,
-      46,    4,  491,    2, 0x08 /* Private */,
-      46,    2,  500,    2, 0x08 /* Private */,
-      47,    0,  505,    2, 0x08 /* Private */,
-      48,    1,  506,    2, 0x08 /* Private */,
-      50,    1,  509,    2, 0x08 /* Private */,
-      52,    3,  512,    2, 0x08 /* Private */,
-      55,    3,  519,    2, 0x08 /* Private */,
-      58,    3,  526,    2, 0x08 /* Private */,
-      59,    0,  533,    2, 0x08 /* Private */,
-      60,    0,  534,    2, 0x08 /* Private */,
-      61,    2,  535,    2, 0x08 /* Private */,
-      62,    2,  540,    2, 0x08 /* Private */,
-      63,    2,  545,    2, 0x08 /* Private */,
-      64,    2,  550,    2, 0x08 /* Private */,
-      65,    2,  555,    2, 0x08 /* Private */,
-      66,    3,  560,    2, 0x08 /* Private */,
-      70,    3,  567,    2, 0x08 /* Private */,
-      72,    3,  574,    2, 0x08 /* Private */,
-      73,   10,  581,    2, 0x08 /* Private */,
-      82,    0,  602,    2, 0x08 /* Private */,
-      83,    2,  603,    2, 0x08 /* Private */,
-      84,    0,  608,    2, 0x08 /* Private */,
-      85,    0,  609,    2, 0x08 /* Private */,
-      86,    0,  610,    2, 0x08 /* Private */,
-      87,    1,  611,    2, 0x08 /* Private */,
-      88,    1,  614,    2, 0x08 /* Private */,
-      90,    4,  617,    2, 0x08 /* Private */,
-      90,    2,  626,    2, 0x08 /* Private */,
-      91,    0,  631,    2, 0x08 /* Private */,
-      92,    1,  632,    2, 0x08 /* Private */,
-      93,    1,  635,    2, 0x08 /* Private */,
-      94,    2,  638,    2, 0x08 /* Private */,
-      97,    0,  643,    2, 0x08 /* Private */,
-      98,    0,  644,    2, 0x08 /* Private */,
-      99,    2,  645,    2, 0x08 /* Private */,
-     101,    1,  650,    2, 0x08 /* Private */,
-     104,    1,  653,    2, 0x08 /* Private */,
-     106,    2,  656,    2, 0x08 /* Private */,
-     107,    1,  661,    2, 0x08 /* Private */,
-     108,    2,  664,    2, 0x08 /* Private */,
-     109,    1,  669,    2, 0x08 /* Private */,
-     110,    2,  672,    2, 0x08 /* Private */,
-     111,    1,  677,    2, 0x08 /* Private */,
-     112,    2,  680,    2, 0x08 /* Private */,
-     113,    1,  685,    2, 0x08 /* Private */,
-     114,    2,  688,    2, 0x08 /* Private */,
-     115,    1,  693,    2, 0x08 /* Private */,
-     116,    0,  696,    2, 0x08 /* Private */,
-     117,    2,  697,    2, 0x08 /* Private */,
-     117,    2,  702,    2, 0x08 /* Private */,
-     121,    3,  707,    2, 0x08 /* Private */,
+       1,    1,  459,    2, 0x08 /* Private */,
+       4,    2,  462,    2, 0x08 /* Private */,
+       8,    2,  467,    2, 0x08 /* Private */,
+       9,    2,  472,    2, 0x08 /* Private */,
+      10,    2,  477,    2, 0x08 /* Private */,
+      11,    2,  482,    2, 0x08 /* Private */,
+      12,    2,  487,    2, 0x08 /* Private */,
+      13,    1,  492,    2, 0x08 /* Private */,
+      14,    1,  495,    2, 0x08 /* Private */,
+      15,    2,  498,    2, 0x08 /* Private */,
+      18,    0,  503,    2, 0x08 /* Private */,
+      19,    1,  504,    2, 0x08 /* Private */,
+      21,    1,  507,    2, 0x08 /* Private */,
+      22,    0,  510,    2, 0x08 /* Private */,
+      23,    0,  511,    2, 0x08 /* Private */,
+      24,    1,  512,    2, 0x08 /* Private */,
+      26,    1,  515,    2, 0x08 /* Private */,
+      28,    1,  518,    2, 0x08 /* Private */,
+      30,    1,  521,    2, 0x08 /* Private */,
+      32,    1,  524,    2, 0x08 /* Private */,
+      33,    1,  527,    2, 0x08 /* Private */,
+      34,    0,  530,    2, 0x08 /* Private */,
+      35,    0,  531,    2, 0x08 /* Private */,
+      36,    1,  532,    2, 0x08 /* Private */,
+      38,    2,  535,    2, 0x08 /* Private */,
+      43,    2,  540,    2, 0x08 /* Private */,
+      48,    0,  545,    2, 0x08 /* Private */,
+      49,    0,  546,    2, 0x08 /* Private */,
+      50,    4,  547,    2, 0x08 /* Private */,
+      56,    4,  556,    2, 0x08 /* Private */,
+      56,    2,  565,    2, 0x08 /* Private */,
+      57,    0,  570,    2, 0x08 /* Private */,
+      58,    1,  571,    2, 0x08 /* Private */,
+      60,    1,  574,    2, 0x08 /* Private */,
+      62,    3,  577,    2, 0x08 /* Private */,
+      65,    3,  584,    2, 0x08 /* Private */,
+      68,    3,  591,    2, 0x08 /* Private */,
+      69,    0,  598,    2, 0x08 /* Private */,
+      70,    0,  599,    2, 0x08 /* Private */,
+      71,    2,  600,    2, 0x08 /* Private */,
+      72,    2,  605,    2, 0x08 /* Private */,
+      73,    2,  610,    2, 0x08 /* Private */,
+      74,    2,  615,    2, 0x08 /* Private */,
+      75,    2,  620,    2, 0x08 /* Private */,
+      76,    3,  625,    2, 0x08 /* Private */,
+      80,    3,  632,    2, 0x08 /* Private */,
+      82,    3,  639,    2, 0x08 /* Private */,
+      83,   10,  646,    2, 0x08 /* Private */,
+      92,    0,  667,    2, 0x08 /* Private */,
+      93,    2,  668,    2, 0x08 /* Private */,
+      94,    0,  673,    2, 0x08 /* Private */,
+      95,    0,  674,    2, 0x08 /* Private */,
+      96,    0,  675,    2, 0x08 /* Private */,
+      97,    1,  676,    2, 0x08 /* Private */,
+      98,    1,  679,    2, 0x08 /* Private */,
+     100,    4,  682,    2, 0x08 /* Private */,
+     100,    2,  691,    2, 0x08 /* Private */,
+     101,    0,  696,    2, 0x08 /* Private */,
+     102,    0,  697,    2, 0x08 /* Private */,
+     103,    0,  698,    2, 0x08 /* Private */,
+     104,    0,  699,    2, 0x08 /* Private */,
+     105,    1,  700,    2, 0x08 /* Private */,
+     106,    1,  703,    2, 0x08 /* Private */,
+     107,    2,  706,    2, 0x08 /* Private */,
+     110,    0,  711,    2, 0x08 /* Private */,
+     111,    0,  712,    2, 0x08 /* Private */,
+     112,    2,  713,    2, 0x08 /* Private */,
+     114,    1,  718,    2, 0x08 /* Private */,
+     117,    1,  721,    2, 0x08 /* Private */,
+     119,    2,  724,    2, 0x08 /* Private */,
+     120,    1,  729,    2, 0x08 /* Private */,
+     121,    2,  732,    2, 0x08 /* Private */,
+     122,    1,  737,    2, 0x08 /* Private */,
+     123,    2,  740,    2, 0x08 /* Private */,
+     124,    1,  745,    2, 0x08 /* Private */,
+     125,    2,  748,    2, 0x08 /* Private */,
+     126,    1,  753,    2, 0x08 /* Private */,
+     127,    2,  756,    2, 0x08 /* Private */,
+     128,    1,  761,    2, 0x08 /* Private */,
+     129,    0,  764,    2, 0x08 /* Private */,
+     130,    2,  765,    2, 0x08 /* Private */,
+     130,    2,  770,    2, 0x08 /* Private */,
+     134,    3,  775,    2, 0x08 /* Private */,
+     136,    0,  782,    2, 0x08 /* Private */,
+     137,    1,  783,    2, 0x08 /* Private */,
+     139,    0,  786,    2, 0x08 /* Private */,
+     140,    1,  787,    2, 0x08 /* Private */,
+     142,    1,  790,    2, 0x08 /* Private */,
+     144,    1,  793,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Bool, QMetaType::QObjectStar,    3,
@@ -386,60 +430,71 @@ static const uint qt_meta_data_ActionReceiver[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,   37,
+    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 41,   40,   42,
+    QMetaType::Void, 0x80000000 | 44, 0x80000000 | 46,   45,   47,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 41, QMetaType::Int, QMetaType::Int, QMetaType::Int,   42,   43,   44,   45,
-    QMetaType::Void, 0x80000000 | 41, QMetaType::Int, QMetaType::Int, QMetaType::Int,   42,   43,   44,   45,
-    QMetaType::Void, 0x80000000 | 41, QMetaType::Int,   42,   43,
+    QMetaType::Void, 0x80000000 | 51, QMetaType::Int, QMetaType::Int, QMetaType::Int,   52,   53,   54,   55,
+    QMetaType::Void, 0x80000000 | 51, QMetaType::Int, QMetaType::Int, QMetaType::Int,   52,   53,   54,   55,
+    QMetaType::Void, 0x80000000 | 51, QMetaType::Int,   52,   53,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   49,
-    QMetaType::Void, QMetaType::Int,   51,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   43,   53,   54,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   43,   56,   57,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   43,   56,   57,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   54,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   54,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   54,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   54,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   54,
-    QMetaType::Void, QMetaType::UInt, QMetaType::ULong, QMetaType::VoidStar,   67,   68,   69,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   43,   54,   71,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   43,   54,   71,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 41, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,   43,   74,   75,   76,   77,   53,   78,   79,   80,   81,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   76,
+    QMetaType::Void, QMetaType::Int,   59,
+    QMetaType::Void, QMetaType::Int,   61,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   53,   63,   64,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   53,   66,   67,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   53,   66,   67,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   53,   64,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   53,   64,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   53,   64,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   53,   64,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   53,   64,
+    QMetaType::Void, QMetaType::UInt, QMetaType::ULong, QMetaType::VoidStar,   77,   78,   79,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   53,   64,   81,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   53,   64,   81,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 51, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,   53,   84,   85,   86,   87,   63,   88,   89,   90,   91,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   43,
-    QMetaType::Void, QMetaType::Int,   89,
-    QMetaType::Void, 0x80000000 | 41, QMetaType::Int, QMetaType::Int, QMetaType::Int,    2,    2,    2,    2,
-    QMetaType::Void, 0x80000000 | 41, QMetaType::Int,   75,   76,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   53,   86,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   53,
+    QMetaType::Void, QMetaType::Int,   99,
+    QMetaType::Void, 0x80000000 | 51, QMetaType::Int, QMetaType::Int, QMetaType::Int,    2,    2,    2,    2,
+    QMetaType::Void, 0x80000000 | 51, QMetaType::Int,   85,   86,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   27,
     QMetaType::Void, QMetaType::QString,   27,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   95,   96,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  108,  109,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
-    QMetaType::Void, 0x80000000 | 102,  103,
-    QMetaType::Void, 0x80000000 | 105,    6,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
-    QMetaType::Void, 0x80000000 | 105,    6,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
-    QMetaType::Void, 0x80000000 | 105,    6,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
-    QMetaType::Void, 0x80000000 | 105,    6,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
-    QMetaType::Void, 0x80000000 | 105,    6,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,  100,    7,
-    QMetaType::Void, 0x80000000 | 105,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  113,    7,
+    QMetaType::Void, 0x80000000 | 115,  116,
+    QMetaType::Void, 0x80000000 | 118,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  113,    7,
+    QMetaType::Void, 0x80000000 | 118,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  113,    7,
+    QMetaType::Void, 0x80000000 | 118,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  113,    7,
+    QMetaType::Void, 0x80000000 | 118,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  113,    7,
+    QMetaType::Void, 0x80000000 | 118,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,  113,    7,
+    QMetaType::Void, 0x80000000 | 118,    6,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 118, QMetaType::Int,  119,  120,
-    QMetaType::Void, 0x80000000 | 118, QMetaType::QVariant,  119,  120,
-    QMetaType::Void, 0x80000000 | 118, QMetaType::QString, QMetaType::QVariant,  119,  122,  120,
+    QMetaType::Void, 0x80000000 | 131, QMetaType::Int,  132,  133,
+    QMetaType::Void, 0x80000000 | 131, QMetaType::QVariant,  132,  133,
+    QMetaType::Void, 0x80000000 | 131, QMetaType::QString, QMetaType::QVariant,  132,  135,  133,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,  138,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QDateTime,  141,
+    QMetaType::Void, QMetaType::QTime,  143,
+    QMetaType::Void, QMetaType::QDate,  145,
 
        0        // eod
 };
@@ -475,60 +530,71 @@ void ActionReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 21: _t->onAccept(); break;
         case 22: _t->onReject(); break;
         case 23: _t->QSCN_SELCHANGED((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 24: _t->SCN_AUTOCCANCELLED(); break;
-        case 25: _t->SCN_AUTOCCHARDELETED(); break;
-        case 26: _t->SCN_AUTOCCOMPLETED((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
-        case 27: _t->SCN_AUTOCSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
-        case 28: _t->SCN_AUTOCSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 29: _t->SCEN_CHANGE(); break;
-        case 30: _t->SCN_CALLTIPCLICK((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 31: _t->SCN_CHARADDED((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 32: _t->SCN_DOUBLECLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 33: _t->SCN_DWELLEND((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 34: _t->SCN_DWELLSTART((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 35: _t->SCN_FOCUSIN(); break;
-        case 36: _t->SCN_FOCUSOUT(); break;
-        case 37: _t->SCN_HOTSPOTCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 38: _t->SCN_HOTSPOTDOUBLECLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 39: _t->SCN_HOTSPOTRELEASECLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 40: _t->SCN_INDICATORCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 41: _t->SCN_INDICATORRELEASE((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 42: _t->SCN_MACRORECORD((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< ulong(*)>(_a[2])),(*reinterpret_cast< void*(*)>(_a[3]))); break;
-        case 43: _t->SCN_MARGINCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 44: _t->SCN_MARGINRIGHTCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 45: _t->SCN_MODIFIED((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< const char*(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< int(*)>(_a[8])),(*reinterpret_cast< int(*)>(_a[9])),(*reinterpret_cast< int(*)>(_a[10]))); break;
-        case 46: _t->SCN_MODIFYATTEMPTRO(); break;
-        case 47: _t->SCN_NEEDSHOWN((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 48: _t->SCN_PAINTED(); break;
-        case 49: _t->SCN_SAVEPOINTLEFT(); break;
-        case 50: _t->SCN_SAVEPOINTREACHED(); break;
-        case 51: _t->SCN_STYLENEEDED((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 52: _t->SCN_UPDATEUI((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 53: _t->SCN_USERLISTSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
-        case 54: _t->SCN_USERLISTSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 55: _t->SCN_ZOOM(); break;
-        case 56: _t->etextChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 57: _t->etextEdited((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 58: _t->ecursorPositionChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 59: _t->ereturnPressed(); break;
-        case 60: _t->eeditingFinished(); break;
-        case 61: _t->oncellPress((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 62: _t->onPreviewRequested((*reinterpret_cast< QPrinter*(*)>(_a[1]))); break;
-        case 63: _t->oncellItemPress((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 64: _t->oncellClick((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 65: _t->oncellItemClick((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 66: _t->oncellDBClick((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 67: _t->oncellItemDBClick((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 68: _t->oncellEnter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 69: _t->oncellItemEnter((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 70: _t->oncellActive((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 71: _t->oncellItemActive((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 72: _t->oncellChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 73: _t->oncellItemChanged((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
-        case 74: _t->eselectionChanged(); break;
-        case 75: _t->onValueChanged((*reinterpret_cast< QtProperty*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 76: _t->onValueChanged((*reinterpret_cast< QtProperty*(*)>(_a[1])),(*reinterpret_cast< const QVariant(*)>(_a[2]))); break;
-        case 77: _t->onAttributeChanged((*reinterpret_cast< QtProperty*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QVariant(*)>(_a[3]))); break;
+        case 24: _t->slotGetCallbackData((*reinterpret_cast< LimeReport::CallbackInfo(*)>(_a[1])),(*reinterpret_cast< QVariant(*)>(_a[2]))); break;
+        case 25: _t->slotChangePos((*reinterpret_cast< const LimeReport::CallbackInfo::ChangePosType(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 26: _t->SCN_AUTOCCANCELLED(); break;
+        case 27: _t->SCN_AUTOCCHARDELETED(); break;
+        case 28: _t->SCN_AUTOCCOMPLETED((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
+        case 29: _t->SCN_AUTOCSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
+        case 30: _t->SCN_AUTOCSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 31: _t->SCEN_CHANGE(); break;
+        case 32: _t->SCN_CALLTIPCLICK((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 33: _t->SCN_CHARADDED((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 34: _t->SCN_DOUBLECLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 35: _t->SCN_DWELLEND((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 36: _t->SCN_DWELLSTART((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 37: _t->SCN_FOCUSIN(); break;
+        case 38: _t->SCN_FOCUSOUT(); break;
+        case 39: _t->SCN_HOTSPOTCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 40: _t->SCN_HOTSPOTDOUBLECLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 41: _t->SCN_HOTSPOTRELEASECLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 42: _t->SCN_INDICATORCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 43: _t->SCN_INDICATORRELEASE((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 44: _t->SCN_MACRORECORD((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< ulong(*)>(_a[2])),(*reinterpret_cast< void*(*)>(_a[3]))); break;
+        case 45: _t->SCN_MARGINCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 46: _t->SCN_MARGINRIGHTCLICK((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 47: _t->SCN_MODIFIED((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< const char*(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< int(*)>(_a[8])),(*reinterpret_cast< int(*)>(_a[9])),(*reinterpret_cast< int(*)>(_a[10]))); break;
+        case 48: _t->SCN_MODIFYATTEMPTRO(); break;
+        case 49: _t->SCN_NEEDSHOWN((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 50: _t->SCN_PAINTED(); break;
+        case 51: _t->SCN_SAVEPOINTLEFT(); break;
+        case 52: _t->SCN_SAVEPOINTREACHED(); break;
+        case 53: _t->SCN_STYLENEEDED((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 54: _t->SCN_UPDATEUI((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 55: _t->SCN_USERLISTSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
+        case 56: _t->SCN_USERLISTSELECTION((*reinterpret_cast< const char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 57: _t->SCN_ZOOM(); break;
+        case 58: _t->tetextChanged(); break;
+        case 59: _t->tecursorPositionChanged(); break;
+        case 60: _t->teselectionChanged(); break;
+        case 61: _t->etextChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 62: _t->etextEdited((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 63: _t->ecursorPositionChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 64: _t->ereturnPressed(); break;
+        case 65: _t->eeditingFinished(); break;
+        case 66: _t->oncellPress((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 67: _t->onPreviewRequested((*reinterpret_cast< QPrinter*(*)>(_a[1]))); break;
+        case 68: _t->oncellItemPress((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 69: _t->oncellClick((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 70: _t->oncellItemClick((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 71: _t->oncellDBClick((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 72: _t->oncellItemDBClick((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 73: _t->oncellEnter((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 74: _t->oncellItemEnter((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 75: _t->oncellActive((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 76: _t->oncellItemActive((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 77: _t->oncellChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 78: _t->oncellItemChanged((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 79: _t->eselectionChanged(); break;
+        case 80: _t->onValueChanged((*reinterpret_cast< QtProperty*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 81: _t->onValueChanged((*reinterpret_cast< QtProperty*(*)>(_a[1])),(*reinterpret_cast< const QVariant(*)>(_a[2]))); break;
+        case 82: _t->onAttributeChanged((*reinterpret_cast< QtProperty*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QVariant(*)>(_a[3]))); break;
+        case 83: _t->renderStarted(); break;
+        case 84: _t->renderPageFinished((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 85: _t->renderFinished(); break;
+        case 86: _t->dateTimeChanged((*reinterpret_cast< const QDateTime(*)>(_a[1]))); break;
+        case 87: _t->timeChanged((*reinterpret_cast< const QTime(*)>(_a[1]))); break;
+        case 88: _t->dateChanged((*reinterpret_cast< const QDate(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -559,13 +625,13 @@ int ActionReceiver::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 78)
+        if (_id < 89)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 78;
+        _id -= 89;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 78)
+        if (_id < 89)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 78;
+        _id -= 89;
     }
     return _id;
 }

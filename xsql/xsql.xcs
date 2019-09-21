@@ -2,9 +2,19 @@
 
 package Sql{
 	class SqlException : Exception{
+        SqlException(){
+            
+        }
         SqlException(int err, String sqlmessage){
 			errcode = err;
             message = sqlmessage;
+        }
+    };
+    
+    class DatabaseNotSupportException : SqlException{
+        DatabaseNotSupportException(String sqlmessage){
+			errcode = 0;
+            message = "not support method:" + sqlmessage;
         }
     };
     
@@ -218,6 +228,8 @@ package Sql{
             }
             return nilptr;
         }
+        
+        
     };
     
     interface ConnectionRegister{
@@ -262,6 +274,7 @@ package Sql{
 
 		bool isFirst();
 		bool isLast();
+        bool isEof();
 		bool isValid();
         
 		int getInt(String columnlabel);
@@ -425,19 +438,17 @@ package Sql{
 };
 
 
-/*
 
-void testSql(){
+
+/*void testSql(){
     Sql.ConnectionPool pool = new Sql.ConnectionPool();
     pool.config(new Sql.ConnPoolCallback(){
     
         Sql.Connection createConnection()override{
             //TODO 
-            Sql.Connection conn = Sql.Database.getConnection("mysql");
+            Sql.Connection conn = Sql.Database.getConnection("sqlserver");
             if (conn != nilptr){
-                conn.create("127.0.0.1", "root", "123456");
-                conn.setOption(Mysql.MysqlOption.CHARSET,"utf8");
-                conn.setOption(Mysql.MysqlOption.SELECTDB, "test");
+                conn.create("192.168.10.128", "sa", "233276111");
             }
             return conn;
         }
@@ -455,7 +466,7 @@ void testSql(){
         }
     },"2006,2014",50, 50, 3, 300000, 10000);
     
-    for (int i =0; i < 30; i++){ 
+    for (int i = 0; i < 30; i++){ 
         new Thread(){
             void run()override{
                 testSqlite(pool);
@@ -466,58 +477,56 @@ void testSql(){
 
 int testSqlite(Sql.ConnectionPool pool){
 
-	Mysql.registry();
-    
-   
+	Sqlite.registry();
     
 	_system_.createConsole();
     
     long before = _system_.currentTimeMillis();
 
-for (int cx = 0; cx < 100;cx ++){ 
-	Sql.Connection slite = pool.getConnector();
+    for (int cx = 0; cx < 100;cx ++){ 
+        Sql.Connection slite = pool.getConnector();
     
-    if (slite != nilptr){
+        if (slite != nilptr){
 
-		//slite.create("sqlite.db", nilptr, nilptr);
-        //slite.create("127.0.0.1", "root", "233276111");
-        
-        //slite.setOption(Mysql.MysqlOption.CHARSET,"utf8");
-        
-        //slite.setOption(Mysql.MysqlOption.SELECTDB, "test");
-        
-        
-        // 创建表
-        Sql.PreparedStatement stmt = slite.prepareStatement("CREATE table member(name varchar(32),age int) CHARSET=utf8");
-        
-        //_system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - 1\n");
-        
-        try{
-			stmt.execute();
-        }catch(Exception e){
-			//_system_.consoleWrite("Sql Error:" + e.getErrorCode() + "," + e.getMessage() + "\n");
-        }
-        
-        String [] names = {
-			"嘉懿","煜城","懿轩","烨伟","苑博","伟泽","熠彤","鸿煊","博涛","烨霖","烨华","煜祺","智宸","正豪",
-			"昊然","明杰","立诚","立轩","立辉","峻熙","弘文","熠彤","鸿煊","烨霖","哲瀚","鑫鹏","致远","俊驰"
-		};
-        
-        _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - before insert\n");
-        
-		try{
-			//插入人名  年龄随机
+            //slite.create("sqlite.db", nilptr, nilptr);
+            //slite.create("127.0.0.1", "root", "233276111");
             
-			for(int i = 0,  c = names.length; i < c; i ++){
-				stmt = slite.prepareStatement("insert into member (name,age)VALUES(?, ?)");
-				stmt.setValue(names[i]);
-				stmt.setValue((int)(Math.random() * 80));
-				stmt.execute();
-			}
-		}catch(Exception e){
-			_system_.consoleWrite(e.getMessage() + "\n");
-		}
-        _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - after insert\n");
+            //slite.setOption(Mysql.MysqlOption.CHARSET,"utf8");
+            
+            //slite.setOption(Mysql.MysqlOption.SELECTDB, "test");
+            
+            
+            // 创建表
+            Sql.PreparedStatement stmt = slite.prepareStatement("CREATE table member(name varchar(32),age int) CHARSET=utf8");
+            
+            //_system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - 1\n");
+            
+            try{
+                stmt.execute();
+            }catch(Exception e){
+                //_system_.consoleWrite("SqlException:" + e.getErrorCode() + "," + e.getMessage() + "\n");
+            }
+            
+            String [] names = {
+                "嘉懿","煜城","懿轩","烨伟","苑博","伟泽","熠彤","鸿煊","博涛","烨霖","烨华","煜祺","智宸","正豪",
+                "昊然","明杰","立诚","立轩","立辉","峻熙","弘文","熠彤","鸿煊","烨霖","哲瀚","鑫鹏","致远","俊驰"
+            };
+            
+            _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - before insert\n");
+            
+            try{
+                //插入人名  年龄随机
+                
+                for(int i = 0,  c = names.length; i < c; i ++){
+                    stmt = slite.prepareStatement("insert into member (name,age)VALUES(?, ?)");
+                    stmt.setValue(names[i]);
+                    stmt.setValue((int)(Math.random() * 80));
+                    stmt.execute();
+                }
+            }catch(Exception e){
+                _system_.consoleWrite(e.getMessage() + "\n");
+            }
+            _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - after insert\n");
 
         
             stmt = slite.prepareStatement("select * from member where age < ? limit 10");
@@ -543,7 +552,106 @@ for (int cx = 0; cx < 100;cx ++){
 	return 0;
 }
 
+*/
+/*
+void testSql(){
+    //SqlServer.registry();
 
+    Sql.ConnectionPool pool = new Sql.ConnectionPool();
+    pool.config(new Sql.ConnPoolCallback(){
+    
+        Sql.Connection createConnection()override{
+            //TODO 
+            Sql.Connection conn = Sql.Database.getConnection("sqlserver");
+            if (conn != nilptr){
+                conn.create("192.168.10.128", "sa", "233276111");
+            }
+            return conn;
+        }
+        
+        bool alive(Sql.Connection conn)override{
+            //TODO 
+            Sql.Statement state =  conn.createStatement();
+            try{
+                state.execute("select 1;");
+                return true;
+            }catch(Exception e){
+                
+            }
+            return false;
+        }
+    },"2006,2014",50, 50, 3, 300000, 10000);
+    
+    for (int i = 0; i < 30; i++){ 
+        new Thread(){
+            void run()override{
+                testSqlserver(pool);
+            }
+        }.start();
+    }
+}
+
+int testSqlserver(Sql.ConnectionPool pool){
+	_system_.createConsole();
+
+   for (int aa = 0;aa < 1000; aa++){
+        long before = _system_.currentTimeMillis();
+        
+        Sql.Connection slite = pool.getConnector();
+        if (slite != nilptr){
+            Sql.PreparedStatement stmt = slite.prepareStatement("CREATE table blog..member(name varchar(32),age int)");
+            
+            _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - 1\n");
+            
+            try{
+                stmt.execute();
+            }catch(Exception e){
+                _system_.consoleWrite("SqlException:" + e.getErrorCode() + "," + new String(e.getMessage().getBytes("GB18030//IGNORE")) + "\n");
+            }
+            
+            String [] names = {
+                "嘉懿","煜城","懿轩","烨伟","苑博","伟泽","熠彤","鸿煊","博涛","烨霖","烨华","煜祺","智宸","正豪",
+                "昊然","明杰","立诚","立轩","立辉","峻熙","弘文","熠彤","鸿煊","烨霖","哲瀚","鑫鹏","致远","俊驰"
+            };
+            
+            _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - before insert\n");
+            
+            try{
+                //插入人名  年龄随机
+                
+                for(int i = 0,  c = names.length; i < c; i ++){
+                    stmt = slite.prepareStatement("insert into blog..member (name,age)VALUES(?, ?)");
+                    stmt.setValue(names[i]);
+                    stmt.setValue((int)(Math.random() * 80));
+                    stmt.execute();
+                }
+            }catch(Exception e){
+                _system_.consoleWrite(new String(e.getMessage().getBytes("GB18030//IGNORE")) + "\n");
+            }
+            _system_.consoleWrite("time:" + (_system_.currentTimeMillis() - before) + " - after insert\n");
+
+        
+            stmt = slite.prepareStatement("select top 10 * from blog..member where age < ?");
+            stmt.setValue(40);
+            
+            try{
+                Sql.ResultSet rs = stmt.executeQuery();
+                int c = rs.getRowCount();
+                while (rs.isEof() == false){
+                    _system_.consoleWrite(new String(rs.getString("name").getBytes("GB18030//IGNORE")) + ":" + rs.getString("age") + "\n");
+                    rs.next();
+                }
+            }catch(Exception e){
+                _system_.consoleWrite(new String(e.getMessage().getBytes("GB18030//IGNORE")) + "\n");
+            }
+            pool.recycle(slite);
+        }
+        _system_.consoleWrite("done time:" + (_system_.currentTimeMillis() - before) + " - 4\n");
+   }
+    
+    Thread.sleep(100);
+	return 0;
+}
 
 int main(String [] args){
     testSql();

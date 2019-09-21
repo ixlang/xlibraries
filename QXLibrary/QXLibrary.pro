@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui uitools
+QT       += core gui uitools printsupport network qml xml sql designer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QTDIR = /Users/cadaqs/qt512/macos_x64_static
@@ -50,6 +50,18 @@ macx: PRE_TARGETDEPS += $$QTDIR/lib/libQtSolutions_PropertyBrowser-head.a
 
 macx: LIBS += -L$$QTDIR/plugins/platforms/ -lqcocoa
 macx: PRE_TARGETDEPS += $$QTDIR/plugins/platforms/libqcocoa.a
+
+macx: LIBS += -L$$QTDIR/lib/ -llimereport
+macx: PRE_TARGETDEPS += $$QTDIR/lib/liblimereport.a
+
+macx: LIBS += -L$$QTDIR/lib/ -lQtZint
+macx: PRE_TARGETDEPS += $$QTDIR/lib/libQtZint.a
+
+macx: LIBS += -L$$QTDIR/lib/ -lQt5Designer
+macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5Designer.a
+
+macx: LIBS += -L$$QTDIR/lib/ -lQt5DesignerComponents
+macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5DesignerComponents.a
 
 macx: LIBS += -L$$QTDIR/lib/ -lQt5MacExtras
 

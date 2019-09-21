@@ -17,7 +17,7 @@ EXEC=$(OUTPUT)/mysql_helper.so
 MYSQLIB=./libmysql/$(shell uname -s)/$(shell arch)/lib/libmysqlclient_r.a
 endif
 start: $(OBJS)
-	$(CC) $(CPPFLAGS) -shared -o $(EXEC) $(OBJS) $(MYSQLIB)   -fPIC
+	$(CC) $(CPPFLAGS) -shared -o $(EXEC) $(OBJS) $(MYSQLIB) -fPIC -static-libstdc++
 
 .cpp.o:
 	$(CC) $(CPPFLAGS) -O2 -fPIC -Wall -o $@ -c $<

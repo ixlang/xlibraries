@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport
+QT       += core gui printsupport qml xml network designer sql
 
 TARGET = QXLibrary
 TEMPLATE = lib
@@ -21,7 +21,7 @@ unix:!macx{
         }
     }
 }
-
+QMAKE_LFLAGS += -Xlinker -zmuldefs -Wl,-z,defs
 QMAKE_CXXFLAGS_RELEASE += -Os
 CONFIG += dll
 DEFINES += QXLIBRARY_LIBRARY
@@ -74,12 +74,23 @@ DEPENDPATH += $$QTDIR/include
 unix: PRE_TARGETDEPS += $$QTDIR/lib/libQt5Widgets.a
 
 unix: LIBS += -L$$QTDIR/lib/ -lqscintilla2_qt5
+
 #unix: LIBS += -L$$QTDIR/lib/ -lfcitxplatforminputcontextplugin
 
 INCLUDEPATH += $$QTDIR/include
 DEPENDPATH += $$QTDIR/include
 
 unix: PRE_TARGETDEPS += $$QTDIR/lib/libqscintilla2_qt5.a
+
+unix: LIBS += -L$$QTDIR/lib/ -llimereport
+unix: PRE_TARGETDEPS += $$QTDIR/lib/liblimereport.a
+
+unix: LIBS += -L$$QTDIR/lib/ -lQtZint
+unix: PRE_TARGETDEPS += $$QTDIR/lib/libQtZint.a
+
+unix: LIBS += -L$$QTDIR/lib/ -lQt5DesignerComponents
+unix: PRE_TARGETDEPS += $$QTDIR/lib/libQt5DesignerComponents.a
+
 #unix: PRE_TARGETDEPS += $$QTDIR/lib/libfcitxplatforminputcontextplugin.a
 
 win32:CONFIG(release, debug|release): LIBS += -L$$QTDIR/lib/release/ -lQtSolutions_PropertyBrowser-head

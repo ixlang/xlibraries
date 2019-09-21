@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Cadaqs\Desktop\zxing-cpp-master\zxing-cpp-master\build\CMakeFiles\e0b59482fde19d92b7f8b844189194cd\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{720182C6-7AE9-3B01-886E-03479BC2E09C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

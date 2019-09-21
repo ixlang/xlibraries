@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="forxlang.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\BarcodeFormat.cpp" />
+    <ClCompile Include="..\..\core\src\BitArray.cpp" />
+    <ClCompile Include="..\..\core\src\BitMatrix.cpp" />
+    <ClCompile Include="..\..\core\src\CharacterSetECI.cpp" />
+    <ClCompile Include="..\..\core\src\GenericGF.cpp" />
+    <ClCompile Include="..\..\core\src\GenericGFPoly.cpp" />
+    <ClCompile Include="..\..\core\src\TextUtfEncoding.cpp" />
+    <ClCompile Include="..\..\core\src\ZXBigInteger.cpp" />
+    <ClCompile Include="..\..\core\src\BitSource.cpp" />
+    <ClCompile Include="..\..\core\src\DecodeHints.cpp" />
+    <ClCompile Include="..\..\core\src\DecodeStatus.cpp" />
+    <ClCompile Include="..\..\core\src\GenericLuminanceSource.cpp" />
+    <ClCompile Include="..\..\core\src\GlobalHistogramBinarizer.cpp" />
+    <ClCompile Include="..\..\core\src\GridSampler.cpp" />
+    <ClCompile Include="..\..\core\src\HybridBinarizer.cpp" />
+    <ClCompile Include="..\..\core\src\LuminanceSource.cpp" />
+    <ClCompile Include="..\..\core\src\MultiFormatReader.cpp" />
+    <ClCompile Include="..\..\core\src\PerspectiveTransform.cpp" />
+    <ClCompile Include="..\..\core\src\ReedSolomonDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\Result.cpp" />
+    <ClCompile Include="..\..\core\src\ResultMetadata.cpp" />
+    <ClCompile Include="..\..\core\src\ResultPoint.cpp" />
+    <ClCompile Include="..\..\core\src\TextDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\WhiteRectDetector.cpp" />
+    <ClCompile Include="..\..\core\src\ReedSolomonEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\TextEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\MultiFormatWriter.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZDetector.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZReader.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZHighLevelEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZToken.cpp" />
+    <ClCompile Include="..\..\core\src\aztec\AZWriter.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMBitMatrixParser.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMDataBlock.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMDetector.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMVersion.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMReader.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMECEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMDefaultPlacement.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMHighLevelEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMSymbolInfo.cpp" />
+    <ClCompile Include="..\..\core\src\datamatrix\DMWriter.cpp" />
+    <ClCompile Include="..\..\core\src\maxicode\MCBitMatrixParser.cpp" />
+    <ClCompile Include="..\..\core\src\maxicode\MCDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\maxicode\MCReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCEANCommon.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode128Patterns.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCodabarReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode39Reader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode93Reader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode128Reader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODEAN8Reader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODEAN13Reader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODEANManufacturerOrgSupport.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODITFReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODMultiUPCEANReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODRowReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODRSS14Reader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODRSSExpandedReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCAReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCEANExtensionSupport.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCEANReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCEReader.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCodabarWriter.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode39Writer.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode93Writer.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODCode128Writer.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODEAN8Writer.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODEAN13Writer.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODITFWriter.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCEWriter.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODUPCAWriter.cpp" />
+    <ClCompile Include="..\..\core\src\oned\ODWriterHelper.cpp" />
+    <ClCompile Include="..\..\core\src\oned\rss\ODRSSExpandedBinaryDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\oned\rss\ODRSSFieldParser.cpp" />
+    <ClCompile Include="..\..\core\src\oned\rss\ODRSSGenericAppIdDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\oned\rss\ODRSSReaderHelper.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFBarcodeValue.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFBoundingBox.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFCodewordDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFDecodedBitStreamParser.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFDetectionResult.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFDetectionResultColumn.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFDetector.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFModulusGF.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFModulusPoly.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFReader.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFScanningDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFHighLevelEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\pdf417\PDFWriter.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRCodecMode.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRErrorCorrectionLevel.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRVersion.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRAlignmentPattern.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRAlignmentPatternFinder.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRBitMatrixParser.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRDataBlock.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRDataMask.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRDetector.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRFinderPattern.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRFinderPatternFinder.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRFormatInformation.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRReader.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QREncoder.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRMaskUtil.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRMatrixUtil.cpp" />
+    <ClCompile Include="..\..\core\src\qrcode\QRWriter.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\Big5MapTable.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\KRHangulMapping.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\Big5TextDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\GBTextDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\JPTextDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\KRTextDecoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\Big5TextEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\GBTextEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\JPTextEncoder.cpp" />
+    <ClCompile Include="..\..\core\src\textcodec\KRTextEncoder.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\core\src\BarcodeFormat.h" />
+    <ClInclude Include="..\..\core\src\BitArray.h" />
+    <ClInclude Include="..\..\core\src\BitHacks.h" />
+    <ClInclude Include="..\..\core\src\BitMatrix.h" />
+    <ClInclude Include="..\..\core\src\ByteArray.h" />
+    <ClInclude Include="..\..\core\src\CharacterSet.h" />
+    <ClInclude Include="..\..\core\src\CharacterSetECI.h" />
+    <ClInclude Include="..\..\core\src\CustomData.h" />
+    <ClInclude Include="..\..\core\src\GenericGF.h" />
+    <ClInclude Include="..\..\core\src\GenericGFPoly.h" />
+    <ClInclude Include="..\..\core\src\TextUtfEncoding.h" />
+    <ClInclude Include="..\..\core\src\ZXBigInteger.h" />
+    <ClInclude Include="..\..\core\src\ZXConfig.h" />
+    <ClInclude Include="..\..\core\src\ZXNullable.h" />
+    <ClInclude Include="..\..\core\src\ZXNumeric.h" />
+    <ClInclude Include="..\..\core\src\ZXContainerAlgorithms.h" />
+    <ClInclude Include="..\..\core\src\ZXStrConvWorkaround.h" />
+    <ClInclude Include="..\..\core\src\ZXTestSupport.h" />
+    <ClInclude Include="..\..\core\src\BinaryBitmap.h" />
+    <ClInclude Include="..\..\core\src\BitSource.h" />
+    <ClInclude Include="..\..\core\src\DecodeHints.h" />
+    <ClInclude Include="..\..\core\src\DecodeStatus.h" />
+    <ClInclude Include="..\..\core\src\DecoderResult.h" />
+    <ClInclude Include="..\..\core\src\DetectorResult.h" />
+    <ClInclude Include="..\..\core\src\GenericLuminanceSource.h" />
+    <ClInclude Include="..\..\core\src\GlobalHistogramBinarizer.h" />
+    <ClInclude Include="..\..\core\src\GridSampler.h" />
+    <ClInclude Include="..\..\core\src\HybridBinarizer.h" />
+    <ClInclude Include="..\..\core\src\LuminanceSource.h" />
+    <ClInclude Include="..\..\core\src\MultiFormatReader.h" />
+    <ClInclude Include="..\..\core\src\PerspectiveTransform.h" />
+    <ClInclude Include="..\..\core\src\Reader.h" />
+    <ClInclude Include="..\..\core\src\ReedSolomonDecoder.h" />
+    <ClInclude Include="..\..\core\src\Result.h" />
+    <ClInclude Include="..\..\core\src\ResultMetadata.h" />
+    <ClInclude Include="..\..\core\src\ResultPoint.h" />
+    <ClInclude Include="..\..\core\src\TextDecoder.h" />
+    <ClInclude Include="..\..\core\src\WhiteRectDetector.h" />
+    <ClInclude Include="..\..\core\src\ByteMatrix.h" />
+    <ClInclude Include="..\..\core\src\ReedSolomonEncoder.h" />
+    <ClInclude Include="..\..\core\src\TextEncoder.h" />
+    <ClInclude Include="..\..\core\src\MultiFormatWriter.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZDecoder.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZDetector.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZDetectorResult.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZReader.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZEncodingState.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZEncoder.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZHighLevelEncoder.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZToken.h" />
+    <ClInclude Include="..\..\core\src\aztec\AZWriter.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMBitMatrixParser.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMECB.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMDataBlock.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMDecoder.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMDetector.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMVersion.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMReader.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMECEncoder.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMEncoderContext.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMDefaultPlacement.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMHighLevelEncoder.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMSymbolInfo.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMSymbolShape.h" />
+    <ClInclude Include="..\..\core\src\datamatrix\DMWriter.h" />
+    <ClInclude Include="..\..\core\src\maxicode\MCBitMatrixParser.h" />
+    <ClInclude Include="..\..\core\src\maxicode\MCDecoder.h" />
+    <ClInclude Include="..\..\core\src\maxicode\MCReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCEANCommon.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode128Patterns.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCodabarReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode39Reader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode93Reader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode128Reader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODEAN8Reader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODEAN13Reader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODEANManufacturerOrgSupport.h" />
+    <ClInclude Include="..\..\core\src\oned\ODITFReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODMultiUPCEANReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODRowReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODRSS14Reader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODRSSExpandedReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCAReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCEANExtensionSupport.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCEANReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCEReader.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCodabarWriter.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode39Writer.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode93Writer.h" />
+    <ClInclude Include="..\..\core\src\oned\ODCode128Writer.h" />
+    <ClInclude Include="..\..\core\src\oned\ODEAN8Writer.h" />
+    <ClInclude Include="..\..\core\src\oned\ODEAN13Writer.h" />
+    <ClInclude Include="..\..\core\src\oned\ODITFWriter.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCEWriter.h" />
+    <ClInclude Include="..\..\core\src\oned\ODUPCAWriter.h" />
+    <ClInclude Include="..\..\core\src\oned\ODWriterHelper.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSDataCharacter.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSExpandedBinaryDecoder.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSExpandedPair.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSExpandedRow.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSFieldParser.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSFinderPattern.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSGenericAppIdDecoder.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSPair.h" />
+    <ClInclude Include="..\..\core\src\oned\rss\ODRSSReaderHelper.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFBarcodeMetadata.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFBarcodeValue.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFBoundingBox.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFCodeword.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFCodewordDecoder.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFDecodedBitStreamParser.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFDecoderResultExtra.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFDetectionResult.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFDetectionResultColumn.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFDetector.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFModulusGF.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFModulusPoly.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFReader.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFScanningDecoder.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFCompaction.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFEncoder.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFHighLevelEncoder.h" />
+    <ClInclude Include="..\..\core\src\pdf417\PDFWriter.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRCodecMode.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRErrorCorrectionLevel.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRVersion.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRAlignmentPattern.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRAlignmentPatternFinder.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRBitMatrixParser.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRDataBlock.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRDataMask.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRDecoder.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRDecoderMetadata.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRDetector.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRECB.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRFinderPattern.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRFinderPatternFinder.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRFinderPatternInfo.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRFormatInformation.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRReader.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QREncoder.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QREncodeResult.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRMaskUtil.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRMatrixUtil.h" />
+    <ClInclude Include="..\..\core\src\qrcode\QRWriter.h" />
+    <ClInclude Include="..\..\core\src\textcodec\Big5MapTable.h" />
+    <ClInclude Include="..\..\core\src\textcodec\KRHangulMapping.h" />
+    <ClInclude Include="..\..\core\src\textcodec\Big5TextDecoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\GBTextDecoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\JPTextDecoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\KRTextDecoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\Big5TextEncoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\GBTextEncoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\JPTextEncoder.h" />
+    <ClInclude Include="..\..\core\src\textcodec\KRTextEncoder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{B325C446-BE22-3FA4-8ED4-5DBE1D6F6E05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\oned\rss">
+      <UniqueIdentifier>{30B5B83D-2276-39F2-B6A0-27310E2DC03B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\aztec">
+      <UniqueIdentifier>{0CDA0CF8-7BEF-37D4-BB1A-14DFAC09C116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\datamatrix">
+      <UniqueIdentifier>{D648138B-A48C-3EF3-8377-DF5CF9B856E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\maxicode">
+      <UniqueIdentifier>{FB9CCEB3-6E7F-3AC3-97AE-9DBD6CB72592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\oned">
+      <UniqueIdentifier>{3ED49E3C-BC4A-3B52-BB9E-EED53AB36597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\pdf417">
+      <UniqueIdentifier>{4C029A43-2F0E-39AC-8539-B43D070F3C02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\qrcode">
+      <UniqueIdentifier>{0CE2A013-7485-3844-8758-07EA14358D51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\textcodec">
+      <UniqueIdentifier>{274A553A-99D3-3D7F-9FBA-0AACB430BC0D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="zxing.def" />
+  </ItemGroup>
+</Project>

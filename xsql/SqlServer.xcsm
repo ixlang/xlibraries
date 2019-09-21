@@ -1,0 +1,29 @@
+//xlang Source, Name:SqlServer.xcsm 
+//Date: Sat Sep 21:23:09 2019 
+
+class SqlServer : AdoConnector{
+
+    SqlServer(){
+        setDriver("SQL SERVER");
+    }
+    static class SqlServerRegister : Sql.ConnectionRegister{
+		Sql.Connection allocConnection(String drivername){
+			if (drivername.equals("sqlserver")){
+				return new SqlServer();
+            }
+            return nilptr;
+        }
+    };
+    
+	static bool registry(){
+        
+        if (Helper.init()){
+            Sql.Database.reigstry("sqlserver", new SqlServerRegister());
+            return true;
+        }
+
+        return false;
+    }
+    
+    static bool registried = registry();
+};

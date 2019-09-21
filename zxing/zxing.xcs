@@ -1,0 +1,112 @@
+//xlang 
+class ZXing : Library{
+    enum BarcodeFormat
+    {
+        /** Aztec 2D barcode format. */
+        AZTEC,
+
+        /** CODABAR 1D format. */
+        CODABAR,
+
+        /** Code 39 1D format. */
+        CODE_39,
+
+        /** Code 93 1D format. */
+        CODE_93,
+
+        /** Code 128 1D format. */
+        CODE_128,
+
+        /** Data Matrix 2D barcode format. */
+        DATA_MATRIX,
+
+        /** EAN-8 1D format. */
+        EAN_8,
+
+        /** EAN-13 1D format. */
+        EAN_13,
+
+        /** ITF (Interleaved Two of Five) 1D format. */
+        ITF,
+
+        /** MaxiCode 2D barcode format. */
+        MAXICODE,
+
+        /** PDF417 format. */
+        PDF_417,
+
+        /** QR Code 2D barcode format. */
+        QR_CODE,
+
+        /** RSS 14 */
+        RSS_14,
+
+        /** RSS EXPANDED */
+        RSS_EXPANDED,
+
+        /** UPC-A 1D format. */
+        UPC_A,
+
+        /** UPC-E 1D format. */
+        UPC_E,
+
+        /** UPC/EAN extension format. Not a stand-alone format. */
+        UPC_EAN_EXTENSION,
+
+
+
+        // Not valid value, used to count the number of formats, thus should be always the last listed here
+        FORMAT_COUNT
+    };
+
+    static bool bLoaded = new ZXing().load();
+    
+    static bool load(){
+        try{
+            loadLibrary("ZXingCore");
+            return true;
+        }catch(Exception e){
+        }
+        return false;
+    }
+    
+    import {
+        Object cdecl generator_qr(int format, String content, int width, int height, bool naked);
+        Object cdecl read_qrcode(ObjectPtr buffer,int offset, int width, int height, int row_bytes, int pixel_bytes,
+            int index_r, int index_g, int index_b, ObjectPtr num_bits, ObjectPtr status, ObjectPtr format);
+    };
+    
+    static class Result{
+        String text;
+        BarcodeFormat format;
+        
+        Result(byte [] data, ZXing.BarcodeFormat fmt){
+            text = new String(data);
+            format = fmt;
+        }
+    };
+    
+    static Result readQRCodeFromARGB8888Buffer(byte [] data, int offset, int width, int height){
+        int num_bits = 5, status = 7;
+        ZXing.BarcodeFormat format = ZXing.BarcodeFormat.FORMAT_COUNT;
+        byte []  rs = (byte [])ZXing.read_qrcode(data,offset,width,height,width*4,4,1,2,3,num_bits,status,format);
+        if (rs != nilptr){
+            return new Result(rs, format);
+        }
+        return nilptr;
+    }
+    
+    static byte[] generateQRCodeToARGB8888Bitmap(String content, int widthOrHeight, bool isBmpFile){
+        return (byte[])generator_qr(ZXing.BarcodeFormat.QR_CODE, content, widthOrHeight, widthOrHeight, !isBmpFile);
+    }
+};
+
+
+/*int main(String [] args){
+    byte [] data  = ZXing.generateQRCodeToARGB8888Bitmap("1566", 100, true);
+    long hf = _system_.openFile("ll.bmp","w");
+    _system_.writeFile(hf,data,0,data.length);
+    _system_.closeFile(hf);
+	return 0;
+}
+*/

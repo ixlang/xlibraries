@@ -36,7 +36,7 @@
 		}
 	},
 	"package":	"Qt5.9.1",
-	"version":	"5.9.1.11",
+	"version":	"5.9.1.12",
 	"descr":	"优秀的跨平台界面库",
 	"author":	"https://github.com/ixlang/xlibraries"
 }

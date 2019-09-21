@@ -1,0 +1,24 @@
+LIBRARY "adohelper.dll"
+
+EXPORTS
+
+XNLMain
+XNLExit
+ado_alloc
+ado_delloc
+ado_execute
+ado_delloc_rs
+ado_rs_next
+ado_rs_prev     
+ado_rs_first
+ado_rs_last
+ado_rs_count
+ado_rs_iseof    
+ado_rs_getValue
+ado_rs_getValueI
+ado_rs_getValueL
+ado_rs_getValueD
+ado_rs_getIValue
+ado_rs_getIValueI
+ado_rs_getIValueL
+ado_rs_getIValueD

@@ -56,11 +56,17 @@ QXApplication::~QXApplication()
 		if (strcmp(type, "QTreeWidget") == 0) {
 			ar.installTreeAction(obj);
 		}
+		if ((strcmp(type, "QDateTimeEdit") == 0) || (strcmp(type, "QTimeEdit") == 0) || (strcmp(type, "QDateEdit") == 0)) {
+			ar.installDateTimeEditAction(obj);
+		}
 		if (strcmp(type, "QPushButton") == 0 || strcmp(type, "QCheckBox") == 0) {
 			ar.installButtonAction(obj);
 		}
 		if (strcmp(type, "QLineEdit") == 0) {
 			ar.installEditAction(obj);
+		}
+		if (strcmp(type, "QTextEdit") == 0) {
+			ar.installTextEditAction(obj);
 		}
 		if (strcmp(type, "QTableWidget") == 0) {
 			ar.installTableCellChange((QTableWidget*)obj);

@@ -2,7 +2,7 @@
 package XCImg{
 	class VCodeGen : Library{
         long nativehandle;
-        static bool loaded;
+        static bool loaded = false;
         static bool load(){
             if (loaded == false){
                 try{
