@@ -21,7 +21,7 @@ unix:!macx{
         }
     }
 }
-QMAKE_LFLAGS += -Xlinker -zmuldefs -Wl,-z,defs
+QMAKE_LFLAGS += -Wl,-z,defs
 QMAKE_CXXFLAGS_RELEASE += -Os
 CONFIG += dll
 DEFINES += QXLIBRARY_LIBRARY

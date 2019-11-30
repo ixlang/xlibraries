@@ -57,11 +57,11 @@ macx: PRE_TARGETDEPS += $$QTDIR/lib/liblimereport.a
 macx: LIBS += -L$$QTDIR/lib/ -lQtZint
 macx: PRE_TARGETDEPS += $$QTDIR/lib/libQtZint.a
 
-macx: LIBS += -L$$QTDIR/lib/ -lQt5Designer
-macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5Designer.a
+#macx: LIBS += -L$$QTDIR/lib/ -lQt5Designer
+#macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5Designer.a
 
-macx: LIBS += -L$$QTDIR/lib/ -lQt5DesignerComponents
-macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5DesignerComponents.a
+#macx: LIBS += -L$$QTDIR/lib/ -lQt5DesignerComponents
+#macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5DesignerComponents.a
 
 macx: LIBS += -L$$QTDIR/lib/ -lQt5MacExtras
 

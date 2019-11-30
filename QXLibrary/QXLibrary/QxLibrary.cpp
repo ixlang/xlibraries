@@ -1359,6 +1359,12 @@ XNLEXPORT xbool XI_CDECL widget_get_int_bool(xlong h, xint proid, xint v) {
 
         switch (proid)
         {
+		case TREEITEMISEXPAND:
+		{
+			QTreeWidgetItem * titem = (QTreeWidgetItem *)h;
+			return titem->isExpanded();
+		}
+			break;
 		case PRTDLGTEST:
 		{
 			QPrintDialog * titem = (QPrintDialog *)h;
@@ -4231,7 +4237,6 @@ XNLEXPORT xbool XI_CDECL string_bool5_int2_bool2(xlong handle,xint proid, xstrin
 }
 
 XNLEXPORT xlong XI_CDECL long_intstring(xlong handle, xint proid, xint type, xstring v1) {
-
         switch (proid)
         {
         case PROPADDPROPERTY:
@@ -4332,15 +4337,14 @@ XNLEXPORT xlong XI_CDECL pointer_intlong2(void* handle, xint proid, xlong value,
 		int width = (value >> 32) & 0xffffffff;
 		int height = (value & 0xffffffff);
 
-		QImage * qm = 0;
+		QImage * qm = new QImage(width, height, (QImage::Format)v1);
 		if (handle == 0) {
-			qm = new QImage(width, height, (QImage::Format)v1);
 			qm->fill(Qt::GlobalColor::transparent);
 		}
 		else {
-			uchar * pbuf = new uchar[width * height * 4];
-			memcpy(pbuf, (uchar*)handle, width * height * 4);
-			qm = new QImage(pbuf, width, height, (QImage::Format)v1, CleanupQImage, pbuf);
+			uchar * data = qm->bits();
+			size_t count = qm->byteCount();
+			memcpy(data, (uchar*)handle, count);
 		}
 
 		return (xlong)qm;

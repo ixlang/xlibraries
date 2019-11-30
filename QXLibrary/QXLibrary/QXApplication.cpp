@@ -765,7 +765,13 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 		break;
 
 	case QEvent::InputMethod:
-		//QInputMethodEvent
+	{
+		/*QInputMethodEvent* iEvent = dynamic_cast<QInputMethodEvent*> (evn);
+		输入法事件
+		iEvent->preeditString(); // 活动编辑内容
+		//replacementLength（）将包含被替换的字符数。replaceStart（）包含相对于预编辑字符串开头的字符要替换的位置。
+		iEvent->commitString();// 输入的内容*/
+	}
 		break;
 
 	case QEvent::TabletMove:
