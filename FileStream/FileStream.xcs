@@ -10,10 +10,17 @@ package FileStream {
 				throw new IllegalArgumentException("file " + path + " can not open");
 			}
 		} 
-		FileInputStream(FileSystem.File file){
+		FileInputStream(FSObject file){
 			filehandler = XPlatform.openSystemFile(file.getPath(), "r");
 			if (filehandler == 0){
 				throw new IllegalArgumentException("file " + file.getPath() + " can not open");
+			}
+		}
+        FileInputStream(FSObject dir, String file){
+            String path = dir.getPath().appendPath(file);
+			filehandler = XPlatform.openSystemFile(path, "r");
+			if (filehandler == 0){
+				throw new IllegalArgumentException("file " + path + " can not open");
 			}
 		}
 		bool attach(String path){
@@ -92,16 +99,23 @@ package FileStream {
 			}
 		}
         
-		FileOutputStream(FileSystem.File file){
+		FileOutputStream(FSObject file){
 			filehandler = XPlatform.openSystemFile(file.getPath(), "w");
 			if (filehandler == 0){
 				throw new IllegalArgumentException("file " + file.getPath() + " can not open");
 			}
 		}
-		FileOutputStream(FileSystem.File file, bool append){
+		FileOutputStream(FSObject file, bool append){
 			filehandler = XPlatform.openSystemFile(file.getPath(), append ? "a" : "w");
 			if (filehandler == 0){
 				throw new IllegalArgumentException("file " + file.getPath() + " can not open");
+			}
+		}
+        FileOutputStream(FSObject dir, String file, bool append){
+            String path = dir.getPath().appendPath(file);
+			filehandler = XPlatform.openSystemFile(path, append ? "a" : "w");
+			if (filehandler == 0){
+				throw new IllegalArgumentException("file " + path + " can not open");
 			}
 		}
 		bool attach(String path){

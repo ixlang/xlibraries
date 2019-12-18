@@ -1,7 +1,19 @@
 #include "qxlibrary_global.h"
 #include "QXApplication.h"
 
-#include<QtPlugin>  // for release
+//#include<QtPlugin>  // for release
+
+
+
+#ifdef WIN32
+#include <conio.h>
+#include <codecvt>
+#endif
+#include <stdio.h>
+#include <locale>
+
+#include <assert.h>
+#ifndef MOBILE_APP
 
 Q_IMPORT_PLUGIN(QGifPlugin) //for releas
 Q_IMPORT_PLUGIN(QICNSPlugin) //for releas
@@ -13,15 +25,6 @@ Q_IMPORT_PLUGIN(QTgaPlugin) //for releas
 Q_IMPORT_PLUGIN(QTiffPlugin) //for releas
 Q_IMPORT_PLUGIN(QWbmpPlugin) //for releas
 Q_IMPORT_PLUGIN(QWebpPlugin) //for releas
-
-#ifdef WIN32
-#include <conio.h>
-#include <codecvt>
-#endif
-#include <stdio.h>
-#include <locale>
-
-#include <assert.h>
 #ifdef WIN32
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
@@ -38,6 +41,10 @@ Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #elif defined(__APPLE__)
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
+#endif
+#else
+//#include <QtPlugin>
+//Q_IMPORT_PLUGIN(QAndroidPlatformIntegrationPlugin)
 #endif
 XNLEnv * gs_env = 0;
 XObject * _application = 0;
@@ -76,6 +83,8 @@ void CleanupQImage(void* p) {
 #else
 #include <sys/stat.h>
 #endif
+
+
 
 #ifdef WIN32
 
@@ -344,7 +353,9 @@ XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
         }
 		ui_thread = gs_env->getContext(&ui_release);
 		ui_thread_id = QThread::currentThreadId();
-        _xapplication = new QXApplication(global_argc, 0);
+        if (_xapplication == 0){
+            _xapplication = new QXApplication(global_argc, 0);
+        }
 		//uithreadid = GetCurrentThreadId();
         //qapp->installEventFilter(new QFilter());
 		//qDebug() << "Supported formats:" << QImageReader::supportedImageFormats();
@@ -1025,12 +1036,14 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }
             break;
 		case qtReportEngine:
+#ifndef MOBILE_APP
 			if (parent != 0) {
 				qobject = new LimeReport::ReportEngine((QObject*)parent);
 			}else {
 				qobject = new LimeReport::ReportEngine();
 			}
 			ar.installReportView((LimeReport::ReportEngine*)qobject);
+#endif
 			break;
         default:
             break;
@@ -1114,7 +1127,7 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 			}
 		}
 		break;
-		case TESETALIGNMENT:
+        case TESETALIGNMENT:
 		{
 			QTextEdit * pset = ((QTextEdit*)h);
 			if (pset != 0) {
@@ -1335,7 +1348,9 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 			((QTableWidget*)h)->horizontalHeader()->setFixedHeight(value);
 			break;
 		case SHOWREPORT:
+#ifndef MOBILE_APP
 			return ((LimeReport::ReportEngine *)h)->previewReport(LimeReport::PreviewHint(value));
+#endif
 			default:
                 break;
         }
@@ -2200,7 +2215,7 @@ XNLEXPORT xint XI_CDECL widget_set_intstring_value(xlong h, xint proid, xint xv,
 				return 1;
 			}
 			break;
-
+#ifndef MOBILE_APP
 		case LOADREPORTFROMFILE:
 			return ((LimeReport::ReportEngine *)h)->loadFromFile(QString::fromUtf8(yv)) ? 1 : 0;
 			break;
@@ -2208,6 +2223,7 @@ XNLEXPORT xint XI_CDECL widget_set_intstring_value(xlong h, xint proid, xint xv,
 		case LOADREPORTFROMTEXT:
 			return ((LimeReport::ReportEngine *)h)->loadFromString(QString::fromUtf8(yv)) ? 1 : 0;
 			break;
+#endif
         }
         return 0;
 }
@@ -3244,6 +3260,7 @@ XNLEXPORT xlong XI_CDECL long_object_string(xlong handle, xint proid, XObject * 
 
 		case REGDATASOURCE:
 		{
+#ifndef MOBILE_APP
 			LimeReport::ICallbackDatasource * qobject = 0;
 			try {
 				qobject = ((LimeReport::ReportEngine*)handle)->dataManager()->createCallbackDatasource(QString::fromUtf8(v2));
@@ -3260,6 +3277,7 @@ XNLEXPORT xlong XI_CDECL long_object_string(xlong handle, xint proid, XObject * 
 			
 			
 			return (xlong)qobject;
+#endif
 		}
 			break;
         default:
@@ -4486,3 +4504,317 @@ XNLEXPORT xint XI_CDECL int_long_int_long_int_int(xlong h, xint proid, xlong h1,
         }
         return 0;
 }
+
+#ifdef MOBILE_APP
+
+void * getFunction(const char * name) {
+    if (strcmp(name, "XNLMain") == 0) return  (void*)&XNLMain;
+    if (strcmp(name, "XNLExit") == 0) return  (void*)&XNLExit;
+    if (strcmp(name, "locaUiFile") == 0) return (void*)&locaUiFile;
+    if (strcmp(name, "ShowUi") == 0) return (void*)&ShowUi;
+    if (strcmp(name, "createQxApplication") == 0) return (void*)&createQxApplication;
+    if (strcmp(name, "ApplicationRun") == 0) return (void*)& ApplicationRun;
+    if (strcmp(name, "widget_set_vint_value") == 0) return (void*)& widget_set_vint_value;
+    if (strcmp(name, "widget_get_bool_value") == 0) return (void*)& widget_get_bool_value;
+    if (strcmp(name, "widget_get_object") == 0) return (void*)& widget_get_object;
+    if (strcmp(name, "widget_get_double_value") == 0) return (void*)& widget_get_double_value;
+    if (strcmp(name, "widget_set_double_value") == 0) return (void*)& widget_set_double_value;
+    if (strcmp(name, "widget_set_bool_value") == 0) return (void*)& widget_set_bool_value;
+    if (strcmp(name, "widget_set_bkrl") == 0) return (void*)& widget_set_bkrl;
+    if (strcmp(name, "widget_get_int_value") == 0) return (void*)& widget_get_int_value;
+    if (strcmp(name, "widget_set_v2int_value") == 0) return (void*)& widget_set_v2int_value;
+    if (strcmp(name, "widget_set_native_value") == 0) return (void*)& widget_set_native_value;
+    if (strcmp(name, "widget_slot_string") == 0) return (void*)& widget_slot_string;
+    if (strcmp(name, "widget_slot") == 0) return (void*)& widget_slot;
+    if (strcmp(name, "core_sub_class") == 0) return (void*)& core_sub_class;
+    if (strcmp(name, "findControl") == 0) return (void*)& findControl;
+    if (strcmp(name, "core_getName") == 0) return (void*)& core_getName;
+    if (strcmp(name, "core_getClassName") == 0) return (void*)& core_getClassName;
+    if (strcmp(name, "core_getParent") == 0) return (void*)& core_getParent;
+    if (strcmp(name, "createQObject") == 0) return (void*)& createQObject;
+    if (strcmp(name, "createNObject") == 0) return (void*)& createNObject;
+    if (strcmp(name, "widget_set_intstring_value") == 0) return (void*)& widget_set_intstring_value;
+    if (strcmp(name, "widget_set_v3int_value") == 0) return (void*)& widget_set_v3int_value;
+    if (strcmp(name, "widget_set_intintstring_value") == 0) return (void*)& widget_set_intintstring_value;
+    if (strcmp(name, "core_getString") == 0) return (void*)& core_getString;
+    if (strcmp(name, "object_get_string") == 0) return (void*)& object_get_string;
+    if (strcmp(name, "object_get_handle_string") == 0) return (void*)& object_get_handle_string;
+    if (strcmp(name, "object_get_string2") == 0) return (void*)& object_get_string2;
+    if (strcmp(name, "object_get_handle") == 0) return (void*)& object_get_handle;
+    if (strcmp(name, "object_get_handle2") == 0) return (void*)& object_get_handle2;
+    if (strcmp(name, "object_get_string_handle_string2") == 0) return (void*)& object_get_string_handle_string2;
+    if (strcmp(name, "object_get_string_handle_string_int") == 0) return (void*)& object_get_string_handle_string_int;
+    if (strcmp(name, "object_get_string2_handle_string2") == 0) return (void*)& object_get_string2_handle_string2;
+    if (strcmp(name, "object_get_string2_handle_string_int") == 0) return (void*)& object_get_string2_handle_string_int;
+    if (strcmp(name, "attachControl") == 0) return (void*)& attachControl;
+    if (strcmp(name, "openfile_dlg_string3_obj") == 0) return (void*)& openfile_dlg_string3_obj;
+    if (strcmp(name, "long_string2") == 0) return (void*)& long_string2;
+    if (strcmp(name, "long_long_string2") == 0) return (void*)& long_long_string2;
+    if (strcmp(name, "long_get") == 0) return (void*)& long_get;
+    if (strcmp(name, "core_attach") == 0) return (void*)& core_attach;
+    if (strcmp(name, "widget_set_intlongstring_value") == 0) return (void*)& widget_set_intlongstring_value;
+    if (strcmp(name, "widget_set_intlongint_value") == 0) return (void*)& widget_set_intlongint_value;
+    if (strcmp(name, "widget_set_object_value") == 0) return (void*)& widget_set_object_value;
+    if (strcmp(name, "object_set_long_int_long") == 0) return (void*)& object_set_long_int_long;
+    if (strcmp(name, "object_get_long_int") == 0) return (void*)& object_get_long_int;
+    if (strcmp(name, "long_string2_int2") == 0) return (void*)& long_string2_int2;
+    if (strcmp(name, "widget_set_int_bool_value") == 0) return (void*)& widget_set_int_bool_value;
+    if (strcmp(name, "string_bool5_int2_bool2") == 0) return (void*)& string_bool5_int2_bool2;
+    if (strcmp(name, "long_intstring") == 0) return (void*)& long_intstring;
+    if (strcmp(name, "long_intlong") == 0) return (void*)& long_intlong;
+    if (strcmp(name, "void_long2") == 0) return (void*)& void_long2;
+    if (strcmp(name, "widget_set_long_object_value") == 0) return (void*)& widget_set_long_object_value;
+    if (strcmp(name, "core_getintlong") == 0) return (void*)& core_getintlong;
+    if (strcmp(name, "native_double2") == 0) return (void*)& native_double2;
+    if (strcmp(name, "native_double4") == 0) return (void*)& native_double4;
+    if (strcmp(name, "core_getStringlongint") == 0) return (void*)& core_getStringlongint;
+    if (strcmp(name, "int_long_int_long_int_int") == 0) return (void*)& int_long_int_long_int_int;
+    if (strcmp(name, "widget_set_int2_object_value") == 0) return (void*)& widget_set_int2_object_value;
+    if (strcmp(name, "array_int2") == 0) return (void*)& array_int2;
+    if (strcmp(name, "locaUiData") == 0) return (void*)& locaUiData;
+    if (strcmp(name, "widget_set_bint_value") == 0) return (void*)& widget_set_bint_value;
+    if (strcmp(name, "create_array_int2") == 0) return (void*)& create_array_int2;
+    if (strcmp(name, "createSObject") == 0) return (void*)& createSObject;
+    if (strcmp(name, "long_longstring") == 0) return (void*)& long_longstring;
+    if (strcmp(name, "long_intlong2") == 0) return (void*)& long_intlong2;
+    if (strcmp(name, "widget_get_int_bool") == 0) return (void*)& widget_get_int_bool;
+    if (strcmp(name, "widget_set_v2int_double_value") == 0) return (void*)& widget_set_v2int_double_value;
+    if (strcmp(name, "native_int4") == 0) return (void*)& native_int4;
+    if (strcmp(name, "long_long_int9") == 0) return (void*)& long_long_int9;
+    if (strcmp(name, "long_double2") == 0) return (void*)& long_double2;
+    if (strcmp(name, "long_object_string") == 0) return (void*)& long_object_string;
+    if (strcmp(name, "pointer_intlong2") == 0) return (void*)& pointer_intlong2;
+    if (strcmp(name, "createPObject") == 0) return (void*)& createPObject;
+    if (strcmp(name, "createQPObject") == 0) return (void*)& createQPObject;
+	return 0;
+}
+
+#include <QtAndroid>
+#include <QJsonObject>
+#include <android/log.h>
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "QXLibrary",__VA_ARGS__)
+
+typedef void (*__init_function_ptr)(void*(*prcload)(const char *),
+    void*(*prcgetf)(void *, const char *),
+    void(*prcfree)(void*),
+    int(*prcout)(const char *, size_t),
+    int(*prcin)(const char *, size_t),
+    void (*preexit)(void));
+
+typedef void * (*__init_xrvm_ptr)();
+
+typedef int (*__start_xrvm_ptr)(void * pvm,
+                                const char * app_path,
+                                unsigned char * data,
+                                size_t len,
+                                int argc,
+                                const char * argv[],
+                                int * errcode);
+
+__init_function_ptr __init_function_p = 0;
+__init_xrvm_ptr __init_xrvm_p = 0;
+__start_xrvm_ptr __start_xrvm_p = 0;
+
+//#include "../../../../../xcross/libxrvm.h"
+#include <dlfcn.h>
+
+char * mymod = 0;
+
+void* load_module(const char * name) {
+	if (strcmp(name, "libQXLibrary.so") == 0) {
+		if (mymod == 0) {
+			mymod = new char[8];
+		}
+		return mymod;
+	}
+	return  dlopen(name, RTLD_NOW);
+}
+
+void * get_function(void * handle, const char * name) {
+	if (handle == mymod && mymod != 0) {
+		return getFunction(name);
+	}
+	return dlsym(handle, name);
+}
+
+void free_library(void * handle) {
+	if (mymod != 0) {
+		delete[] mymod;
+		return;
+	}
+	dlclose(handle);
+}
+
+int std_stream_out(const char * text, size_t len) {
+	return len;
+}
+int std_stream_in(const char * text, size_t len) {
+	return 0;
+}
+
+void onexit(){
+    LOGD("libQXLibrary: %s", "wille exit");
+}
+
+bool loadXRVM(bool & debug){
+    debug = true;
+    void * xhandle = dlopen("libxrvmd.so", RTLD_NOW);
+
+    if (xhandle == 0){
+        debug = false;
+        xhandle = dlopen("libxrvm.so", RTLD_NOW);
+    }
+
+    if (xhandle != 0){
+       __init_function_p = (__init_function_ptr)dlsym(xhandle, "__init_function");
+       __init_xrvm_p = (__init_xrvm_ptr)dlsym(xhandle, "__init_xrvm");
+       __start_xrvm_p = (__start_xrvm_ptr)dlsym(xhandle, "__start_xrvm");
+       return true;
+    }
+
+    return false;
+}
+
+
+QString getRunArgument() {
+  QString argument;
+  QAndroidJniObject activity = QtAndroid::androidActivity();
+  if (activity.isValid()) {
+    QAndroidJniObject intent = activity.callObjectMethod("getIntent", "()Landroid/content/Intent;");
+    if (intent.isValid()) {
+       QAndroidJniObject data = intent.callObjectMethod("getExtras", "()Landroid/os/Bundle;");
+       if (data.isValid()) {
+           argument = data.toString();
+       }
+    }
+  }
+  return argument;
+}
+
+void processArgv(char * data, int len, std::vector<const char*> & argout){
+    char * hp = data;
+    char * ep = (data + len - 1);
+    while (hp != ep){
+        if (*hp == '{'){
+            hp++;
+            break;
+        }
+        hp++;
+    }
+    while (ep != hp){
+        if (*ep == '}'){
+            *ep = 0;
+            len = ep - hp;
+            data = hp;
+            break;
+        }
+        ep--;
+    }
+    if (ep == hp){
+        return;
+    }
+    bool ds = false;
+    char * p = data, *q = data + len;
+    bool begin = false;
+
+    while (p != q){
+        if (*p != '\\'){
+            if (*p == '"'){ ds = !ds; }
+            if (!ds){
+                if (!begin && *p != ' ' && *p != ','){
+                    begin = true;
+                    argout.push_back(p);
+                }
+                if (*p == ','){
+                    *p = 0;
+                    begin = false;
+                }
+            }
+        }
+        else{
+            p++;
+        }
+        p++;
+    }
+}
+
+
+int main(int argc, char *argv[]) {
+    //_xapplication = new QXApplication(argc, argv);
+    QString _argv = getRunArgument();
+    //LOGD("QXLibrary: %s", "qt start --------------------------------------");
+    int dbgport = -1;
+
+    bool runasDebug = false;
+    if (loadXRVM(runasDebug) == false){
+        return 0;
+    }
+
+    //LOGD("QXLibrary: %s", _argv.toUtf8().data());
+    std::vector<const char*> arglist;
+    for (int x = 0;x < argc; x++){
+        arglist.push_back(argv[x]);
+    }
+    //LOGD("QXLibrary: %s", "qt start --------------------------------------2");
+    QByteArray _argpb = _argv.toUtf8();
+
+    if (_argpb.size() > 0){
+        processArgv(_argpb.data(), _argpb.size(), arglist);
+
+        if (arglist.size() > 0){
+            if (runasDebug){
+                for (size_t i = 0; i < arglist.size(); i++){
+                    if (0 == strncmp(arglist[i], "xdbn=", 5)){
+                        dbgport = atoi(arglist[i] + 5);
+                        arglist.erase(arglist.begin() + i);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    //LOGD("QXLibrary: %s", "qt start --------------------------------------3");
+    char dbgargv[128];
+
+    if (runasDebug){
+        if (dbgport > 0){
+            sprintf(dbgargv, "-xdbn:%d", dbgport);
+            arglist.push_back(dbgargv);
+        }
+    }
+
+    //LOGD("QXLibrary: %s", "qt start --------------------------------------4");
+    QFile fileSrc("assets:/app.exc");
+    if (fileSrc.open(QFile::ReadOnly)) {
+      //  LOGD("QXLibrary: %s", "qt start --------------------------------------5");
+        QByteArray data;
+        data = fileSrc.readAll();
+        fileSrc.close();
+
+
+        int error = 0;
+        //LOGD("QXLibrary: %s", "qt start --------------------------------------6");
+        unsigned char * pdata = new unsigned char[data.size() + 32], * pcode = 0;
+
+        size_t mod = size_t(pdata) % 32;
+        if (mod != 0){
+            pcode = pdata + (32 - mod);
+        }else{
+            pcode = pdata;
+        }
+
+        memcpy(pcode, data.data(), data.size());
+        size_t codelen = data.size();
+        data.clear();
+        //LOGD("QXLibrary: %s", "qt start --------------------------------------7");
+        void * handle = __init_xrvm_p();
+        __init_function_p(&load_module, &get_function, &free_library, &std_stream_out, &std_stream_in, &onexit);
+        __start_xrvm_p(handle, argv[0], pcode, codelen, arglist.size(), &arglist[0], &error);
+        //LOGD("QXLibrary: %s err = %d", "qt start --------------------------------------8", error);
+    }
+
+    return 0;
+}
+
+
+#endif

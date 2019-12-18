@@ -495,7 +495,7 @@ private slots:
 			}
 		}
 	}
-
+#ifndef MOBILE_APP
 	void slotGetCallbackData(LimeReport::CallbackInfo info, QVariant& data) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
@@ -600,7 +600,7 @@ private slots:
 			}
 		}
 	}
-
+#endif
 	void SCN_AUTOCCANCELLED() {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
@@ -1854,12 +1854,12 @@ public:
 		XLINK(t, SIGNAL(cellPressed(int, int)), this, SLOT(oncellPress(int, int)));
 		XLINK(t, SIGNAL(itemPressed(QTableWidgetItem *)), this, SLOT(oncellItemPress(QTableWidgetItem *)));
 	}
-
+#ifndef MOBILE_APP
 	void installDatasourceCallback(LimeReport::ICallbackDatasource * qobject) {
 		connect(qobject, SIGNAL(getCallbackData(LimeReport::CallbackInfo, QVariant&)), this, SLOT(slotGetCallbackData(LimeReport::CallbackInfo, QVariant&)));
 		connect(qobject, SIGNAL(changePos(const LimeReport::CallbackInfo::ChangePosType&, bool&)), this, SLOT(slotChangePos(const LimeReport::CallbackInfo::ChangePosType&, bool&)));
 	}
-
+#endif
 	void installDialogAction(QDialog * dlg) {
 		XLINK(dlg, SIGNAL(finished(int)), this, SLOT(onFinish(int)));
 		XLINK(dlg, SIGNAL(accepted()), this, SLOT(onAccept()));
@@ -1940,13 +1940,13 @@ public:
 	void installTimePropertyChange(QtTimePropertyManager*qobject) {
 
 	}
-
+#ifndef MOBILE_APP
 	void installReportView(LimeReport::ReportEngine * qobject) {
 		XLINK(qobject, SIGNAL(renderStarted()), this, SLOT(renderStarted()));
 		XLINK(qobject, SIGNAL(renderPageFinished(int)),this, SLOT(renderPageFinished(int)));
 		XLINK(qobject, SIGNAL(renderFinished()), this, SLOT(renderFinished()));
 	}
-
+#endif
 	void installVariantPropertyChange(QtVariantPropertyManager*qobject) {
 		XLINK(qobject, SIGNAL(valueChanged(QtProperty *, const QVariant &)), this, SLOT(onValueChanged(QtProperty *, const QVariant &)));
 		XLINK(qobject, SIGNAL(attributeChanged(QtProperty *,const QString &, const QVariant &)), this, SLOT(onAttributeChanged(QtProperty *,const QString &, const QVariant &)));

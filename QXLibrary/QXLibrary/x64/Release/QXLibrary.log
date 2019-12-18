@@ -1,8 +1,4 @@
-﻿  Moc'ing QXApplication.h...
-  QXApplication.cpp
-  QXLibrary.cpp
-  xid.cpp
-  moc_QXApplication.cpp
+﻿  QXLibrary.cpp
     正在创建库 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\QXLibrary\x64\Release\QXLibrary.lib 和对象 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\QXLibrary\x64\Release\QXLibrary.exp
   正在生成代码
   已完成代码的生成

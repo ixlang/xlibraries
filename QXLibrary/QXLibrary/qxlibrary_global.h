@@ -9,7 +9,9 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#ifndef MOBILE_APP
 #include <LimeReport>
+#endif
 //高版本下要加
 //Qt5WindowsUIAutomationSupport.lib
 
