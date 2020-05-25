@@ -3,12 +3,9 @@
 
 
 class Sqlite : Sql.Connection{
-
-    
-    
 	static const String DRIVERNAME = "sqlite";
         	
-	static bool registry(){
+	public static bool registry(){
 		if (Native.init()){
 			Sql.Database.reigstry(DRIVERNAME, new SqliteRegister());
             return true;
@@ -29,7 +26,7 @@ class Sqlite : Sql.Connection{
     
     static class CSTDNative : Library{
 		static bool loaded = false;
-        static bool load(){
+        public static bool load(){
 			if (loaded == false){
 				int cstd_os = _system_.getPlatformId();
 				try{
@@ -49,7 +46,7 @@ class Sqlite : Sql.Connection{
             }
             return loaded;
         }
-		import{
+		public import{
 			Pointer cdecl memcpy(ObjectPtr dest, Pointer src, Pointer n);
 			Pointer cdecl strcpy(ObjectPtr dest, ObjectPtr src);
 			Pointer cdecl strlen(Pointer);
@@ -58,7 +55,7 @@ class Sqlite : Sql.Connection{
 	static class Native : Library{
 		static bool bloaded = false;
         
-        static bool init(){
+        public static bool init(){
 			if (bloaded == false){
 				if (CSTDNative.load()){
 					try{
@@ -72,7 +69,7 @@ class Sqlite : Sql.Connection{
             return bloaded;
         }
         
-        import {
+        public import {
 			int cdecl sqlite3_open(
 				  String filename,   /* Database filename (UTF-8) */
 				  ObjectPtr ppDb          /* OUT: SQLite db handle */
@@ -114,7 +111,7 @@ class Sqlite : Sql.Connection{
     static bool registried = registry();
 	long hdb = 0;
     
-	void create(String uri, String username, String pwd){
+	public void create(String uri, String username, String pwd){
 		int err = Native.sqlite3_open(uri, hdb);
         if (err != 0){
 			throw new Sql.SqlException(err, "can not open database:" + uri);
@@ -131,37 +128,37 @@ class Sqlite : Sql.Connection{
 	* 
 	* @Exception : SqlException
 	*/
-	void setOption(int opt, Object option){
+	public void setOption(int opt, Object option){
 		throw new Sql.DatabaseNotSupportException("setOption");
     }
 	
-    int getErrorCode()override{
+    public int getErrorCode()override{
         return 0;
     }
     
-    String getError()override{
+    public String getError()override{
         return nilptr;
     }
     
-	Object getOption(int opt){
+	public Object getOption(int opt){
 		throw new Sql.DatabaseNotSupportException("getOption");
         return nilptr;
     }
 	
-	Sql.PreparedStatement prepareStatement(String sql){
+	public Sql.PreparedStatement prepareStatement(String sql){
 		return new SqlitePreparedStatement(this, sql);
     }
 	
-	Sql.Statement createStatement(){
+	public Sql.Statement createStatement(){
 		return new SqlitePreparedStatement(this);
     }
 	
-	bool isClosed(){
+	public bool isClosed(){
 		return hdb != 0;
     }
 
     
-	void close(){
+	public void close(){
 		if (hdb != 0){
 			Native.sqlite3_close(hdb);
             hdb = 0;
@@ -174,7 +171,7 @@ class Sqlite : Sql.Connection{
     
 
     
-    String generateErrorText(long herr, String fallback){
+    public String generateErrorText(long herr, String fallback){
 		if (herr != 0){
 			long len = CSTDNative.strlen(herr);
 			byte [] data = new byte[len + 1];
@@ -184,7 +181,7 @@ class Sqlite : Sql.Connection{
         return fallback;
     }
     
-    int execute(String stmt){
+    public int execute(String stmt){
 		if (hdb != 0){
 			long msg;
 			int err = Native.sqlite3_exec(hdb, stmt, (long)0, (long)0, msg);
@@ -197,7 +194,7 @@ class Sqlite : Sql.Connection{
         return -1;
     }
     
-    long prepare(String sql){
+    public long prepare(String sql){
 		long nstmt;
 		if (hdb != 0){
 			long msg;
@@ -211,60 +208,60 @@ class Sqlite : Sql.Connection{
         return nstmt;
     }
     
-	long getDb(){
+	public long getDb(){
 		return hdb;
     }
     
 
-    static class SqlitePreparedStatement : Sql.PreparedStatement{
+    public static class SqlitePreparedStatement : Sql.PreparedStatement{
         Sqlite sqlite;
         
-        SqlitePreparedStatement(Sqlite db, String sql){
+        public SqlitePreparedStatement(Sqlite db, String sql){
 			super(sql);
             sqlite = db;
         }
         
-        SqlitePreparedStatement(Sqlite db){
+        public SqlitePreparedStatement(Sqlite db){
 			super(nilptr);
             sqlite = db;
         }
         
-    	int execute(String sql){
+    	public int execute(String sql){
 			
 			return sqlite.execute(sql);
         }
         
-        Sql.ResultSet executeQuery(String sql){
+        public Sql.ResultSet executeQuery(String sql){
 			long nstmt = sqlite.prepare(sql);
 			return new SqliteResultSet(sqlite, nstmt);
         }
         
-        int executeUpdate(String sql){
+        public int executeUpdate(String sql){
 			return sqlite.execute(sql);
         }
         
-        Sql.ResultSet getResult(){
+        public Sql.ResultSet getResult(){
 			throw new Sql.DatabaseNotSupportException("getResult");
             return nilptr;
         }
         
-        void close(){
+        public void close(){
 			sqlite = nilptr;
         }
     };
     
-    static class SqliteResultSet : Sql.ResultSet{
+    public static class SqliteResultSet : Sql.ResultSet{
 		long hres;
         Sqlite sqlite;
         Map<String, int> __fields_Map = new Map<String, int>();
         
-		SqliteResultSet(Sqlite db, long res){
+		public SqliteResultSet(Sqlite db, long res){
 			sqlite = db;
 			hres = res;
             parseResult();
         }
         
-        void parseResult(){
+        public void parseResult(){
 			int ncolumn = Native.sqlite3_column_count(hres);
             for (int i = 0; i < ncolumn; i++){
 				String colutext = Native.sqlite3_column_name(hres, i);
@@ -272,121 +269,121 @@ class Sqlite : Sql.Connection{
             }
         }
         
-        int label2idx(String label){
+        public int label2idx(String label){
 			return __fields_Map.get(label);
         }
         
-		bool first()override{
+		public bool first()override{
 			throw new Sql.DatabaseNotSupportException("first");
             return false;
         }
         
-		bool last()override{
+		public bool last()override{
 			throw new Sql.DatabaseNotSupportException("last");
             return false;
         }
 
-		bool next()override{
+		public bool next()override{
 			return 100 == Native.sqlite3_step(hres);
         }
         
-		bool previous()override{
+		public bool previous()override{
 			throw new Sql.DatabaseNotSupportException("previous");
             return false;
         }
         
-		bool isFirst()override{
+		public bool isFirst()override{
 			throw new Sql.DatabaseNotSupportException("isFirst");
             return false;
         }
         
-		bool isLast()override{
+		public bool isLast()override{
 			throw new Sql.DatabaseNotSupportException("isLast");
             return false;
         }
         
-		bool isValid()override{
+		public bool isValid()override{
 			return hres != 0;
         }
         
-        bool isEof(){
+        public bool isEof(){
             throw new Sql.DatabaseNotSupportException("isEof");
             return false;
         }
         
-		int getInt(String columnlabel)override{
+		public int getInt(String columnlabel)override{
 			return Native.sqlite3_column_int(hres, label2idx(columnlabel));
         }
         
-		long getLong(String columnlabel)override{
+		public long getLong(String columnlabel)override{
 			return Native.sqlite3_column_int64(hres, label2idx(columnlabel));
         }
         
-		double getDouble(String columnlabel)override{
+		public double getDouble(String columnlabel)override{
 			return Native.sqlite3_column_double(hres, label2idx(columnlabel));
         }
         
-		byte getByte(String columnlabel)override{
+		public byte getByte(String columnlabel)override{
 			return Native.sqlite3_column_int(hres, label2idx(columnlabel));
         }
         
-		bool getBoolean(String columnlabel)override{
+		public bool getBoolean(String columnlabel)override{
 			return Native.sqlite3_column_int(hres, label2idx(columnlabel)) != 0;
         }
         
-		String getString(String columnlabel)override{
+		public String getString(String columnlabel)override{
 			return Native.sqlite3_column_text(hres, label2idx(columnlabel));
         }
         
 
-		int getInt(int columnIndex)override{
+		public int getInt(int columnIndex)override{
 			return Native.sqlite3_column_int(hres, columnIndex);
         }
         
-		long getLong(int columnIndex)override{
+		public long getLong(int columnIndex)override{
 			return Native.sqlite3_column_int64(hres, columnIndex);
         }
         
-		double getDouble(int columnIndex)override{
+		public double getDouble(int columnIndex)override{
 			return Native.sqlite3_column_double(hres, columnIndex);
         }
         
-		byte getByte(int columnIndex)override{
+		public byte getByte(int columnIndex)override{
 			return Native.sqlite3_column_int(hres, columnIndex);
         }
         
-		bool getBoolean(int columnIndex)override{
+		public bool getBoolean(int columnIndex)override{
 			return Native.sqlite3_column_int(hres, columnIndex)!= 0;
         }
         
-		String getString(int columnIndex)override{
+		public String getString(int columnIndex)override{
 			return Native.sqlite3_column_text(hres, columnIndex);
         }
         
 
         
-		int findColumn(String label)override{
+		public int findColumn(String label)override{
 			return label2idx(label);
         }
         
-		long getRowCount()override{
+		public long getRowCount()override{
 			throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         
-		int getRow()override{
+		public int getRow()override{
 			throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         
-		void close()override{
+		public void close()override{
 			if (hres != 0){
 				Native.sqlite3_finalize(hres);
                 hres = 0;
             }
         }
         
-        void finalize(){
+        public void finalize(){
 			close();
             sqlite = nilptr;
         }

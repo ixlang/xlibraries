@@ -1,32 +1,32 @@
 //xlang 
 
 package Sql{
-	class SqlException : Exception{
-        SqlException(){
+	public class SqlException : Exception{
+        public SqlException(){
             
         }
-        SqlException(int err, String sqlmessage){
+        public SqlException(int err, String sqlmessage){
 			errcode = err;
             message = sqlmessage;
         }
     };
     
-    class DatabaseNotSupportException : SqlException{
-        DatabaseNotSupportException(String sqlmessage){
+    public class DatabaseNotSupportException : SqlException{
+        public DatabaseNotSupportException(String sqlmessage){
 			errcode = 0;
             message = "not support method:" + sqlmessage;
         }
     };
     
-    interface ConnPoolCallback{
+    public interface ConnPoolCallback{
         Connection createConnection();
         bool alive(Connection conn);
     };
     
-    class ConnectionPool{
+    public class ConnectionPool{
         static class connectorMgr{
-            Connection pconnection;
-            long timestamp;
+            public Connection pconnection;
+            public long timestamp;
         };
         
         List<connectorMgr> _pool = new List<connectorMgr>();
@@ -49,7 +49,7 @@ package Sql{
             return connector;
         }
 
-        Connection getConnector(){
+        public Connection getConnector(){
             Connection connector = nilptr;
             long lastactive = 0;
 
@@ -97,7 +97,7 @@ package Sql{
             return true;
         }
 
-        void recycle(Connection connection){
+        public void recycle(Connection connection){
         
             int mysql_error = connection.getErrorCode();
 
@@ -156,7 +156,7 @@ package Sql{
             @param validtesttime 校验时间
         **/
 
-        bool config(ConnPoolCallback _callback, String reset_error, int maxWait, int maxConnect, int maxIdle, int maxIdleTime, int validtesttime){
+        public bool config(ConnPoolCallback _callback, String reset_error, int maxWait, int maxConnect, int maxIdle, int maxIdleTime, int validtesttime){
         
             if (maxIdle != 0 && maxConnect != 0 && maxIdle >= maxConnect){
                 throw new IllegalArgumentException("Connector config failed : maxIdle >= maxConnect\n");
@@ -191,7 +191,7 @@ package Sql{
             return true;
         }
 
-        void clear(){
+        public void clear(){
             synchronized(_pool){
                 _pool.clear();
                 _error_map.clear();
@@ -204,10 +204,10 @@ package Sql{
         }
     };
     
-    class Database{
+    public class Database{
 		static Map<String, ConnectionRegister> _database = new Map<String, ConnectionRegister>();
         
-        static bool reigstry(String name, ConnectionRegister reg){
+        public static bool reigstry(String name, ConnectionRegister reg){
 			synchronized(_database){
 				if (_database.containsKey(name) == false){
 					_database.put(name, reg);
@@ -217,7 +217,7 @@ package Sql{
             return false;
         }
         
-        static Connection getConnection(String driverName){
+        public static Connection getConnection(String driverName){
 			synchronized(_database){
 				try{
 					ConnectionRegister cr = _database.get(driverName);
@@ -232,11 +232,11 @@ package Sql{
         
     };
     
-    interface ConnectionRegister{
+    public interface ConnectionRegister{
 		Connection allocConnection(String drivername);
     };
     
-	interface Connection{
+	public interface Connection{
 		/** 创建连接
         * 
         * @Exception : SqlException
@@ -265,7 +265,7 @@ package Sql{
     };
     
     
-    interface ResultSet{
+    public interface ResultSet{
 		bool first();
 		bool last();
 
@@ -297,7 +297,7 @@ package Sql{
 		void close();
     };
     
-    interface Statement{
+    public interface Statement{
 		int execute(String sql);
         
         ResultSet executeQuery(String sql);
@@ -309,14 +309,14 @@ package Sql{
         void close();
     };
     
-    static class PreparedStatement : Statement{
+    public static class PreparedStatement : Statement{
     
 		String textSql;
         String []strsplit;
         String []strparams;
         int paramid = 0;
         
-		PreparedStatement(String sql){
+		public PreparedStatement(String sql){
 			textSql = " " + sql + " ";
             strsplit = textSql.split('?');
             if (strsplit.length == 0){
@@ -325,7 +325,7 @@ package Sql{
             strparams = new String[strsplit.length - 1];
         }
         
-        String safety(String str){
+        public String safety(String str){
 			str = str.replace("\\", "\\\\");
 			str = str.replace("\"", "\\\"");
             str = str.replace("\'", "\\\'");
@@ -333,11 +333,11 @@ package Sql{
 			return "'" + str + "'";
         }
         
-		int execute(){
+		public int execute(){
 			return execute(getSql());
         }
         
-        String getSql(){
+        public String getSql(){
             String sqlout = strsplit[0];
             int i = 1, c = strsplit.length;
             for (; i < c; i++){
@@ -346,15 +346,15 @@ package Sql{
             return sqlout;
         }
         
-        ResultSet executeQuery(){
+        public ResultSet executeQuery(){
 			return executeQuery(getSql());
         }
         
-        int executeUpdate(){
+        public int executeUpdate(){
 			return executeUpdate(getSql());
         }
         
-        void setValue(String value){
+        public void setValue(String value){
             if (paramid < strparams.length){
                 strparams[paramid++] = safety(value);
             }else{
@@ -362,7 +362,7 @@ package Sql{
             }
         }
         
-        void setValue(int value){
+        public void setValue(int value){
             if (paramid < strparams.length){
                 strparams[paramid++] = String.format("%d",value);
             }else{
@@ -370,7 +370,7 @@ package Sql{
             }
         }
         
-        void setValue(long value){
+        public void setValue(long value){
             if (paramid < strparams.length){
                 strparams[paramid++] = String.format("%d",value);
             }else{
@@ -378,7 +378,7 @@ package Sql{
             }
         }
         
-        void setValue(byte value){
+        public void setValue(byte value){
             if (paramid < strparams.length){
                 strparams[paramid++] = String.format("%02u",value & 0xff);
             }else{
@@ -386,7 +386,7 @@ package Sql{
             }
         }
         
-        void setValue(double value){
+        public void setValue(double value){
             if (paramid < strparams.length){
                 strparams[paramid++] = String.format("%f",value);
             }else{
@@ -395,7 +395,7 @@ package Sql{
         }
         
         
-		void setValue(int id, String value){
+		public void setValue(int id, String value){
             if ((id > 0) && (id - 1 < strparams.length)){
                 strparams[id - 1] = safety(value);
             }else{
@@ -403,7 +403,7 @@ package Sql{
             }      
         }
         
-        void setValue(int id, int value){
+        public void setValue(int id, int value){
             if ((id > 0) && (id - 1 < strparams.length)){
                 strparams[id - 1] = String.format("%d",value);
             }else{
@@ -411,7 +411,7 @@ package Sql{
             }  
         }
         
-        void setValue(int id, long value){
+        public void setValue(int id, long value){
             if ((id > 0) && (id - 1 < strparams.length)){
                 strparams[id - 1] = String.format("%d",value);
             }else{
@@ -419,7 +419,7 @@ package Sql{
             }  
         }
         
-        void setValue(int id, byte value){
+        public void setValue(int id, byte value){
             if ((id > 0) && (id - 1 < strparams.length)){
                 strparams[id - 1] = String.format("%02u",value & 0xff);
             }else{
@@ -427,7 +427,7 @@ package Sql{
             }  
         }
         
-        void setValue(int id, double value){
+        public void setValue(int id, double value){
             if ((id > 0) && (id - 1 < strparams.length)){
                 strparams[id - 1] = String.format("%f",value);
             }else{
@@ -438,9 +438,9 @@ package Sql{
 };
 
 
+/*
 
-
-/*void testSql(){
+void testSql1(){
     Sql.ConnectionPool pool = new Sql.ConnectionPool();
     pool.config(new Sql.ConnPoolCallback(){
     
@@ -552,8 +552,8 @@ int testSqlite(Sql.ConnectionPool pool){
 	return 0;
 }
 
-*/
-/*
+
+
 void testSql(){
     //SqlServer.registry();
 
@@ -658,5 +658,4 @@ int main(String [] args){
     Thread.sleep(-1);
     return 0;
 }
-
 */

@@ -9,7 +9,7 @@ class Mysql : Sql.Connection{
     int port = 3306;
     int timeout = 0;
     
-    enum MysqlOption{
+    public enum MysqlOption{
 		PORT,
         TIMEOUT,
         CHARSET,
@@ -25,7 +25,7 @@ class Mysql : Sql.Connection{
         }
     };
     
-	static bool registry(){
+	public static bool registry(){
 		if (Helper.init()){
 			Sql.Database.reigstry(DRIVERNAME, new MysqlRegister());
             return true;
@@ -36,7 +36,7 @@ class Mysql : Sql.Connection{
     static class Helper :Library {
     	static bool bloaded = false;
         
-        static bool init(){
+        public static bool init(){
 			if (bloaded == false){
                 try{
                     loadLibrary("mysql_helper");
@@ -48,7 +48,7 @@ class Mysql : Sql.Connection{
             return bloaded;
         }
         
-        import{
+        public import{
             Pointer cdecl rs_create(Pointer);
             void cdecl rs_free(Pointer);
             bool cdecl rs_next(Pointer);
@@ -115,111 +115,111 @@ class Mysql : Sql.Connection{
     
     static bool registried = registry();
     
-    static class MysqlResultSet : Sql.ResultSet{
+    public static class MysqlResultSet : Sql.ResultSet{
         long hres;
         
-        MysqlResultSet(long r){
+        public MysqlResultSet(long r){
             hres = Helper.rs_create(r);
         }
         
-		bool first(){
+		public bool first(){
             return Helper.rs_first(hres);
         }
         
-		bool last(){
+		public bool last(){
             return Helper.rs_last(hres);
         }
 
-		bool next(){
+		public bool next(){
             return Helper.rs_next(hres);
         }
         
-        bool isEof(){
+        public bool isEof(){
             throw new Sql.DatabaseNotSupportException("isEof");
             return false;
         }
         
-		bool previous(){
+		public bool previous(){
             throw new Sql.DatabaseNotSupportException("previous");
             return false;
         }
 
-		bool isFirst(){
+		public bool isFirst(){
             throw new Sql.DatabaseNotSupportException("isFirst");
             return false;
         }
         
-		bool isLast(){
+		public bool isLast(){
             return Helper.rs_isLast(hres);
         }
         
-		bool isValid(){
+		public bool isValid(){
             return Helper.rs_isValid(hres);
         }
         
-		int getInt(String columnlabel){
+		public int getInt(String columnlabel){
             return Helper.rs_getValueI(hres, columnlabel);
         }
         
-		long getLong(String columnlabel){
+		public long getLong(String columnlabel){
             return Helper.rs_getValueL(hres, columnlabel);
         }
         
-		double getDouble(String columnlabel){
+		public double getDouble(String columnlabel){
             return Helper.rs_getValueD(hres, columnlabel);
         }
         
-		byte getByte(String columnlabel){
+		public byte getByte(String columnlabel){
             return Helper.rs_getValueI(hres, columnlabel);
         }
         
-		bool getBoolean(String columnlabel){
+		public bool getBoolean(String columnlabel){
             return Helper.rs_getValueI(hres, columnlabel) != 0;
         }
         
-		String getString(String columnlabel){
+		public String getString(String columnlabel){
             return Helper.rs_getValue(hres, columnlabel);
         }
 
-		int getInt(int columnIndex){
+		public int getInt(int columnIndex){
             return Helper.rs_getIValueI(hres, columnIndex);
         }
         
-		long getLong(int columnIndex){
+		public long getLong(int columnIndex){
             return Helper.rs_getIValueL(hres, columnIndex);
         }
         
-		double getDouble(int columnIndex){
+		public double getDouble(int columnIndex){
             return Helper.rs_getIValueD(hres, columnIndex);
         }
         
-		byte getByte(int columnIndex){
+		public byte getByte(int columnIndex){
             return Helper.rs_getIValueI(hres, columnIndex);
         }
         
-		bool getBoolean(int columnIndex){
+		public bool getBoolean(int columnIndex){
             return Helper.rs_getIValueI(hres, columnIndex) != 0;
         }
         
-		String getString(int columnIndex){
+		public String getString(int columnIndex){
             return Helper.rs_getIValue(hres, columnIndex);
         }
 
-		int findColumn(String){
+		public int findColumn(String){
             throw new Sql.DatabaseNotSupportException("findColumn");
             return -1;
         }
         
-		long getRowCount(){
+		public long getRowCount(){
             return Helper.rs_getRowCount(hres);
         }
         
-		int getRow(){
+		public int getRow(){
             throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         
-		void close(){
+		public void close(){
             if (hres != 0){
                 Helper.rs_free(hres);
                 hres = 0;
@@ -231,35 +231,35 @@ class Mysql : Sql.Connection{
         }
     };
     
-    static class MysqlStatement : Sql.Statement{
+    public static class MysqlStatement : Sql.Statement{
         Mysql mysql;
         
-        MysqlStatement(Mysql m){
+        public MysqlStatement(Mysql m){
             mysql = m;
         }
         
-        int execute(String sql){
+        public int execute(String sql){
             if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
                 throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
             }
             return 0;
         }
         
-        Sql.ResultSet executeQuery(String sql){
+        public Sql.ResultSet executeQuery(String sql){
             if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
                 throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
             }
             return getResult();
         }
         
-        int executeUpdate(String sql){
+        public int executeUpdate(String sql){
             if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
                 throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
             }
             return 0;
         }
         
-        Sql.ResultSet getResult(){
+        public Sql.ResultSet getResult(){
             long res = Helper.x_mysql_store_result(mysql._mysql);
             if (res != 0){
                 return new MysqlResultSet(res);
@@ -267,42 +267,42 @@ class Mysql : Sql.Connection{
             return nilptr;
         }
         
-        void close(){
+        public void close(){
         
         }
     };
     
     
-    class MysqlPreparedStatement : Sql.PreparedStatement{
+    public class MysqlPreparedStatement : Sql.PreparedStatement{
         Mysql mysql;
         
-        MysqlPreparedStatement(Mysql m, String sql){
+        public MysqlPreparedStatement(Mysql m, String sql){
             super(sql);
             mysql = m;
         }
         
-        int execute(String sql){
+        public int execute(String sql){
             if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
                 throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
             }
             return 0;
         }
         
-        Sql.ResultSet executeQuery(String sql){
+        public Sql.ResultSet executeQuery(String sql){
             if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
                 throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
             }
             return getResult();
         }
         
-        int executeUpdate(String sql){
+        public int executeUpdate(String sql){
             if (0 != Helper.x_mysql_query(mysql._mysql,sql)){
                 throw new Sql.SqlException(mysql.getErrorCode(), mysql.getError());
             }
             return 0;
         }
         
-        Sql.ResultSet getResult(){
+        public Sql.ResultSet getResult(){
             long res = Helper.x_mysql_store_result(mysql._mysql);
             if (res != 0){
                 return new MysqlResultSet(res);
@@ -310,13 +310,13 @@ class Mysql : Sql.Connection{
             return nilptr;
         }
         
-        void close(){
+        public void close(){
         
         }
     };
     
     
-	void close() override {
+	public void close() override {
 		//TODO:	
         if (_mysql != nilptr){
             Helper.x_mysql_close(_mysql);
@@ -328,7 +328,7 @@ class Mysql : Sql.Connection{
         close();
     }
     
-	void create(String uri, String username, String pwd) override {
+	public void create(String uri, String username, String pwd) override {
 		//TODO:	
         byte [] __mysql = new byte[2048];
         
@@ -349,35 +349,35 @@ class Mysql : Sql.Connection{
         _mysql = __mysql;
 	}
 
-	bool isClosed() override {
+	public bool isClosed() override {
 		//TODO:	
         return _mysql != nilptr;
 	}
 
 
-    int getErrorCode()override{
+    public int getErrorCode()override{
         return Helper.x_mysql_errno(_mysql);
     }
     
-    String getError()override{
+    public String getError()override{
         return Helper.x_mysql_error(_mysql);
     }
     
-    String getSqlState(){
+    public String getSqlState(){
         return Helper.x_mysql_state(_mysql);
     }
     
-    String getInfo(){
+    public String getInfo(){
         return Helper.x_mysql_info(_mysql);
     }
     
-	Object getOption(int opt) override {
+	public Object getOption(int opt) override {
 		//TODO:	
         throw new Sql.DatabaseNotSupportException("getOption");
         return nilptr;
 	}
 
-	void setOption(int opt, Object option) override {
+	public void setOption(int opt, Object option) override {
 		switch(opt){
 			case MysqlOption.PORT:
                 port = (int)option;
@@ -407,11 +407,11 @@ class Mysql : Sql.Connection{
         }
 	}
 
-	Sql.Statement createStatement() override {
+	public Sql.Statement createStatement() override {
 		return new MysqlStatement(this);
 	}
 
-	Sql.PreparedStatement prepareStatement(String sql) override {
+	public Sql.PreparedStatement prepareStatement(String sql) override {
 		return new MysqlPreparedStatement(this, sql);
 	}
 

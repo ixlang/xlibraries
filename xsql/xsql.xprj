@@ -25,6 +25,7 @@
 				"debugdatabase":	"",
 				"wtype":	"-arch:x86_64",
 				"ostype":	"-xcross-windows",
+				"sstype":	"",
 				"outname":	"$(ProjectName)$(Ext)",
 				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
 				"command":	"-lix -c",

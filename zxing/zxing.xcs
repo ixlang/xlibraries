@@ -1,6 +1,6 @@
 //xlang 
 class ZXing : Library{
-    enum BarcodeFormat
+    public enum BarcodeFormat
     {
         /** Aztec 2D barcode format. */
         AZTEC,
@@ -76,17 +76,23 @@ class ZXing : Library{
             int index_r, int index_g, int index_b, ObjectPtr num_bits, ObjectPtr status, ObjectPtr format);
     };
     
-    static class Result{
+    public static class Result{
         String text;
         BarcodeFormat format;
         
-        Result(byte [] data, ZXing.BarcodeFormat fmt){
+        public Result(byte [] data, ZXing.BarcodeFormat fmt){
             text = new String(data);
             format = fmt;
         }
+        public String getText(){
+            return text;
+        }
+        public BarcodeFormat getFormat(){
+            return format;
+        }
     };
     
-    static Result readQRCodeFromARGB8888Buffer(byte [] data, int offset, int width, int height){
+    public static Result readQRCodeFromARGB8888Buffer(byte [] data, int offset, int width, int height){
         int num_bits = 5, status = 7;
         ZXing.BarcodeFormat format = ZXing.BarcodeFormat.FORMAT_COUNT;
         byte []  rs = (byte [])ZXing.read_qrcode(data,offset,width,height,width*4,4,1,2,3,num_bits,status,format);
@@ -96,17 +102,16 @@ class ZXing : Library{
         return nilptr;
     }
     
-    static byte[] generateQRCodeToARGB8888Bitmap(String content, int widthOrHeight, bool isBmpFile){
+    public static byte[] generateQRCodeToARGB8888Bitmap(String content, int widthOrHeight, bool isBmpFile){
         return (byte[])generator_qr(ZXing.BarcodeFormat.QR_CODE, content, widthOrHeight, widthOrHeight, !isBmpFile);
     }
 };
 
-
-/*int main(String [] args){
+/*
+int main(String [] args){
     byte [] data  = ZXing.generateQRCodeToARGB8888Bitmap("1566", 100, true);
     long hf = _system_.openFile("ll.bmp","w");
     _system_.writeFile(hf,data,0,data.length);
     _system_.closeFile(hf);
 	return 0;
-}
-*/
+}*/

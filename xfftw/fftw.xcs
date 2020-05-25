@@ -23,31 +23,31 @@ class fftw : Library{
         return bloaded;
     }*/
     
-    static class fftwComplex{
+    public static class fftwComplex{
 		long native = 0;
-        int s = 0, w = 0, h = 0;
+        public int s = 0, w = 0, h = 0;
         
-		fftwComplex(int size){
+		public fftwComplex(int size){
 			s = size;
 			native = alloc_complex(size);
         }
         
         // 从复数创建FFTW复数
-        static fftwComplex from_complex(double[][] complex){
+        public static fftwComplex from_complex(double[][] complex){
 			fftwComplex dat = new fftwComplex(complex[0].length);
             dat.fill(complex[0], complex[1]);
             return dat;
         }
         
         // 创建二维复数
-		fftwComplex(int width, int height){
+		public fftwComplex(int width, int height){
 			w = width;
 			h = height ;
 			native = alloc_complex(w * h);
         }
         
         // 提取复数
-        double [][]extract(){
+        public double [][]extract(){
 			double[][] fo = nilptr;
             int len = 0;
             
@@ -63,7 +63,7 @@ class fftw : Library{
         }
         
         // 填充复数
-        void fill(double [] rd, double []id){
+        public void fill(double [] rd, double []id){
             int len = 0;
             
 			if (s != 0){
@@ -79,7 +79,7 @@ class fftw : Library{
         }
         
         // 填充二维复数
-        void fill(double [][] rd, double [][] id){
+        public void fill(double [][] rd, double [][] id){
 			int row = rd[0].length;
             
             if (id != nilptr){
@@ -101,7 +101,7 @@ class fftw : Library{
     };
     
     
-    static fftwComplex fft2d(fftwComplex in){
+    public static fftwComplex fft2d(fftwComplex in){
 		fftwComplex out = new fftwComplex(in.w, in.h);
 		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, -1, 0x40);
         if (plan == 0){
@@ -112,7 +112,7 @@ class fftw : Library{
         return out;
     }
     
-    static fftwComplex ifft2d(fftwComplex in){
+    public static fftwComplex ifft2d(fftwComplex in){
 		fftwComplex out = new fftwComplex(in.w, in.h);
 		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, 1, 0x40);
         if (plan == 0){
@@ -123,7 +123,7 @@ class fftw : Library{
         return out;
     }
     
-    static fftwComplex fft2d(double [][] rd, double [][] id){
+    public static fftwComplex fft2d(double [][] rd, double [][] id){
 		if (id != nilptr && id.length != rd.length){
 			throw new IllegalArgumentException("rd length != id length");
             return nilptr;
@@ -143,7 +143,7 @@ class fftw : Library{
         return out;
     }
     
-    static fftwComplex ifft2d(double [][] rd, double [][] id){
+    public static fftwComplex ifft2d(double [][] rd, double [][] id){
 		if (id != nilptr && id.length != rd.length){
 			throw new IllegalArgumentException("rd length != id length");
             return nilptr;
@@ -163,7 +163,7 @@ class fftw : Library{
         return out;
     }
     
-    static double[][] fft2(int n0, int n1, double [] rd, double [] id){
+    public static double[][] fft2(int n0, int n1, double [] rd, double [] id){
         if (rd.length != (n0 * n1)){
 			throw new IllegalArgumentException("rd length != n0 *n1");
             return nilptr;
@@ -190,7 +190,7 @@ class fftw : Library{
         return out.extract();
     }
     
-    static double[][] ifft2(int n0, int n1,double [] rd, double [] id){
+    public static double[][] ifft2(int n0, int n1,double [] rd, double [] id){
         if (rd.length != (n0 * n1)){
 			throw new IllegalArgumentException("rd length != n0 *n1");
             return nilptr;

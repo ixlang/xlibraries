@@ -36,7 +36,7 @@
 		}
 	},
 	"package":	"Sql",
-	"version":	"1.0.0.2",
+	"version":	"1.0.0.3",
 	"descr":	"提供xlang的sqlite和mysql;sqlserver在 windows和linux下的数据库操作",
 	"author":	"https://github.com/ixlang/xlibraries"
 }

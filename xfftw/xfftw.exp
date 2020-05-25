@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/x64/debug/fftw.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/readme.txt",
+	"icon":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/fftw.png",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/binary/1/0/xfftw.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/binary/1/1/xfftw.so"],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/binary/2/0/xfftw.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/binary/2/1/xfftw.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/xfftw/binary/2/2/xfftw.dylib"],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"xfftw",
+	"version":	"1.0.0.1",
+	"descr":	"快速傅里叶变换",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

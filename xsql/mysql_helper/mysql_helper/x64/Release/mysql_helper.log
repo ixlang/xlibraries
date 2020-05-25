@@ -1,16 +1,14 @@
-﻿生成启动时间为 2019/9/20 21:02:27。
-     1>项目“E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\mysql_helper.vcxproj”在节点 2 上(Build 个目标)。
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(1193,5): warning MSB8012: TargetPath(E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.dll) does not match the Linker's OutputFile property value (E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\output\Win32\x64\mysql_helper.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"output\Win32\x64\mysql_helper.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win64" libmysql.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"Source.def" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.lib" /MACHINE:X64 /DLL x64\Release\dllmain.obj
-         x64\Release\mysql_helper.obj
-         x64\Release\stdafx.obj
-            正在创建库 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.lib 和对象 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.exp
-         正在生成代码
-         已完成代码的生成
-         mysql_helper.vcxproj -> E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.dll
-     1>已完成生成项目“E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\mysql_helper.vcxproj”(Build 个目标)的操作。
-
-生成成功。
-
-已用时间 00:00:00.58
+﻿  stdafx.cpp
+  dllmain.cpp
+  mysql_helper.cpp
+E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\mysql_helper.cpp(118,23): warning C4018: “<”: 有符号/无符号不匹配
+E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\mysql_helper.cpp(125,23): warning C4018: “<”: 有符号/无符号不匹配
+E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\mysql_helper.cpp(132,23): warning C4018: “<”: 有符号/无符号不匹配
+E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\mysql_helper.cpp(143,23): warning C4018: “<”: 有符号/无符号不匹配
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1274,5): warning MSB8012: TargetPath(E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.dll) does not match the Linker's OutputFile property value (E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\mysql_helper\output\Win32\x64\mysql_helper.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+    正在创建库 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.lib 和对象 E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.exp
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 37 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  mysql_helper.vcxproj -> E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\xlibrarys\xsql\mysql_helper\x64\Release\mysql_helper.dll

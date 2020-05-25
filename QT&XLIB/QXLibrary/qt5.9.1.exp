@@ -11,15 +11,15 @@
 			"3":	[]
 		},
 		"1":	{
-			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86/QXLibrary.dll"],
-			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86/QXLibrary.so"],
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/QXLibrary/Win32/Release/QXLibrary.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Linux/i686/libQXLibrary.so"],
 			"2":	[],
 			"3":	[]
 		},
 		"2":	{
-			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86_64/QXLibrary.dll"],
-			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86_64/QXLibrary.so"],
-			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xlang_public/basedir/lib/x86_64/QXLibrary.dylib"],
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/QXLibrary/x64/Release/QXLibrary.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Linux/x86_64/libQXLibrary.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Darwin/i386/libQXLibrary.dylib"],
 			"3":	[]
 		},
 		"3":	{
@@ -36,7 +36,7 @@
 		}
 	},
 	"package":	"Qt5.9.1",
-	"version":	"5.9.1.14",
+	"version":	"5.9.1.15",
 	"descr":	"优秀的跨平台界面库",
 	"author":	"https://github.com/ixlang/xlibraries"
 }

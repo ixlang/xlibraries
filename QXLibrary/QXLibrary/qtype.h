@@ -64,5 +64,8 @@ enum QTypes {
 	qtDateEdit = 59,
 	qtDateTimeEdit = 60,
 	qtTimeEdit = 61,
-	qtTextEdit = 62
+	qtTextEdit = 62,
+	qtDockWidget = 63,
+	qtVLayout = 64,
+	qtHLayout = 65
 };

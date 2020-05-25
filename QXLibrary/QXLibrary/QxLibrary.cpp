@@ -85,6 +85,12 @@ void CleanupQImage(void* p) {
 #endif
 
 
+QColor QMakeColor(xint c) {
+	QColor qc(c);
+	qc.setAlpha((c >> 24) & 0xff);
+	return qc;
+}
+
 
 #ifdef WIN32
 
@@ -666,6 +672,20 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 		}
 		break;
 
+		case qtVLayout:
+		{
+			QVBoxLayout * fsw = new QVBoxLayout((QWidget*)parent);
+			qobject = fsw;
+		}
+		break;
+
+		case qtHLayout:
+		{
+			QHBoxLayout * fsw = new QHBoxLayout((QWidget*)parent);
+			qobject = fsw;
+		}
+		break;
+
         case qtMainWindow:
         {
                 QWidget * qw = 0;
@@ -709,6 +729,14 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 }
                 ar.installEditAction(qobject);
                 break;
+		case qtDockWidget:
+			if (parent != 0) {
+				qobject = new QDockWidget((QWidget*)parent);
+			}
+			else {
+				qobject = new QDockWidget();
+			}
+			break;
 		case qtTextEdit:
 			if (parent != 0) {
 				qobject = new QTextEdit((QWidget*)parent);
@@ -1095,11 +1123,27 @@ XNLEXPORT xint  XI_STDCALL XNLExit(XNLEnv * env){
 XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         switch (proid)
         {
+		case DOCKSETALLOWEDAREAS:
+		{
+			QDockWidget * pset = ((QDockWidget*)h);
+			if (pset != 0) {
+				pset->setAllowedAreas((Qt::DockWidgetAreas)value);
+			}
+		}
+		break;
 		case TESETLINEWRAPMODE:
 		{
 			QTextEdit * pset = ((QTextEdit*)h);
 			if (pset != 0) {
 				pset->setLineWrapMode((QTextEdit::LineWrapMode)value);
+			}
+		}
+		break;
+		case SETDOCKNESTINGENABLED:
+		{
+			QMainWindow * pset = ((QMainWindow*)h);
+			if (pset != 0) {
+				pset->setDockNestingEnabled(value ? true : false);
 			}
 		}
 		break;
@@ -1139,7 +1183,7 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 		{
 			QTextEdit * pset = ((QTextEdit*)h);
 			if (pset != 0) {
-				pset->setTextBackgroundColor(value);
+				pset->setTextBackgroundColor(QMakeColor(value));
 			}
 		}
 		break;
@@ -1147,7 +1191,7 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 		{
 			QTextEdit * pset = ((QTextEdit*)h);
 			if (pset != 0) {
-				pset->setTextColor(value);
+				pset->setTextColor(QMakeColor(value));
 			}
 		}
 		break;
@@ -1185,7 +1229,7 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
 		break;
 		case PRTDLGDONE:
 		{
-			QPrintDialog * pset = ((QPrintDialog*)h);
+			QDialog * pset = ((QDialog*)h);
 			if (pset != 0) {
 				pset->done(value);
 			}
@@ -1441,6 +1485,9 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
 
         switch (proid)
         {
+		case ISDOCKNESTINGENABLED:
+			return ((QMainWindow*)h)->isDockNestingEnabled();
+			break;
 		case TETABCHANGESFOCUS:
 			return ((QTextEdit*)h)->tabChangesFocus();
 			break;
@@ -1893,7 +1940,7 @@ XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
 			return ((QPrintDialog*)h)->options();
 			break;
 		case PRTDLGEXEC:
-			return ((QPrintDialog*)h)->exec();
+			return ((QDialog*)h)->exec();
 			break;
 		case PVWDLGEXEC:
 			return ((QPrintPreviewDialog*)h)->exec();
@@ -2042,11 +2089,7 @@ XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
 }
 
 
-QColor QMakeColor(xint c) {
-        QColor qc(c);
-        qc.setAlpha((c >> 24) & 0xff);
-        return qc;
-}
+
 XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xint yv) {
         switch (proid)
         {
@@ -2159,7 +2202,7 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_double_value(xlong h, xint proid, xint 
                 break;
 
 		case SETCOLORAT:
-			((QGradient*)h)->setColorAt(w, xv);
+			((QGradient*)h)->setColorAt(w, QMakeColor(xv));
 			break;
         }
         return 0;
@@ -2268,7 +2311,9 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
         case PALETTE:
                 ((QWidget*)h)->setPalette(*(QPalette*)value);
                 break;
-
+		case SETLAYOUT:
+			((QWidget*)h)->setLayout((QLayout*)value);
+			break;
         case STYLE:
                 ((QWidget*)h)->setStyle((QStyle*)value);
                 break;
@@ -2355,6 +2400,7 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
                                 parent->removeChild(item);
                         }
                         else {
+							
                                 int i = ((QTreeWidget*)h)->indexOfTopLevelItem(item);
                                 /*QList<QTreeWidgetItem *> children(item->takeChildren());
                                 qDeleteAll(children);*/
@@ -2383,11 +2429,13 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
 				((QWidget*)h)->setStyle(style);
 			}
 		}
-			
+					   
 			break;
 		case TESCROLLTOANCHOR:
 			((QTextEdit*)h)->scrollToAnchor(QString::fromUtf8(value));
+
 			break;
+
 		case TEAPPEND:
 			((QTextEdit*)h)->append(QString::fromUtf8(value));
 			break;
@@ -3433,6 +3481,9 @@ XNLEXPORT xint XI_CDECL long_string2_int2(xlong handle, xint proid, xstring v1, 
 		case SCICMD:
 				return ((QsciScintilla*)handle)->SendScintilla(flags, v1, v2);
 			break;
+		case SCI_PROP:
+			return ((QsciScintilla*)handle)->setProperty(v1, QString::fromUtf8(v2));
+			break;
         default:
                 break;
         }
@@ -3685,8 +3736,17 @@ XNLEXPORT void XI_CDECL widget_set_intlongint_value(xlong h, xint proid, xlong x
         }
                 break;
 		case TOOLBARADDWIDGET:
+		{
 			((QToolBar*)h)->addWidget((QWidget*)xv);
+		}
 			break;
+
+		case LAYTOUADDWIDGET:
+		{
+			((QBoxLayout*)h)->addWidget((QWidget*)xv);
+		}
+			break;
+
 		case TABLESETCELLWIDGET:
 		{
 			((QTableWidget*)h)->setCellWidget(yv, zv, (QWidget*)xv);
@@ -3876,7 +3936,7 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
         case ADDDEFACTION:
         {
                 QWidget * twidget = (QWidget *)h;
-
+				
                 if (gs_env->isArray(value)) {
                         QList<QAction*> actions;
                         xlong size = gs_env->getLengthOfArray(value);
@@ -4032,6 +4092,7 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
                         QByteArray data;
 						extartByteArray(value, data);
                         ((QMainWindow *)h)->restoreState(data);
+
                 }
         }
         break;
@@ -4102,6 +4163,12 @@ XNLEXPORT void XI_CDECL object_set_long_int_long(xlong h, xint proid, xlong hv,i
 			obj->setData(Qt::UserRole, h1);
 		}
 		break;
+		case TABIFYDOCKWIDGET:
+		{
+			QMainWindow * obj = (QMainWindow*)h;
+			obj->tabifyDockWidget((QDockWidget*)hv, (QDockWidget*)h1);
+		}
+		break;
         default:
                 break;
         }
@@ -4147,7 +4214,7 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
 			((QtTreePropertyBrowser*)h)->setItemVisible((QtBrowserItem*)hv, iv != 0);
 			break;
 		case QPB_SETBACKCOLOR:
-			((QtTreePropertyBrowser*)h)->setBackgroundColor((QtBrowserItem*)hv, QColor(iv));
+			((QtTreePropertyBrowser*)h)->setBackgroundColor((QtBrowserItem*)hv, QMakeColor(iv));
 			break;
 		case CLIPBOARDIMAGE:
 		{
@@ -4234,6 +4301,13 @@ XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int 
 		{
 			QTableWidget * obj = (QTableWidget*)h;
 			return (xlong)obj->item(hv, iv);
+		}
+		break;
+		case TREEITEMSELED:
+		{
+			QTreeWidgetItem * obj = (QTreeWidgetItem*)hv;
+			QTreeWidget * tree = (QTreeWidget *)h;
+			tree->setItemSelected(obj, iv != 0);
 		}
 		break;
         default:
@@ -4499,6 +4573,12 @@ XNLEXPORT xint XI_CDECL int_long_int_long_int_int(xlong h, xint proid, xlong h1,
         case INSERTPERWIDGET:
                 return ((QStatusBar *)h)->insertPermanentWidget(v2, (QWidget*)h1, v1);
                 break;
+		case ADDDOCKWIDGET:
+		{
+			QMainWindow * obj = (QMainWindow*)h;
+			obj->addDockWidget((Qt::DockWidgetArea)v1, (QDockWidget*)(h1), (Qt::Orientation)v2);
+		}
+		break;
         default:
                 break;
         }

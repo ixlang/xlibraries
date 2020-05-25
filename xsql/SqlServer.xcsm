@@ -3,10 +3,10 @@
 
 class SqlServer : AdoConnector{
 
-    SqlServer(){
+    public SqlServer(){
         setDriver("SQL SERVER");
     }
-    static class SqlServerRegister : Sql.ConnectionRegister{
+    public static class SqlServerRegister : Sql.ConnectionRegister{
 		Sql.Connection allocConnection(String drivername){
 			if (drivername.equals("sqlserver")){
 				return new SqlServer();

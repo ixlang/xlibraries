@@ -3,13 +3,13 @@
 package Runtime{
 
 	class rtlp{
-		static int rtl_osid = _system_.getPlatformId();
+		public static int rtl_osid = _system_.getPlatformId();
     };
     
 	class UnixlikeApi : Library{
 		static bool loaded = false;
 		
-        static bool load_linux(){
+        public static bool load_linux(){
 			try{
 				loadLibrary("libc.so.6");
 				return true;
@@ -25,7 +25,7 @@ package Runtime{
             return false;
         }
         
-		static bool load(){
+		public static bool load(){
 			if (loaded == false){
 				if (rtlp.rtl_osid == 1){
 					loaded = load_linux();
@@ -44,7 +44,7 @@ package Runtime{
 			return loaded;
 		}
             
-		import{
+		public import{
 			 Pointer cdecl readlink (String __path,
 			 ObjectPtr __buf, Pointer __len);
              int cdecl kill(int pid, int sig);
@@ -52,11 +52,11 @@ package Runtime{
     };
 	class Win32Api{
     
-		static class Psapi32 : Library{
+		public static class Psapi32 : Library{
         
-			static bool loaded = false;
+			public static bool loaded = false;
             
-            static bool load(){
+            public static bool load(){
 				if (loaded == false){
 					try{
 						loadLibrary("psapi.dll");
@@ -68,7 +68,7 @@ package Runtime{
                 return loaded;
             }
             
-			import {
+			public import {
 				int
 				stdcall
 				GetProcessImageFileNameA(
@@ -93,11 +93,11 @@ package Runtime{
 			};
         };
         
-		static class Kernel32 : Library{
+		public static class Kernel32 : Library{
         
-			static bool loaded = false;
+			public static bool loaded = false;
             
-            static bool load(){
+            public static bool load(){
 				if (loaded == false){
 					try{
 						loadLibrary("kernel32.dll");
@@ -109,14 +109,14 @@ package Runtime{
                 return loaded;
             }
             
-            static const int MAX_PATH = 260,
+            public static const int MAX_PATH = 260,
             TH32CS_SNAPHEAPLIST     = 1,
 			TH32CS_SNAPPROCESS      = 2,
 			TH32CS_SNAPTHREAD       = 4,
 			TH32CS_SNAPMODULE       = 8,
 			TH32CS_SNAPALL          = TH32CS_SNAPHEAPLIST | TH32CS_SNAPPROCESS | TH32CS_SNAPTHREAD | TH32CS_SNAPMODULE;
             
-            import {
+            public import {
 				Pointer stdcall CreateToolhelp32Snapshot(
 					int dwFlags,
 					int th32ProcessID
@@ -161,10 +161,10 @@ package Runtime{
     };
     
     
-	class OSProcess{
-		OSProcess(){
+	public class OSProcess{
+		public OSProcess(){
         }
-		OSProcess(int Id){
+		public OSProcess(int Id){
 			processId = Id;
         }
 		OSProcess(byte[] data){
@@ -184,15 +184,15 @@ package Runtime{
         String name;
         String exepath;
         
-        int getId(){
+        public int getId(){
 			return processId;
         }
         
-        String getName(){
+        public String getName(){
 			return name;
         }
         
-        String getPath(){
+        public String getPath(){
 			//PROCESS_QUERY_INFORMATION 
 			if (exepath == nilptr){
 			
@@ -222,18 +222,18 @@ package Runtime{
             return exepath;
         }
         
-        long open(){
+        public long open(){
 			return Win32Api.Kernel32.OpenProcess(0x001fffff, false, processId);
         }
         
-        void closeHandle(long handle){
+        public void closeHandle(long handle){
 			Win32Api.Kernel32.CloseHandle(handle);
         }
-        long open(int flag, bool bi){
+        public long open(int flag, bool bi){
 			return Win32Api.Kernel32.OpenProcess(flag, bi, processId);
         }
         
-        bool kill(int code){
+        public bool kill(int code){
 			bool r = false;
 			if (rtlp.rtl_osid == 0){
 				
@@ -248,7 +248,7 @@ package Runtime{
             return r;
         }
         
-        static 
+        public static 
         List<OSProcess> listProcesses(){
 			int osid = _system_.getPlatformId();
 			if (osid == 0){
@@ -270,55 +270,57 @@ package Runtime{
             
             plist = new List<OSProcess>();
             
-            FileSystem.File file = new FileSystem.File ("/proc");
+            FSObject file = new FSObject ("/proc");
             
-            List<FileSystem.File> flist = file.listFiles();
             
-            List.Iterator<FileSystem.File> iter = flist.iterator();
+            long hfind = file.openDir();
+            if (hfind != 0){
             
-			while (iter.hasNext()){
-				OSProcess process = new OSProcess();
+                FSObject pf = new FSObject();
                 
-				FileSystem.File pf = iter.next();
-                String pname = pf.getFileName();
-                if (pname.isDigit()){
-					String namepath = pf.getPath().appendPath("status");
-                    
-                    try{
-						FileStream.FileInputStream fis = new FileStream.FileInputStream (namepath);
-						
+                OSProcess process = new OSProcess();
+                
+                while (file.findObject(hfind,pf)){
+                    String pname = pf.getName();
+                    if (pname.isDigit()){
+                        String namepath = pf.getPath().appendPath("status");
                         
-                        String txtstatus = "";
-                        
-                        byte []status = new byte[1024];
-                        int rd = 0;
-                        while ((rd = fis.read(status, 0, 1024)) > 0){
-							txtstatus = txtstatus + new String(status, 0, rd);
-                        }
-                        
-                        fis.close();
-
-                        int pos = txtstatus.indexOf("Name:");
-                        if (pos != -1){
-							int le = txtstatus.indexOf("\n", pos);
-                            if (le == -1){
-								le = txtstatus.length();
+                        try{
+                            FileStream.FileInputStream fis = new FileStream.FileInputStream (namepath);
+                            
+                            String txtstatus = "";
+                            
+                            byte []status = new byte[1024];
+                            int rd = 0;
+                            while ((rd = fis.read(status, 0, 1024)) > 0){
+                                txtstatus = txtstatus + new String(status, 0, rd);
                             }
-							process.name = txtstatus.substring(pos + 5, le).trim(true);
+                            
+                            fis.close();
+
+                            int pos = txtstatus.indexOf("Name:");
+                            if (pos != -1){
+                                int le = txtstatus.indexOf("\n", pos);
+                                if (le == -1){
+                                    le = txtstatus.length();
+                                }
+                                process.name = txtstatus.substring(pos + 5, le).trim(true);
+                            }
+                        }catch(Exception e){
+                        
                         }
-                    }catch(Exception e){
-                    
+                        String expath = pf.getPath().appendPath("exe");
+                        
+                        byte [] fullpath = new byte[320];
+                        long length = UnixlikeApi.readlink(expath,fullpath,(long)320);
+                        if (length != -1){
+                            process.exepath = new String (fullpath, 0, length);
+                        }
+                        process.processId = pname.parseInt();
+                        plist.add(process);
                     }
-					String expath = pf.getPath().appendPath("exe");
-                    
-                    byte [] fullpath = new byte[320];
-                    long length = UnixlikeApi.readlink(expath,fullpath,(long)320);
-                    if (length != -1){
-						process.exepath = new String (fullpath, 0, length);
-                    }
-                    process.processId = pname.parseInt();
-                    plist.add(process);
                 }
+               file.closeDir(hfind); 
             }
             return plist;
         }
@@ -356,17 +358,17 @@ package Runtime{
 };
 /*
 package System{
-	class out{
-		static int println(String text){
+	public class out{
+		public static int println(String text){
 			return _system_.consoleWrite(text + "\n");
 		}
-		static int print(String text){
+		public static int print(String text){
 			return _system_.consoleWrite(text);
 		}
 	};
 	
-	class Console{
-		Console(){
+	public class Console{
+		public Console(){
 			_system_.createConsole();
 		}
 	};
@@ -392,4 +394,5 @@ int main(String [] args){
 	Thread.sleep(-1);
 
 	return 0;
-}*/
+}
+*/

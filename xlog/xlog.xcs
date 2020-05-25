@@ -1,10 +1,10 @@
 //xlang 
 package Logcat{
-	interface LogcatListener{
+	public interface LogcatListener{
 		bool onLogcatOuput(int level, String tag, String log);
     };
     
-	class Log{
+	public class Log{
     
 		static Vector<LogcatListener> logcallback = new Vector<LogcatListener>();
         
@@ -19,13 +19,13 @@ package Logcat{
             return true;
         }
         
-        static void addLogcatListener(LogcatListener l){
+        public static void addLogcatListener(LogcatListener l){
 			synchronized(logcallback){
 				logcallback.add(l);
 			}
         } 
         
-        static bool removeLogcatListener(LogcatListener l){
+        public static bool removeLogcatListener(LogcatListener l){
 			synchronized(logcallback){
 				for (int x =0, c = logcallback.size(); x < c; x++){
 					if (logcallback.get(x) == l){
@@ -37,25 +37,25 @@ package Logcat{
             return false;
         }
            
-		static void e(String tag ,String text){
+		public static void e(String tag ,String text){
 			if (onLogcat(_system_.LOG_LEV_ERR, tag, text)){
 				_system_.log(tag,_system_.LOG_LEV_ERR,text,false);
             }
 		}
         
-		static void i(String tag ,String text){
+		public static void i(String tag ,String text){
 			if (onLogcat(_system_.LOG_LEV_INFO, tag, text)){
 				_system_.log(tag,_system_.LOG_LEV_INFO,text,false);
             }
 		}
         
-		static void w(String tag ,String text){
+		public static void w(String tag ,String text){
 			if (onLogcat(_system_.LOG_LEV_WARNING, tag, text)){
 				_system_.log(tag,_system_.LOG_LEV_WARNING,text,false);
             }
 		}
         
-        static void d(String tag ,String text){
+        public static void d(String tag ,String text){
 			if (onLogcat(_system_.LOG_LEV_DEBUG, tag, text)){
 				_system_.log(tag,_system_.LOG_LEV_DEBUG,text,false);
             }

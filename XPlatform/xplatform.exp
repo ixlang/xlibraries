@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/XPlatform/x64/debug/XPlatform.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/XPlatform/readme.md",
+	"icon":	"",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"XPlatform",
+	"version":	"1.0.0.3",
+	"descr":	"处理多平台字符集差异",
+	"author":	"https://github.com/ixlang/xlibrarys"
+}

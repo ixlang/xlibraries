@@ -1,6 +1,6 @@
 //xlang 
 package XCImg{
-	class VCodeGen : Library{
+	public class VCodeGen : Library{
         long nativehandle;
         static bool loaded = false;
         static bool load(){
@@ -30,7 +30,7 @@ package XCImg{
             void cdecl delloc_vcode(Pointer img);
         };
         
-        VCodeGen(String text, int length,  int height){
+        public VCodeGen(String text, int length,  int height){
             if (load()){
                 nativehandle = alloc_vcode(text, length, height);
             }else{
@@ -43,14 +43,14 @@ package XCImg{
             delloc_vcode(nativehandle);
         }
         
-        byte[] getData(){
+        public byte[] getData(){
             int length = get_buffer_req(nativehandle);
             byte[] data = new byte[length];
             get_data(nativehandle, data, length);
             return data;
         }
         
-        int length(){
+        public int length(){
             return get_buffer_req(nativehandle);
         }
 	};
