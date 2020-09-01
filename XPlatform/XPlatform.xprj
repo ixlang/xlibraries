@@ -9,14 +9,23 @@
 					"incpath":	[],
 					"libpath":	[]
 				},
-				"libs":	[],
 				"options":	"",
-				"debugable":	"-dbg",
 				"cmd":	"$(Output)",
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)",
+				"libs":	[],
+				"links":	[],
+				"depends":	[],
+				"ignorewarning":	"",
+				"warexcp":	"-we",
+				"compdest":	"",
+				"ignorewl":	"",
+				"debugable":	"-dbg",
+				"debugdatabase":	"",
+				"warnilptr":	"-wn",
 				"wtype":	"",
 				"ostype":	"",
+				"sstype":	"",
 				"outname":	"$(ProjectName)$(Ext)",
 				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
 				"command":	"-lix -c",
@@ -38,6 +47,7 @@
 				"workdir":	"$(ProjectDir)"
 			}
 		},
+		"versioninc":	"0",
 		"icofile":	""
 	}
 }

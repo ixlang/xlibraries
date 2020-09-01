@@ -2,9 +2,9 @@
 //
 
 #include "stdafx.h"
-#if _MSC_VER
+/*#if _MSC_VER
 #define snprintf _snprintf
-#endif
+#endif*/
 
 #include <stdio.h>
 #include <random>

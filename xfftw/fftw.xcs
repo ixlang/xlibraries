@@ -24,7 +24,7 @@ class fftw : Library{
     }*/
     
     public static class fftwComplex{
-		long native = 0;
+		public long native = 0;
         public int s = 0, w = 0, h = 0;
         
 		public fftwComplex(int size){
@@ -207,6 +207,86 @@ class fftw : Library{
 		fftwComplex out = new fftwComplex(in.w, in.h);
       
 		long plan = create_fftw_plan_dft_2d(in.w, in.h, in.native, out.native, 1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out.extract();
+    }
+    
+    public static double[][] fft(double [] rd, double [] id){        
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+
+        fftwComplex in = new fftwComplex(rd.length);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(rd.length);
+      
+		long plan = create_fftw_plan_dft_1d(in.s, in.native, out.native, -1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out.extract();
+    }
+    
+    public static double[][] ifft(double [] rd, double [] id){
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+
+        fftwComplex in = new fftwComplex(rd.length);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(rd.length);
+      
+		long plan = create_fftw_plan_dft_1d(in.s, in.native, out.native, 1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out.extract();
+    }
+    
+    public static double[][] fftr2c(double [] rd, double [] id){        
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+
+        fftwComplex in = new fftwComplex(rd.length);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(rd.length);
+      
+		long plan = create_fftw_plan_r2c_1d(in.s, in.native, out.native, -1, 0x40);
+        if (plan == 0){
+			return nilptr;
+        }
+        execute_fftw(plan);
+        free_plan(plan);
+        return out.extract();
+    }
+    
+    public static double[][] ifftc2r(double [] rd, double [] id){
+		if (id != nilptr && id.length != rd.length){
+			throw new IllegalArgumentException("rd length != id length");
+            return nilptr;
+        }
+
+        fftwComplex in = new fftwComplex(rd.length);
+        in.fill(rd, id);
+        
+		fftwComplex out = new fftwComplex(rd.length);
+      
+		long plan = create_fftw_plan_c2r_1d(in.s, in.native, out.native, 1, 0x40);
         if (plan == 0){
 			return nilptr;
         }

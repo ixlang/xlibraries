@@ -9,18 +9,28 @@
 					"incpath":	[],
 					"libpath":	[]
 				},
-				"libs":	[],
 				"options":	"",
+				"libs":	[],
+				"links":	[],
+				"depends":	[],
 				"cmd":	"$(Output)",
 				"args":	"",
 				"workdir":	"$(ProjectDir)",
 				"ignorewarning":	"",
+				"compdest":	"",
+				"ignorewl":	"324;204;298",
 				"debugable":	"-dbg",
 				"debugdatabase":	"",
+				"wtype":	"",
+				"ostype":	"",
+				"sstype":	"",
 				"outname":	"$(ProjectName).lix",
 				"outpath":	"$(ProjectDir)/$(Configure)",
-				"command":	"-lix -c"
+				"command":	"-lix -c",
+				"uaclevel":	"默认"
 			}
-		}
+		},
+		"versioninc":	"0",
+		"icofile":	""
 	}
 }

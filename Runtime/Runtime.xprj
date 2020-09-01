@@ -14,6 +14,8 @@
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)",
 				"ignorewarning":	"",
+				"compdest":	"",
+				"ignorewl":	"324",
 				"debugable":	"-dbg",
 				"debugdatabase":	"",
 				"libs":	["XPlatform.lix", "FileStream.lix"],

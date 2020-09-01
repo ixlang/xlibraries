@@ -30,14 +30,14 @@ Q_IMPORT_PLUGIN(QWebpPlugin) //for releas
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 Q_IMPORT_PLUGIN(QWindowsPrinterSupportPlugin) //for releas
 #elif defined(__linux__)
-#ifdef __arm__
-#include <QtPlugin>
-Q_IMPORT_PLUGIN(QLinuxFbIntegrationPlugin)
-#else
+//#ifdef __arm__
+//#include <QtPlugin>
+//Q_IMPORT_PLUGIN(QLinuxFbIntegrationPlugin)
+//#else
 #include <QtPlugin>
 //Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
-#endif
+//#endif
 #elif defined(__APPLE__)
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
@@ -333,7 +333,12 @@ QIcon * loadIcon(QString file) {
 }
 
 
-
+void checkMainThread(){
+    if (QThread::currentThreadId() != ui_thread_id){
+        XThread thread;
+        gs_env->throwNativeException(thread.getThread(), "must from UIThread");
+    }
+}
 
 XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
 
@@ -344,6 +349,7 @@ XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
 
         onNotifyId = gs_env->getMethodId("/*@/QXApplication/onCreateXObject(/long,/String)");
         createObject = gs_env->getVirtualMethod(x, onNotifyId);
+
 
         MAX_METHOD = getEventMaxCount();
         methodIdent = new XIDENT[MAX_METHOD];
@@ -369,6 +375,8 @@ XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
 }
 
 XNLEXPORT xlong  XI_CDECL locaUiFile(xstring path, XObject * x, xlong parent){
+        checkMainThread();
+
         QString uifilePath = QString::fromUtf8(path);
 
         QUiLoader uiLoader;
@@ -402,6 +410,7 @@ XNLEXPORT xlong  XI_CDECL locaUiFile(xstring path, XObject * x, xlong parent){
 }
 
 XNLEXPORT xlong  XI_CDECL locaUiData(xlong buffer, XObject * x, xlong parent) {
+        checkMainThread();
 
         QUiLoader uiLoader;
 
@@ -433,6 +442,8 @@ XNLEXPORT xlong  XI_CDECL locaUiData(xlong buffer, XObject * x, xlong parent) {
 }
 
 XNLEXPORT xlong  XI_CDECL createNObject(xint type, xlong param) {
+        checkMainThread();
+
         switch (type)
         {
         case qtFont:
@@ -478,6 +489,7 @@ XNLEXPORT xlong  XI_CDECL createNObject(xint type, xlong param) {
 }
 
 XNLEXPORT xlong  XI_CDECL createSObject(xint type, xstring param) {
+        checkMainThread();
         switch (type)
         {
         case qtFont:
@@ -495,6 +507,7 @@ XNLEXPORT xlong  XI_CDECL createSObject(xint type, xstring param) {
 }
 
 XNLEXPORT xlong  XI_CDECL createPObject(xint type, xptr param) {
+
 	switch (type)
 	{
 	case qtLineGradient:
@@ -577,7 +590,7 @@ public:
 
 XNLEXPORT xlong  XI_CDECL createQPObject(xint type, XObject * x, xlong parent, xlong param1, xlong param2, xlong param3, xlong param4) {
 	QObject * qobject = 0;
-
+    checkMainThread();
 	switch (type){
 	case qtPrinter:
 	{
@@ -641,7 +654,7 @@ XNLEXPORT xlong  XI_CDECL createQPObject(xint type, XObject * x, xlong parent, x
 }
 
 XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
-
+        checkMainThread();
         QObject * qobject = 0;
         switch (type)
         {
@@ -1087,12 +1100,14 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 }
 
 XNLEXPORT void XI_CDECL ShowUi(xlong widget){
+        checkMainThread();
         QWidget* getWidget = (QWidget*)widget;
         getWidget->show();
 }
 
 
 XNLEXPORT void XI_CDECL ApplicationRun(xlong app) {
+        checkMainThread();
         QXApplication * exe = (QXApplication*)app;
         exe->exec();
 }
@@ -1121,6 +1136,7 @@ XNLEXPORT xint  XI_STDCALL XNLExit(XNLEnv * env){
 
 
 XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
+        checkMainThread();
         switch (proid)
         {
 		case DOCKSETALLOWEDAREAS:
@@ -3019,6 +3035,12 @@ XNLEXPORT XObject *  XI_CDECL core_getString(xlong h, xint proid) {
         QByteArray qba;
         switch (proid)
         {
+		case BUTTONGETTEXT:
+			qba = ((QPushButton*)h)->text().toUtf8();
+			break;
+		case WIDGETGETTITLE:
+			qba = ((QWidget*)h)->windowTitle().toUtf8();
+			break;
 		case TEGETPLACEHOLDERTEXT:
 			qba = ((QTextEdit*)h)->placeholderText().toUtf8();
 			break;

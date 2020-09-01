@@ -11,13 +11,12 @@ TEMPLATE = lib
 
 unix:!macx{
     contains(QT_ARCH, arm) {
-        QTDIR = /media/pi/MEDIA/pi/Qt5.9.1/Qt5.9.1_linux_gcc_x64_static_fc
+        QTDIR = /media/pi/Backup/qt5.9.1
     }else{
         contains(QT_ARCH, x86_64) {
            QTDIR = /home/cadaqs/qt5.12/5.9.1/linux_gcc_x64_static
         } else {
            QTDIR = /home/cadaqs/Qt5.9.1/5.9.1/gcc_x86_static
-            #/home/cadaqs/Qt5.12/5.9.1/gcc_x86_static
         }
     }
 }
@@ -119,21 +118,22 @@ else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$QTDIR/
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$QTDIR/lib/debug/Qt5UiTools.lib
 else:unix: PRE_TARGETDEPS += $$QTDIR/lib/libQt5UiTools.a
 
-contains(QT_ARCH, arm) {
-unix: LIBS += -L$$QTDIR/plugins/platforms/ -lqlinuxfb
+#contains(QT_ARCH, arm) {
+#unix: LIBS += -L$$QTDIR/plugins/platforms/ -lqlinuxfb
 
-INCLUDEPATH += $$QTDIR/plugins/platforms
-DEPENDPATH += $$QTDIR/plugins/platforms
+#INCLUDEPATH += $$QTDIR/plugins/platforms
+#DEPENDPATH += $$QTDIR/plugins/platforms
 
-unix: PRE_TARGETDEPS += $$QTDIR/plugins/platforms/libqlinuxfb.a
-}else{
+#unix: PRE_TARGETDEPS += $$QTDIR/plugins/platforms/libqlinuxfb.a
+#}else
+#{
 unix: LIBS += -L$$QTDIR/plugins/platforms/ -lqxcb
 
 INCLUDEPATH += $$QTDIR/plugins/platforms
 DEPENDPATH += $$QTDIR/plugins/platforms
 
 unix: PRE_TARGETDEPS += $$QTDIR/plugins/platforms/libqxcb.a
-}
+#}
 
 
 #unix:!macx: LIBS += -lxkbcommon

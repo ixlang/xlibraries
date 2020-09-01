@@ -20,31 +20,31 @@ class AudioOut : Library{
         return loaded;
     }
     
-	AudioOut(){
+	public AudioOut(){
 		load();
     }
-    bool create(int channel, int sample, int widebits, int buffer_ms){
+    public bool create(int channel, int sample, int widebits, int buffer_ms){
         handle = audio_create(channel, sample, widebits, buffer_ms);
         return handle != 0;
     }
     
-    int write(short [] data, int size){
+    public int write(short [] data, int size){
         return audio_writeData(handle, data, size);
     }
     
-    bool play(){
+    public bool play(){
         return audio_play(handle);
     }
     
-    bool stop(){
+    public bool stop(){
         return audio_stop(handle);
     }
     
-    bool pause(){
+    public bool pause(){
         return audio_pause(handle);
     }
     
-    void reset(){
+    public void reset(){
         audio_cleanup(handle);
     }
     
@@ -52,7 +52,7 @@ class AudioOut : Library{
         audio_destroy(handle);
     }
     
-    int getPosition(){
+    public int getPosition(){
         if (handle == 0){ 
             return 0;
         }

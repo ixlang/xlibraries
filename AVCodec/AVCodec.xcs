@@ -2,7 +2,7 @@
 //Date: Sun Jan 21:35:17 2019 
 
 class AVCodeC : Library{
-	interface IPlayerCallback{ 
+	public interface IPlayerCallback{ 
 		void writeVideoData(byte [] data, int length, long timemillis);
         void writeAudioData(short [] data, int length, long timemillis);
         void stop();
@@ -41,20 +41,20 @@ class AVCodeC : Library{
     bool bStop = true;
     bool bReady = false;
     
-    AVCodeC(IPlayerCallback player){
+    public AVCodeC(IPlayerCallback player){
 		load();
         _player = player;
     }
-	AVCodeC(){
+	public AVCodeC(){
 		load();
     }
-    long hMedia = 0;
+    public long hMedia = 0;
     
     bool bhasVideo = false, bhasAudio = false;
     
     long play_position = 0;
     
-    bool open(String file){
+    public bool open(String file){
 		if (bStop == true){
 			hMedia = openMedia(file);
 			if (hMedia != 0){
@@ -65,15 +65,15 @@ class AVCodeC : Library{
         return false;
     }
     
-    bool hasVideo(){
+    public bool hasVideo(){
 		return bhasVideo;
     }
     
-    bool hasAudio(){
+    public bool hasAudio(){
 		return bhasAudio;
     }
     
-    bool prepare(){
+    public bool prepare(){
 		bhasVideo = bhasAudio = false;
 		int rt = prepareMedia(hMedia);
         if ((rt & 1) == 1){
@@ -85,7 +85,7 @@ class AVCodeC : Library{
         return true;
     }
     
-    byte[] getPreview(long position){
+    public byte[] getPreview(long position){
 		long []lengths = new long[2];
 		byte [] video_data = new byte[getVideoBufferSize(hMedia)];
 		byte [] audio_data = new byte[getAudioBufferSize(hMedia)];
@@ -127,7 +127,7 @@ class AVCodeC : Library{
         return dataout;
     }
     
-    bool preparePreview(){
+    public bool preparePreview(){
 		int pos = 78500;
 		long [] lengths = new long[2];
     	byte [] video_data = new byte[getVideoBufferSize(hMedia)];
@@ -143,11 +143,11 @@ class AVCodeC : Library{
         return false;
     }
     
-    bool begin(){
+    public bool begin(){
 		return bReady = beginDecode(hMedia);
     }
     
-    void decode(){
+    public void decode(){
 		if (begin()){
         
 			long []lengths = new long[2];
@@ -232,15 +232,15 @@ class AVCodeC : Library{
         }
     }
     
-    void close(){
+    public void close(){
 		closeMedia(hMedia);
     }
     
-    long getPosition(){
+    public long getPosition(){
 		return play_position;
     }
     
-    void stop(){
+    public void stop(){
 		synchronized(this){
 			if (bStop == false){
 				bStop = true;
@@ -250,38 +250,38 @@ class AVCodeC : Library{
         }
     }
     
-    int getFps(){
+    public int getFps(){
     	if (hMedia == 0){
 			return 0;
         }
 		return getVideoFps(hMedia);
     }
     
-    int getWidth(){
+    public int getWidth(){
     	if (hMedia == 0){
 			return 0;
         }
 		return getVideoWidth(hMedia);
     }
     
-    int getHeight(){
+    public int getHeight(){
 		if (hMedia == 0){
 			return 0;
         }
 		return getVideoHeight(hMedia);
     }
     
-    bool isReady(){
+    public bool isReady(){
 		return bReady;
     }
-    long getDuration(){
+    public long getDuration(){
 		if (hMedia != 0){
 			return getDuration(hMedia);
         }
         return 0;
     }
     
-    bool seek(long position){
+    public bool seek(long position){
 		if (hMedia == 0){
 			return false;
         }
@@ -300,8 +300,16 @@ class AVCodeC : Library{
         return true;
     }
     
-    
-	import {
+    public int getVideoBufferSize(){
+        return getVideoBufferSize(hMedia);
+    }
+    public int getAudioBufferSize(){
+        return getAudioBufferSize(hMedia);
+    }
+    public bool readStream(){
+        return readStream(hMedia);
+    }
+	public import {
 		 long stdcall openMedia(String uri);
 		 int stdcall prepareMedia(long hpc);
 		 bool stdcall beginDecode(long hpc);

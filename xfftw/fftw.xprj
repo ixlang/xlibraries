@@ -25,6 +25,7 @@
 				"libs":	[],
 				"wtype":	"",
 				"ostype":	"",
+				"sstype":	"",
 				"outname":	"$(ProjectName)$(Ext)",
 				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
 				"command":	"-lix -c",

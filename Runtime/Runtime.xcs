@@ -121,6 +121,7 @@ package Runtime{
 					int dwFlags,
 					int th32ProcessID
 				);
+
 				//结构体356个字节
 				bool stdcall Process32First(
 				  Pointer hSnapshot,
@@ -167,7 +168,7 @@ package Runtime{
 		public OSProcess(int Id){
 			processId = Id;
         }
-		OSProcess(byte[] data){
+		OSProcess(byte[] data) throws IndexOutOfBoundsException	,ArrayStoreException,NullPointerException{
 			for (int i =0; i <4; i ++){
 				processId = (processId << 8) | data[8 + 3 -i];
             }
@@ -178,8 +179,7 @@ package Runtime{
 			int len = Win32Api.Kernel32.lstrlenA(paths);
             name = new String(paths, 0, len);
         }
-        
-        
+
 		int processId;
         String name;
         String exepath;
@@ -212,7 +212,11 @@ package Runtime{
 						if (Win32Api.Psapi32.EnumProcessModules(handle, hm, 8, up)){
 							int len = Win32Api.Psapi32.GetModuleFileNameExA(handle, hm[0], path, Win32Api.Kernel32.MAX_PATH);
 							if (len > 0){
-								exepath = new String(path, 0, len);
+                                try{
+                                    exepath = new String(path, 0, len);
+                                }catch(Exception e){
+                                    
+                                }
 							}
 						}
 						closeHandle(handle);
@@ -270,58 +274,63 @@ package Runtime{
             
             plist = new List<OSProcess>();
             
-            FSObject file = new FSObject ("/proc");
-            
-            
-            long hfind = file.openDir();
-            if (hfind != 0){
-            
-                FSObject pf = new FSObject();
+            try{
+                FSObject file = new FSObject ("/proc");
+                long hfind = file.openDir();
+                if (hfind != 0){
                 
-                OSProcess process = new OSProcess();
-                
-                while (file.findObject(hfind,pf)){
-                    String pname = pf.getName();
-                    if (pname.isDigit()){
-                        String namepath = pf.getPath().appendPath("status");
-                        
-                        try{
-                            FileStream.FileInputStream fis = new FileStream.FileInputStream (namepath);
-                            
-                            String txtstatus = "";
-                            
-                            byte []status = new byte[1024];
-                            int rd = 0;
-                            while ((rd = fis.read(status, 0, 1024)) > 0){
-                                txtstatus = txtstatus + new String(status, 0, rd);
-                            }
-                            
-                            fis.close();
+                    FSObject pf = new FSObject();
+          
+                    while (file.findObject(hfind,pf)){
+                        String pname = pf.getName();
+                        if (pname != nilptr && pname.isDigit()){
+                            OSProcess process = new OSProcess();
+                            String fppath = pf.getPath();
+                            if (fppath != nilptr){
+                                String namepath = fppath.appendPath("status");
+                                
+                                try{
+                                    FileStream.FileInputStream fis = new FileStream.FileInputStream (namepath);
+                                    
+                                    String txtstatus = "";
+                                    
+                                    byte []status = new byte[1024];
+                                    int rd = 0;
+                                    while ((rd = fis.read(status, 0, 1024)) > 0){
+                                        txtstatus = txtstatus + new String(status, 0, rd);
+                                    }
+                                    
+                                    fis.close();
 
-                            int pos = txtstatus.indexOf("Name:");
-                            if (pos != -1){
-                                int le = txtstatus.indexOf("\n", pos);
-                                if (le == -1){
-                                    le = txtstatus.length();
+                                    int pos = txtstatus.indexOf("Name:");
+                                    if (pos != -1){
+                                        int le = txtstatus.indexOf("\n", pos);
+                                        if (le == -1){
+                                            le = txtstatus.length();
+                                        }
+                                        process.name = txtstatus.substring(pos + 5, le).trim(true);
+                                    }
+                                }catch(Exception e){
+                                
                                 }
-                                process.name = txtstatus.substring(pos + 5, le).trim(true);
+                                String expath = fppath.appendPath("exe");
+                                
+                                byte [] fullpath = new byte[4096];
+                                long length = UnixlikeApi.readlink(expath,fullpath,(long)4096);
+                                if (length != -1){
+                                    process.exepath = new String (fullpath, 0, (int)length);
+                                }
+                                process.processId = pname.parseInt();
+                                plist.add(process);
                             }
-                        }catch(Exception e){
-                        
                         }
-                        String expath = pf.getPath().appendPath("exe");
-                        
-                        byte [] fullpath = new byte[320];
-                        long length = UnixlikeApi.readlink(expath,fullpath,(long)320);
-                        if (length != -1){
-                            process.exepath = new String (fullpath, 0, length);
-                        }
-                        process.processId = pname.parseInt();
-                        plist.add(process);
                     }
+                   file.closeDir(hfind); 
                 }
-               file.closeDir(hfind); 
+            }catch(Exception e){
+                
             }
+            
             return plist;
         }
         
@@ -342,20 +351,24 @@ package Runtime{
 				Win32Api.Kernel32.TH32CS_SNAPALL,
 				0);
 			
-			if (snopt > 0){
-				bool succ = Win32Api.Kernel32.Process32First(snopt,struct);
-				while (succ){
-					plist.add(new OSProcess(struct));
-					succ = Win32Api.Kernel32.Process32Next(snopt,struct);
-				}
-				
-				Win32Api.Kernel32.CloseHandle(snopt);
-			}
-		
+            try{
+                if (snopt > 0){
+                    bool succ = Win32Api.Kernel32.Process32First(snopt,struct);
+                    while (succ){
+                        plist.add(new OSProcess(struct));
+                        succ = Win32Api.Kernel32.Process32Next(snopt,struct);
+                    }
+                    
+                    Win32Api.Kernel32.CloseHandle(snopt);
+                }
+            }catch(Exception e){
+                
+            }
             return plist;     
         }
     };
 };
+
 /*
 package System{
 	public class out{

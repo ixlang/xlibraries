@@ -36,7 +36,7 @@
 		}
 	},
 	"package":	"XPlatform",
-	"version":	"1.0.0.3",
+	"version":	"1.0.0.4",
 	"descr":	"处理多平台字符集差异",
 	"author":	"https://github.com/ixlang/xlibrarys"
 }
