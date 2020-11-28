@@ -1,0 +1,95 @@
+//xlang Source, Name:QProgressBar.xcs 
+//Date: Sat Aug 11:35:52 2018 
+package Qt{
+    public class QProgressBar : QWidget{
+        public QProgressBar(){
+        
+        }
+        
+        public QProgressBar(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtProgressBar, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtProgressBar, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        public int minimum(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QPMININUM);
+        }
+        public int maximum() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QPMAXINUM);
+        }
+        public int value() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QPVALUE);
+        }
+        public String getText(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.QPTEXT);
+        }
+        public void setTextVisible(bool visible){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.QPVISIBLE, visible);
+        }
+        public bool isTextVisible() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.QPVISIBLE);
+        }
+        public int alignment(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QPALIGN);
+        }
+        public void setAlignment(int alignment){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QPALIGN, alignment);
+        }
+        public int orientation(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QPORIENTATION);
+        }
+        public void setInvertedAppearance(bool invert){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.QPINVERTAPPEAR, invert);
+        }
+        public bool invertedAppearance() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.QPINVERTAPPEAR);
+        }
+        public void setTextDirection(int textDirection){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QPTEXTDIR, textDirection);
+        }
+        public int textDirection() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QPTEXTDIR);
+        }
+        public void setFormat(String format){
+            QtXnl.widget_slot_string(nativehandle, Constant.QPFORMAT, format);
+        }
+        public void resetFormat(){
+            QtXnl.widget_slot(nativehandle, Constant.QPFORMAT);
+        }
+        public String format() {
+            return (String)QtXnl.core_getString(nativehandle, Constant.QPFORMAT);
+        }
+        public void reset(){
+            QtXnl.widget_slot(nativehandle, Constant.QPRESET);
+        }
+        public void setRange(int minimum, int maximum){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.QPRANGE, minimum, maximum);
+        }
+        public void setMinimum(int minimum){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QPMININUM, minimum);
+        }
+        public void setMaximum(int maximum){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QPMAXINUM, maximum);
+        }
+        public void setValue(int value){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QPVALUE, value);
+        }
+        public void setOrientation(int Orientation){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QPORIENTATION, Orientation);
+        }
+    };
+};

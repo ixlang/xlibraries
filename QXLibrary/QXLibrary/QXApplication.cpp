@@ -34,6 +34,110 @@ QXApplication::~QXApplication()
 }
 
 
+
+void installAction(QObject * obj) {
+	const char * type = obj->metaObject()->className();
+
+	if (strcmp(type, "QAction") == 0) {
+		ar.installAction(obj);
+	}
+	if ((strcmp(type, "QDateTimeEdit") == 0) || (strcmp(type, "QTimeEdit") == 0) || (strcmp(type, "QDateEdit") == 0)) {
+		ar.installDateTimeEditAction(obj);
+	}
+	if (strcmp(type, "QPushButton") == 0 || strcmp(type, "QCheckBox") == 0) {
+		ar.installButtonAction(obj);
+	}
+	if (strcmp(type, "QLineEdit") == 0) {
+		ar.installEditAction(obj);
+	}
+	if (strcmp(type, "QTextEdit") == 0) {
+		ar.installTextEditAction(obj);
+	}
+	if (strcmp(type, "QTableWidget") == 0) {
+		ar.installTableCellChange((QTableWidget*)obj);
+	}
+	if (strcmp(type, "QsciScintilla") == 0) {
+		ar.installSciAction((QsciScintilla*)obj);
+	}
+	if (strcmp(type, "QComboBox") == 0) {
+		ar.installComboBoxAction((QComboBox*)obj);
+	}
+	if (strcmp(type, "QFileSystemWatcher") == 0) {
+		ar.installFSWEvent((QFileSystemWatcher*)obj);
+	}
+	if (strcmp(type, "QSlider") == 0) {
+		ar.installSliderAction(obj);
+	}
+	if (strcmp(type, "QTabWidget") == 0) {
+		ar.installTabWidgetAction(obj);
+	}
+	if (strcmp(type, "QTabBar") == 0) {
+		ar.installTabBarAction(obj);
+	}
+	if (strcmp(type, "QTreeWidget") == 0) {
+		ar.installTreeAction(obj);
+	}
+	if (strcmp(type, "QDialog") == 0) {
+		ar.installDialogAction((QDialog*)obj);
+	}
+	if (strcmp(type, "QtBoolPropertyManager") == 0) {
+		ar.installBoolPropertyChange((QtBoolPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtColorPropertyManager") == 0) {
+		ar.installColorPropertyChange((QtColorPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtDatePropertyManager") == 0) {
+		ar.installDatePropertyChange((QtDatePropertyManager*)obj);
+	}
+	if (strcmp(type, "QtDateTimePropertyManager") == 0) {
+		ar.installDateTimePropertyChange((QtDateTimePropertyManager*)obj);
+	}
+	if (strcmp(type, "QtDoublePropertyManager") == 0) {
+		ar.installDoublePropertyChange((QtDoublePropertyManager*)obj);
+	}
+	if (strcmp(type, "QtEnumPropertyManager") == 0) {
+		ar.installEnumPropertyChange((QtEnumPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtFlagPropertyManager") == 0) {
+		ar.installFlagPropertyChange((QtFlagPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtFontPropertyManager") == 0) {
+		ar.installFontPropertyChange((QtFontPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtGroupPropertyManager") == 0) {
+		ar.installGroupPropertyChange((QtGroupPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtIntPropertyManager") == 0) {
+		ar.installIntPropertyChange((QtIntPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtPointPropertyManager") == 0) {
+		ar.installPointPropertyChange((QtPointPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtRectPropertyManager") == 0) {
+		ar.installRectPropertyChange((QtRectPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtSizePropertyManager") == 0) {
+		ar.installSizePropertyChange((QtSizePropertyManager*)obj);
+	}
+	if (strcmp(type, "QtSizePolicyPropertyManager") == 0) {
+		ar.installSizePolicyPropertyChange((QtSizePolicyPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtStringPropertyManager") == 0) {
+		ar.installStringPropertyChange((QtStringPropertyManager*)obj);
+	}
+	if (strcmp(type, "QtTimePropertyManager") == 0) {
+		ar.installTimePropertyChange((QtTimePropertyManager*)obj);
+	}
+	if (strcmp(type, "QtVariantPropertyManager") == 0) {
+		ar.installVariantPropertyChange((QtVariantPropertyManager*)obj);
+	}
+#ifndef MOBILE_APP
+	if (strcmp(type, "ReportEngine") == 0) {
+		ar.installReportView((LimeReport::ReportEngine*)obj);
+	}
+#endif
+}
+
  XObject * getObjectControl(QObject * obj) {
 	if (obj == 0) {
 		return 0;
@@ -45,42 +149,10 @@ QXApplication::~QXApplication()
 		XObject * object_type = gs_env->createObject();
 		XObject * objectvalue = gs_env->createObject();
 		const char * type = obj->metaObject()->className();
-		if (strcmp(type, "QMenu") == 0) {
-			QMenu * pm = (QMenu*)obj;
-			QList<QAction*> acts =  pm->actions();
-			for (QAction* act : acts) {
-				getObjectControl(act);
-				ar.installAction(act);
-			}
-		}
-		if (strcmp(type, "QTreeWidget") == 0) {
-			ar.installTreeAction(obj);
-		}
-		if ((strcmp(type, "QDateTimeEdit") == 0) || (strcmp(type, "QTimeEdit") == 0) || (strcmp(type, "QDateEdit") == 0)) {
-			ar.installDateTimeEditAction(obj);
-		}
-		if (strcmp(type, "QPushButton") == 0 || strcmp(type, "QCheckBox") == 0) {
-			ar.installButtonAction(obj);
-		}
-		if (strcmp(type, "QLineEdit") == 0) {
-			ar.installEditAction(obj);
-		}
-		if (strcmp(type, "QTextEdit") == 0) {
-			ar.installTextEditAction(obj);
-		}
-		if (strcmp(type, "QTableWidget") == 0) {
-			ar.installTableCellChange((QTableWidget*)obj);
-		}
-		if (strcmp(type, "QDialog") == 0) {
-			QDialog * pm = (QDialog*)obj;
-			ar.installDialogAction(pm);
-		}
-		if (strcmp(type, "QComboBox") == 0) {
-			ar.installComboBoxAction((QComboBox*)obj);
-		}
-		if (strcmp(type, "QFileSystemWatcher") == 0) {
-			ar.installFSWEvent((QFileSystemWatcher*)obj);
-		}
+
+
+		installAction(obj);
+
 		XThread thread;
 
 		gs_env->setValue(thread.getThread(), object_type, type, strlen(type));

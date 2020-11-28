@@ -1,0 +1,1745 @@
+//xlang Source, Name:Qt.x 
+//Date: Thu Nov 20:47:52 2020 
+
+package Qt{
+
+    public class Constant{
+        
+        public static const int 
+            OPACITY = 0,
+            VISIBLE = 1,
+            MAXIMIZED = 2,
+            MINIMIZED = 3,
+            ENABLED = 4,
+            MINIMUMHEIGHT = 5,
+            ACTIVED = 6,
+            MAXIMUMHEIGHT = 7,
+            MINIMUMWIDTH = 8,
+            MAXIMUMWIDTH = 9,
+            WIDTH = 10,
+            HEIGHT = 11,
+            FULLSCREEN = 12,
+            HIDDEN = 13,
+            MODAL = 14,
+            WINDOW = 15,
+            RESIZE = 16,
+            SCROLL = 17,
+            FIXEDHEIGHT = 18,
+            FIXEDSIZE = 19,
+            FIXEDWIDTH = 20,
+            PALETTE = 21,
+            STYLE = 22,
+            CLOSE = 23,
+            HIDE = 24,
+            LOWER = 25,
+            RAISE = 26,
+            UPDATE = 27,
+            WINDOWTITLE = 28,
+            SHOW = 29,
+            SHOWFULLSCREEN = 30,
+            SHOWMAX = 31,
+            SHOWMIN = 32,
+            SHOWNORMAL = 33,
+            FLATING = 34,
+            TITLEBAR = 35,
+            DOCKWIDGETFEATURE = 36,
+            REPAINT = 37,
+            SCICMD = 38,
+            SCIFONT = 39,
+            FONTSETFAMILY = 40,
+            FONTPTSIZE = 41,
+            FONTPXSIZE = 42,
+            FONTCTOR = 43,
+            MENUBAR = 44,
+            ADDACTION = 45,
+            ADDMENU = 46,
+            ADDSEP = 47,
+            INSSEP = 48,
+            INSMENU = 49,
+            MENUBAR_CLR = 50,
+            ISDEFUP = 51,
+            ISNAMBR = 52,
+            SETMENU = 53,
+            SETSEP = 54,
+            ISSEP = 55,
+            SETSHRCUT = 56,
+            SETTEXT = 57,
+            GETTEXT = 58,
+            GETMENU = 59,
+            PARENTWIDGET = 60,
+            TRIGGER = 61,
+            CHECKED = 62,
+            ADDACT = 63,
+            MDIMODE = 64,
+            X_POS = 65,
+            Y_POS = 66,
+            MOVE = 67,
+            SETWIDGET = 68,
+            GETWIDGET = 69,
+            SUBSETWIDGET = 70,
+            SUBGETWIDGET = 71,
+            MDISETSCROLLH = 72,
+            MDISETSCROLLV = 73,
+            CENTRALWIDGET = 74,
+            TREEWIDGETADD = 75,
+            TREEWIDGETINST = 76,
+            TREEWIDGETGETSEL = 77,
+            OPEN = 78,
+            SAVE = 79,
+            SETITEMTEXT = 80,
+            SETITEMCOLOR = 81,
+            SETBACKCOLOR = 82,
+            SETCOLUMNS = 83,
+            TREEWIDGETCLEAR = 84,
+            SETCOLUMBWIDTH = 85,
+            SETTAG = 86,
+            GETTAG = 87,
+            XNOTIFY = 88,
+            NATIVEFINALIZE = 89,
+            FOLDER = 90,
+            LINEEDITSETTEXT = 91,
+            LINEEDITGETTEXT = 92,
+            QSCIGETTEXT = 93,
+            QSCIGETSELTXT = 94,
+            REMSUBWIN = 95,
+            ADDSUBWIN = 96,
+            MESSAGEBOXWAR = 97,
+            MESSAGEBOXERR = 98,
+            MESSAGEBOXINF = 99,
+            MESSAGEBOXABT = 100,
+            MESSAGEBOXQUE = 101,
+            CURRENTSUBWIN = 102,
+            WINDOWFLAG = 103,
+            SETWINDOWFLAG = 104,
+            CASCADESUBWIN = 105,
+            TILESUBWIN = 106,
+            SETACTSUBWIN = 107,
+            SCIFINDFIRST = 108,
+            COMBOGETTEXT = 109,
+            COMBOSETTEXT = 110,
+            SCIFINDNEXT = 111,
+            PROPADDPROPERTY = 112,
+            ADDPROPERTY = 113,
+            SETMGRFACTORY = 114,
+            SPWVM = 115,
+            SRID = 116,
+            ADDSUBPROPERTY = 117,
+            PROPSETENUM = 118,
+            PEORENUMVALUE = 119,
+            PROPSETARRT = 120,
+            PROPSETARRTSZMAX = 121,
+            PROPSETARRTSZMIN = 122,
+            PROPSETARRTPTMAX = 123,
+            PROPSETARRTPTMIN = 124,
+            PROPSETARRTRC = 125,
+            PROPSETVALUEPT = 126,
+            PROPSETVALUESZ = 127,
+            PROPSETVALUERC = 128,
+            PROPATTRCONST = 129,
+            PROPATTRSSTEP = 130,
+            PROPATTRDECIM = 131,
+            PROPATTRENUMI = 132,
+            PROPATTRENUMN = 133,
+            PROPATTRFLAGN = 134,
+            PROPATTRMAXIM = 135,
+            PROPATTRMINIM = 136,
+            PROPATTRREGEX = 137,
+            PROPATTRECHOM = 138,
+            PROPSETVALUE = 139,
+            PROPADDPROPERTYGROUP = 140,
+            PROPADDPROPERTYENUM = 141,
+            PROPADDPROPERTYFLAG = 142,
+            TREEPROPCLEAR = 143,
+            PROPGETVALUE = 144,
+            COMBOBOXADD = 145,
+            COMBOBOXSETID = 146,
+            COMBOBOXGETID = 147,
+            SETFOCUS = 148,
+            TRGETITEMTEXT = 149,
+            QSCIGETRANGE = 150,
+            LBLSETTEXT = 151,
+            LBLGETTEXT = 152,
+
+            CHKSETCHECK = 153,
+            CHKGETCHECK = 154,
+            GETVIEWPORT = 155,
+            ADDDEFACTION = 156,
+            SETCONTEXTMENUPOLICY = 157,
+            ACTSETTEXT = 158,
+            ACTGETTEXT = 159,
+            ACTENABLED = 160,
+            TREEWIDGETREM = 161,
+            WINDOWICON = 162,
+            ADDWIDGET = 163,
+            INSERTWIDGET = 164,
+            ADDPERWIDGET = 165,
+            INSERTPERWIDGET = 166,
+            REMOVEWIDGET = 167,
+            SIZEGRIPENABLED = 168,
+            CURRENTMESSAGE = 169,
+            STATUSBAR = 170,
+            SHOWMESSAGE = 171,
+            QPMININUM = 172,
+            QPMAXINUM = 173,
+            QPVALUE = 174,
+            QPTEXT	=	175,
+            QPVISIBLE = 176,
+            QPALIGN = 177,
+            QPORIENTATION = 178,
+            QPINVERTAPPEAR = 179,
+            QPTEXTDIR = 180,
+            QPFORMAT = 181,
+            QPRESET = 182,
+            QPRANGE = 183,
+            STYLESHEET = 184,
+            PALETTECOLOR = 185,
+            TRCOLUMNSHOW = 186,
+            TRSELECTMODE = 187,
+            TRAUTORESIZE = 188,
+            TRHEADERWIDTH = 189,
+            TRSORTENABLE = 190,
+            TRELIDMODE = 191,
+            TREESETCURITEM = 192,
+            TREEGETCURROW = 193,
+            TREEGETCURCOL = 194,
+            TREESETCURROW = 195,
+            TREESETCURCOL = 196,
+            TREEGETCOUNT = 197,
+            TREEGETSELITEM = 198,
+            TREEITEMFLAG = 199,
+            TREEITEMGETFLAG = 200,
+            TREEITEMPARENT = 201,
+            DELLOCBUFFER = 202,
+            BUFFERSETDATA = 203,
+            OPENBUFFER = 204,
+            DELLOCICON = 205,
+            DELLOCBYTEARRAY = 206,
+            SAVESTATE = 207,
+            LOADSTATE = 208,
+            TRSCROLLBOTTOM = 209,
+            TRIEMCLEARCHILD = 210,
+            TRIEMSETEXPAND = 211,
+            TRIEMSETHIDDEN = 212,
+            MAPPOINT = 213,
+            TRITEMSETCHECK = 214,
+            TRITEMGETCHECK = 215,
+            TREEGETCHILDREN = 216,
+            SETITEMICON = 217,
+            SETPEN	=	218,
+            SETBRUSH = 219,
+            QXPAINTDRAWLINE = 220,
+            SETBKBRUSH = 221,
+            QXPAINTOPACITY = 222,
+            QXPAINTBGMMODE = 223,
+            IMGLOAD = 224,
+            DELETEIMAGE = 225,
+            DRAWIMAGE = 226,
+            IMGWIDTH = 227,
+            IMGHEIGHT = 228,
+            IMGFORMAT = 229,
+            IMGGETDATA = 230,
+            QXPAINTDRAWRECT = 231,
+            FILLRECT = 232,
+            DRAWTEXT = 233,
+            PAINTERSETFONT = 234,
+            LOADFONT = 235,
+            SETAPPFONT = 236,
+            MATRIXDTOR = 237,
+            PAINTERSAVE = 238,
+            PAINTERRESTORE = 239,
+            PAINTRESETMATRIX = 240,
+            PAINTRESETTRANSFORM = 241,
+            MATRIXMAPPOINT = 242,
+            MATRIXTRANSLATE = 243,
+            MATRIXSCALE = 244,
+            MATRIXSHEAR = 245,
+            MATRIXROTATE = 246,
+            MATRIXMUL = 247,
+            PAINTERGETMATRIX = 248,
+            PAINTSETMATRIX = 249,
+            COMBOXCLR = 250,
+            BUTTONSETTEXT = 251,
+            ROUNDRECT = 252,
+            ROUNDEDRECT = 253,
+            SETATTRIBUTE = 254,
+            SETRENDERHINT = 255,
+            MEASURETEXT = 256,
+            PAINTERGETFCONT = 257,
+            PAINTERFROMIMG = 258,
+            DELLOCPAINTER = 259,
+            DRAWELLIPSE = 260,
+            SCREENPOSITION = 261,
+            SCREENSIZE	= 262,
+            SCREENCOUNT = 263,
+            CURRENTSCREEN = 264,
+            DELETEWIDGET = 265,
+            TOOLBARADDWIDGET = 266,
+            TOOLBARINSWIDGET = 267,
+            OPENURL		=	268,
+            SETSTYLESHEET = 269,
+            SETCOMPOSITIONMODE = 270,
+            GETSTYLESHEEY = 271,
+            FSWADDFILE = 272,
+            FSWREMFILE = 273,
+            SETCURSOR = 274,
+            LOADTRANSLATE = 275,
+            OPENLOCAL = 276,
+            HASFOCUS = 277,
+            GETTOPITEM = 278,
+            TREEGETTOPITEMS = 279,
+            TABLESETITEM = 280,
+            TABLEREMOVEROW = 281,
+            TABLEREMOVECOLUMN = 282,
+            TABLESETCOLUMNCNT = 283,
+            TABLESETROWCNT = 284,
+            TABLESELECTROW = 285,
+            TABLEITEMFLAG = 286,
+            TABLESETTAG = 287,
+            TABLEGETTAG = 288,
+            TABLESETVHRM = 289,
+            TABLESETVHDSS = 290,
+            TABLESETSM = 291,
+            TABLESETSB = 292,
+            TABLESETET = 293,
+            TABLESETHHFH = 294,
+            TABLESETHHLS = 295,
+            TABLESETSG = 296,
+            TABLESETVHV = 297,
+            TABLESETHHRS = 298,
+            SETTABHHCOLUMNS = 299,
+            SETTABVHCOLUMNS = 300,
+            TABLEGETTEXTBYRC = 301,
+            TABLEGETTEXTBYITEM = 302,
+            TABLECLEAR = 303,
+            TABLECLEARCONTENT = 304,
+            TABLEGETSELITEM = 305,
+            TABLEGETSELRANGE = 306,
+            TABLEGETITEM = 307,
+            SETTABLEITEMTEXT = 308,
+            SETTABLEITEMICON = 309,
+            SETTABLEITEMCOLOR = 310,
+            SETTABLEITEMBACKCOLOR = 311,
+            TABITEMGETCHECK = 312,
+            TABITEMSETCHECK = 313,
+            TABITEMGETFLAG = 314,
+            TABLESETCELLWIDGET = 315,
+            TABLEGETCELLWIDGET = 316,
+            SETFOCUSPOLICY = 317,
+            SETWHATSTHIS = 318,
+            STYLESHEETSTRING = 319,
+            SETSTYLESHEETSTRING = 320,
+            GETFONT = 321,
+            LOADFONTDESCRIPTION = 322,
+            SETWIDGETFONT = 323,
+            GETFONTDESCRIPTION = 324,
+            GETFONTNAME = 325,
+            GETFONTPIXELSIZE = 326,
+            GETFONTPTSIZE = 327,
+            QPBSETLABELS = 328,
+            QPBADJUST = 329,
+            QIMGSAVE = 330,
+            CHECKABLE = 331,
+            SETPROPWIDTHS = 332,
+            DELLOCBRUSH = 333,
+            SETSPREAD = 334,
+            SETCOLORAT = 335,
+            DELLOCGRADIENT = 336,
+            SETGRADIENT = 337,
+            SHOWTOOLTIPS = 338,
+            SETTOOLTIPS = 339,
+            GETTOOLTIPS = 340,
+            PAINTMEASURETEXT = 341,
+            PAINTFONTPTSIZE = 342,
+            PAINTFONTPXSIZE = 343,
+            FONTASCENT = 344,
+            FONTDESCENT = 345,
+            PAINTFONTASCENT = 346,
+            PAINTFONTDESCENT = 347,
+            TRSETFOREBR = 348,
+            TRSETBACKBR = 349,
+            ENABLEDROG = 350,
+            PATHMOVETO = 351,
+            PATHLINETO = 352,
+            PATHARCMOVETO = 353,
+            PATHARCTO = 354,
+            CUBICTO = 355,
+            QUADTO = 356,
+            ADDRECT = 357,
+            ADDELLIPSE = 358,
+            PATHCTOR = 359,
+            DRAWPATH = 360,
+            UPDATEENABLE = 361,
+            OPENMULTI = 362,
+            CLIPBOARDTEXT = 363,
+            CLIPBOARDIMAGE = 364,
+            QSCIDISABLESHORTCUT = 365,
+            QSCIUPDATESHORTCUT = 366,
+            QSCIUNBINDSHORTCUT = 367,
+            OBJECTSETNAME = 368,
+            QPB_SETEXPAND = 369,
+            QPB_SETSELECT = 370,
+            QPB_SETVISIBLE = 371,
+            QPB_SETBACKCOLOR = 372,
+            ASSOCIATEEXT = 373,
+            CHECKASSOCIATED = 374,
+            PAINTDEVICEMETRICGET = 375,
+            PAINTDEVICEPRFS = 376,
+            PRTDLGEXEC = 377,
+            PAINTDEVICEMETRICGETPRF = 378,
+            PRTDLGDONE = 379,
+            PRTDLGSETOPT = 380,
+            PRTDLGTEST = 381,
+            PRTDLGSETOPTS = 382,
+            PRTDLGGETOPTS = 383,
+            PAINTERTYPE = 384,
+            PAINTDEVICETYPE = 385,
+            PAINTDEVICEACTIVE = 386,
+            PAINTERFROMDEVICE = 387,
+            PVWDLGEXEC = 388,
+            PVWDLGDONE = 389,
+            PRINTERDTOR = 390,
+            PRINTERSETOUTFMT = 391,
+            PRINTERGETOUTFMT= 392,
+            WIDGETRENDERF = 393,
+            WIDGETRENDER4 = 394,
+            WIDGETRENDER2 = 395,
+            WIDGETRENDER1 = 396,
+            PRINTSCIRANGE = 397,
+            SCIPRINTERDTOR = 398,
+            REGDATASOURCE = 399,
+            LOADREPORTFROMFILE = 400,
+            LOADREPORTFROMTEXT = 401,
+            SHOWREPORT = 402,
+            SETDATETIME = 403,
+            SETDATE = 404,
+            SETTIME = 405,
+            GETDATETIME = 406,
+            GETDATE = 407,
+            GETTIME = 408,
+            TESETLINEWRAPMODE = 409,
+            TEZOOMOUT = 410, 
+            TEZOOMIN = 411,
+            TESETAUTOFORMATTING = 412,
+            TESETALIGNMENT = 413,
+            TESETTEXTBACKGROUNDCOLOR = 414,
+            TESETTEXTCOLOR = 415, 
+            TESETFONTWEIGHT = 416,
+            TESETWORDWRAPMODE = 417,
+            TETABCHANGESFOCUS = 418,
+            TEGETREADONLY = 419,
+            TESETFONTPOINTSIZE = 420,
+            TESETTABCHANGESFOCUS = 421,
+            TESETFONTITALIC = 422,
+            TESETFONTUNDERLINE = 423,
+            TESETREADONLY = 424,
+            TEGETAUTOFORMATTING = 425,
+            TEGETWRAPMODE = 426,
+            TEGETALIGNMENT = 427,
+            TESETCURRENTFONT = 428,
+            TESCROLLTOANCHOR = 429,
+            TEAPPEND = 430,
+            TEINSERTHTML = 431,
+            TEINSERTPLAINTEXT = 432,
+            TESETPLACEHOLDERTEXT = 433,
+            TESETTEXT = 434,
+            TESETHTML = 435,
+            TESETPLAINTEXT = 436,
+            TESETFONTFAMILY = 437,
+            TESELECTALL = 438,
+            TECLEAR = 439,
+            TEREDO = 440,
+            TEUNDO = 441,
+            TEPASTE = 442,
+            TECOPY = 443,
+            TECUT = 444,
+            TEGETPLACEHOLDERTEXT = 445,
+            TETOPLAINTEXT = 446,
+            TETOHTML = 447,
+            SETSTYLE = 448,
+            TREEITEMISEXPAND = 449,
+            TREEITEMSELED = 450,
+            SCI_PROP = 451,
+            ADDDOCKWIDGET = 452,
+            SETDOCKNESTINGENABLED = 453,
+            TABIFYDOCKWIDGET = 454,
+            ISDOCKNESTINGENABLED = 455,
+            LAYTOUADDWIDGET = 456,
+            SETLAYOUT = 457,
+            DOCKSETALLOWEDAREAS = 458,
+            BUTTONGETTEXT = 459,
+            WIDGETGETTITLE = 460,
+            SLD_SETMIN = 461,
+            SLD_GETMIN = 462,
+            SLD_SETMAX = 463,
+            SLD_GETMAX = 464,
+            SLD_SETSINGLESTEP = 465,
+            SLD_GETSINGLESTEP = 466,
+            SLD_SETPAGESTEP = 467,
+            SLD_GETPAGESTEP = 468,
+            SLD_SETTRACKING = 469,
+            SLD_GETTRACKING = 470,
+            SLD_SETSLIDDOWN = 471,
+            SLD_GETSLIDDOWN = 472,
+            SLD_SETSLIDPOS = 473,
+            SLD_GETSLIDPOS = 474,
+            SLD_SETINVERTEDAPPEARANCE = 475,
+            SLD_GETINVERTEDAPPEARANCE = 476,
+            SLD_SETINVERTEDCONTROLS = 477,
+            SLD_GETINVERTEDCONTROLS = 478,
+            SLD_SETVALUE = 479,
+            SLD_GETVALUE = 480,
+            SLD_SETORIENTATION = 481,
+            SLD_TRIGGERACTION = 482,
+            SLD_SETRANGE = 483,
+            TOOLBARADDACTION = 484,
+            TOOLBARADDSEPAR = 485,
+            TOOLBARINSACTION = 486,
+            TOOLBARINSSEPAR = 487,
+            MAINWNDADDMENU = 488,
+            TOOLBARREMACTION = 489,
+            MAINWNDADDTOOLBAR = 490,
+            MAINWNDMENUADD = 491,
+            MENUINSMENU = 492,
+            MENUACTION = 493,
+            MENUBARINSMENU = 494,
+            MENUADDSEPAR = 495,
+            MENUBARADDSEPAR = 496,
+            SETICONSIZE = 497,
+            TABWIDGETADDTAB = 498,
+            TABWIDGETINSERTTAB = 499,
+            TABWIDGETINSERTTAB2 = 500,
+            TABWIDGETREMOVETAB = 501,
+            TABWIDGETISTABENABLED = 502,
+            TABWIDGETSETTABENABLED = 503,
+            TABWIDGETTABTEXT = 504,
+            TABWIDGETSETTABTEXT = 505,
+            TABWIDGETSETTABICON = 506,
+            TABWIDGETSETTABTOOLTIP = 507,
+            TABWIDGETTABTOOLTIP = 508,
+            TABWIDGETSETTABWHATSTHIS = 509,
+            TABWIDGETTABWHATSTHIS = 510,
+            TABWIDGETCURRENTINDEX = 511,
+            TABWIDGETCURRENTWIDGET = 512,
+            TABWIDGETWIDGET = 513,
+            TABWIDGETINDEXOF = 514,
+            TABWIDGETCOUNT = 515,
+            TABWIDGETTABPOSITION = 516,
+            TABWIDGETSETTABPOSITION = 517,
+            TABWIDGETTABSCLOSABLE = 518,
+            TABWIDGETSETTABSCLOSABLE = 519,
+            TABWIDGETISMOVABLE = 520,
+            TABWIDGETSETMOVABLE = 521,
+            TABWIDGETTABSHAPE = 522,
+            TABWIDGETSETTABSHAPE = 523,
+            TABWIDGETSIZEHINT = 524,
+            TABWIDGETMINIMUMSIZEHINT = 525,
+            TABWIDGETHEIGHTFORWIDTH = 526,
+            TABWIDGETHASHEIGHTFORWIDTH = 527,
+            TABWIDGETSETCORNERWIDGET = 528,
+            TABWIDGETCORNERWIDGET = 529,
+            TABWIDGETELIDEMODE = 530,
+            TABWIDGETSETELIDEMODE = 531,
+            TABWIDGETICONSIZE = 532,
+            TABWIDGETSETICONSIZE = 533,
+            TABWIDGETUSESSCROLLBUTTONS = 534,
+            TABWIDGETSETUSESSCROLLBUTTONS = 535,
+            TABWIDGETDOCUMENTMODE = 536,
+            TABWIDGETSETDOCUMENTMODE = 537,
+            TABWIDGETAUTOHIDE = 538,
+            TABWIDGETSETTABBARAUTOHIDE = 539,
+            TABWIDGETCLEAR = 540,
+            TABWIDGETTABBAR = 541,
+            TABWIDGETSETCURRENTINDEX = 542,
+            TABWIDGETSETCURRENTWIDGET = 543,
+            TABBARSHAPE = 544,
+            TABBARSETSHAPE = 545,
+            TABBARADDTAB = 546,
+            TABBARINSERTTAB = 547,
+            TABBARREMOVETAB = 548,
+            TABBARMOVETAB = 549,
+            TABBARISTABENABLED = 550,
+            TABBARSETTABENABLED = 551,
+            TABBARTABTEXT = 552,
+            TABBARSETTABTEXT = 553,
+            TABBARTABTEXTCOLOR = 554,
+            TABBARSETTABTEXTCOLOR = 555,
+            TABBARSETTABICON = 556,
+            TABBARELIDEMODE = 557,
+            TABBARSETELIDEMODE = 558,
+            TABBARSETTABTOOLTIP = 559,
+            TABBARTABTOOLTIP = 560,
+            TABBARSETTABWHATSTHIS = 561,
+            TABBARTABWHATSTHIS = 562,
+            TABBARTABAT = 563,
+            TABBARCURRENTINDEX = 564,
+            TABBARCOUNT = 565,
+            TABBARSIZEHINT = 566,
+            TABBARMINIMUMSIZEHINT = 567,
+            TABBARSETDRAWBASE = 568,
+            TABBARDRAWBASE = 569,
+            TABBARICONSIZE = 570,
+            TABBARSETICONSIZE = 571,
+            TABBARUSESSCROLLBUTTONS = 572,
+            TABBARUSEBUTTONS = 573,
+            TABBARTABSCLOSABLE = 574,
+            TABBARSETTABSCLOSABLE = 575,
+            TABBARSETTABBUTTON = 576,
+            TABBARTABBUTTON = 577,
+            TABBARSELECTIONBEHAVIORONREMOVE = 578,
+            TABBARSETSELECTIONBEHAVIORONREMOVE = 579,
+            TABBAREXPANDING = 580,
+            TABBARSETEXPANDING = 581,
+            TABBARISMOVABLE = 582,
+            TABBARSETMOVABLE = 583,
+            TABBARDOCUMENTMODE = 584,
+            TABBARSETDOCUMENTMODE = 585,
+            TABBARAUTOHIDE = 586,
+            TABBARSETAUTOHIDE = 587,
+            TABBARCHANGECURRENTONDRAG = 588,
+            TABBARSETCHANGECURRENTONDRAG = 589,
+            TABBARACCESSIBLETABNAME = 590,
+            TABBARSETACCESSIBLETABNAME = 591,
+            TABBARSETCURRENTINDEX = 592,
+            APPLICATIONATTRIBUTES = 593,
+            BOXADDSTRETCH = 594,
+            BOXADDSPACING = 595,
+            BOXSETSPACING = 596,
+            BOXSETSTRETCH = 597;
+        
+        public static const int
+            ElideLeft = 0,
+            ElideRight = 1,
+            ElideMiddle = 2,
+            ElideNone = 3;
+
+        public static const int
+            ArrowCursor = 0,
+            UpArrowCursor = 1,
+            CrossCursor = 2,
+            WaitCursor = 3,
+            IBeamCursor = 4,
+            SizeVerCursor = 5,
+            SizeHorCursor = 6,
+            SizeBDiagCursor = 7,
+            SizeFDiagCursor = 8,
+            SizeAllCursor = 9,
+            BlankCursor = 10,
+            SplitVCursor = 11,
+            SplitHCursor = 12,
+            PointingHandCursor = 13,
+            ForbiddenCursor = 14,
+            WhatsThisCursor = 15,
+            BusyCursor = 16,
+            OpenHandCursor = 17,
+            ClosedHandCursor = 18,
+            DragCopyCursor = 19,
+            DragMoveCursor = 20,
+            DragLinkCursor = 21,
+            LastCursor = DragLinkCursor,
+            BitmapCursor = 24,
+            CustomCursor = 25;
+        
+
+        
+        public static const int
+            Key_Escape = 0x01000000,                // misc keys
+            Key_Tab = 0x01000001,
+            Key_Backtab = 0x01000002,
+            Key_Backspace = 0x01000003,
+            Key_Return = 0x01000004,
+            Key_Enter = 0x01000005,
+            Key_Insert = 0x01000006,
+            Key_Delete = 0x01000007,
+            Key_Pause = 0x01000008,
+            Key_Print = 0x01000009,               // print screen
+            Key_SysReq = 0x0100000a,
+            Key_Clear = 0x0100000b,
+            Key_Home = 0x01000010,                // cursor movement
+            Key_End = 0x01000011,
+            Key_Left = 0x01000012,
+            Key_Up = 0x01000013,
+            Key_Right = 0x01000014,
+            Key_Down = 0x01000015,
+            Key_PageUp = 0x01000016,
+            Key_PageDown = 0x01000017,
+            Key_Shift = 0x01000020,                // modifiers
+            Key_Control = 0x01000021,
+            Key_Meta = 0x01000022,
+            Key_Alt = 0x01000023,
+            Key_CapsLock = 0x01000024,
+            Key_NumLock = 0x01000025,
+            Key_ScrollLock = 0x01000026,
+            Key_F1 = 0x01000030,                // function keys
+            Key_F2 = 0x01000031,
+            Key_F3 = 0x01000032,
+            Key_F4 = 0x01000033,
+            Key_F5 = 0x01000034,
+            Key_F6 = 0x01000035,
+            Key_F7 = 0x01000036,
+            Key_F8 = 0x01000037,
+            Key_F9 = 0x01000038,
+            Key_F10 = 0x01000039,
+            Key_F11 = 0x0100003a,
+            Key_F12 = 0x0100003b,
+            Key_F13 = 0x0100003c,
+            Key_F14 = 0x0100003d,
+            Key_F15 = 0x0100003e,
+            Key_F16 = 0x0100003f,
+            Key_F17 = 0x01000040,
+            Key_F18 = 0x01000041,
+            Key_F19 = 0x01000042,
+            Key_F20 = 0x01000043,
+            Key_F21 = 0x01000044,
+            Key_F22 = 0x01000045,
+            Key_F23 = 0x01000046,
+            Key_F24 = 0x01000047,
+            Key_F25 = 0x01000048,                // F25 .. F35 only on X11
+            Key_F26 = 0x01000049,
+            Key_F27 = 0x0100004a,
+            Key_F28 = 0x0100004b,
+            Key_F29 = 0x0100004c,
+            Key_F30 = 0x0100004d,
+            Key_F31 = 0x0100004e,
+            Key_F32 = 0x0100004f,
+            Key_F33 = 0x01000050,
+            Key_F34 = 0x01000051,
+            Key_F35 = 0x01000052,
+            Key_Super_L = 0x01000053,                 // extra keys
+            Key_Super_R = 0x01000054,
+            Key_Menu = 0x01000055,
+            Key_Hyper_L = 0x01000056,
+            Key_Hyper_R = 0x01000057,
+            Key_Help = 0x01000058,
+            Key_Direction_L = 0x01000059,
+            Key_Direction_R = 0x01000060,
+            Key_Space = 0x20,                // 7 bit printable ASCII
+            Key_Any = Key_Space,
+            Key_Exclam = 0x21,
+            Key_QuoteDbl = 0x22,
+            Key_NumberSign = 0x23,
+            Key_Dollar = 0x24,
+            Key_Percent = 0x25,
+            Key_Ampersand = 0x26,
+            Key_Apostrophe = 0x27,
+            Key_ParenLeft = 0x28,
+            Key_ParenRight = 0x29,
+            Key_Asterisk = 0x2a,
+            Key_Plus = 0x2b,
+            Key_Comma = 0x2c,
+            Key_Minus = 0x2d,
+            Key_Period = 0x2e,
+            Key_Slash = 0x2f,
+            Key_0 = 0x30,
+            Key_1 = 0x31,
+            Key_2 = 0x32,
+            Key_3 = 0x33,
+            Key_4 = 0x34,
+            Key_5 = 0x35,
+            Key_6 = 0x36,
+            Key_7 = 0x37,
+            Key_8 = 0x38,
+            Key_9 = 0x39,
+            Key_Colon = 0x3a,
+            Key_Semicolon = 0x3b,
+            Key_Less = 0x3c,
+            Key_Equal = 0x3d,
+            Key_Greater = 0x3e,
+            Key_Question = 0x3f,
+            Key_At = 0x40,
+            Key_A = 0x41,
+            Key_B = 0x42,
+            Key_C = 0x43,
+            Key_D = 0x44,
+            Key_E = 0x45,
+            Key_F = 0x46,
+            Key_G = 0x47,
+            Key_H = 0x48,
+            Key_I = 0x49,
+            Key_J = 0x4a,
+            Key_K = 0x4b,
+            Key_L = 0x4c,
+            Key_M = 0x4d,
+            Key_N = 0x4e,
+            Key_O = 0x4f,
+            Key_P = 0x50,
+            Key_Q = 0x51,
+            Key_R = 0x52,
+            Key_S = 0x53,
+            Key_T = 0x54,
+            Key_U = 0x55,
+            Key_V = 0x56,
+            Key_W = 0x57,
+            Key_X = 0x58,
+            Key_Y = 0x59,
+            Key_Z = 0x5a,
+            Key_BracketLeft = 0x5b,
+            Key_Backslash = 0x5c,
+            Key_BracketRight = 0x5d,
+            Key_AsciiCircum = 0x5e,
+            Key_Underscore = 0x5f,
+            Key_QuoteLeft = 0x60,
+            Key_BraceLeft = 0x7b,
+            Key_Bar = 0x7c,
+            Key_BraceRight = 0x7d,
+            Key_AsciiTilde = 0x7e,
+            Key_nobreakspace = 0x0a0,
+            Key_exclamdown = 0x0a1,
+            Key_cent = 0x0a2,
+            Key_sterling = 0x0a3,
+            Key_currency = 0x0a4,
+            Key_yen = 0x0a5,
+            Key_brokenbar = 0x0a6,
+            Key_section = 0x0a7,
+            Key_diaeresis = 0x0a8,
+            Key_copyright = 0x0a9,
+            Key_ordfeminine = 0x0aa,
+            Key_guillemotleft = 0x0ab,        // left angle quotation mark
+            Key_notsign = 0x0ac,
+            Key_hyphen = 0x0ad,
+            Key_registered = 0x0ae,
+            Key_macron = 0x0af,
+            Key_degree = 0x0b0,
+            Key_plusminus = 0x0b1,
+            Key_twosuperior = 0x0b2,
+            Key_threesuperior = 0x0b3,
+            Key_acute = 0x0b4,
+            Key_mu = 0x0b5,
+            Key_paragraph = 0x0b6,
+            Key_periodcentered = 0x0b7,
+            Key_cedilla = 0x0b8,
+            Key_onesuperior = 0x0b9,
+            Key_masculine = 0x0ba,
+            Key_guillemotright = 0x0bb,        // right angle quotation mark
+            Key_onequarter = 0x0bc,
+            Key_onehalf = 0x0bd,
+            Key_threequarters = 0x0be,
+            Key_questiondown = 0x0bf,
+            Key_Agrave = 0x0c0,
+            Key_Aacute = 0x0c1,
+            Key_Acircumflex = 0x0c2,
+            Key_Atilde = 0x0c3,
+            Key_Adiaeresis = 0x0c4,
+            Key_Aring = 0x0c5,
+            Key_AE = 0x0c6,
+            Key_Ccedilla = 0x0c7,
+            Key_Egrave = 0x0c8,
+            Key_Eacute = 0x0c9,
+            Key_Ecircumflex = 0x0ca,
+            Key_Ediaeresis = 0x0cb,
+            Key_Igrave = 0x0cc,
+            Key_Iacute = 0x0cd,
+            Key_Icircumflex = 0x0ce,
+            Key_Idiaeresis = 0x0cf,
+            Key_ETH = 0x0d0,
+            Key_Ntilde = 0x0d1,
+            Key_Ograve = 0x0d2,
+            Key_Oacute = 0x0d3,
+            Key_Ocircumflex = 0x0d4,
+            Key_Otilde = 0x0d5,
+            Key_Odiaeresis = 0x0d6,
+            Key_multiply = 0x0d7,
+            Key_Ooblique = 0x0d8,
+            Key_Ugrave = 0x0d9,
+            Key_Uacute = 0x0da,
+            Key_Ucircumflex = 0x0db,
+            Key_Udiaeresis = 0x0dc,
+            Key_Yacute = 0x0dd,
+            Key_THORN = 0x0de,
+            Key_ssharp = 0x0df,
+            Key_division = 0x0f7,
+            Key_ydiaeresis = 0x0ff,
+            // International input method support (X keycode - 0xEE00, the
+            // definition follows Qt/Embedded 2.3.7) Only interesting if
+            // you are writing your own input method
+            // International & multi-key character composition
+            Key_AltGr               = 0x01001103,
+            Key_Multi_key           = 0x01001120,  // Multi-key character compose
+            Key_Codeinput           = 0x01001137,
+            Key_SingleCandidate     = 0x0100113c,
+            Key_MultipleCandidate   = 0x0100113d,
+            Key_PreviousCandidate   = 0x0100113e,
+            // Misc Functions
+            Key_Mode_switch         = 0x0100117e,  // Character set switch
+            //Key_script_switch       = 0x0100117e,  // Alias for mode_switch
+            // Japanese keyboard support
+            Key_Kanji               = 0x01001121,  // Kanji, Kanji convert
+            Key_Muhenkan            = 0x01001122,  // Cancel Conversion
+            //Key_Henkan_Mode         = 0x01001123,  // Start/Stop Conversion
+            Key_Henkan              = 0x01001123,  // Alias for Henkan_Mode
+            Key_Romaji              = 0x01001124,  // to Romaji
+            Key_Hiragana            = 0x01001125,  // to Hiragana
+            Key_Katakana            = 0x01001126,  // to Katakana
+            Key_Hiragana_Katakana   = 0x01001127,  // Hiragana/Katakana toggle
+            Key_Zenkaku             = 0x01001128,  // to Zenkaku
+            Key_Hankaku             = 0x01001129,  // to Hankaku
+            Key_Zenkaku_Hankaku     = 0x0100112a,  // Zenkaku/Hankaku toggle
+            Key_Touroku             = 0x0100112b,  // Add to Dictionary
+            Key_Massyo              = 0x0100112c,  // Delete from Dictionary
+            Key_Kana_Lock           = 0x0100112d,  // Kana Lock
+            Key_Kana_Shift          = 0x0100112e,  // Kana Shift
+            Key_Eisu_Shift          = 0x0100112f,  // Alphanumeric Shift
+            Key_Eisu_toggle         = 0x01001130,  // Alphanumeric toggle
+            //Key_Kanji_Bangou        = 0x01001137,  // Codeinput
+            //Key_Zen_Koho            = 0x0100113d,  // Multiple/All Candidate(s)
+            //Key_Mae_Koho            = 0x0100113e,  // Previous Candidate
+            // Korean keyboard support
+            //
+            // In fact, many Korean users need only 2 keys, Key_Hangul and
+            // Key_Hangul_Hanja. But rest of the keys are good for future.
+            Key_Hangul              = 0x01001131,  // Hangul start/stop(toggle)
+            Key_Hangul_Start        = 0x01001132,  // Hangul start
+            Key_Hangul_End          = 0x01001133,  // Hangul end, English start
+            Key_Hangul_Hanja        = 0x01001134,  // Start Hangul->Hanja Conversion
+            Key_Hangul_Jamo         = 0x01001135,  // Hangul Jamo mode
+            Key_Hangul_Romaja       = 0x01001136,  // Hangul Romaja mode
+            //Key_Hangul_Codeinput    = 0x01001137,  // Hangul code input mode
+            Key_Hangul_Jeonja       = 0x01001138,  // Jeonja mode
+            Key_Hangul_Banja        = 0x01001139,  // Banja mode
+            Key_Hangul_PreHanja     = 0x0100113a,  // Pre Hanja conversion
+            Key_Hangul_PostHanja    = 0x0100113b,  // Post Hanja conversion
+            //Key_Hangul_SingleCandidate   = 0x0100113c,  // Single candidate
+            //Key_Hangul_MultipleCandidate = 0x0100113d,  // Multiple candidate
+            //Key_Hangul_PreviousCandidate = 0x0100113e,  // Previous candidate
+            Key_Hangul_Special      = 0x0100113f,  // Special symbols
+            //Key_Hangul_switch       = 0x0100117e,  // Alias for mode_switch
+            // dead keys (X keycode - 0xED00 to avoid the conflict)
+            Key_Dead_Grave          = 0x01001250,
+            Key_Dead_Acute          = 0x01001251,
+            Key_Dead_Circumflex     = 0x01001252,
+            Key_Dead_Tilde          = 0x01001253,
+            Key_Dead_Macron         = 0x01001254,
+            Key_Dead_Breve          = 0x01001255,
+            Key_Dead_Abovedot       = 0x01001256,
+            Key_Dead_Diaeresis      = 0x01001257,
+            Key_Dead_Abovering      = 0x01001258,
+            Key_Dead_Doubleacute    = 0x01001259,
+            Key_Dead_Caron          = 0x0100125a,
+            Key_Dead_Cedilla        = 0x0100125b,
+            Key_Dead_Ogonek         = 0x0100125c,
+            Key_Dead_Iota           = 0x0100125d,
+            Key_Dead_Voiced_Sound   = 0x0100125e,
+            Key_Dead_Semivoiced_Sound = 0x0100125f,
+            Key_Dead_Belowdot       = 0x01001260,
+            Key_Dead_Hook           = 0x01001261,
+            Key_Dead_Horn           = 0x01001262,
+            // multimedia/internet keys - ignored by default - see QKeyEvent c'tor
+            Key_Back  = 0x01000061,
+            Key_Forward  = 0x01000062,
+            Key_Stop  = 0x01000063,
+            Key_Refresh  = 0x01000064,
+            Key_VolumeDown = 0x01000070,
+            Key_VolumeMute  = 0x01000071,
+            Key_VolumeUp = 0x01000072,
+            Key_BassBoost = 0x01000073,
+            Key_BassUp = 0x01000074,
+            Key_BassDown = 0x01000075,
+            Key_TrebleUp = 0x01000076,
+            Key_TrebleDown = 0x01000077,
+            Key_MediaPlay  = 0x01000080,
+            Key_MediaStop  = 0x01000081,
+            Key_MediaPrevious  = 0x01000082,
+            Key_MediaNext  = 0x01000083,
+            Key_MediaRecord = 0x01000084,
+            Key_MediaPause = 0x1000085,
+            Key_MediaTogglePlayPause = 0x1000086,
+            Key_HomePage  = 0x01000090,
+            Key_Favorites  = 0x01000091,
+            Key_Search  = 0x01000092,
+            Key_Standby = 0x01000093,
+            Key_OpenUrl = 0x01000094,
+            Key_LaunchMail  = 0x010000a0,
+            Key_LaunchMedia = 0x010000a1,
+            Key_Launch0  = 0x010000a2,
+            Key_Launch1  = 0x010000a3,
+            Key_Launch2  = 0x010000a4,
+            Key_Launch3  = 0x010000a5,
+            Key_Launch4  = 0x010000a6,
+            Key_Launch5  = 0x010000a7,
+            Key_Launch6  = 0x010000a8,
+            Key_Launch7  = 0x010000a9,
+            Key_Launch8  = 0x010000aa,
+            Key_Launch9  = 0x010000ab,
+            Key_LaunchA  = 0x010000ac,
+            Key_LaunchB  = 0x010000ad,
+            Key_LaunchC  = 0x010000ae,
+            Key_LaunchD  = 0x010000af,
+            Key_LaunchE  = 0x010000b0,
+            Key_LaunchF  = 0x010000b1,
+            Key_MonBrightnessUp = 0x010000b2,
+            Key_MonBrightnessDown = 0x010000b3,
+            Key_KeyboardLightOnOff = 0x010000b4,
+            Key_KeyboardBrightnessUp = 0x010000b5,
+            Key_KeyboardBrightnessDown = 0x010000b6,
+            Key_PowerOff = 0x010000b7,
+            Key_WakeUp = 0x010000b8,
+            Key_Eject = 0x010000b9,
+            Key_ScreenSaver = 0x010000ba,
+            Key_WWW = 0x010000bb,
+            Key_Memo = 0x010000bc,
+            Key_LightBulb = 0x010000bd,
+            Key_Shop = 0x010000be,
+            Key_History = 0x010000bf,
+            Key_AddFavorite = 0x010000c0,
+            Key_HotLinks = 0x010000c1,
+            Key_BrightnessAdjust = 0x010000c2,
+            Key_Finance = 0x010000c3,
+            Key_Community = 0x010000c4,
+            Key_AudioRewind = 0x010000c5, // Media rewind
+            Key_BackForward = 0x010000c6,
+            Key_ApplicationLeft = 0x010000c7,
+            Key_ApplicationRight = 0x010000c8,
+            Key_Book = 0x010000c9,
+            Key_CD = 0x010000ca,
+            Key_Calculator = 0x010000cb,
+            Key_ToDoList = 0x010000cc,
+            Key_ClearGrab = 0x010000cd,
+            Key_Close = 0x010000ce,
+            Key_Copy = 0x010000cf,
+            Key_Cut = 0x010000d0,
+            Key_Display = 0x010000d1, // Output switch key
+            Key_DOS = 0x010000d2,
+            Key_Documents = 0x010000d3,
+            Key_Excel = 0x010000d4,
+            Key_Explorer = 0x010000d5,
+            Key_Game = 0x010000d6,
+            Key_Go = 0x010000d7,
+            Key_iTouch = 0x010000d8,
+            Key_LogOff = 0x010000d9,
+            Key_Market = 0x010000da,
+            Key_Meeting = 0x010000db,
+            Key_MenuKB = 0x010000dc,
+            Key_MenuPB = 0x010000dd,
+            Key_MySites = 0x010000de,
+            Key_News = 0x010000df,
+            Key_OfficeHome = 0x010000e0,
+            Key_Option = 0x010000e1,
+            Key_Paste = 0x010000e2,
+            Key_Phone = 0x010000e3,
+            Key_Calendar = 0x010000e4,
+            Key_Reply = 0x010000e5,
+            Key_Reload = 0x010000e6,
+            Key_RotateWindows = 0x010000e7,
+            Key_RotationPB = 0x010000e8,
+            Key_RotationKB = 0x010000e9,
+            Key_Save = 0x010000ea,
+            Key_Send = 0x010000eb,
+            Key_Spell = 0x010000ec,
+            Key_SplitScreen = 0x010000ed,
+            Key_Support = 0x010000ee,
+            Key_TaskPane = 0x010000ef,
+            Key_Terminal = 0x010000f0,
+            Key_Tools = 0x010000f1,
+            Key_Travel = 0x010000f2,
+            Key_Video = 0x010000f3,
+            Key_Word = 0x010000f4,
+            Key_Xfer = 0x010000f5,
+            Key_ZoomIn = 0x010000f6,
+            Key_ZoomOut = 0x010000f7,
+            Key_Away = 0x010000f8,
+            Key_Messenger = 0x010000f9,
+            Key_WebCam = 0x010000fa,
+            Key_MailForward = 0x010000fb,
+            Key_Pictures = 0x010000fc,
+            Key_Music = 0x010000fd,
+            Key_Battery = 0x010000fe,
+            Key_Bluetooth = 0x010000ff,
+            Key_WLAN = 0x01000100,
+            Key_UWB = 0x01000101,
+            Key_AudioForward = 0x01000102, // Media fast-forward
+            Key_AudioRepeat = 0x01000103, // Toggle repeat mode
+            Key_AudioRandomPlay = 0x01000104, // Toggle shuffle mode
+            Key_Subtitle = 0x01000105,
+            Key_AudioCycleTrack = 0x01000106,
+            Key_Time = 0x01000107,
+            Key_Hibernate = 0x01000108,
+            Key_View = 0x01000109,
+            Key_TopMenu = 0x0100010a,
+            Key_PowerDown = 0x0100010b,
+            Key_Suspend = 0x0100010c,
+            Key_ContrastAdjust = 0x0100010d,
+            Key_LaunchG  = 0x0100010e,
+            Key_LaunchH  = 0x0100010f,
+            Key_TouchpadToggle = 0x01000110,
+            Key_TouchpadOn = 0x01000111,
+            Key_TouchpadOff = 0x01000112,
+            Key_MicMute = 0x01000113,
+            Key_Red = 0x01000114,
+            Key_Green = 0x01000115,
+            Key_Yellow = 0x01000116,
+            Key_Blue = 0x01000117,
+            Key_ChannelUp = 0x01000118,
+            Key_ChannelDown = 0x01000119,
+            Key_Guide    = 0x0100011a,
+            Key_Info     = 0x0100011b,
+            Key_Settings = 0x0100011c,
+            Key_MicVolumeUp   = 0x0100011d,
+            Key_MicVolumeDown = 0x0100011e,
+            Key_New      = 0x01000120,
+            Key_Open     = 0x01000121,
+            Key_Find     = 0x01000122,
+            Key_Undo     = 0x01000123,
+            Key_Redo     = 0x01000124,
+            Key_MediaLast = 0x0100ffff,
+            // Keypad navigation keys
+            Key_Select = 0x01010000,
+            Key_Yes = 0x01010001,
+            Key_No = 0x01010002,
+            // Newer misc keys
+            Key_Cancel  = 0x01020001,
+            Key_Printer = 0x01020002,
+            Key_Execute = 0x01020003,
+            Key_Sleep   = 0x01020004,
+            Key_Play    = 0x01020005, // Not the same as Key_MediaPlay
+            Key_Zoom    = 0x01020006,
+            //Key_Jisho   = 0x01020007, // IME: Dictionary key
+            //Key_Oyayubi_Left = 0x01020008, // IME: Left Oyayubi key
+            //Key_Oyayubi_Right = 0x01020009, // IME: Right Oyayubi key
+            Key_Exit    = 0x0102000a,
+            // Device keys
+            Key_Context1 = 0x01100000,
+            Key_Context2 = 0x01100001,
+            Key_Context3 = 0x01100002,
+            Key_Context4 = 0x01100003,
+            Key_Call = 0x01100004,      // set absolute state to in a call (do not toggle state)
+            Key_Hangup = 0x01100005,    // set absolute state to hang up (do not toggle state)
+            Key_Flip = 0x01100006,
+            Key_ToggleCallHangup = 0x01100007, // a toggle key for answering, or hanging up, based on current call state
+            Key_VoiceDial = 0x01100008,
+            Key_LastNumberRedial = 0x01100009,
+            Key_Camera = 0x01100020,
+            Key_CameraFocus = 0x01100021,
+            Key_unknown = 0x01ffffff;
+
+        public static const int 
+            LeftButton       = 0x00000001,
+            RightButton      = 0x00000002,
+            MidButton        = 0x00000004, // ### Qt 6: remove me
+            MiddleButton     = MidButton,
+            BackButton       = 0x00000008,
+            XButton1         = BackButton,
+            ExtraButton1     = XButton1,
+            ForwardButton    = 0x00000010,
+            XButton2         = ForwardButton,
+            ExtraButton2     = ForwardButton,
+            TaskButton       = 0x00000020,
+            ExtraButton3     = TaskButton,
+            ExtraButton4     = 0x00000040,
+            ExtraButton5     = 0x00000080,
+            ExtraButton6     = 0x00000100,
+            ExtraButton7     = 0x00000200,
+            ExtraButton8     = 0x00000400,
+            ExtraButton9     = 0x00000800,
+            ExtraButton10    = 0x00001000,
+            ExtraButton11    = 0x00002000,
+            ExtraButton12    = 0x00004000,
+            ExtraButton13    = 0x00008000,
+            ExtraButton14    = 0x00010000,
+            ExtraButton15    = 0x00020000,
+            ExtraButton16    = 0x00040000,
+            ExtraButton17    = 0x00080000,
+            ExtraButton18    = 0x00100000,
+            ExtraButton19    = 0x00200000,
+            ExtraButton20    = 0x00400000,
+            ExtraButton21    = 0x00800000,
+            ExtraButton22    = 0x01000000,
+            ExtraButton23    = 0x02000000,
+            ExtraButton24    = 0x04000000,
+            AllButtons       = 0x07ffffff,
+            MaxMouseButton   = ExtraButton24,
+            // 4 high-order bits remain available for future use (0x08000000 through 0x40000000).
+            MouseButtonMask  = 0xffffffff;
+        
+        public static const int NoModifier           = 0x00000000,
+             ShiftModifier        = 0x02000000,
+             ControlModifier      = 0x04000000,
+             AltModifier          = 0x08000000,
+             MetaModifier         = 0x10000000,
+             KeypadModifier       = 0x20000000,
+             GroupSwitchModifier  = 0x40000000,
+             // Do not extend the mask to include 0x01000000
+             KeyboardModifierMask = 0xfe000000;
+
+        public static const int Invalid = 0,
+             Bool = 1,
+             Int = 2,
+             UInt = 3,
+             LongLong = 4,
+             ULongLong = 5,
+             Double = 6,
+             Char = 7,
+             Map = 8,
+             List = 9,
+             String = 10,
+             StringList = 11,
+             ByteArray = 12,
+             BitArray = 13,
+             Date = 14,
+             Time = 15,
+             DateTime = 16,
+             Url = 17,
+             Locale = 18,
+             Rect = 19,
+             RectF = 20,
+             Size = 21,
+             SizeF = 22,
+             Line = 23,
+             LineF = 24,
+             Point = 25,
+             PointF = 26,
+             RegExp = 27,
+             RegularExpression = 44,
+             Hash = 28,
+             EasingCurve = 29,
+             Uuid = 30,
+             ModelIndex = 42,
+             PersistentModelIndex = 50,
+             LastCoreType = 51,
+
+             Font = 64,
+             Pixmap = 65,
+             Brush = 66,
+             Color = 67,
+             Palette = 68,
+             Image = 70,
+             Polygon = 71,
+             Region = 72,
+             Bitmap = 73,
+             Cursor = 74,
+             KeySequence = 75,
+             Pen = 76,
+             TextLength = 77,
+             TextFormat = 78,
+             Matrix = 79,
+             Transform = 80,
+             Matrix4x4 = 81,
+             Vector2D = 82,
+             Vector3D = 83,
+             Vector4D = 84,
+             Quaternion = 85,
+             PolygonF = 86,
+             Icon = 69,
+             LastGuiType = 86,
+
+             SizePolicy = 121,
+
+             UserType = 1024,
+             LastType = -1; // need this so that gcc >= 3.4 allocates 32 bits for Type
+
+        
+        public static const int Widget = 0x00000000;
+        public static const int Window = 0x00000001;
+        public static const int Dialog = 0x00000002 | Window;
+        public static const int Sheet = 0x00000004 | Window;
+        public static const int Drawer = Sheet | Dialog;
+        public static const int Popup = 0x00000008 | Window;
+        public static const int Tool = Popup | Dialog;
+        public static const int ToolTip = Popup | Sheet;
+        public static const int SplashScreen = ToolTip | Dialog;
+        public static const int Desktop = 0x00000010 | Window;
+        public static const int SubWindow = 0x00000012;
+        public static const int ForeignWindow = 0x00000020 | Window;
+        public static const int CoverWindow = 0x00000040 | Window;
+        public static const int WindowType_Mask = 0x000000ff;
+        public static const int MSWindowsFixedSizeDialogHint = 0x00000100;
+        public static const int MSWindowsOwnDC = 0x00000200;
+        public static const int BypassWindowManagerHint = 0x00000400;
+        public static const int X11BypassWindowManagerHint = BypassWindowManagerHint;
+        public static const int FramelessWindowHint = 0x00000800;
+        public static const int WindowTitleHint = 0x00001000;
+        public static const int WindowSystemMenuHint = 0x00002000;
+        public static const int WindowMinimizeButtonHint = 0x00004000;
+        public static const int WindowMaximizeButtonHint = 0x00008000;
+        public static const int WindowMinMaxButtonsHint = WindowMinimizeButtonHint | WindowMaximizeButtonHint;
+        public static const int WindowContextHelpButtonHint = 0x00010000;
+        public static const int WindowShadeButtonHint = 0x00020000;
+        public static const int WindowStaysOnTopHint = 0x00040000;
+        public static const int WindowTransparentForInput = 0x00080000;
+        public static const int WindowOverridesSystemGestures = 0x00100000;
+        public static const int WindowDoesNotAcceptFocus = 0x00200000;
+        public static const int MaximizeUsingFullscreenGeometryHint = 0x00400000;
+        public static const int CustomizeWindowHint = 0x02000000;
+        public static const int WindowStaysOnBottomHint = 0x04000000;
+        public static const int WindowCloseButtonHint = 0x08000000;
+        public static const int MacWindowToolBarButtonHint = 0x10000000;
+        public static const int BypassGraphicsProxyWidget = 0x20000000;
+        public static const int NoDropShadowWindowHint = 0x40000000;
+        public static const int WindowFullscreenButtonHint = 0x80000000;
+
+        public static const int  AlignLeft = 0x0001,
+                          AlignLeading = AlignLeft,
+                          AlignRight = 0x0002,
+                          AlignTrailing = AlignRight,
+                          AlignHCenter = 0x0004,
+                          AlignJustify = 0x0008,
+                          AlignAbsolute = 0x0010,
+                          AlignHorizontal_Mask = AlignLeft | AlignRight | AlignHCenter | AlignJustify | AlignAbsolute,
+                          AlignTop = 0x0020,
+                          AlignBottom = 0x0040,
+                          AlignVCenter = 0x0080,
+                          AlignBaseline = 0x0100,
+                          // Note that 0x100 will clash with Qt::TextSingleLine = 0x100 due to what the comment above
+                          // this enum declaration states. However, since Qt::AlignBaseline is only used by layouts,
+                          // it doesn't make sense to pass Qt::AlignBaseline to QPainter::drawText(), so there
+                          // shouldn't really be any ambiguity between the two overlapping enum values.
+                          AlignVertical_Mask = AlignTop | AlignBottom | AlignVCenter | AlignBaseline,
+                          AlignCenter = AlignVCenter | AlignHCenter;
+        
+        public static const int  TopToBottom = 0, BottomToTop = 1;
+        public static const int
+            NoContextMenu = 0,
+            DefaultContextMenu = 1,
+            ActionsContextMenu = 2,
+            CustomContextMenu = 3,
+            PreventContextMenu = 4;
+
+        public static const int NEW_UI_TASK_NID = 0xf00f00ff;
+        public static const int   WA_Disabled = 0,
+           WA_UnderMouse = 1,
+           WA_MouseTracking = 2,
+           WA_ContentsPropagated = 3, // ## deprecated
+           WA_OpaquePaintEvent = 4,
+           WA_NoBackground = WA_OpaquePaintEvent,  // ## deprecated
+           WA_StaticContents = 5,
+           WA_LaidOut = 7,
+           WA_PaintOnScreen = 8,
+           WA_NoSystemBackground = 9,
+           WA_UpdatesDisabled = 10,
+           WA_Mapped = 11,
+           WA_MacNoClickThrough = 12, // Mac only
+           WA_InputMethodEnabled = 14,
+           WA_WState_Visible = 15,
+           WA_WState_Hidden = 16,
+
+           WA_ForceDisabled = 32,
+           WA_KeyCompression = 33,
+           WA_PendingMoveEvent = 34,
+           WA_PendingResizeEvent = 35,
+           WA_SetPalette = 36,
+           WA_SetFont = 37,
+           WA_SetCursor = 38,
+           WA_NoChildEventsFromChildren = 39,
+           WA_WindowModified = 41,
+           WA_Resized = 42,
+           WA_Moved = 43,
+           WA_PendingUpdate = 44,
+           WA_InvalidSize = 45,
+           WA_MacBrushedMetal = 46, // Mac only
+           WA_MacMetalStyle = WA_MacBrushedMetal, // obsolete
+           WA_CustomWhatsThis = 47,
+           WA_LayoutOnEntireRect = 48,
+           WA_OutsideWSRange = 49,
+           WA_GrabbedShortcut = 50,
+           WA_TransparentForMouseEvents = 51,
+           WA_PaintUnclipped = 52,
+           WA_SetWindowIcon = 53,
+           WA_NoMouseReplay = 54,
+           WA_DeleteOnClose = 55,
+           WA_RightToLeft = 56,
+           WA_SetLayoutDirection = 57,
+           WA_NoChildEventsForParent = 58,
+           WA_ForceUpdatesDisabled = 59,
+
+           WA_WState_Created = 60,
+           WA_WState_CompressKeys = 61,
+           WA_WState_InPaintEvent = 62,
+           WA_WState_Reparented = 63,
+           WA_WState_ConfigPending = 64,
+           WA_WState_Polished = 66,
+           WA_WState_DND = 67, // ## deprecated
+           WA_WState_OwnSizePolicy = 68,
+           WA_WState_ExplicitShowHide = 69,
+
+           WA_ShowModal = 70, // ## deprecated
+           WA_MouseNoMask = 71,
+           WA_GroupLeader = 72, // ## deprecated
+           WA_NoMousePropagation = 73, // ## for now, might go away.
+           WA_Hover = 74,
+           WA_InputMethodTransparent = 75, // Don't reset IM when user clicks on this (for virtual keyboards on embedded)
+           WA_QuitOnClose = 76,
+
+           WA_KeyboardFocusChange = 77,
+
+           WA_AcceptDrops = 78,
+           WA_DropSiteRegistered = 79, // internal
+           WA_ForceAcceptDrops = WA_DropSiteRegistered, // ## deprecated
+
+           WA_WindowPropagation = 80,
+
+           WA_NoX11EventCompression = 81,
+           WA_TintedBackground = 82,
+           WA_X11OpenGLOverlay = 83,
+           WA_AlwaysShowToolTips = 84,
+           WA_MacOpaqueSizeGrip = 85,
+           WA_SetStyle = 86,
+
+           WA_SetLocale = 87,
+           WA_MacShowFocusRect = 88,
+
+           WA_MacNormalSize = 89,  // Mac only
+           WA_MacSmallSize = 90,   // Mac only
+           WA_MacMiniSize = 91,    // Mac only
+
+           WA_LayoutUsesWidgetRect = 92,
+           WA_StyledBackground = 93, // internal
+           WA_MSWindowsUseDirect3D = 94, // Win only
+           WA_CanHostQMdiSubWindowTitleBar = 95, // Internal
+
+           WA_MacAlwaysShowToolWindow = 96, // Mac only
+
+           WA_StyleSheet = 97, // internal
+
+           WA_ShowWithoutActivating = 98,
+
+           WA_X11BypassTransientForHint = 99,
+
+           WA_NativeWindow = 100,
+           WA_DontCreateNativeAncestors = 101,
+
+           WA_MacVariableSize = 102,    // Mac only
+
+           WA_DontShowOnScreen = 103,
+
+           // window types from http://standards.freedesktop.org/wm-spec/
+           WA_X11NetWmWindowTypeDesktop = 104,
+           WA_X11NetWmWindowTypeDock = 105,
+           WA_X11NetWmWindowTypeToolBar = 106,
+           WA_X11NetWmWindowTypeMenu = 107,
+           WA_X11NetWmWindowTypeUtility = 108,
+           WA_X11NetWmWindowTypeSplash = 109,
+           WA_X11NetWmWindowTypeDialog = 110,
+           WA_X11NetWmWindowTypeDropDownMenu = 111,
+           WA_X11NetWmWindowTypePopupMenu = 112,
+           WA_X11NetWmWindowTypeToolTip = 113,
+           WA_X11NetWmWindowTypeNotification = 114,
+           WA_X11NetWmWindowTypeCombo = 115,
+           WA_X11NetWmWindowTypeDND = 116,
+
+           WA_MacFrameworkScaled  = 117,
+
+           WA_SetWindowModality = 118,
+           WA_WState_WindowOpacitySet = 119, // internal
+           WA_TranslucentBackground = 120,
+
+           WA_AcceptTouchEvents = 121,
+           WA_WState_AcceptedTouchBeginEvent = 122,
+           WA_TouchPadAcceptSingleTouchEvents = 123,
+
+           WA_X11DoNotAcceptFocus = 126,
+           WA_MacNoShadow = 127,
+
+           WA_AlwaysStackOnTop = 128,
+
+           WA_TabletTracking = 129,
+
+           // Add new attributes before this line
+           WA_AttributeCount = 130;
+           
+            public static const int
+            NoFocus = 0,
+            TabFocus = 0x1,
+            ClickFocus = 0x2,
+            StrongFocus = TabFocus | ClickFocus | 0x8,
+            WheelFocus = StrongFocus | 0x4;
+    };
+    
+    
+    
+    public enum ApplicationAttribute
+    {
+        AA_ImmediateWidgetCreation = 0,
+        AA_MSWindowsUseDirect3DByDefault = 1, // Win only
+        AA_DontShowIconsInMenus = 2,
+        AA_NativeWindows = 3,
+        AA_DontCreateNativeWidgetSiblings = 4,
+        AA_PluginApplication = 5,
+        AA_MacPluginApplication = AA_PluginApplication,  // ### Qt 6: remove me
+        AA_DontUseNativeMenuBar = 6,
+        AA_MacDontSwapCtrlAndMeta = 7,
+        AA_Use96Dpi = 8,
+        AA_X11InitThreads = 10,
+        AA_SynthesizeTouchForUnhandledMouseEvents = 11,
+        AA_SynthesizeMouseForUnhandledTouchEvents = 12,
+        AA_UseHighDpiPixmaps = 13,
+        AA_ForceRasterWidgets = 14,
+        AA_UseDesktopOpenGL = 15,
+        AA_UseOpenGLES = 16,
+        AA_UseSoftwareOpenGL = 17,
+        AA_ShareOpenGLContexts = 18,
+        AA_SetPalette = 19,
+        AA_EnableHighDpiScaling = 20,
+        AA_DisableHighDpiScaling = 21,
+        AA_UseStyleSheetPropagationInWidgetStyles = 22, // ### Qt 6: remove me
+        AA_DontUseNativeDialogs = 23,
+        AA_SynthesizeMouseForUnhandledTabletEvents = 24,
+        AA_CompressHighFrequencyEvents = 25,
+        AA_DontCheckOpenGLContextThreadAffinity = 26,
+        AA_DisableShaderDiskCache = 27,
+
+        // Add new attributes before this line
+        AA_AttributeCount
+    };
+     
+    public enum RenderFlag {
+        DrawWindowBackground = 0x1,
+        DrawChildren = 0x2,
+        IgnoreMask = 0x4
+    };
+    public enum Orientation {
+            Horizontal = 0x1,
+            Vertical = 0x2
+        };
+    public enum RegionType { Rectangle, Ellipse };
+    public enum Corner {
+        TopLeftCorner = 0x00000,
+        TopRightCorner = 0x00001,
+        BottomLeftCorner = 0x00002,
+        BottomRightCorner = 0x00003
+    };
+    
+    public enum TextElideMode {
+        ElideLeft,
+        ElideRight,
+        ElideMiddle,
+        ElideNone
+    };
+        
+    public static class onMouseEventListener {
+        public void onMouseButtonPress(QObject obj, int Button, int x, int y, int flags, int source) {
+        }
+        public void onMouseButtonRelease(QObject obj, int Button, int x, int y, int flags, int source) {
+        }
+        public void onMouseButtonDblClick(QObject obj, int Button, int x, int y, int flags, int source) {
+        }
+        public void onMouseMove(QObject obj, int Button, int x, int y, int flags, int source) {
+        }
+        public void onWheel(QObject obj, int button, int x,int y,int Orientation,int delta, bool inverted) {
+        }
+    };
+
+    public static class onKeyEventListener {
+        public bool onKeyPress(QObject obj, int key, bool repeat, int count, String text, int scanCode, int virtualKey, int modifier) {
+            return true;
+        }
+        public bool onKeyRelease(QObject obj, int key, bool repeat, int count, String text, int scanCode, int virtualKey, int modifier) {
+            return true;
+        }
+    };
+
+    public static class onClickListener {
+        public void onClick(QObject obj, bool checked) {
+        }
+        public void onToggle(QObject obj, bool checked) {
+        }
+        public void onPress(QObject obj) {
+        }
+        public void onRelease(QObject obj) {
+        }
+    };
+
+    public static class onFocusEventListener {
+        public void onFocusIn(QObject obj, bool focus, int reson) {
+        }
+        public void onFocusOut(QObject obj, bool focus, int reson) {
+        }
+        public void onFocusAboutToChange(QObject obj, bool focus, int reson) {
+        }
+    };
+
+    public static class onScopeEventListener {
+        public void onEnter(QObject obj,int x, int y) {
+        }
+        public void onLeave(QObject obj) {
+        }
+    };
+
+    public static class onPaintListener {
+        public void onPaint(QObject obj, int l,int t, int r,int b, long hpaint) {
+        }
+    };
+
+    public static class onNotifyListener {
+        public void onNotify(QObject obj, long eventid) {
+        }
+    };
+
+    public static class onLayoutEventListener {
+        public void onMove(QObject obj, int x,int y,int oldx,int oldy) {
+        }
+        public void onResize(QObject obj, int w, int h, int oldw, int oldh) {
+        }
+    };
+
+    public static class onTreeViewItemEvent {
+        public void onItemPressed(QTreeWidget, long item, int column) {
+        }
+        public void onItemClicked(QTreeWidget,long item, int column) {
+        }
+        public void onItemDoubleClicked(QTreeWidget,long item, int column) {
+        }
+        public void onItemActived(QTreeWidget,long item, int column) {
+        }
+        public void onItemEntered(QTreeWidget,long item, int column) {
+        }
+        public void onItemChanged(QTreeWidget,long item, int column) {
+        }
+        public void onItemExpanded(QTreeWidget,long item) {
+        }
+        public void onItemCollapsed(QTreeWidget,long item) {
+        }
+        public void onCurrentItemChanged(QTreeWidget,long current, long previous) {
+        }
+        public void onItemSelectionChanged(QTreeWidget) {
+        }
+    };
+    public static class onUpdateListener {
+        public void onUpdate(QObject obj) {
+        }
+    };
+
+    public static class onEventListener {
+        public void onTrigger(QObject obj) {
+        }
+    };
+
+    public static class onComboBoxEventListener {
+        public void onCurrentTextChange(QObject obj, String text) {
+        }
+        public void onActivated(QObject obj, int id) {
+        }
+        public void onItemSelected(QObject obj, int id) {
+        }
+    };
+
+    public static class onDragListener {
+        public bool onDragEnter(QObject obj, int l,int t,int r,int b) {
+            return true;
+        }
+        public bool onDragMove(QObject obj,int l,int t,int r,int b) {
+            return true;
+        }
+        public bool onDragLeave(QObject obj,int l,int t,int r,int b) {
+            return true;
+        }
+        public void onDrop(QObject obj,Object [] object) {
+        }
+    };
+
+    public static class onStatusListener {
+        public void onCreate(QObject obj) {
+        }
+        public void onDestroy(QObject obj) {
+        }
+        public void onShow(QObject obj) {
+        }
+        public void onHide(QObject obj) {
+        }
+        public bool onClose(QObject obj) {
+            return true;
+        }
+        public void onQuit(QObject obj) {
+        }
+        public void onParentChange(QObject obj) {
+        }
+        public void onWindowStateChange(QObject obj, int state, int oldState) {}
+    };
+
+    public static class TableWidgetEventListener {
+        public void onCellChange(QTableWidget object, int row,int column) {
+
+        }
+        public void onItemChange(QTableWidget object,long item) {
+
+        }
+        public void onCellPress(QTableWidget object, int row,int column) {
+
+        }
+        public void onItemPress(QTableWidget object,long item) {
+
+        }
+        public void onCellClick(QTableWidget object, int row,int column) {
+
+        }
+        public void onItemClick(QTableWidget object,long item) {
+
+        }
+        public void onCellDBClick(QTableWidget object, int row,int column) {
+
+        }
+        public void onItemDBClick(QTableWidget object,long item) {
+
+        }
+        public void onCellEnter(QTableWidget object, int row,int column) {
+
+        }
+        public void onItemEnter(QTableWidget object,long item) {
+
+        }
+        public void onCellActived(QTableWidget object, int row,int column) {
+
+        }
+        public void onItemActived(QTableWidget object,long item) {
+
+        }
+    };
+    public static class SciEventListener {
+        public void QON_SELCHANGED(QScintilla sci, bool yes) {	}
+        public void ON_AUTOCCANCELLED(QScintilla sci) {	}
+        public void ON_AUTOCCHARDELETED(QScintilla sci) {	}
+        public void ON_AUTOCCOMPLETED(QScintilla sci,String selection, int position, int ch, int method) {	}
+        public void ON_AUTOCSELECTION(QScintilla sci,String selection, int position, int ch, int method) {	}
+        public void ON_AUTOCSELECTION(QScintilla sci,String selection, int position) {	}
+        public void SCEN_CHANGE(QScintilla sci) {	}
+        public void ON_CALLTIPCLICK(QScintilla sci,int direction) {	}
+        public void ON_CHARADDED(QScintilla sci,int charadded) {	}
+        public void ON_DOUBLECLICK(QScintilla sci,int position, int line, int modifiers) {	}
+        public void ON_DWELLEND(QScintilla sci,int position, int x, int y) {	}
+        public void ON_DWELLSTART(QScintilla sci,int position, int x, int y) {	}
+        public void ON_FOCUSIN(QScintilla sci) {	}
+        public void ON_FOCUSOUT(QScintilla sci) {	}
+        public void ON_HOTSPOTCLICK(QScintilla sci,int position, int modifiers) {	}
+        public void ON_HOTSPOTDOUBLECLICK(QScintilla sci,int position, int modifiers) {	}
+        public void ON_HOTSPOTRELEASECLICK(QScintilla sci, int position, int modifiers) {	}
+        public void ON_INDICATORCLICK(QScintilla sci, int position, int modifiers) {	}
+        public void ON_INDICATORRELEASE(QScintilla sci, int position, int modifiers) {	}
+        public void ON_MACRORECORD(QScintilla sci, int msg, long wparam, long lparam) {	}
+        public void ON_MARGINCLICK(QScintilla sci, int position, int modifiers, int margin) {	}
+        public void ON_MARGINRIGHTCLICK(QScintilla sci, int position, int modifiers, int margin) {	}
+        public void ON_MODIFIED(QScintilla sci,
+                         int position, int modType,
+                         String text, int length,
+                         int linesAdded, int line,
+                         int foldLevelNow, int foldLevelPrev,
+                         int token, int annotationLinesAdded) {		}
+        public void ON_MODIFYATTEMPTRO(QScintilla sci) {	} 
+        public void ON_NEEDSHOWN(QScintilla sci, int positino, int length) {	}
+        public void ON_PAINTED(QScintilla sci) {	}
+        public void ON_SAVEPOINTLEFT(QScintilla sci) {	}
+        public void ON_SAVEPOINTREACHED(QScintilla sci) {	}
+        public void ON_STYLENEEDED(QScintilla sci, int position) {	}
+        public void ON_UPDATEUI(QScintilla sci, int updated) {	}
+        public void ON_USERLISTSELECTION(QScintilla sci, String text, int wparam, int ch, int listCompletionMethod) {	}
+        public void ON_USERLISTSELECTION(QScintilla sci, String text, int wparam) {	}
+        public void ON_ZOOM(QScintilla sci) {	}
+    };
+    public static class onEditEventListener {
+        public void onTextChanged(QObject, String ) {}
+        public void onTextEdited(QObject, String ) {}
+        public void onCursorPositionChanged(QObject, int,int) {}
+        public void onReturnPressed(QObject) {}
+        public void onEditingFinished(QObject) {}
+        public void onSelectionChanged(QObject) {}
+    };
+    public static class onContextMenuListener {
+        public void onContextMenu(QObject, int x,int y,int reson);
+    };
+
+    public static class onActivateListener {
+        public void onWindowActivate(QObject) {}
+        public void onWindowDeactivate(QObject) {}
+    };
+
+    public static class onFileSystemChangeListener {
+        public void onFileChanged(QObject, String path);
+        public void onDirChange(QObject,String path);
+    };
+};

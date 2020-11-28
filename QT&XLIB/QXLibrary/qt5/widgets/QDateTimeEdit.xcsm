@@ -1,0 +1,114 @@
+//xlang Source, Name:QDateTimeEdit.xcsm 
+//Date: Thu Sep 20:14:47 2019 
+
+package Qt{
+    public class QDateTimeEdit : QWidget{
+
+        private onDateTimeChangeListener lis = nilptr;
+        
+        public static class QTime{
+            public  int hour,  min,  sec,  msec;
+            public QTime(int h, int m, int s,int ms){
+                hour = h;
+                min = m;
+                sec = s; 
+                msec = ms;
+            }
+        };
+        
+        public static class QDate{
+            public int year,  mon,  day;
+            public QDate(int y, int m, int d){
+                year = y;
+                mon = m;
+                day = d; 
+            }
+        };
+        
+        public QDateTimeEdit() {//构造
+            //TODO:	
+        }
+
+        public QDateTimeEdit(long h) {//构造
+            super(h);
+        }
+
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtDateTimeEdit, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtDateTimeEdit, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        
+        public static class onDateTimeChangeListener{
+            public void onDateTimeChange(QDateTimeEdit, long){
+            
+            }
+            
+            public void onDateChange(QDateTimeEdit, int, int, int){
+                
+            }
+            
+            public void onTimeChange(QDateTimeEdit, int, int, int, int){
+                
+            }
+        };
+        
+        public void onDateTimeChange(long dateTime){
+            if (lis != nilptr){
+                lis.onDateTimeChange(this, dateTime);
+            }
+        }
+        
+        public void onDateChange(int year,int month,int day){
+            if (lis != nilptr){
+                lis.onDateChange(this, year, month, day);
+            }
+        }
+        
+        public void onTimeChange(int hour ,int min ,int sec,int msec){
+            if (lis != nilptr){
+                lis.onTimeChange(this, hour, min, sec, msec);
+            }
+        }
+        
+        public void setDateTime(long milliSecond){
+            QtXnl.widget_set_native_value(nativehandle, Constant.SETDATETIME, milliSecond);
+        }
+        
+        public void setDate(int year, int mon, int day){
+            int [] params = {year, mon, day};
+            QtXnl.widget_set_object_value(nativehandle, Constant.SETDATE, params);
+        }
+        
+        public void setTime(int hour, int min, int sec, int msec){
+            int [] params = {hour, min, sec, msec};
+            QtXnl.widget_set_object_value(nativehandle, Constant.SETTIME, params);
+        }
+        
+        public long getDateTime(){
+            return QtXnl.long_get(nativehandle, Constant.GETDATETIME);
+        }
+        
+        public QTime getTime(){
+            int [] params = new int [4];
+            QtXnl.widget_set_object_value(nativehandle, Constant.GETTIME, params);
+            return new QTime(params[0], params[1], params[2], params[3]);
+        }
+        
+        public QDate getDate(){
+            int [] params = new int [3];
+            QtXnl.widget_set_object_value(nativehandle, Constant.GETDATE, params);
+            return new QDate(params[0], params[1], params[2]);
+        }
+    };
+};

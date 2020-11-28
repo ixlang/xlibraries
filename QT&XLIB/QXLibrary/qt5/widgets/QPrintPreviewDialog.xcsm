@@ -1,0 +1,63 @@
+//xlang Source, Name:QPrintPreviewDialog.xcsm 
+//Date: Sat Aug 15:42:52 2019 
+
+package Qt{
+    public class QPrintPreviewDialog : QDialog{
+        
+        QPrintPreviewDialog(){
+
+        }
+        QPrintPreviewDialog(@NotNilptr QPrinter printer) throws IllegalArgumentException{
+            if (false == create(nilptr, printer)){
+                throw new IllegalArgumentException("canot create QPrintPreviewDialog");
+            }
+        }
+        QPrintPreviewDialog(@NotNilptr QWidget parent,@NotNilptr  QPrinter printer) throws IllegalArgumentException{
+            if (false == create(parent, printer)){
+                throw new IllegalArgumentException("canot create QPrintPreviewDialog");
+            }
+        }
+        QPrintPreviewDialog(@NotNilptr QWidget parent) throws IllegalArgumentException{
+            if (false == create(parent, nilptr)){
+                throw new IllegalArgumentException("canot create QPrintPreviewDialog");
+            }
+        }
+        void onPreviewRequest(long printer){
+            requestPreview(new QPrinter(printer));
+        }
+        
+        void requestPreview(@NotNilptr QPrinter printer);
+        int exec()override {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.PVWDLGEXEC);
+        }
+        
+        void done(int result)override {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.PVWDLGDONE, result);
+        }
+        
+        
+        bool create()override {
+            nativehandle = QtXnl.createQPObject(QType.qtPrintViewDialog, this, 0, 0, 0, 0, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQPObject(QType.qtPrintViewDialog, this, parent.nativehandle, 0, 0, 0, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        
+        bool create(QWidget parent, QPrinter printer){
+            nativehandle = QtXnl.createQPObject(QType.qtPrintViewDialog, this, parent == nilptr ? 0 : parent.nativehandle,printer == nilptr ? 0 : printer.nativehandle, 0, 0, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }  
+    };
+};

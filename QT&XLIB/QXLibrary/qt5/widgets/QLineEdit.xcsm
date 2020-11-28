@@ -1,0 +1,39 @@
+
+package Qt{
+    public class QLineEdit : QWidget{
+        static const int Normal = 0, NoEcho = 1, Password = 2, PasswordEchoOnEdit = 3;
+        
+        public QLineEdit(){
+        
+        }
+        
+        public QLineEdit(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtLineEdit, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtLineEdit, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        public void setText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.LINEEDITSETTEXT, text);
+        }
+        
+        public @NotNilptr String getText(){
+            String __txt = (String)QtXnl.core_getString(nativehandle, Constant.LINEEDITGETTEXT);
+            __nilptr_safe(__txt);
+            return __txt;
+        }
+    };
+};

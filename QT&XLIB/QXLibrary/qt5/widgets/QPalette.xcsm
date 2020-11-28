@@ -1,0 +1,5 @@
+
+package Qt{
+    public class QPalette : QNative{
+    };
+};

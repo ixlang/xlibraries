@@ -1,0 +1,57 @@
+//xlang Source, Name:qt5/widgets/QPath.xcsm 
+//Date: Tue Apr 17:42:15 2019 
+package Qt{
+    public class QPath : QCore{
+
+        public QPath() throws IllegalArgumentException{
+            nativehandle = QtXnl.createNObject(QType.qtPath, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not new QPath");
+            }
+        }
+        
+        public void moveto(double x, double y){
+            double [] param = {x, y};
+            QtXnl.pointer_intlong2(param, Constant.PATHMOVETO, nativehandle, 0);
+        }
+        
+        public void lineto(double x, double y){
+            double [] param = {x, y};
+            QtXnl.pointer_intlong2(param, Constant.PATHLINETO, nativehandle, 0);
+        }
+        
+        public void arcmoveto(double l,double t,double r,double b,double angle){
+            double [] param = {l, t, r, b, angle};
+            QtXnl.pointer_intlong2(param, Constant.PATHARCMOVETO, nativehandle, 0);
+        }
+        
+        public void arcto(double l,double t,double r,double b,double angle, double length){
+            double [] param = {l, t, r, b, angle, length};
+            QtXnl.pointer_intlong2(param, Constant.PATHARCTO, nativehandle, 0);
+        }
+        
+        public void cubicto(double c1x,double c1y,double c2x,double c2y,double ex, double ey){
+            double [] param = {c1x, c1y, c2x, c2y, ex, ey};
+            QtXnl.pointer_intlong2(param, Constant.CUBICTO, nativehandle, 0);
+        }
+        
+        public void quadto(double c1x,double c1y,double ex, double ey){
+            double [] param = {c1x, c1y, ex, ey};
+            QtXnl.pointer_intlong2(param, Constant.QUADTO, nativehandle, 0);
+        }
+        
+        public void addRect(double l,double t,double r,double b){
+            double [] param = {l, t, r, b};
+            QtXnl.pointer_intlong2(param, Constant.ADDRECT, nativehandle, 0);
+        }
+        
+        public void addEllipse(double l,double t,double r,double b){
+            double [] param = {l, t, r, b};
+            QtXnl.pointer_intlong2(param, Constant.ADDELLIPSE, nativehandle, 0);
+        }
+        
+        public void finalize(){
+            QtXnl.widget_slot(nativehandle, Constant.PATHCTOR);
+        }
+    };
+};

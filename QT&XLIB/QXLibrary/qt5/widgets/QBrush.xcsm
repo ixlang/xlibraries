@@ -1,0 +1,167 @@
+//xlang Source, Name:qt5/widgets/QBrush.xcsm 
+//Date: Thu Apr 18:46:27 2019 
+package Qt{
+    public class QBrush : QNative{
+
+        /** @brush style
+        */
+        public enum Style{
+            NoBrush ,
+            SolidPattern ,
+            Dense1Pattern ,
+            Dense2Pattern ,
+            Dense3Pattern ,
+            Dense4Pattern ,
+            Dense5Pattern ,
+            Dense6Pattern ,
+            Dense7Pattern ,
+            HorPattern ,
+            VerPattern ,
+            CrossPattern ,
+            BDiagPattern ,
+            FDiagPattern ,
+            DiagCrossPattern ,
+            LinearGradientPattern ,
+            RadialGradientPattern ,
+            ConicalGradientPattern ,
+            TexturePattern = 24
+        };
+
+        public enum Spread{
+            PadSpread ,
+            ReflectSpread ,
+            RepeatSpread 
+        };
+        
+        public static class Gradient{
+            public long gradhandle = 0;
+            
+            int nstyle = Style.LinearGradientPattern;
+                    
+            public Gradient(int style){
+                nstyle = style;
+            }
+            
+            public bool create(@NotNilptr double [] data){
+                if (gradhandle != 0){
+                    return false;
+                }
+                
+                switch(nstyle){
+                    case Style.LinearGradientPattern:
+                        gradhandle = QtXnl.createPObject(QType.qtLineGradient, data);
+                    break;
+                    case Style.RadialGradientPattern:
+                        {
+                            switch(data.length){
+                                case 3:
+                                    gradhandle = QtXnl.createPObject(QType.qtRadialGradient3, data);
+                                break;
+                                case 5:
+                                    gradhandle = QtXnl.createPObject(QType.qtRadialGradient5, data);
+                                break;
+                                case 6:
+                                    gradhandle = QtXnl.createPObject(QType.qtRadialGradient6, data);
+                                break;
+                            }
+                        }
+                    break;
+                    case Style.ConicalGradientPattern:
+                        gradhandle = QtXnl.createPObject(QType.qtConicalGradient, data);
+                    break;
+                }
+                return gradhandle != 0;
+            }
+            
+            public void setColorAt(double pos, int color){
+                QtXnl.widget_set_v2int_double_value(gradhandle, Constant.SETCOLORAT, color, pos, 0);
+            }
+            
+            public void setSpread(int spread){
+                QtXnl.widget_set_vint_value(gradhandle, Constant.SETSPREAD, spread);
+            } 
+            
+            public void finalize(){
+                if (gradhandle != 0){
+                    QtXnl.widget_slot(gradhandle, Constant.DELLOCGRADIENT);
+                }
+            }
+        };
+        
+        public static class QLinearGradient : Gradient{
+            public QLinearGradient(double x,double y,double ex,double ey) throws IllegalArgumentException{
+                super(Style.LinearGradientPattern);
+                double [] _params = {x, y, ex, ey};
+                if (create(_params) == false){
+                    throw new IllegalArgumentException("can not create QLinearGradient");
+                }
+            }
+
+        };
+        
+        public static class QRadialGradient : Gradient{
+            public QRadialGradient(double x,double y,double r) throws IllegalArgumentException{
+                super(Style.RadialGradientPattern);
+                double [] _params = {x, y, r};
+                if (create(_params) == false){
+                    throw new IllegalArgumentException("can not create QRadialGradient");
+                }
+            }
+            
+            public QRadialGradient(double x,double y,double r,double fx,double fy) throws IllegalArgumentException{
+                super(Style.RadialGradientPattern);
+                double [] _params = {x, y, r, fx, fy};
+                if (create(_params) == false){
+                    throw new IllegalArgumentException("can not create QRadialGradient");
+                }
+            }
+            
+            public QRadialGradient(double x,double y,double r,double fx,double fy, double fr) throws IllegalArgumentException{
+                super(Style.RadialGradientPattern);
+                double [] _params = {x, y, r, fx, fy, fr};
+                if (create(_params) == false){
+                    throw new IllegalArgumentException("can not create QRadialGradient");
+                }
+            }
+        };
+        
+        public static class QConicalGradient : Gradient{
+            public QConicalGradient(double cx,double cy,double s) throws IllegalArgumentException{
+                super(Style.ConicalGradientPattern);
+                double [] _params = {cx, cy, s};
+                if (create(_params) == false){
+                    throw new IllegalArgumentException("can not create QConicalGradient");
+                }
+            }
+        };
+        
+        public QBrush()  throws IllegalArgumentException{//构造
+            nativehandle = QtXnl.createNObject(QType.qtBrush, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not create QBrush");
+            }
+        }
+
+        public QBrush(@NotNilptr Gradient grad) throws IllegalArgumentException{
+            nativehandle = QtXnl.createNObject(QType.qtBrush, grad.gradhandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not create QBrush");
+            }
+        }
+        
+        public QBrush(@NotNilptr QImage img) throws IllegalArgumentException{
+            nativehandle = QtXnl.createNObject(QType.qtImgBrush, img.himage);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not create QBrush");
+            }
+        }
+        
+        public void finalize(){
+            if (nativehandle != 0){
+                QtXnl.widget_slot(nativehandle, Constant.DELLOCBRUSH);
+            }
+        }
+        
+        
+    };
+};

@@ -1,0 +1,73 @@
+//xlang Source, Name:QPrintDialog.xcsm 
+//Date: Sat Aug 13:20:50 2019 
+
+package Qt{
+    public class QPrintDialog : QAbstractPrintDialog{
+        public QPrintDialog(){
+        
+        }
+        
+        public QPrintDialog(@NotNilptr QPrinter pprinter) throws IllegalArgumentException{
+            if (false == create(nilptr, pprinter)){
+                throw new IllegalArgumentException("can not new QPrintDialog");
+            }
+        }
+            
+        public QPrintDialog(@NotNilptr QWidget parent) throws IllegalArgumentException{
+            if (false == create(parent)){
+                throw new IllegalArgumentException("can not new QPrintDialog");
+            }
+        }
+        
+        public QPrintDialog(@NotNilptr QWidget parent, @NotNilptr QPrinter pprinter) throws IllegalArgumentException{
+            if (false == create(parent, pprinter)){
+                throw new IllegalArgumentException("can not new QPrintDialog");
+            }
+        }
+        
+        public QPrintDialog(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQPObject(QType.qtPrintDialog, this, 0, 0, 0, 0, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQPObject(QType.qtPrintDialog, this, parent.nativehandle, 0, 0, 0, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        
+        public bool create(QWidget parent,@NotNilptr QPrinter printer){
+            nativehandle = QtXnl.createQPObject(QType.qtPrintDialog, this, parent == nilptr ? 0 : parent.nativehandle, printer.nativehandle, 0, 0, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+
+        
+        public void setOption(PrintDialogOption option, bool on){
+            QtXnl.widget_set_int_bool_value(nativehandle, Constant.PRTDLGSETOPT, option, on);
+        }
+        
+        public bool testOption(PrintDialogOption option){
+            return QtXnl.widget_get_int_bool(nativehandle, Constant.PRTDLGTEST, option);
+        }
+        
+        public void setOptions(int options){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.PRTDLGSETOPTS, options);
+        }
+        
+        public int options(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.PRTDLGGETOPTS);
+        }
+    };
+};

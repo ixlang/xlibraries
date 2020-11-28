@@ -1731,7 +1731,219 @@ private slots:
 		}
 	}
 
-	void dateTimeChanged(const QDateTime &dateTime) {
+
+	void qtabwidget_currentChanged(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABWIDGET_CURRENTCHANGED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void qtabwidget_tabCloseRequested(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABWIDGET_TABCLOSEREQUESTED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void qtabwidget_tabBarClicked(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABWIDGET_TABBARCLICKED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void qtabwidget_tabBarDoubleClicked(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABWIDGET_TABBARDOUBLECLICKED].methodId, index);
+				}
+			}
+		}
+	}
+
+
+	void qtabbar_currentChanged(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABBAR_CURRENTCHANGED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void qtabbar_tabCloseRequested(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABBAR_TABCLOSEREQUESTED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void qtabbar_tabMoved(int from, int to) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABBAR_TABMOVED].methodId, from, to);
+				}
+			}
+		}
+	}
+
+	void qtabbar_tabBarClicked(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABBAR_TABBARCLICKED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void qtabbar_tabBarDoubleClicked(int index) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QTABBAR_TABBARDOUBLECLICKED].methodId, index);
+				}
+			}
+		}
+	}
+
+	void slider_valueChanged(int value) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SLIDER_VALUECHANGED].methodId, value);
+				}
+			}
+		}
+	}
+
+	void slider_sliderPressed() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SLIDER_SLIDERPRESSED].methodId);
+				}
+			}
+		}
+	}
+
+	void slider_sliderMoved(int position) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SLIDER_SLIDERMOVED].methodId, position);
+				}
+			}
+		}
+	}
+
+	void slider_sliderReleased() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SLIDER_SLIDERRELEASED].methodId);
+				}
+			}
+		}
+	}
+
+	void slider_rangeChanged(int min, int max) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SLIDER_RANGECHANGED].methodId, min, max);
+				}
+			}
+		}
+	}
+
+	void slider_actionTriggered(int action) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_SLIDER_ACTIONTRIGGERED].methodId, action);
+				}
+			}
+		}
+	}
+
+	void ondateTimeChanged(const QDateTime &dateTime) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
@@ -1745,7 +1957,7 @@ private slots:
 		}
 	}
 
-	void timeChanged(const QTime &time) {
+	void ontimeChanged(const QTime &time) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 		
 		if (obj != 0) {
@@ -1759,7 +1971,7 @@ private slots:
 		}
 	}
 
-	void dateChanged(const QDate &date) {
+	void ondateChanged(const QDate &date) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 		
 		if (obj != 0) {
@@ -1815,9 +2027,34 @@ public:
 	}
 
 	void installDateTimeEditAction(QObject * edit) {
-		XLINK(edit, SIGNAL(dateTimeChanged(const QDateTime &)), this, SLOT(ondateTimeChanged(const QDateTime &)));
-		XLINK(edit, SIGNAL(timeChanged(const QTime &)), this, SLOT(ontimeChanged(const QTime &)));
-		XLINK(edit, SIGNAL(dateChanged(const QDate &)), this, SLOT(ondateChanged(const QDate &)));
+		XLINK(edit, SIGNAL(ondateTimeChanged(const QDateTime &)), this, SLOT(dateTimeChanged(const QDateTime &)));
+		XLINK(edit, SIGNAL(ontimeChanged(const QTime &)), this, SLOT(timeChanged(const QTime &)));
+		XLINK(edit, SIGNAL(ondateChanged(const QDate &)), this, SLOT(dateChanged(const QDate &)));
+	}
+
+
+	void installTabBarAction(QObject * edit) {
+		XLINK(edit, SIGNAL(currentChanged(int)), this, SLOT(qtabbar_currentChanged(int)));
+		XLINK(edit, SIGNAL(tabCloseRequested(int)), this, SLOT(qtabbar_tabCloseRequested(int)));
+		XLINK(edit, SIGNAL(tabMoved(int, int)), this, SLOT(qtabbar_tabMoved(int, int)));
+		XLINK(edit, SIGNAL(tabBarClicked(int)), this, SLOT(qtabbar_tabBarClicked(int)));
+		XLINK(edit, SIGNAL(tabBarDoubleClicked(int)), this, SLOT(qtabbar_tabBarDoubleClicked(int)));
+	}
+
+	void installTabWidgetAction(QObject * edit) {
+		XLINK(edit, SIGNAL(currentChanged(int)), this, SLOT(qtabwidget_currentChanged(int)));
+		XLINK(edit, SIGNAL(tabCloseRequested(int)), this, SLOT(qtabwidget_tabCloseRequested(int)));
+		XLINK(edit, SIGNAL(tabBarClicked(int)), this, SLOT(qtabwidget_tabBarClicked(int)));
+		XLINK(edit, SIGNAL(tabBarDoubleClicked(int)), this, SLOT(qtabwidget_tabBarDoubleClicked(int)));
+	}
+
+	void installSliderAction(QObject * edit) {
+		XLINK(edit, SIGNAL(valueChanged(int)),this, SLOT(slider_valueChanged(int)));
+		XLINK(edit, SIGNAL(sliderPressed()), this, SLOT(slider_sliderPressed()));
+		XLINK(edit, SIGNAL(sliderMoved(int)), this, SLOT(slider_sliderMoved(int)));
+		XLINK(edit, SIGNAL(sliderReleased()), this, SLOT(slider_sliderReleased()));
+		XLINK(edit, SIGNAL(rangeChanged(int, int)), this, SLOT(slider_rangeChanged(int, int)));
+		XLINK(edit, SIGNAL(actionTriggered(int)), this, SLOT(slider_actionTriggered(int)));
 	}
 
 	void installEditAction(QObject * edit) {

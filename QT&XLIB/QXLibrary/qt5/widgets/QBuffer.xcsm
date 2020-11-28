@@ -1,0 +1,37 @@
+//xlang Source, Name:QXBuffer.xcsm 
+//Date: Thu Sep 22:15:52 2018 
+package Qt{
+    public class QBuffer : QCore{
+        public static const int 
+            NotOpen = 0x0000,
+            ReadOnly = 0x0001,
+            WriteOnly = 0x0002,
+            ReadWrite = ReadOnly | WriteOnly,
+            Append = 0x0004,
+            Truncate = 0x0008,
+            Text = 0x0010,
+            Unbuffered = 0x0020;
+            
+        public QBuffer() throws IllegalArgumentException{
+            nativehandle = QtXnl.createNObject(QType.qtBuffer, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not create buffer");
+            }
+        }
+        public bool open(int openFlags){
+            return 0 != QtXnl.widget_set_bint_value(nativehandle, Constant.OPENBUFFER, openFlags);
+        }
+        
+        public void setBuffer(byte [] data, int position, int length){
+            QtXnl.array_int2(nativehandle, Constant.BUFFERSETDATA, data, position, length);
+        }
+        public void setBuffer(@NotNilptr QByteArray array){
+            QtXnl.long_intlong(nativehandle, Constant.BUFFERSETDATA, array.nativehandle);
+        }
+        public void finalize(){
+            if (nativehandle != 0){
+                QtXnl.widget_slot(nativehandle, Constant.DELLOCBUFFER);
+            }
+        }
+    };
+};

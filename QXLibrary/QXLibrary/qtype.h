@@ -67,5 +67,8 @@ enum QTypes {
 	qtTextEdit = 62,
 	qtDockWidget = 63,
 	qtVLayout = 64,
-	qtHLayout = 65
+	qtHLayout = 65,
+	qtSlider = 66,
+	qtTabWidget = 67,
+	qtTabBar = 68
 };

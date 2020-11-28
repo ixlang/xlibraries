@@ -1,0 +1,498 @@
+
+package Qt{
+
+    public static class Runnable {
+        public void run();
+    };
+
+    public class QWidget : QObject {
+        //WindowType
+        public QWidget() {
+        }
+        
+        public static List<Runnable> _uiloop_list = new List<Runnable>();
+
+        public void runOnUi(Runnable task) {
+            synchronized(_uiloop_list) {
+                _uiloop_list.add(task);
+            }
+            Notify(Constant.NEW_UI_TASK_NID);
+        }
+
+        public static void runOnThread(Runnable task) {
+            new Thread() {
+                void run()override {
+                    task.run();
+                }
+            } .start();
+        }
+
+        private final void onNotify(long eventid)override {
+            if (eventid == Constant.NEW_UI_TASK_NID) {
+                while (_uiloop_list.size() > 0) {
+                    Runnable r;
+                    synchronized(_uiloop_list) {
+                        if (_uiloop_list.size() > 0) {
+                            try{
+                                r = _uiloop_list.pollHead();
+                            }catch(IllegalArgumentException e){
+                                
+                            }
+                        }
+                    }
+                    if (r != nilptr) {
+                        r.run();
+                    }
+                }
+            } else {
+                onNotification(eventid);
+            }
+        }
+
+
+        public void onNotification(long eventid) {
+            if (_notifyListener != nilptr) {
+                _notifyListener.onNotify(this, eventid);
+            }
+        }
+
+        public QWidget(long h) {
+            super(h);
+        }
+
+        public bool create() {
+            nativehandle = QtXnl.createQObject(QType.qtWidget, this, 0);
+            if (nativehandle == 0) {
+                return false;
+            }
+            return true;
+        }
+
+        public void setAttribute(int flag, bool bOn) {
+            QtXnl.widget_set_int_bool_value(nativehandle, Constant.SETATTRIBUTE, flag, bOn);
+        }
+
+        public bool create(@NotNilptr QWidget parent) {
+            nativehandle = QtXnl.createQObject(QType.qtWidget, this, parent.nativehandle);
+            if (nativehandle == 0) {
+                return false;
+            }
+            return true;
+        }
+
+        public bool load(String uifile) {
+            nativehandle = QtXnl.locaUiFile(uifile, this, 0);
+            if (nativehandle == 0) {
+                return false;
+            }
+            return true;
+        }
+        public bool load(String uifile, @NotNilptr QWidget parent) {
+            nativehandle = QtXnl.locaUiFile(uifile, this, parent.nativehandle);
+            if (nativehandle == 0) {
+                return false;
+            }
+            return true;
+        }
+        public bool load(@NotNilptr QBuffer data) {
+            nativehandle = QtXnl.locaUiData(data.nativehandle, this, 0);
+            if (nativehandle == 0) {
+                return false;
+            }
+            return true;
+        }
+        public bool load(@NotNilptr QBuffer data, @NotNilptr QWidget parent) {
+            nativehandle = QtXnl.locaUiData(data.nativehandle, this, parent.nativehandle);
+            if (nativehandle == 0) {
+                return false;
+            }
+            return true;
+        }
+        public void setParent(@NotNilptr QWidget parent) {
+            QtXnl.widget_set_native_value(nativehandle, Constant.PARENTWIDGET, parent.nativehandle);
+        }
+
+        public double getOpacity() {
+            return QtXnl.widget_get_double_value(nativehandle,Constant.OPACITY);
+        }
+
+        public void setModal(bool bm) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.MODAL, bm);
+        }
+
+        public bool isVisible() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.VISIBLE);
+        }
+
+        public bool maximized() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.MAXIMIZED);
+        }
+
+        public bool minimized() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.MINIMIZED);
+        }
+
+        public bool isEnabled() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.ENABLED);
+        }
+
+        public bool isActive() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.ACTIVED);
+        }
+
+
+
+        public void setOpacity(double v) {
+            QtXnl.widget_set_double_value(nativehandle,Constant.OPACITY, v);
+        }
+
+        public void setVisible(bool v) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.VISIBLE, v);
+        }
+
+        public void setMaximized(bool v) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.MAXIMIZED, v);
+        }
+
+        public void setMinimized(bool v) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.MINIMIZED, v);
+        }
+
+        public void setEnabled(bool v) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.ENABLED, v);
+        }
+
+        public void setActive(bool v) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.ACTIVED, v);
+        }
+
+        public void setFocusPolicy(int fcy)   {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.SETFOCUSPOLICY, fcy);
+        }
+
+        public int getFocusPolicy() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.SETFOCUSPOLICY);
+        }
+        public int getMinimumHeight() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.MINIMUMHEIGHT);
+        }
+
+        public int getMaximumHeight() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.MAXIMUMHEIGHT);
+        }
+
+        public int getMinimumWidth() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.MINIMUMWIDTH);
+        }
+
+        public int getMaximumWidth() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.MAXIMUMWIDTH);
+        }
+
+        public int x() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.X_POS);
+        }
+
+        public int y() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.Y_POS);
+        }
+
+        public int width() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.WIDTH);
+        }
+
+        public int height() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.HEIGHT);
+        }
+
+        public bool isFullScreen() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.FULLSCREEN);
+        }
+
+        public bool isHidden() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.HIDDEN);
+        }
+
+        public bool isModal() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.MODAL);
+        }
+
+        public bool isWindow() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.WINDOW);
+        }
+
+        public void resize(int w,int h) {
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.RESIZE, w, h);
+        }
+
+        public void scroll(int dx,int dy) {
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.SCROLL, dx, dy);
+        }
+
+        public void setBackgroundRole(int role) {
+            QtXnl.widget_set_bkrl(nativehandle, role);
+        }
+
+        public void setCursor() {
+
+        }
+
+        public void move(int x,int y) {
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.MOVE, x, y);
+        }
+
+        public void setFixedHeight(int h) {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.FIXEDHEIGHT, h);
+        }
+
+        public void setWindowFlags(int flag/*WindowType*/) {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.WINDOWFLAG, flag);
+        }
+
+        public void setWindowFlag(int flag/*WindowType*/, bool bOn) {
+            QtXnl.widget_set_int_bool_value(nativehandle, Constant.SETWINDOWFLAG, flag, bOn);
+        }
+        public String getStyleSheet() {
+            return (String)QtXnl.core_getString(nativehandle, Constant.GETSTYLESHEEY);
+        }
+        public void addAction(@NotNilptr QAction action) {
+            QtXnl.widget_set_native_value(nativehandle, Constant.ADDDEFACTION, action.nativehandle);
+        }
+        public void addActions(@NotNilptr QAction []actions) {
+            long [] al = new long[actions.length];
+            for (int i =0; i < al.length; i ++) {
+                al[i] = actions[i].nativehandle;
+            }
+            QtXnl.widget_set_object_value(nativehandle, Constant.ADDDEFACTION, al);
+        }
+
+        public void setWindowIcon(String icon) {
+            QtXnl.widget_slot_string(nativehandle, Constant.WINDOWICON, icon);
+        }
+        public void setContextMenuPolicy(int v) {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.SETCONTEXTMENUPOLICY, v);
+        }
+        public void setFixedSize(int w, int h) {
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.FIXEDSIZE, w, h);
+        }
+        public void setFontDescrption(String desc) {
+            QtXnl.widget_slot_string(nativehandle, Constant.SETWIDGETFONT, desc);
+        }
+        public void setFixedWidth(int w) {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.FIXEDWIDTH, w);
+        }
+
+        public void setPalette(int flags, int color) {
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.PALETTE, flags, color);
+        }
+
+        public void
+        setPalette(@NotNilptr QPalette palette) {
+            QtXnl.widget_set_native_value(nativehandle, Constant.PALETTE, palette.nativehandle);
+        }
+
+        public void
+        setStyle(@NotNilptr QStyle style) {
+            QtXnl.widget_set_native_value(nativehandle, Constant.STYLE, style.nativehandle);
+        }
+
+        //virtual
+        public void close() {
+            QtXnl.widget_slot(nativehandle, Constant.CLOSE);
+        }
+        public void hide() {
+            QtXnl.widget_slot(nativehandle, Constant.HIDE);
+        }
+        public void lower() {
+            QtXnl.widget_slot(nativehandle, Constant.LOWER);
+        }
+        public void raise() {
+            QtXnl.widget_slot(nativehandle, Constant.RAISE);
+        }
+        public void repaint() {
+            QtXnl.widget_slot(nativehandle, Constant.REPAINT);
+        }
+        public void update() {
+            QtXnl.widget_slot(nativehandle, Constant.UPDATE);
+        }
+        public void setFocus() {
+            QtXnl.widget_slot(nativehandle, Constant.SETFOCUS);
+        }
+
+        public void
+        setWindowTitle(String text) {
+            QtXnl.widget_slot_string(nativehandle, Constant.WINDOWTITLE, text);
+        }
+
+        public void
+        show() {
+            QtXnl.widget_slot(nativehandle, Constant.SHOW);
+        }
+        public void
+        showFullScreen() {
+            QtXnl.widget_slot(nativehandle, Constant.SHOWFULLSCREEN);
+        }
+        public void
+        showMaximized() {
+            QtXnl.widget_slot(nativehandle, Constant.SHOWMAX);
+        }
+        public void
+        showMinimized() {
+            QtXnl.widget_slot(nativehandle, Constant.SHOWMIN);
+        }
+        public void
+        showNormal() {
+            QtXnl.widget_slot(nativehandle, Constant.SHOWNORMAL);
+        }
+        public int Critical(String caption, String text, int button, int defaultBtn) {
+            return QtXnl.long_string2_int2(nativehandle, Constant.MESSAGEBOXERR, caption, text, button, defaultBtn);
+        }
+        public int Warning(String caption, String text, int button, int defaultBtn) {
+            return QtXnl.long_string2_int2(nativehandle, Constant.MESSAGEBOXWAR, caption, text, button, defaultBtn);
+        }
+
+        public int Question(String caption, String text, int button, int defaultBtn) {
+            return QtXnl.long_string2_int2(nativehandle, Constant.MESSAGEBOXQUE, caption, text, button, defaultBtn);
+        }
+        public int Information(String caption, String text, int button, int defaultBtn) {
+            return QtXnl.long_string2_int2(nativehandle, Constant.MESSAGEBOXINF, caption, text, button, defaultBtn);
+        }
+
+        public void About(String caption, String text) {
+            QtXnl.long_string2_int2(nativehandle, Constant.MESSAGEBOXABT, caption, text, 0, 0);
+        }
+
+        public void setCursor(int cursor) {
+            QtXnl.widget_set_vint_value(nativehandle, Constant.SETCURSOR, cursor);
+        }
+
+        public @NotNilptr QPoint mapTo(@NotNilptr QWidget w, int x,int y) {
+            long v = x;
+            v = (v << 32) | y;
+            v = QtXnl.long_intlong2(nativehandle, Constant.MAPPOINT, w.nativehandle, v);
+            return new QPoint(v);
+        }
+        public @NotNilptr  QPoint mapToGlobal(int x,int y) {
+            long v = x;
+            v = (v << 32) | y;
+            v = QtXnl.long_intlong2(nativehandle, Constant.MAPPOINT, 0, v);
+            return new QPoint(v);
+        }
+        public @NotNilptr  QPoint mapFromGlobal(int x,int y) {
+            long v = x;
+            v = (v << 32) | y;
+            v = QtXnl.long_intlong2(0, Constant.MAPPOINT, nativehandle, v);
+            return new QPoint(v);
+        }
+        public @NotNilptr  QPoint getScreenPoint(int num) {
+            long xy = QtXnl.object_get_long_int(nativehandle, Constant.SCREENPOSITION, num, 0);
+            return new QPoint((int)(xy >> 32) & 0xffffffff, (int)xy & 0xffffffff);
+        }
+        public @NotNilptr  QPoint getCurrentScreenPoint() {
+            long xy = QtXnl.object_get_long_int(nativehandle, Constant.SCREENPOSITION, -1, 0);
+            return new QPoint((int)(xy >> 32) & 0xffffffff, (int)xy & 0xffffffff);
+        }
+        public @NotNilptr  QRect getScreenSize(int num) {
+            long wh = QtXnl.object_get_long_int(nativehandle, Constant.SCREENSIZE, num, 0);
+            return new QRect(0, 0, (int)(wh >> 32) & 0xffffffff, (int)wh & 0xffffffff);
+        }
+        public @NotNilptr  QRect getCurrentScreenSize() {
+            long wh = QtXnl.object_get_long_int(nativehandle, Constant.SCREENSIZE, -1, 0);
+            return new QRect(0, 0, (int)(wh >> 32) & 0xffffffff, (int)wh & 0xffffffff);
+        }
+        public int getCurrentScreen() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.CURRENTSCREEN);
+        }
+        //不能在工作线程中update 要在UI线程中执行
+        public final void postUpdate() {
+            runOnUi(new Runnable() {
+                void run()override {
+                    QWidget.this.update();
+                }
+            });
+        }
+        public void setStyleSheet(String file) {
+            QtXnl.widget_slot_string(nativehandle, Constant.SETSTYLESHEET, file);
+        }
+        public void setStyle(String styneName) {
+            QtXnl.widget_slot_string(nativehandle, Constant.SETSTYLE, styneName);
+        }
+        public void setStyleSheetString(String stylesheet) {
+            QtXnl.widget_slot_string(nativehandle, Constant.SETSTYLESHEETSTRING, stylesheet);
+        }
+        public void setWhatsThis(String tips) {
+            QtXnl.widget_slot_string(nativehandle, Constant.SETWHATSTHIS, tips);
+        }
+        public void centerScreen() {
+            QRect rc = getCurrentScreenSize();
+            rc.offset(getCurrentScreenPoint());
+            move((rc.width() - width()) / 2, (rc.height() - height()) / 2);
+        }
+
+        public bool hasFocus() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.HASFOCUS);
+        }
+
+        public String getToolTips() {
+            return (String)QtXnl.core_getString(nativehandle, Constant.GETTOOLTIPS);
+        }
+
+        public void setToolTips(String text) {
+            QtXnl.widget_slot_string(nativehandle, Constant.SETTOOLTIPS, text);
+        }
+        public void setLayout(@NotNilptr QLayout layout){
+            QtXnl.widget_set_native_value(nativehandle, Constant.SETLAYOUT, layout.nativehandle);
+        }
+        public void showToolTips(int x, int y, long duration) {
+            QtXnl.widget_set_intlongstring_value(nativehandle, Constant.SHOWTOOLTIPS, ((long)x) << 32 |  y, (int)duration, nilptr);
+        }
+        public void showToolTips(int x, int y, String text, long duration) {
+            QtXnl.widget_set_intlongstring_value(nativehandle, Constant.SHOWTOOLTIPS, ((long)x) << 32 |  y,  (int)duration, text);
+        }
+        public static void ShowToolTips(int x, int y, String text, long duration) {
+            QtXnl.widget_set_intlongstring_value(0, Constant.SHOWTOOLTIPS, ((long)x) << 32 |  y,  (int) duration, text);
+        }
+
+        public bool isAcceptDrops() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.ENABLEDROG);
+        }
+
+        public void setAcceptDrops(bool ba) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.ENABLEDROG, ba);
+        }
+
+        public void setUpdateEnabled(bool be) {
+            QtXnl.widget_set_bool_value(nativehandle, Constant.UPDATEENABLE, be);
+        }
+
+        public bool isUpdateEnabled() {
+            return QtXnl.widget_get_bool_value(nativehandle,Constant.UPDATEENABLE );
+        }
+        public void render(@NotNilptr QPainter painter){
+            QtXnl.long_long_int9(nativehandle, Constant.WIDGETRENDER1, painter.hpaint, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+        public void render(@NotNilptr QPainter painter, RenderFlag flags){
+            QtXnl.long_long_int9(nativehandle, Constant.WIDGETRENDER1, painter.hpaint, 0, 0, 0, 0, 0, 0, 0, flags, 0);
+        }
+        public void render(@NotNilptr QPainter painter, int x,int y, RenderFlag flags){
+            QtXnl.long_long_int9(nativehandle, Constant.WIDGETRENDER1, painter.hpaint, x, y, 0, 0, 0, 0, 0, flags, 0);
+        }
+        public void render(@NotNilptr QPainter painter, int x,int y, int sx,int sy,int sw,int sh,RegionType sflags, RenderFlag flags){
+            QtXnl.long_long_int9(nativehandle, Constant.WIDGETRENDER1, painter.hpaint, x, y, sx, sy, sw, sh, sflags, flags, 0);
+        }
+        
+        public @NotNilptr String getWindowTitle(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.WIDGETGETTITLE);
+        }
+        void finalize()override{
+            if (nativehandle != 0) {
+                runOnUi(new Runnable(){
+                    long handle = nativehandle;
+                    void run()override{
+                        QtXnl.widget_slot(handle, Constant.NATIVEFINALIZE);
+                    }
+                });
+            }
+        }
+    };
+};

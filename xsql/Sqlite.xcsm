@@ -15,7 +15,7 @@ class Sqlite : Sql.Connection{
       
 
     static class SqliteRegister : Sql.ConnectionRegister{
-		Sql.Connection allocConnection(String drivername){
+		Sql.Connection allocConnection(String drivername)override{
 			if (drivername.equals("sqlite")){
 				return new Sqlite();
             }
@@ -111,7 +111,7 @@ class Sqlite : Sql.Connection{
     static bool registried = registry();
 	long hdb = 0;
     
-	public void create(String uri, String username, String pwd){
+	public void create(String uri, String username, String pwd)override{
 		int err = Native.sqlite3_open(uri, hdb);
         if (err != 0){
 			throw new Sql.SqlException(err, "can not open database:" + uri);
@@ -128,7 +128,7 @@ class Sqlite : Sql.Connection{
 	* 
 	* @Exception : SqlException
 	*/
-	public void setOption(int opt, Object option){
+	public void setOption(int opt, Object option)override{
 		throw new Sql.DatabaseNotSupportException("setOption");
     }
 	
@@ -140,25 +140,25 @@ class Sqlite : Sql.Connection{
         return nilptr;
     }
     
-	public Object getOption(int opt){
+	public Object getOption(int opt)override{
 		throw new Sql.DatabaseNotSupportException("getOption");
         return nilptr;
     }
 	
-	public Sql.PreparedStatement prepareStatement(String sql){
+	public Sql.PreparedStatement prepareStatement(String sql)override{
 		return new SqlitePreparedStatement(this, sql);
     }
 	
-	public Sql.Statement createStatement(){
+	public Sql.Statement createStatement()override{
 		return new SqlitePreparedStatement(this);
     }
 	
-	public bool isClosed(){
+	public bool isClosed()override{
 		return hdb != 0;
     }
 
     
-	public void close(){
+	public void close()override{
 		if (hdb != 0){
 			Native.sqlite3_close(hdb);
             hdb = 0;
@@ -183,7 +183,7 @@ class Sqlite : Sql.Connection{
     
     public int execute(String stmt){
 		if (hdb != 0){
-			long msg;
+			long msg = 0;
 			int err = Native.sqlite3_exec(hdb, stmt, (long)0, (long)0, msg);
             if (err != 0){
 				throw new Sql.SqlException(err, "Sqlite execute error :" + generateErrorText(msg, "execute failed"));
@@ -195,9 +195,9 @@ class Sqlite : Sql.Connection{
     }
     
     public long prepare(String sql){
-		long nstmt;
+		long nstmt = 0;
 		if (hdb != 0){
-			long msg;
+			long msg = 0;
 			int err = Native.sqlite3_prepare(hdb, sql, -1, nstmt, msg);
 			if (err != 0){
 				throw new Sql.SqlException(err, "Sqlite execute error :" +  generateErrorText(msg, "execute failed"));
@@ -226,26 +226,26 @@ class Sqlite : Sql.Connection{
             sqlite = db;
         }
         
-    	public int execute(String sql){
+    	public int execute(String sql)override{
 			
 			return sqlite.execute(sql);
         }
         
-        public Sql.ResultSet executeQuery(String sql){
+        public Sql.ResultSet executeQuery(String sql)override{
 			long nstmt = sqlite.prepare(sql);
 			return new SqliteResultSet(sqlite, nstmt);
         }
         
-        public int executeUpdate(String sql){
+        public int executeUpdate(String sql)override{
 			return sqlite.execute(sql);
         }
         
-        public Sql.ResultSet getResult(){
+        public Sql.ResultSet getResult()override{
 			throw new Sql.DatabaseNotSupportException("getResult");
             return nilptr;
         }
         
-        public void close(){
+        public void close()override{
 			sqlite = nilptr;
         }
     };
@@ -306,7 +306,7 @@ class Sqlite : Sql.Connection{
 			return hres != 0;
         }
         
-        public bool isEof(){
+        public bool isEof()override{
             throw new Sql.DatabaseNotSupportException("isEof");
             return false;
         }

@@ -1,0 +1,36 @@
+package Qt{
+    public class QLabel : QWidget{
+        public QLabel(){
+        
+        }
+        
+        public QLabel(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtLabel, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtLabel, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        public void setText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.LBLSETTEXT, text);
+        }
+        
+        public @NotNilptr String getText(){
+            String __txt = (String)QtXnl.core_getString(nativehandle, Constant.LBLGETTEXT);
+            __nilptr_safe(__txt);
+            return __txt;
+        }
+    };
+};

@@ -21,7 +21,7 @@
 				"libs":	["XPlatform.lix", "FileStream.lix"],
 				"links":	[],
 				"depends":	[],
-				"wtype":	"",
+				"wtype":	"-arch:x86",
 				"ostype":	"",
 				"sstype":	"",
 				"outname":	"$(ProjectName)$(Ext)",

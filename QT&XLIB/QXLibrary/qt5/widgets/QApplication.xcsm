@@ -1,0 +1,142 @@
+package Qt{
+    public class QApplication : QObject{
+        public QApplication(){
+        }
+        
+        public bool createQApplication(){
+            nativehandle = QtXnl.createQxApplication(this);
+            return nativehandle != 0;
+        }
+        public void run(){
+            QtXnl.ApplicationRun(nativehandle);
+        }
+        
+        public bool onNotify(QObject object ,String objectName, String objectClass, long event, int eventId){
+            //_system_.consoleWrite(objectName + "class:" + objectClass + "Event:" + eventId + "\n");
+            return true;
+        }
+        
+        public void setStyleSheet(String file){
+            QtXnl.widget_slot_string(nativehandle, Constant.STYLESHEET, file);
+        }
+        public void setStyleSheetString(String stylesheet){
+            QtXnl.widget_slot_string(nativehandle, Constant.STYLESHEETSTRING, stylesheet);
+        }
+        public void setPaletteColor(String file){
+            QtXnl.widget_slot_string(nativehandle, Constant.PALETTECOLOR, file);
+        }
+        public void setFont(@NotNilptr QFont font){
+            QtXnl.widget_set_native_value(nativehandle, Constant.SETAPPFONT, font.nativehandle);
+        }
+        
+        public void loadTranslator(String file){
+            QtXnl.widget_slot_string(nativehandle, Constant.LOADTRANSLATE, file);
+        }
+        
+        public Object onCreateXObject(long object,@NotNilptr  String objectClass){
+            switch(objectClass){
+                case "QMdiArea":
+                return new QMdiArea(object);
+                break;
+                case "QWidget":
+                return new QWidget(object);
+                break;
+                case "QPushButton":
+                return new QPushButton(object);
+                break;
+                case "QLineEdit":
+                return new QLineEdit(object);
+                break;
+                case "QDockWidget":
+                return new QDockWidget(object);
+                break;
+                case "QMenuBar":
+                return new QMenuBar(object);
+                break;
+                case "QAction":
+                return new QAction(object);
+                break;
+                case "QMenu":
+                return new QMenu(object);
+                break;
+                case "QHBoxLayout":
+                return new QHBoxLayout(object);
+                break;
+                case "QVBoxLayout":
+                return new QVBoxLayout(object);
+                break;
+                case "QsciScintilla":
+                return new QScintilla(object);
+                break;
+                case "QMainWindow":
+                return new QMainWindow(object);
+                break;
+                case "QDialog":
+                return new QDialog(object);
+                break;
+                case "QLabel":
+                return new QLabel(object);
+                break;
+                case "QSlider":
+                return new QSlider(object);
+                break;
+                case "QTabWidget":
+                return new QTabWidget(object);
+                break;
+                case "QTabBar":
+                return new QTabBar(object);
+                break;
+                case "QComboBox":
+                return new QComboBox(object);
+                break;
+                case "QCheckBox":
+                return new QCheckBox(object);
+                break;
+                case "QStatusBar":
+                return new QStatusBar(object);
+                break;
+                case "QToolBar":
+                return new QToolBar(object);
+                break;
+                case "QTableWidget":
+                return new QTableWidget(object);
+                break;
+                case "QTreeWidget":
+                return new QTreeWidget(object);
+                break;
+                case "QFileSystemWatcher":
+                return new QFileSystemWatcher(object);
+                break;
+                case "QDateTimeEdit":
+                return new QDateTimeEdit(object);
+                break;
+                case "QDateEdit":
+                return new QDateEdit(object);
+                break;
+                case "QTimeEdit":
+                return new QTimeEdit(object);
+                break;
+                case "QTextEdit":
+                return new QTextEdit(object);
+                break;
+                case "QProgressBar":
+                return new QProgressBar(object);
+                break;
+                case "QtTreePropertyBrowser":
+                return new QPropertyBrowser(object);
+                break;
+                case "QListView":
+                return new QListView(object);
+                break;
+                case "QMdiSubWindow":
+                return new QMdiSubWindow(object);
+                break;
+            }
+            return nilptr;
+        }
+        
+        public static void setAttribute(ApplicationAttribute attr, bool bOn){
+            QtXnl.widget_set_int_bool_value(0, Constant.APPLICATIONATTRIBUTES, attr, bOn);
+        }
+    };
+};

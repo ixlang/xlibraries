@@ -1,0 +1,47 @@
+//xlang Source, Name:QPaintDevice.xcsm 
+//Date: Sat Aug 13:38:22 2019 
+package Qt{
+
+public class QPaintDevice : QCore{
+    public enum PaintDeviceMetric {
+        PdmWidth = 1,
+        PdmHeight,
+        PdmWidthMM,
+        PdmHeightMM,
+        PdmNumColors,
+        PdmDepth,
+        PdmDpiX,
+        PdmDpiY,
+        PdmPhysicalDpiX,
+        PdmPhysicalDpiY,
+        PdmDevicePixelRatio,
+        PdmDevicePixelRatioScaled
+    };
+    
+    
+    public int devType() {
+        return QtXnl.widget_get_int_value(nativehandle, Constant.PAINTDEVICETYPE);
+    }
+    
+    public bool paintingActive() {
+        return QtXnl.widget_get_bool_value(nativehandle, Constant.PAINTDEVICEACTIVE);
+    }
+
+
+    public int width()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmWidth); }
+    public int height()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmHeight); }
+    public int widthMM()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmWidthMM); }
+    public int heightMM()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmHeightMM); }
+    public int logicalDpiX()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmDpiX); }
+    public int logicalDpiY()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmDpiY); }
+    public int physicalDpiX()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmPhysicalDpiX); }
+    public int physicalDpiY()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmPhysicalDpiY); }
+    public int devicePixelRatio()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET, PaintDeviceMetric.PdmDevicePixelRatio); }
+    public double devicePixelRatioF()   { return QtXnl.widget_get_double_value(nativehandle, Constant.PAINTDEVICEMETRICGETPRF); }
+    public double devicePixelRatioFScale(){ return QtXnl.widget_get_double_value(nativehandle, Constant.PAINTDEVICEPRFS);}
+    
+    public int colorCount()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET,PaintDeviceMetric.PdmNumColors); }
+    public int depth()  { return QtXnl.core_getintlong(nativehandle, Constant.PAINTDEVICEMETRICGET,PaintDeviceMetric.PdmDepth); }
+};
+
+};

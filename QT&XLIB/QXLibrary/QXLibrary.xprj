@@ -2,7 +2,7 @@
 	"QXLibrary":	{
 		"version":	"1.2",
 		"language":	"xlang",
-		"sources":	["QXLibrary.xcs", "..\\..\\..\\XStudio\\qt5\\qx5.xcsm"],
+		"sources":	["QXLibrary.xcs", ".\\qt5\\qt5.xcsm", ".\\qt5\\Constant.x"],
 		"configures":	{
 			"debug":	{
 				"path":	{

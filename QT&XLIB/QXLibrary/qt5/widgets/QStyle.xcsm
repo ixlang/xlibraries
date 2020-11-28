@@ -1,0 +1,4 @@
+package Qt{
+    public class QStyle : QNative{
+    };
+};

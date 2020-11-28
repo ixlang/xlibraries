@@ -1,0 +1,50 @@
+
+package Qt{
+    public class QComboBox : QWidget{
+        public QComboBox(){
+        
+        }
+        
+        public QComboBox(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtComboBox, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtComboBox, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        public void setText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.COMBOSETTEXT, text);
+        }
+        
+        public @NotNilptr String getCurrentText(){
+            String __txt = (String)QtXnl.core_getString(nativehandle, Constant.COMBOGETTEXT);
+            __nilptr_safe(__txt);
+            return __txt;
+        }
+        public void addItems(String [] items){
+            QtXnl.widget_set_object_value(nativehandle, Constant.COMBOBOXADD, items);
+        }
+        public void clear(){
+            QtXnl.widget_get_bool_value(nativehandle, Constant.COMBOXCLR);
+        }
+        public void setCurrentIndex(int id){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.COMBOBOXSETID, id);
+        }
+        
+        public int getCurrentIndex(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.COMBOBOXGETID);
+        }
+    };
+};

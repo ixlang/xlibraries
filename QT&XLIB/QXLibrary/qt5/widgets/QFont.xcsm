@@ -1,0 +1,89 @@
+package Qt{
+    public class QFont : QCore{
+       public  QFont(String fontName) throws IllegalArgumentException{
+            nativehandle = QtXnl.createNObject(QType.qtFont, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not new QPath");
+            }
+            QtXnl.widget_slot_string(nativehandle, Constant.FONTSETFAMILY, fontName);
+        }
+        
+       public  static QFont loadFromString(String string){
+            long h = QtXnl.long_string2(0, Constant.LOADFONTDESCRIPTION, string, nilptr);
+            if (h != 0){
+                return new QFont(h);
+            }
+            
+            return nilptr;
+        }
+        
+        public static QFont loadFromFile(String file, String subName){
+            long h = QtXnl.long_string2(0, Constant.LOADFONT, file, subName);
+            if (h != 0){
+                return new QFont(h);
+            }
+            
+            return nilptr;
+        }
+         
+        public QFont(String fontName, int size, bool ptsize){
+            nativehandle = QtXnl.createNObject(QType.qtFont, 0);
+            QtXnl.widget_slot_string(nativehandle, Constant.FONTSETFAMILY, fontName);
+            if (ptsize){
+                QtXnl.widget_set_vint_value(nativehandle, Constant.FONTPTSIZE, size);
+            }else{
+                QtXnl.widget_set_vint_value(nativehandle, Constant.FONTPXSIZE, size);
+            }
+        }
+        
+        public QFont(long handle){
+            nativehandle = handle; 
+        }
+        
+        public QFont(){
+            nativehandle = QtXnl.createNObject(QType.qtFont, 0);
+        }
+        public int ascent(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.FONTASCENT);
+        }
+       public  int descent(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.FONTDESCENT);
+        }
+       public  void setFont(String fontName){
+            QtXnl.widget_slot_string(nativehandle, Constant.FONTSETFAMILY, fontName);
+        }
+        
+       public  void setPointSize(int ptSize){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.FONTPTSIZE, ptSize);
+        }
+        
+       public  void setPixelSize(int pxSize){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.FONTPXSIZE, pxSize);
+        }
+        
+      public   void finalize(){
+            QtXnl.widget_slot(nativehandle, Constant.FONTCTOR);
+        }
+        
+       public  String familyName(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.GETFONTNAME);
+        }
+        
+        public int pointSize(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.GETFONTPTSIZE);
+        }
+        
+       public  int pixelSize(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.GETFONTPIXELSIZE);
+        }
+        
+       public @NotNilptr QRect measure(String text){
+            QRect qr = new QRect();
+            long v = QtXnl.long_longstring(nativehandle, Constant.MEASURETEXT, 0, text);
+            qr.left = qr.top = 0;
+            qr.right = (v >> 32) & 0xffffffff;
+            qr.bottom = v & 0xffffffff;
+            return qr;
+        }
+    };
+};

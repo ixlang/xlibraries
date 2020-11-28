@@ -85,103 +85,103 @@ class AdoConnector : Sql.Connection{
             hres = r;
         }
         
-		public bool first(){
+		public bool first()override{
             return Helper.ado_rs_first(hres);
         }
         
-		public bool last(){
+		public bool last()override{
             return Helper.ado_rs_last(hres);
         }
 
-		public bool next(){
+		public bool next()override{
             return Helper.ado_rs_next(hres);
         }
         
-		public bool previous(){
+		public bool previous()override{
             return Helper.ado_rs_prev(hres);
         }
 
-		public bool isFirst(){
+		public bool isFirst()override{
             throw new Sql.DatabaseNotSupportException("isFirst");
             return false;
         }
         
-		public bool isLast(){
+		public bool isLast()override{
             throw new Sql.DatabaseNotSupportException("isLast");
             return false;
         }
         
-        public bool isEof(){
+        public bool isEof()override{
             return Helper.ado_rs_iseof(hres);
         }
         
-		public bool isValid(){
+		public bool isValid()override{
             return hres != 0;
         }
         
-		public int getInt(String columnlabel){
+		public int getInt(String columnlabel)override{
             return Helper.ado_rs_getValueI(hres, columnlabel);
         }
         
-		public long getLong(String columnlabel){
+		public long getLong(String columnlabel)override{
             return Helper.ado_rs_getValueL(hres, columnlabel);
         }
         
-		public double getDouble(String columnlabel){
+		public double getDouble(String columnlabel)override{
             return Helper.ado_rs_getValueD(hres, columnlabel);
         }
         
-		public byte getByte(String columnlabel){
+		public byte getByte(String columnlabel)override{
             return Helper.ado_rs_getValueI(hres, columnlabel);
         }
         
-		public bool getBoolean(String columnlabel){
+		public bool getBoolean(String columnlabel)override{
             return Helper.ado_rs_getValueI(hres, columnlabel) != 0;
         }
         
-		public String getString(String columnlabel){
+		public String getString(String columnlabel)override{
             return (String)Helper.ado_rs_getValue(hres, columnlabel);
         }
 
-		public int getInt(int columnIndex){
+		public int getInt(int columnIndex)override{
             return Helper.ado_rs_getIValueI(hres, columnIndex);
         }
         
-		public long getLong(int columnIndex){
+		public long getLong(int columnIndex)override{
             return Helper.ado_rs_getIValueL(hres, columnIndex);
         }
         
-		public double getDouble(int columnIndex){
+		public double getDouble(int columnIndex)override{
             return Helper.ado_rs_getIValueD(hres, columnIndex);
         }
         
-		public byte getByte(int columnIndex){
+		public byte getByte(int columnIndex)override{
             return Helper.ado_rs_getIValueI(hres, columnIndex);
         }
         
-		public bool getBoolean(int columnIndex){
+		public bool getBoolean(int columnIndex)override{
             return Helper.ado_rs_getIValueI(hres, columnIndex) != 0;
         }
         
-		public String getString(int columnIndex){
+		public String getString(int columnIndex)override{
             return (String)Helper.ado_rs_getIValue(hres, columnIndex);
         }
 
-		public int findColumn(String){
+		public int findColumn(String)override{
             throw new Sql.DatabaseNotSupportException("findColumn");
             return -1;
         }
         
-		public long getRowCount(){
+		public long getRowCount()override{
             return Helper.ado_rs_count(hres);
         }
         
-		public int getRow(){
+		public int getRow()override{
             throw new Sql.DatabaseNotSupportException("getRow");
             return 0;
         }
         
-		public void close(){
+		public void close()override{
             if (hres != 0){
                 Helper.ado_delloc_rs(hres);
                 hres = 0;
@@ -200,9 +200,9 @@ class AdoConnector : Sql.Connection{
             __ado = m;
         }
         
-        public int execute(String sql){
+        public int execute(String sql)override{
             int errcode = 0;
-            String errmsg;
+            String errmsg = nilptr;
             
             long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
             if (0 == hrs){
@@ -213,9 +213,9 @@ class AdoConnector : Sql.Connection{
             return 0;
         }
         
-        public Sql.ResultSet executeQuery(String sql){
+        public Sql.ResultSet executeQuery(String sql)override{
             int errcode = 0;
-            String errmsg;
+            String errmsg = nilptr;
             long hrs = Helper.ado_execute(__ado.hAdo,sql, true, errcode, errmsg);
             if (0 == hrs){
                 throw new Sql.SqlException(errcode, errmsg);
@@ -223,9 +223,9 @@ class AdoConnector : Sql.Connection{
             return new AdoResultSet(hrs);
         }
         
-        public int executeUpdate(String sql){
+        public int executeUpdate(String sql)override{
             int errcode = 0;
-            String errmsg;
+            String errmsg = nilptr;
             long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
             if (0 == hrs){
                 throw new Sql.SqlException(errcode, errmsg);
@@ -235,9 +235,9 @@ class AdoConnector : Sql.Connection{
             return 0;
         }
         
-        public Sql.ResultSet getResult(){ throw new Sql.DatabaseNotSupportException("getResult"); return nilptr;     }
+        public Sql.ResultSet getResult()override{ throw new Sql.DatabaseNotSupportException("getResult"); return nilptr;     }
         
-        public void close(){ }
+        public void close()override{ }
     };
     
     
@@ -249,9 +249,9 @@ class AdoConnector : Sql.Connection{
             __ado = m;
         }
         
-        public int execute(String sql){
+        public int execute(String sql)override{
             int errcode = 0;
-            String errmsg;
+            String errmsg = nilptr;
             long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
             if (0 == hrs){
                 throw new Sql.SqlException(errcode, errmsg);
@@ -261,9 +261,9 @@ class AdoConnector : Sql.Connection{
             return 0;
         }
         
-        public Sql.ResultSet executeQuery(String sql){
+        public Sql.ResultSet executeQuery(String sql)override{
             int errcode = 0;
-            String errmsg;
+            String errmsg = nilptr;
             long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
             if (0 == hrs){
                 throw new Sql.SqlException(errcode, errmsg);
@@ -271,9 +271,9 @@ class AdoConnector : Sql.Connection{
             return new AdoResultSet(hrs);
         }
         
-        public int executeUpdate(String sql){
+        public int executeUpdate(String sql)override{
             int errcode = 0;
-            String errmsg;
+            String errmsg = nilptr;
             long hrs = Helper.ado_execute(__ado.hAdo,sql, false, errcode, errmsg);
             if (0 == hrs){
                 throw new Sql.SqlException(errcode, errmsg);
@@ -283,9 +283,9 @@ class AdoConnector : Sql.Connection{
             return 0;
         }
         
-        public Sql.ResultSet getResult(){           throw new Sql.DatabaseNotSupportException("getResult"); return nilptr;        }
+        public Sql.ResultSet getResult()override{           throw new Sql.DatabaseNotSupportException("getResult"); return nilptr;        }
         
-        public void close(){
+        public void close()override{
         
         }
     };
@@ -315,7 +315,7 @@ class AdoConnector : Sql.Connection{
             throw new Sql.SqlException(-1, "driver is nilptr");
         }
         int errcode = 0;
-        String errmsg;
+        String errmsg = nilptr;
             
         hAdo = Helper.ado_alloc(driver, uri, port, username, pwd, timeout, errcode, errmsg);
         

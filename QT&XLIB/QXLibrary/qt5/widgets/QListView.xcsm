@@ -1,0 +1,30 @@
+
+package Qt{
+    public class QListView : QWidget{
+        
+        public QListView(){
+            
+        }
+        
+        public QListView(long h){
+            super(h);
+        }
+        
+        bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtListView, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtListView, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+    };
+};

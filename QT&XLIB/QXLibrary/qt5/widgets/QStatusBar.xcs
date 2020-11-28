@@ -1,0 +1,56 @@
+//xlang Source, Name:QStatusBar.xcs 
+//Date: Sat Aug 11:03:30 2018 
+package Qt{
+    public class QStatusBar : QWidget{
+        public QStatusBar(){
+        
+        }
+        
+        public QStatusBar(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtStatusBar, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtStatusBar, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        public void addWidget(@NotNilptr QWidget widget, int stretch ){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.ADDWIDGET, widget.nativehandle, stretch, 0);
+        }
+        public int insertWidget(int index, @NotNilptr QWidget widget, int stretch){
+            return QtXnl.int_long_int_long_int_int(nativehandle, Constant.INSERTWIDGET, widget.nativehandle, stretch, index);
+        }
+        public void addPermanentWidget(@NotNilptr QWidget widget, int stretch){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.ADDPERWIDGET, widget.nativehandle, stretch, 0);
+        }
+        public int insertPermanentWidget(int index, @NotNilptr QWidget widget, int stretch){
+            return QtXnl.int_long_int_long_int_int(nativehandle, Constant.INSERTPERWIDGET, widget.nativehandle, stretch, index);
+        }
+        public void removeWidget(@NotNilptr QWidget widget){
+            QtXnl.widget_set_native_value(nativehandle, Constant.REMOVEWIDGET, widget.nativehandle);
+        }
+       public void setSizeGripEnabled(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.SIZEGRIPENABLED, b);
+        }
+        public bool isSizeGripEnabled() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.SIZEGRIPENABLED);
+        }
+        public String currentMessage() {
+            return (String)QtXnl.core_getString(nativehandle, Constant.CURRENTMESSAGE);
+        }
+        public void showMessage(String text){
+            QtXnl.widget_slot_string(nativehandle,Constant. SHOWMESSAGE, text);
+        }	
+    };
+};

@@ -1,0 +1,62 @@
+package Qt{
+    public class QCore : QNative {
+        public QCore() {
+        }
+        public QCore(int type) throws IllegalArgumentException {
+            nativehandle = QtXnl.createQObject(type, this, 0);
+            if (nativehandle == 0) {
+                throw new IllegalArgumentException("can't new Object");
+            }
+        }
+        public QCore(int type, QNative parent) throws IllegalArgumentException{
+            if (parent == nilptr) {
+                throw new IllegalArgumentException("parent is null");
+            }
+            nativehandle = QtXnl.createQObject(QType.qtWidget, this, parent.nativehandle);
+            if (nativehandle == 0) {
+                throw new IllegalArgumentException("can't new Object");
+            }
+        }
+
+        public QCore(long handle) {
+            super(handle);
+        }
+
+        public Object subClass(@NotNilptr QCore object) {
+            if (QtXnl.core_sub_class(nativehandle, this, object)) {
+                object.nativehandle = nativehandle;
+                nativehandle = 0;
+                return object;
+            }
+            return nilptr;
+        }
+
+        public static bool openUrl(String url) {
+            return 0 != QtXnl.long_string2(0, Constant.OPENURL, url, nilptr);
+        }
+        public static bool openLocal(String url) {
+            return 0 != QtXnl.long_string2(0, Constant.OPENLOCAL, url, nilptr);
+        }
+        public void Notify(long eventid) {
+            QtXnl.widget_set_native_value(nativehandle, Constant.XNOTIFY, eventid);
+        }
+        public static void setClipboardText(String text) {
+            QtXnl.widget_slot_string(0, Constant.CLIPBOARDTEXT, text);
+        }
+        public static String getClipboardText() {
+            return (String)QtXnl.core_getString(0, Constant.CLIPBOARDTEXT);
+        }
+        public static void setClipboardImage(@NotNilptr QImage img) {
+            QtXnl.widget_set_native_value(0, Constant.CLIPBOARDIMAGE, img.himage);
+        }
+        public static QImage getClipboardImage() {
+            QImage img = nilptr;
+            long handle = QtXnl.object_get_long_int(0, Constant.CLIPBOARDIMAGE, 0, 0);
+            if (handle != 0) {
+                img = new QImage();
+                img.himage = handle;
+            }
+            return img;
+        }
+    };
+};

@@ -1,0 +1,23 @@
+
+package Qt{
+    public class QFileDialog : QNative{
+        public static String getOpenFileName(String caption, String defaultPath, String pattern,@NotNilptr  QWidget parent){
+            return (String)QtXnl.openfile_dlg_string3_obj(Constant.OPEN, caption, defaultPath,  pattern, parent.nativehandle);
+        }
+        public static String[] getOpenFileNames(String caption, String defaultPath, String pattern,@NotNilptr  QWidget parent){
+            return (String[])QtXnl.openfile_dlg_string3_obj(Constant.OPENMULTI, caption, defaultPath,  pattern, parent.nativehandle);
+        }
+        public static String getSaveFileName(String caption, String defaultPath, String pattern,@NotNilptr  QWidget parent){
+            return (String)QtXnl.openfile_dlg_string3_obj(Constant.SAVE, caption, defaultPath,  pattern, parent.nativehandle);
+        }
+        public static String getFolderPath(String caption, String defaultPath, String optionNum,@NotNilptr  QWidget parent){
+            return (String)QtXnl.openfile_dlg_string3_obj(Constant.FOLDER, caption, defaultPath, optionNum, parent.nativehandle);
+        }
+    };
+
+    public class QFontDialog : QNative{
+        public static String getFontDialog(String caption, String defaultfont,@NotNilptr  QWidget parent){ 
+            return (String)QtXnl.openfile_dlg_string3_obj(Constant.GETFONT, caption, defaultfont, nilptr, parent.nativehandle);
+        }
+    };
+};

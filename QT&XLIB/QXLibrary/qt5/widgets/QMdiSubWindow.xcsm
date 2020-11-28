@@ -1,0 +1,35 @@
+package Qt{
+    public class QMdiSubWindow : QWidget{
+        public QMdiSubWindow(){
+            
+        }
+        
+        public QMdiSubWindow(long h){
+            super(h);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtMdiSubWnd, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtMdiSubWnd, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public void setWidget(@NotNilptr QWidget w){
+            QtXnl.widget_set_native_value(nativehandle, Constant.SUBSETWIDGET, w.nativehandle);
+        }
+        
+        public QWidget getWidget(QWidget w){
+            return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.SUBGETWIDGET);
+        }
+    };
+};

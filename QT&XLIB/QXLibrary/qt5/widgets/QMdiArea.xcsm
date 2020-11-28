@@ -1,0 +1,62 @@
+
+package Qt{
+    public class QMdiArea : QWidget{
+        public static const int ScrollBarAsNeeded = 0;
+        public static const int ScrollBarAlwaysOff = 1;
+        public static const int ScrollBarAlwaysOn = 2;
+            
+        public static const int SubWindowView = 0;
+        public static const int TabbedView = 1;
+        
+        public QMdiArea(long handle){
+            super(handle);
+        }
+        
+        public QMdiSubWindow createSubWnd(bool bshow){
+            QMdiSubWindow wnd = new QMdiSubWindow();
+            if (wnd.create(this)){
+                if (bshow){
+                    wnd.show();
+                }
+                return wnd;
+            }
+            return nilptr;
+        }
+        
+        public void setViewMode(int vm){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.MDIMODE, vm);
+        }
+        
+        public void setHorizontalScrollBarPolicy(int v){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.MDISETSCROLLH, v);
+        }
+        
+        public void setVerticalScrollBarPolicy(int v){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.MDISETSCROLLV, v);
+        }
+        
+        public void removeSubWindow(@NotNilptr QWidget subWindow){
+            QtXnl.widget_set_native_value(nativehandle, Constant.REMSUBWIN, subWindow.nativehandle);
+        }
+        
+        public void addSubWindow(@NotNilptr QWidget subWindow){
+            QtXnl.widget_set_native_value(nativehandle, Constant.ADDSUBWIN, subWindow.nativehandle);
+        }
+        
+        public QWidget currentSubWindow(){
+            return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.CURRENTSUBWIN);
+        }
+        
+        public void cascadeSubWindows(){
+            QtXnl.widget_slot(nativehandle, Constant.CASCADESUBWIN);
+        }
+        
+        public void tileSubWindows(){
+            QtXnl.widget_slot(nativehandle, Constant.TILESUBWIN);
+        }
+        
+        public void setActiveSubWindow(@NotNilptr QMdiSubWindow window){
+            QtXnl.widget_set_native_value(nativehandle, Constant.SETACTSUBWIN, window.nativehandle);
+        }
+    };
+};

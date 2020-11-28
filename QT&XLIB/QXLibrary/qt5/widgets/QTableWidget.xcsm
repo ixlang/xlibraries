@@ -1,0 +1,166 @@
+//xlang Source, Name:qt5/widgets/QTableWidget.xcsm 
+//Date: Mon Feb 18:20:25 2019 
+
+package Qt{
+    public class QTableWidget : QWidget{
+        public QTableWidget(){
+        
+        }
+        
+        public QTableWidget(long handle){
+            super(handle);
+        }
+        
+        public bool create() override {
+            nativehandle = QtXnl.createQObject(QType.qtTableWidget, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+
+        public bool create(@NotNilptr QWidget parent) override {
+            nativehandle = QtXnl.createQObject(QType.qtTableWidget, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+
+        public long setItem(int row, int column, String icon, String text){
+            return QtXnl.long_long_string2(nativehandle, Constant.TABLESETITEM, ((long)row) << 32 | column, icon, text);
+        }
+        
+        public void setColumnCount(int c){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETCOLUMNCNT, c);
+        }
+        
+        public void setRowCount(int c){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETROWCNT, c);
+        }
+        
+        public void removeRow(int n){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLEREMOVEROW, n);
+        }
+        
+        public void removeColumn(int n){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLEREMOVECOLUMN, n);
+        }
+        
+        public void selectRow(int n){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESELECTROW, n);
+        }
+        
+        public void modifyItemFlags(long item, int add, int remove){
+            QtXnl.widget_set_v2int_value(item, Constant.TABLEITEMFLAG, add, remove);
+        }
+        
+        public void setItemTag(long item, long tag){
+            QtXnl.object_set_long_int_long(nativehandle, Constant.TABLESETTAG, item, 0, tag);
+        }
+        
+        public long getTag(long item){
+            return QtXnl.object_get_long_int(0,Constant. TABLEGETTAG, item, 0);
+        }
+        
+        public void setHHStretchLastSection(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TABLESETHHLS, b);
+        }
+        public void setVHResizeMode(int b){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETVHRM, b);
+        }
+        public void setVHDefaultSectionSize(int b){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETVHDSS, b);
+        }
+        public void setShowGrid(bool s){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TABLESETSG, s);
+        }
+        public void setVHVisible(bool bv){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TABLESETVHV, bv);
+        }
+        public void setSelectionMode(int sm){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETSM, sm);
+        }
+        public void setSelectionBehavior(int sb){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETSB, sb);
+        }
+        public void setEditTriggers(int et){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETET, et);
+        }
+        public void resizeHHSection(int row, int size){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.TABLESETHHRS, row, size);
+        }
+        public void setHHFixedHeight(int h){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TABLESETHHFH, h);
+        }
+        public void setHHColumns(String [] columns){
+            QtXnl.widget_set_object_value(nativehandle, Constant.SETTABHHCOLUMNS, columns);
+        }
+        public void setVHColumns(String [] columns){
+            QtXnl.widget_set_object_value(nativehandle, Constant.SETTABVHCOLUMNS, columns);
+        }
+        public String getText(int x, int y){
+            return (String)QtXnl.core_getStringlongint(nativehandle, Constant.TABLEGETTEXTBYRC, x, y);
+        }
+        public String getItemText(long item){
+            return (String)QtXnl.core_getStringlongint(item, Constant.TABLEGETTEXTBYITEM, 0, 0);
+        }
+        public void clear(){
+            QtXnl.widget_slot(nativehandle, Constant.TABLECLEAR);
+        }
+        public void clearContent(){
+            QtXnl.widget_slot(nativehandle,Constant. TABLECLEARCONTENT);
+        }
+        public long[] getSelectedItems(){
+            return (long[])QtXnl.widget_get_object(nativehandle, Constant.TABLEGETSELITEM);
+        }
+        public long getItem(int row, int column){
+            return QtXnl.object_get_long_int(nativehandle,Constant. TABLEGETITEM, row, column);
+        }
+        public QRect [] getSelectedRanges(){
+            long [] rs = (long[])QtXnl.widget_get_object(nativehandle, Constant.TABLEGETSELRANGE);
+            if (rs != nilptr){
+                QRect []rgs = new QRect[rs.length / 2];
+                
+                for (long i =0, c = rgs.length; i < c; i++){
+                    QRect r = new QRect((int)(rs[i * 2] >> 32) & 0xffffffff, (int)(rs[i * 2 + 1] >> 32) & 0xffffffff, (int)rs[i * 2] & 0xffffffff, (int)rs[i * 2 + 1] & 0xffffffff);
+                    rgs[i] = r;
+                }
+                
+                return rgs;
+            }
+            return nilptr;
+        }
+        public void setItemText(long item, String text){
+            QtXnl.widget_set_intlongstring_value(0, Constant.SETTABLEITEMTEXT, item, 0, text);
+        }
+        public void setItemIcon(long item , String iconFile){
+            QtXnl.widget_set_intlongstring_value(0, Constant.SETTABLEITEMICON, item, 0, iconFile);
+        }
+        public void setItemColor(long item, int color){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.SETTABLEITEMCOLOR, item, 0, color);
+        }
+        public void setItemBackColor(long item, int color){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.SETTABLEITEMBACKCOLOR, item, 0, color);
+        }
+        public void setItemCheck(long item , bool checked){
+            QtXnl.widget_set_int_bool_value(item, Constant.TABITEMSETCHECK, 0, checked);
+        }
+        
+        public bool isItemCheck(long item){
+            return QtXnl.widget_get_int_bool(item, Constant.TABITEMGETCHECK, 0);
+        }
+        
+        public int getItemFlags(long item){
+            return QtXnl.widget_get_int_value(item, Constant.TABITEMGETFLAG);
+        }
+        
+        public void setCellWidget(int x,int y,@NotNilptr  QWidget w){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.TABLESETCELLWIDGET, w.nativehandle, x, y);
+        }
+        
+        public QWidget getCellWidget(int x,int y){
+            return (QWidget)QtXnl.object_get_handle2(nativehandle, Constant.TABLEGETCELLWIDGET, x, y);
+        }
+    };
+};

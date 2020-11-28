@@ -1,0 +1,66 @@
+//xlang Source, Name:QMatrix.xcsm 
+//Date: Mon Oct 23:07:48 2018 
+package Qt{
+    public class QMatrix : QCore{
+        public QMatrix(){
+            nativehandle = QtXnl.createNObject(QType.qtMatrix, 0);
+        }
+        
+        public QMatrix(long h){
+            nativehandle = h;
+        }
+        
+        public QPoint mapPoint(@NotNilptr QPoint p){
+            long v = QtXnl.object_get_long_int(nativehandle, Constant.MATRIXMAPPOINT, p.x, p.y);
+            return new QPoint((int)(v >> 32) & 0xffffffff, (int)v & 0xffffffff);
+        }
+        
+        public QRect mapRect(@NotNilptr QRect r){
+            long lt = QtXnl.object_get_long_int(nativehandle, Constant.MATRIXMAPPOINT, r.left, r.top);
+            long rb = QtXnl.object_get_long_int(nativehandle, Constant.MATRIXMAPPOINT, r.right, r.bottom);
+            long lb = QtXnl.object_get_long_int(nativehandle, Constant.MATRIXMAPPOINT, r.left, r.bottom);
+            long rt = QtXnl.object_get_long_int(nativehandle, Constant.MATRIXMAPPOINT, r.right, r.top);
+            
+            int x1 = (int)(lt >> 32) & 0xffffffff,
+                x2 = (int)(rb >> 32) & 0xffffffff,
+                x3 = (int)(lb >> 32) & 0xffffffff,
+                x4 = (int)(rt >> 32) & 0xffffffff;
+                
+            int y1 = (int)lt & 0xffffffff,
+                y2 = (int)rb & 0xffffffff,
+                y3 = (int)lb & 0xffffffff,
+                y4 = (int)rt & 0xffffffff;
+                    
+            return new QRect(
+                Math.min(x1,Math.min(x2,Math.min(x3,x4))), Math.min(y1,Math.min(y2,Math.min(y3,y4))),
+                Math.max(x1,Math.max(x2,Math.max(x3,x4))), Math.max(y1,Math.max(y2,Math.max(y3,y4)))
+                );
+        }
+        
+        public QMatrix translate(double x, double y){
+            return new QMatrix(QtXnl.long_double2(nativehandle, Constant.MATRIXTRANSLATE, x, y));
+        }
+        
+        public QMatrix scale(double sx, double sy){
+            return new QMatrix(QtXnl.long_double2(nativehandle, Constant.MATRIXSCALE, sx, sy));
+        }
+
+        public QMatrix shear(double sh, double sv){
+            return new QMatrix(QtXnl.long_double2(nativehandle, Constant.MATRIXSHEAR, sh, sv));
+        }
+        
+        public QMatrix rotate(double a){
+            return new QMatrix(QtXnl.long_double2(nativehandle, Constant.MATRIXROTATE, a, 0));
+        }
+        
+        public QMatrix operator *(@NotNilptr QMatrix m){
+            return new QMatrix(QtXnl.object_get_long_int(nativehandle, Constant.MATRIXMUL, m.nativehandle, 0));
+        }
+        
+        public void finalize(){
+            if (nativehandle != 0){
+                QtXnl.widget_slot(nativehandle, Constant.MATRIXDTOR);
+            }
+        }
+    };
+};

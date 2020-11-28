@@ -24,12 +24,14 @@ $(LocalDebuggerEnvironment)
     <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
 $(LocalDebuggerEnvironment)
     </LocalDebuggerEnvironment>
+    <LocalDebuggerCommand>D:\Programs\windows_x64\XStudio1.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QTDIR>E:\Qt512\Qt5.12.0\5.9.1\win64_static</QTDIR>
-    <LocalDebuggerCommand>D:\home\XHexEditor\x64\debug\XHexEditor.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>D:\Programs\windows_x64\XStudio1.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerWorkingDirectory>D:\home\XHexEditor\x64\debug</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>D:\Programs\windows_x64</LocalDebuggerWorkingDirectory>
     <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(VCRedistPaths)%PATH%
 $(LocalDebuggerEnvironment)
     </LocalDebuggerEnvironment>

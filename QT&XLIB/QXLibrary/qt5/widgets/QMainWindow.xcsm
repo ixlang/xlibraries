@@ -1,0 +1,78 @@
+package Qt{
+public class QMainWindow : QWidget{
+    public QMainWindow(){
+    }
+    
+    public bool create()override {
+        nativehandle = QtXnl.createQObject(QType.qtMainWindow, this, 0);
+        if (nativehandle == 0){
+            return false;
+        }
+        return true;
+    }
+    
+    public bool create(@NotNilptr QWidget parent)override {
+        nativehandle = QtXnl.createQObject(QType.qtMainWindow, this, parent.nativehandle);
+        if (nativehandle == 0){
+            return false;
+        }
+        return true;
+    }    
+    
+    public QWidget getWindow(){
+        return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.WINDOW);
+    }
+    
+    public QWidget getCentralWindow(){
+        return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.CENTRALWIDGET);
+    }
+    
+    public QMainWindow(long handle){
+    
+    }
+    
+    public byte [] saveState(){
+		return (byte[])QtXnl.widget_get_object(nativehandle, Constant.SAVESTATE);
+    }
+    
+    public void loadState(byte [] data){
+		QtXnl.widget_set_object_value(nativehandle, Constant.LOADSTATE, data);
+    }
+    
+    public QMenuBar getMenuBar(){
+        return (QMenuBar)QtXnl.widget_get_object(nativehandle, Constant.MENUBAR);
+    }
+    
+	public QStatusBar getStatusBar(){
+		return (QStatusBar)QtXnl.widget_get_object(nativehandle, Constant.STATUSBAR);
+	}
+    
+    public void addDockWidget(int area, @NotNilptr QDockWidget widget, Orientation ori){
+        QtXnl.int_long_int_long_int_int(nativehandle, Constant.ADDDOCKWIDGET, widget.nativehandle, area, ori);
+    }
+    
+    public void setDockNestingEnabled(bool b){
+        QtXnl.widget_set_vint_value(nativehandle, Constant.SETDOCKNESTINGENABLED, b ? 1:  0);
+    }
+    
+    public void tabifyDockWidget(@NotNilptr QDockWidget a,@NotNilptr  QDockWidget b){
+        QtXnl.object_set_long_int_long(nativehandle, Constant.TABIFYDOCKWIDGET, a.nativehandle, 0, b.nativehandle);
+    }
+    
+    public bool isDockNestingEnabled(){
+        return QtXnl.widget_get_bool_value(nativehandle, Constant.ISDOCKNESTINGENABLED);
+    }
+    
+    public void addToolBar(@NotNilptr QToolBar bar){
+        QtXnl.widget_set_intlongint_value(nativehandle, Constant.MAINWNDADDTOOLBAR, bar.nativehandle, 0, 0);
+    }
+
+    public void addMenu(@NotNilptr QMenu menu){
+        QtXnl.widget_set_intlongint_value(nativehandle, Constant.MAINWNDMENUADD, menu.nativehandle, 0, 0);
+    }
+
+    public QMenu addMenu(@NotNilptr String menu){
+        return (QMenu)QtXnl.object_get_string(nativehandle, Constant.MAINWNDADDMENU, menu);
+    }
+};
+};

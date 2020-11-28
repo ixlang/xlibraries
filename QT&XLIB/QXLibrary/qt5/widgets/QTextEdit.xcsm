@@ -1,0 +1,245 @@
+//xlang Source, Name:QTextEdit.xcsm 
+//Date: Thu Sep 20:52:18 2019 
+    package Qt{
+    public class QTextEdit : QWidget{
+        public enum Alignment {
+            AlignLeft = 0x0001,
+            AlignLeading = 0x0001,
+            AlignRight = 0x0002,
+            AlignTrailing = 0x0002,
+            AlignHCenter = 0x0004,
+            AlignJustify = 0x0008,
+            AlignAbsolute = 0x0010,
+
+
+            AlignTop = 0x0020,
+            AlignBottom = 0x0040,
+            AlignVCenter = 0x0080,
+            AlignBaseline = 0x0100,
+            // Note that 0x100 will clash with Qt::TextSingleLine = 0x100 due to what the comment above
+            // this enum declaration states. However, since Qt::AlignBaseline is only used by layouts,
+            // it doesn't make sense to pass Qt::AlignBaseline to QPainter::drawText(), so there
+            // shouldn't really be any ambiguity between the two overlapping enum values.
+
+
+            AlignCenter = 0x0080 | 0x0004
+        };
+        public enum WrapMode {
+            NoWrap,
+            WordWrap,
+            ManualWrap,
+            WrapAnywhere,
+            WrapAtWordBoundaryOrAnywhere
+        };
+        public enum LineWrapMode {
+            NoWrap,
+            WidgetWidth,
+            FixedPixelWidth,
+            FixedColumnWidth
+        };
+        public enum AutoFormatting {
+            AutoNone = 0,
+            AutoBulletList = 0x00000001,
+            AutoAll = 0xffffffff
+        };
+        public QTextEdit() {//构造
+            //TODO:	
+        }
+
+        public QTextEdit(long h) {//构造
+            super(h);
+        }
+
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtTextEdit, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtTextEdit, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }   
+        
+        public static class onChangeListener{
+            public void onTextChanged(QTextEdit obj){
+            
+            }
+            
+            public void onCursorPositionChanged(QTextEdit obj){
+                
+            }
+            
+            public void onSelectionChanged(QTextEdit obj){
+                
+            }
+        };
+        
+        
+        onChangeListener lis = nilptr;
+        
+        public void setOnChangeListener(onChangeListener l){
+            lis = l;
+        }
+        public void onTextChanged(){
+            if (lis != nilptr){
+                lis.onTextChanged(this);
+            }
+        }
+        
+        public void onCursorPositionChanged(){
+            if (lis != nilptr){
+                lis.onCursorPositionChanged(this);
+            }
+        }
+        
+        public void onSelectionChanged()override {
+            if (lis != nilptr){
+                lis.onSelectionChanged(this);
+            }
+        }
+        
+        public void setReadOnly(bool breadOnly){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TESETREADONLY, breadOnly);
+        }
+        
+        public bool isReadOnly(){
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.TEGETREADONLY);
+        }
+        
+        public Alignment alignment() {
+            return (Alignment)QtXnl.widget_get_int_value(nativehandle, Constant.TEGETALIGNMENT);
+        }
+        
+        public WrapMode wordWrapMode() {
+            return (WrapMode)QtXnl.widget_get_int_value(nativehandle, Constant.TEGETWRAPMODE);
+        }
+        
+        public void setWordWrapMode(WrapMode policy){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETWORDWRAPMODE, policy);
+        }
+        
+        public String toHtml(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.TETOHTML);
+        }
+        
+        public String toPlainText(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.TETOPLAINTEXT);
+        }
+        
+        public void setFontPointSize(double s){
+            QtXnl.widget_set_double_value(nativehandle, Constant.TESETFONTPOINTSIZE, s);
+        }
+        public void setFontFamily(String fontFamily){
+            QtXnl.widget_slot_string(nativehandle, Constant.TESETFONTFAMILY, fontFamily);
+        }
+        public void setFontWeight(int w){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETFONTWEIGHT, w);
+        }
+        public void setFontUnderline(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TESETFONTUNDERLINE, b);
+        }
+        public void setFontItalic(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TESETFONTITALIC, b);
+        }
+        public void setTextColor(int c){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETTEXTCOLOR, c);
+        }
+        public void setTextBackgroundColor(int c){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETTEXTBACKGROUNDCOLOR, c);
+        }
+        public void setCurrentFont(@NotNilptr QFont f){
+            QtXnl.widget_set_native_value(nativehandle, Constant.TESETCURRENTFONT, f.nativehandle);
+        }
+        public void setAlignment(Alignment a){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETALIGNMENT, a);
+        }
+
+        public void setPlainText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.TESETPLAINTEXT, text);
+        }
+
+        public void setHtml(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.TESETHTML, text);
+        }
+
+        public void setText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.TESETTEXT, text);
+        }
+
+
+        public void cut(){
+            QtXnl.widget_slot(nativehandle, Constant.TECUT);
+        }
+        public void copy(){
+            QtXnl.widget_slot(nativehandle, Constant.TECOPY);
+        }
+        public void paste(){
+            QtXnl.widget_slot(nativehandle,Constant. TEPASTE);
+        }
+
+        public AutoFormatting autoFormatting() {
+            return (AutoFormatting)QtXnl.widget_get_int_value(nativehandle, Constant.TEGETAUTOFORMATTING);
+        }
+        public void setAutoFormatting(AutoFormatting features){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETAUTOFORMATTING, features);
+        }
+        public bool tabChangesFocus() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.TETABCHANGESFOCUS);
+        }
+        public void setTabChangesFocus(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TESETTABCHANGESFOCUS, b);
+        }
+        public void setPlaceholderText(String placeholderText){
+            QtXnl.widget_slot_string(nativehandle, Constant.TESETPLACEHOLDERTEXT, placeholderText);
+        }
+        public String placeholderText() {
+            return (String)QtXnl.core_getString(nativehandle, Constant.TEGETPLACEHOLDERTEXT);
+        }
+        public void undo(){
+            QtXnl.widget_slot(nativehandle, Constant.TEUNDO);
+        }
+        public void redo(){
+            QtXnl.widget_slot(nativehandle, Constant.TEREDO);
+        }
+
+        public void clear(){
+            QtXnl.widget_slot(nativehandle, Constant.TECLEAR);
+        }
+        public void selectAll(){
+            QtXnl.widget_slot(nativehandle, Constant.TESELECTALL);
+        }
+
+        public void insertPlainText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.TEINSERTPLAINTEXT, text);
+        }
+
+        public void insertHtml(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.TEINSERTHTML, text);
+        }
+
+
+        public void append(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.TEAPPEND, text);
+        }
+
+        public void scrollToAnchor(String name){
+            QtXnl.widget_slot_string(nativehandle, Constant.TESCROLLTOANCHOR, name);
+        }
+
+        public void zoomIn(int range ){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TEZOOMIN, range);
+        }
+        public void zoomOut(int range ){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TEZOOMOUT, range);
+        }
+        public void setLineWrapMode(LineWrapMode mode){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TESETLINEWRAPMODE, mode);
+        }
+    };
+};

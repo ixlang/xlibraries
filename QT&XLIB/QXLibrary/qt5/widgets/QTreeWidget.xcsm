@@ -1,0 +1,203 @@
+package Qt{
+    public class QTreeWidget : QWidget{
+        
+        public static const int 
+            NoItemFlags = 0,
+            ItemIsSelectable = 1,
+            ItemIsEditable = 2,
+            ItemIsDragEnabled = 4,
+            ItemIsDropEnabled = 8,
+            ItemIsUserCheckable = 16,
+            ItemIsEnabled = 32,
+            ItemIsAutoTristate = 64,
+            ItemIsTristate = ItemIsAutoTristate,
+            ItemNeverHasChildren = 128,
+            ItemIsUserTristate = 256;
+            
+        public QTreeWidget(){
+        
+        }
+        
+        public QTreeWidget(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtTreeView, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtTreeView, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public long addItem(String icon, String Text){
+            return QtXnl.long_string2(nativehandle, Constant.TREEWIDGETADD, icon, Text);
+        }
+        public long addItemWithIcon(@NotNilptr QIcon icon, String Text){
+            return QtXnl.long_longstring(nativehandle, Constant.TREEWIDGETADD, icon.nativehandle, Text);
+        }
+        public long insertItem(long parent, String icon, String Text){
+            return QtXnl.long_long_string2(nativehandle, Constant.TREEWIDGETINST, parent, icon, Text);
+        }
+        public void removeItem(long item){
+            QtXnl.widget_set_native_value(nativehandle, Constant.TREEWIDGETREM, item);
+        }
+        public void setCurrentItem(long item){
+            QtXnl.widget_set_native_value(nativehandle, Constant.TREESETCURITEM, item);
+        }
+        public void setItemText(long item, int row ,String text){
+            QtXnl.widget_set_intlongstring_value(nativehandle, Constant.SETITEMTEXT, item, row, text);
+        }
+        public void setItemIcon(long item, int row ,String file){
+            QtXnl.widget_set_intlongstring_value(nativehandle, Constant.SETITEMICON, item, row, file);
+        }
+        public void setItemColor(long item, int row ,int color){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.SETITEMCOLOR, item, row, color);
+        }
+        
+        public void setItemBackColor(long item, int row ,int color){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.SETBACKCOLOR, item, row, color);
+        }
+        
+        public void setItemBackgroundBrush(long item, int row ,@NotNilptr QBrush brush){
+            QtXnl.widget_set_intlongint_value(item, Constant.TRSETFOREBR, brush.nativehandle, row, 0);
+        }
+        
+        public void setItemForegroundBrush(long item, int row ,@NotNilptr QBrush brush){
+            QtXnl.widget_set_intlongint_value(item, Constant.TRSETBACKBR, brush.nativehandle, row, 0);
+        }
+        
+        public void setColumns(String [] columns){
+            QtXnl.widget_set_object_value(nativehandle, Constant.SETCOLUMNS, columns);
+        }
+        
+        public void setItemTag(long item, int row, long tag){
+            QtXnl.object_set_long_int_long(nativehandle, Constant.SETTAG, item, row, tag);
+        }
+        
+        public long getItemTag(long item ,int row){
+            return QtXnl.object_get_long_int(nativehandle, Constant.GETTAG, item ,row);
+        }
+        public void setColumnWidth(int column, int width){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.SETCOLUMBWIDTH, column, width);
+        }
+        public @NotNilptr String getItemText(long item , int row){
+            String __txt = (String)QtXnl.core_getStringlongint(nativehandle, Constant.TRGETITEMTEXT, item, row);
+            __nilptr_safe(__txt);
+            return __txt;
+        }
+        public long getSelItem(){
+            return QtXnl.long_get(nativehandle, Constant.TREEWIDGETGETSEL);
+        }
+        public void setItemSelected(long item, bool select){
+            QtXnl.object_get_long_int(nativehandle, Constant.TREEITEMSELED, item ,select ? 1 : 0);
+        }
+        public void clear(){
+            QtXnl.widget_get_bool_value(nativehandle, Constant.TREEWIDGETCLEAR);
+        }
+        public QWidget viewPort(){
+            return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.GETVIEWPORT);
+        }
+        public void setHeaderVisible(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TRCOLUMNSHOW, b);
+        }
+        public void scrollToBottom(){
+            QtXnl.widget_slot(nativehandle, Constant.TRSCROLLBOTTOM);
+        }
+        public void setSortEnable(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TRSORTENABLE, b);
+        }
+        public void setFullRowSelection(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TRSELECTMODE, b);
+        }
+        public int getHeaderWidth(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.TRHEADERWIDTH);
+        }
+        public void setColumnAutoResize(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.TRAUTORESIZE, b);
+        }
+        public void setTextElidMode(int mode){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TRELIDMODE, mode);
+        }
+        public int getCurrentRow(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.TREEGETCURROW);
+        }
+        public int getCurrentColumn(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.TREEGETCURCOL);
+        }
+        public void setCurrentIndex(int row, int column){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.TREESETCURROW, row, column);
+        }
+        public void setCurrentRow(int row){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TREESETCURROW, row);
+        }
+        
+        public void setCurrentComuln(int column){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.TREESETCURCOL, column);
+        }
+        
+        public void removeAllchild(long item){
+            QtXnl.widget_slot(item, Constant.TRIEMCLEARCHILD);
+        }
+        
+        public void setExpand(long item, bool bExp){
+            QtXnl.widget_set_bool_value(item, Constant.TRIEMSETEXPAND, bExp);
+        }
+        
+        public void setItemVisible(long item, bool bVisible){
+            QtXnl.widget_set_bool_value(item, Constant.TRIEMSETHIDDEN, !bVisible);
+        }
+        
+        public int getTopLevelCount(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.TREEGETCOUNT);
+        }
+        
+        public long getTopItem(int id){
+            return QtXnl.object_get_long_int(nativehandle, Constant.GETTOPITEM, id, 0);
+        }
+        
+        public long[] getSelectedItems(){
+            return (long[])QtXnl.widget_get_object(nativehandle, Constant.TREEGETSELITEM);
+        }
+        
+        public long[] getTopItems(){
+            return (long[])QtXnl.widget_get_object(nativehandle, Constant.TREEGETTOPITEMS);
+        }
+        
+        public long[] getItemChildren(long item){
+            return (long[])QtXnl.widget_get_object(item, Constant.TREEGETCHILDREN);
+        }
+        
+        public void modifyItemFlags(long item, int add, int remove){
+            QtXnl.widget_set_v2int_value(item, Constant.TREEITEMFLAG, add, remove);
+        }
+        
+        public int getItemFlags(long item){
+            return QtXnl.widget_get_int_value(item, Constant.TREEITEMGETFLAG);
+        }
+        
+        public long getParentItem(long item){
+            return QtXnl.long_get(item, Constant.TREEITEMPARENT);
+        }
+        
+        public void setItemCheck(long item ,int column, bool checked){
+            QtXnl.widget_set_int_bool_value(item, Constant.TRITEMSETCHECK, column, checked);
+        }
+        
+        public bool isItemCheck(long item ,int column){
+            return QtXnl.widget_get_int_bool(item, Constant.TRITEMGETCHECK, column);
+        }
+        
+        public bool isItemExpand(long item){
+            return QtXnl.widget_get_int_bool(item, Constant.TREEITEMISEXPAND, 0);
+        }
+    };
+};

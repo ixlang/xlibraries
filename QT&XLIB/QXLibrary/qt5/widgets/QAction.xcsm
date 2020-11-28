@@ -1,0 +1,84 @@
+package Qt{
+    public class QAction : QObject{
+        public QAction(){
+        }
+        public bool create(){
+            nativehandle = QtXnl.createQObject(QType.qtAction, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent){
+            nativehandle = QtXnl.createQObject(QType.qtAction, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public QAction(long handle){
+            super(handle);
+        }
+        
+        public void setMenu(@NotNilptr QMenu menu){
+            QtXnl.widget_set_native_value(nativehandle, Constant.SETMENU, menu.nativehandle);
+        }
+        
+        public void setSeparator(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.SETSEP, b);
+        }
+        
+        public bool isSeparator(){
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.ISSEP);
+        }
+        
+        public void setShortcut(String shortcutKey){
+            QtXnl.widget_slot_string(nativehandle, Constant.SETSHRCUT, shortcutKey);
+        }
+        
+        public void setShortcut(int StandardKey){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.SETSHRCUT, StandardKey);
+        }
+        
+        public void setText(String text){
+            QtXnl.widget_slot_string(nativehandle, Constant.ACTSETTEXT, text);
+        }
+        
+        public String getText(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.ACTGETTEXT);
+        }
+        
+        public void setEnable(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.ACTENABLED, b);
+        }
+        public QMenu getMenu(){
+            return (QMenu)QtXnl.widget_get_object(nativehandle, Constant.GETMENU);
+        }
+        
+        public QWidget parentWidget(){
+            return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.PARENTWIDGET);
+        }
+        
+        public void trigger(){
+            QtXnl.widget_slot(nativehandle, Constant.TRIGGER);
+        }
+        
+        public void setChecked(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.CHECKED, b);
+        }
+        
+        public bool getChecked(){
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.CHECKED);
+        }
+        
+        public void setCheckable(bool b){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.CHECKABLE, b);
+        }
+        
+        public bool getCheckable(){
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.CHECKABLE);
+        }
+    };
+};

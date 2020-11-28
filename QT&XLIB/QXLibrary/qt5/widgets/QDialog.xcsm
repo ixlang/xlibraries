@@ -1,0 +1,36 @@
+package Qt{
+    public class QDialog : QWidget{
+        public QDialog(){
+        
+        }
+        
+        public QDialog(long handle){
+            super(handle);
+        }
+        
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtDialog, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtDialog, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }    
+        
+        public int exec(){
+            return QtXnl.widget_get_int_value(nativehandle, Constant.PRTDLGEXEC);
+        }
+        
+            
+        public void done(int result){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.PRTDLGDONE, result);
+        }
+    };
+};

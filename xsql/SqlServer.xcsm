@@ -7,7 +7,7 @@ class SqlServer : AdoConnector{
         setDriver("SQL SERVER");
     }
     public static class SqlServerRegister : Sql.ConnectionRegister{
-		Sql.Connection allocConnection(String drivername){
+		Sql.Connection allocConnection(String drivername)override{
 			if (drivername.equals("sqlserver")){
 				return new SqlServer();
             }
@@ -15,7 +15,7 @@ class SqlServer : AdoConnector{
         }
     };
     
-	static bool registry(){
+	public static bool registry(){
         
         if (Helper.init()){
             Sql.Database.reigstry("sqlserver", new SqlServerRegister());

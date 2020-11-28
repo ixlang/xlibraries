@@ -1,0 +1,33 @@
+//xlang Source, Name:QFileSystemWatcher.xcsm 
+//Date: Tue Nov 21:50:30 2018 
+
+package Qt{
+    public class QFileSystemWatcher : QObject{
+        
+        public QFileSystemWatcher(){
+        
+        }
+        
+        public QFileSystemWatcher(long handle){
+            super(handle);
+        }
+        
+        public bool create(@NotNilptr QWidget parent){
+            nativehandle = QtXnl.createQObject(QType.qtFileWatch, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool addPath(String path){
+            return 1 == QtXnl.widget_set_intstring_value(nativehandle, Constant.FSWADDFILE, 0, path);
+        }
+        
+        public bool removePath(String path){
+            return 1 == QtXnl.widget_set_intstring_value(nativehandle, Constant.FSWREMFILE, 0, path);
+        }
+        
+     
+    };
+};

@@ -1,0 +1,53 @@
+//xlang Source, Name:QToolBar.xcsm 
+//Date: Tue Nov 08:54:04 2018 
+
+package Qt{
+    public class QToolBar : QWidget{
+        public QToolBar(){
+        
+        }
+        
+        public QToolBar(long handle){
+            super(handle);
+        }
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtToolbar, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtToolbar, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public void addWidget(@NotNilptr QWidget widget){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.TOOLBARADDWIDGET, widget.nativehandle, 0, 0);
+        }
+        
+        public void insertWidget(@NotNilptr QAction action,@NotNilptr  QWidget widget){
+            QtXnl.void_long2(nativehandle, Constant.TOOLBARINSWIDGET, action.nativehandle, widget.nativehandle);
+        }
+
+        public void addAction(@NotNilptr QAction action)override{
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.TOOLBARADDACTION, action.nativehandle, 0, 0);
+        }
+
+        public void removeAction(@NotNilptr QAction action){
+            QtXnl.widget_set_intlongint_value(nativehandle, Constant.TOOLBARREMACTION, action.nativehandle, 0, 0);
+        }
+
+        public QAction addSeparator(){
+            return (QAction) QtXnl.widget_get_object(nativehandle, Constant.TOOLBARADDSEPAR);
+        }
+        
+        public void setIconSize(int cx, int cy){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.SETICONSIZE, cx, cy);
+        }
+    };
+};

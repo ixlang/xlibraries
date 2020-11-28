@@ -1,0 +1,616 @@
+
+package Qt{
+public class QPropertyBrowser : QWidget{
+    
+    public static class PropertyManager : QObject{
+		
+        Map<long, onPropertyEventListener> eventListener 
+			= new Map<long, onPropertyEventListener>();
+        
+		public static class onPropertyEventListener{
+			 public void onEnumPropertyValueChanged(long prop, int item){
+				
+			 }
+			 public void onVariantPropertyValueChanged(long prop, int dataType, String stringValue){
+				
+			 }
+			 public void onVariantPropertyAttributeChanged(long prop,String strAttributr, int dataType, String stringValue){
+				
+			 }
+        };
+        
+        public PropertyManager(){
+        
+        }
+        
+        public PropertyManager(long handle){
+            super(handle);
+        }
+        
+        public void onEnumPropertyValueChanged(long prop, int item)override{
+			Map.Iterator<long, onPropertyEventListener> _listener = eventListener.find(prop);
+            if (_listener != nilptr){
+                try{
+                    onPropertyEventListener lis = _listener.getValue();
+                    if (lis != nilptr){
+                        lis.onEnumPropertyValueChanged(prop, item);
+                    }
+                }catch(Exception e){
+                    
+                }
+                
+            }
+		}
+        
+		public void onVariantPropertyValueChanged(long prop, int dataType, String stringValue)override{
+			Map.Iterator<long, onPropertyEventListener> _listener = eventListener.find(prop);
+            if (_listener != nilptr){
+                try{
+                    onPropertyEventListener lis = _listener.getValue();
+                    if (lis != nilptr){
+                        lis.onVariantPropertyValueChanged(prop, dataType, stringValue);
+                    }
+                }catch(Exception e){
+                    
+                }
+            }
+		}
+        
+		public void onVariantPropertyAttributeChanged(long prop,String strAttributr, int dataType, String stringValue)override{
+			Map.Iterator<long, onPropertyEventListener> _listener = eventListener.find(prop);
+            if (_listener != nilptr){
+                try{
+                    onPropertyEventListener lis = _listener.getValue();
+                    if (lis != nilptr){
+                        lis.onVariantPropertyAttributeChanged(prop, strAttributr, dataType, stringValue);
+                    }
+                }catch(Exception e){
+                    
+                }
+            }
+		}
+        
+        public void setPropertyEventListener(@NotNilptr QtProperty prop, onPropertyEventListener l){
+			if (l == nilptr){
+				eventListener.remove(prop.nativehandle);
+            }else{
+				eventListener.put(prop.nativehandle, l);
+            }
+        }
+    };
+    
+    static class QtBoolPropertyManager : PropertyManager{
+        public QtBoolPropertyManager(long handle){
+            super(handle);
+        }
+        public QtBoolPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtBoolPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+        public QtBoolPropertyManager(@NotNilptr QObject parent)  throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtBoolPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtColorPropertyManager : PropertyManager{
+        public QtColorPropertyManager(long handle){
+            super(handle);
+        }
+        public QtColorPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtColorPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+        public QtColorPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtColorPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtDatePropertyManager : PropertyManager{
+        public QtDatePropertyManager(long handle){
+            super(handle);
+        }
+        public QtDatePropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtDatePropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+        public QtDatePropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtDatePropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtDateTimePropertyManager : PropertyManager {
+        public QtDateTimePropertyManager(long handle){
+            super(handle);
+        }
+        public QtDateTimePropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtDateTimePropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+        public QtDateTimePropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtDateTimePropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtDoublePropertyManager  : PropertyManager{
+        public QtDoublePropertyManager(long handle){
+            super(handle);
+        }
+        public QtDoublePropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtDoublePropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+        public QtDoublePropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtDoublePropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtBoolPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtEnumPropertyManager : PropertyManager {
+        public QtEnumPropertyManager(long handle){
+            super(handle);
+        }
+        public QtEnumPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtEnumPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtEnumPropertyManager");
+            }
+        }
+        public QtEnumPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtEnumPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtEnumPropertyManager");
+            }
+        }
+        
+        public void setValues(@NotNilptr QtProperty item, String [] values){
+            QtXnl.widget_set_long_object_value(nativehandle, Constant.PROPSETENUM, item.nativehandle, values);
+        }
+        
+        public int getValue(@NotNilptr QtProperty item){
+            return QtXnl.core_getintlong(nativehandle, Constant.PEORENUMVALUE, item.nativehandle);
+        }
+    };
+    
+    
+    public static class QtFlagPropertyManager : PropertyManager {
+        public QtFlagPropertyManager(long handle){
+            super(handle);
+        }
+        public QtFlagPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtFlagPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtFlagPropertyManager");
+            }
+        }
+        public QtFlagPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtFlagPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtFlagPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtFontPropertyManager : PropertyManager {
+        public QtFontPropertyManager(long handle){
+            super(handle);
+        }
+        public QtFontPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtFontPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtFontPropertyManager");
+            }
+        }
+        public QtFontPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtFontPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtFontPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtGroupPropertyManager  : PropertyManager{
+        public QtGroupPropertyManager(long handle){
+            super(handle);
+        }
+        public QtGroupPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtGroupPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtGroupPropertyManager");
+            }
+        }
+        public QtGroupPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtGroupPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtGroupPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtIntPropertyManager  : PropertyManager{
+        public QtIntPropertyManager(long handle){
+            super(handle);
+        }
+        public QtIntPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtIntPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtIntPropertyManager");
+            }
+        }
+        public QtIntPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtIntPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtIntPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtPointPropertyManager  : PropertyManager{
+        public QtPointPropertyManager(long handle){
+            super(handle);
+        }
+        public QtPointPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtPointPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtPointPropertyManager");
+            }
+        }
+        public QtPointPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtPointPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtPointPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtRectPropertyManager   : PropertyManager   {
+        public QtRectPropertyManager(long handle){
+            super(handle);
+        }
+        public QtRectPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtRectPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtRectPropertyManager");
+            }
+        }
+        public QtRectPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtRectPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtRectPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtSizePropertyManager   : PropertyManager   {
+        public QtSizePropertyManager(long handle){
+            super(handle);
+        }
+        public QtSizePropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtSizePropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtSizePropertyManager");
+            }
+        }
+        public QtSizePropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtSizePropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtSizePropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtSizePolicyPropertyManager    : PropertyManager  {
+        public QtSizePolicyPropertyManager(long handle){
+            super(handle);
+        }
+        public QtSizePolicyPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtSizePolicyPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtSizePolicyPropertyManager");
+            }
+        }
+        public QtSizePolicyPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtSizePolicyPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtSizePolicyPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtStringPropertyManager   : PropertyManager  {
+        public QtStringPropertyManager(long handle){
+            super(handle);
+        }
+        public QtStringPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtStringPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtStringPropertyManager");
+            }
+        }
+        public QtStringPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtStringPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtStringPropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtTimePropertyManager   : PropertyManager  {
+        public QtTimePropertyManager(long handle){
+            super(handle);
+        }
+        public QtTimePropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtTimePropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtTimePropertyManager");
+            }
+        }
+        public QtTimePropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtTimePropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtTimePropertyManager");
+            }
+        }
+    };
+    
+    
+    public static class QtVariantPropertyManager : PropertyManager{
+        public QtVariantPropertyManager(long handle){
+            super(handle);
+        }
+        public QtVariantPropertyManager() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtVariantPropertyManager, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtVariantPropertyManager");
+            }
+        }
+        public QtVariantPropertyManager(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtVariantPropertyManager, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object QtVariantPropertyManager");
+            }
+        }
+        public @NotNilptr QtProperty addProperty(@NotNilptr QtProperty obj,int type, String text){
+            obj.nativehandle = QtXnl.long_intstring(nativehandle, Constant.PROPADDPROPERTY, type, text);
+            return obj;
+        }
+        public @NotNilptr QtProperty addPropertyGroup(@NotNilptr QtProperty obj, String text){
+            obj.nativehandle = QtXnl.long_intstring(nativehandle, Constant.PROPADDPROPERTYGROUP, 0, text);
+            return obj;
+        }
+        public @NotNilptr QtProperty addEnumProperty(@NotNilptr QtProperty obj,String text){
+            obj.nativehandle = QtXnl.long_intstring(nativehandle, Constant.PROPADDPROPERTYENUM, 0, text);
+            return obj;
+        }
+        public @NotNilptr QtProperty addFlagProperty(@NotNilptr QtProperty obj,String text){
+            obj.nativehandle = QtXnl.long_intstring(nativehandle, Constant.PROPADDPROPERTYFLAG, 0, text);
+            return obj;
+        }
+    };
+    
+    public static class QtProperty: QCore{
+        Object _tag;
+        
+        public void setTagObject(Object f){ _tag = f;}
+        public Object getTagObject(){return _tag;}
+        
+        public QtProperty(){
+        }
+        public QtProperty(long handle){
+            nativehandle = handle;
+        }
+        public void addSubProperty(@NotNilptr QtProperty prop){
+            QtXnl.widget_set_native_value(nativehandle, Constant.ADDSUBPROPERTY, prop.nativehandle);
+        }
+    };
+    
+    public static class QtVariantProperty : QtProperty{
+        int flags = 0;
+        public void setFlags(int f){ flags = f;}
+        public int getFlags(){return flags;}
+        public QtVariantProperty(){
+        }
+        public QtVariantProperty(long handle){
+            nativehandle = handle;
+        }
+        public void setAttributeEchoMode(int Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRECHOM, Value);
+        }
+        public void setAttributeRegex(String Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRREGEX, Value);
+        }
+        public void setAttributeMax(int Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRMAXIM, Value);
+        }
+        public void setAttributeMax(double Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRMAXIM, Value);
+        }        
+        public void setAttributeMin(int Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRMINIM, Value);
+        }
+        public void setAttributeMin(double Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRMINIM, Value);
+        }           
+        public void setAttributeEnumNames(String[] Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRENUMN, Value);
+        }
+        public void setAttributeFlagNames(String[] Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRFLAGN, Value);
+        }
+        public void setAttributeSingleStep(int Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRSSTEP, Value);
+        }
+        public void setAttributeSingleStep(double Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRSSTEP, Value);
+        }
+        public void setAttributeDecimals(int Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPATTRSSTEP, Value);
+        }
+        public void setValue(int Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPSETVALUE, Value);
+        }
+        public void setValue(String Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPSETVALUE, Value);
+        }
+        public void setValue(bool Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPSETVALUE, Value);
+        }
+        public void setValue(double Value){
+            QtXnl.widget_set_object_value(nativehandle, Constant.PROPSETVALUE, Value);
+        }
+        public void setAttributePointMax(double x, double y){
+            QtXnl.native_double2(nativehandle, Constant.PROPSETARRTPTMAX, x, y);
+        }
+        public void setAttributePointMin(double x, double y){
+            QtXnl.native_double2(nativehandle, Constant.PROPSETARRTPTMIN, x, y);
+        }
+        public void setValuePoint(double x, double y){
+            QtXnl.native_double2(nativehandle, Constant.PROPSETVALUEPT, x, y);
+        }
+        public  String getValue(){
+            return (String)QtXnl.core_getString(nativehandle, Constant.PROPGETVALUE);
+        } 
+        public  void setAttributeSizeMax(double cx, double cy){
+            QtXnl.native_double2(nativehandle, Constant.PROPSETARRTSZMAX, cx, cy);
+        }
+        public void setAttributeSizeMin(double cx, double cy){
+            QtXnl.native_double2(nativehandle, Constant.PROPSETARRTSZMIN, cx, cy);
+        }
+        public void setValueSize(double cx, double cy){
+            QtXnl.native_double2(nativehandle, Constant.PROPSETVALUESZ, cx, cy);
+        }
+        public void setAttributeRect(double l, double t, double r, double b){
+            QtXnl.native_double4(l, t, r, b, nativehandle, Constant.PROPSETARRTRC);
+        }
+        public void setValueRect(double l, double t, double r, double b){
+            QtXnl.native_double4(l, t, r, b, nativehandle, Constant.PROPSETVALUERC);
+        }
+    };
+    
+    public static class QtBrowserItem: QCore{
+        public QtBrowserItem(){
+        }
+        public QtBrowserItem(long handle){
+            nativehandle = handle;
+        }
+    };
+    
+    public static class QtVariantEditorFactory : QObject{
+        public QtVariantEditorFactory(long handle){
+            super(handle);
+        }
+        public QtVariantEditorFactory() throws IllegalArgumentException{
+                nativehandle = QtXnl.createQObject(QType.qtVariantEditorFactory, this, 0);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object qtVariantEditorFactory");
+            }
+        }
+        public QtVariantEditorFactory(@NotNilptr QObject parent) throws IllegalArgumentException{
+            nativehandle = QtXnl.createQObject(QType.qtVariantEditorFactory, this, parent.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can't create Object qtVariantEditorFactory");
+            }
+        }
+    };
+    
+    public QPropertyBrowser(){
+        
+    }
+    
+    public QPropertyBrowser(long h){ 
+        super(h);
+    }
+    
+    public bool create()override {
+        nativehandle = QtXnl.createQObject(QType.qtPropertyBrowser, this, 0);
+        if (nativehandle == 0){
+            return false;
+        }
+        return true;
+    }
+    
+    public bool create(@NotNilptr QWidget parent)override {
+        nativehandle = QtXnl.createQObject(QType.qtPropertyBrowser, this, parent.nativehandle);
+        if (nativehandle == 0){
+            return false;
+        }
+        return true;
+    }
+    
+    public @NotNilptr QtBrowserItem addProperty(@NotNilptr QtProperty pitem){
+        return new QtBrowserItem(QtXnl.long_intlong(nativehandle, Constant.ADDPROPERTY, pitem.nativehandle));
+    }
+    public void setFactoryForManager(@NotNilptr PropertyManager mgr,@NotNilptr  QtVariantEditorFactory factory){
+        QtXnl.void_long2(nativehandle, Constant.SETMGRFACTORY, mgr.nativehandle, factory.nativehandle);
+    }
+    
+    public void setPropertiesWithoutValueMarked(bool b){
+        QtXnl.widget_set_bool_value(nativehandle, Constant.SPWVM, b);
+    }
+    
+    public void setLables(String left, String right){
+		QtXnl.long_string2(nativehandle, Constant.QPBSETLABELS, left, right);
+    }
+    public void setHeaderWidths(int left, int right){
+		QtXnl.widget_set_v2int_value(nativehandle, Constant.SETPROPWIDTHS, left, right);
+    }
+    public void enableAdjust(bool ba){
+		QtXnl.widget_set_bool_value(nativehandle, Constant.QPBADJUST, ba);
+    }
+    public void setRootIsDecorated(bool b){
+        QtXnl.widget_set_bool_value(nativehandle, Constant.SRID, b);
+    }
+    public void setItemExpand(@NotNilptr QtBrowserItem item, bool bp){
+        QtXnl.object_get_long_int(nativehandle, Constant.QPB_SETEXPAND, item.nativehandle, bp ? 1 : 0);
+    }
+    public void setItemSelected(@NotNilptr QtBrowserItem item, bool bp){
+        QtXnl.object_get_long_int(nativehandle, Constant.QPB_SETSELECT, item.nativehandle, bp ? 1 : 0);
+    }
+    public void setItemVisible(@NotNilptr QtBrowserItem item, bool bp){
+        QtXnl.object_get_long_int(nativehandle, Constant.QPB_SETVISIBLE, item.nativehandle, bp ? 1 : 0);
+    }
+    public void setItemBackColor(@NotNilptr QtBrowserItem item, int color){
+        QtXnl.object_get_long_int(nativehandle, Constant.QPB_SETBACKCOLOR, item.nativehandle, color);
+    }
+    public void clear(){
+        QtXnl.widget_get_bool_value(nativehandle, Constant.TREEPROPCLEAR);
+    }
+};
+};

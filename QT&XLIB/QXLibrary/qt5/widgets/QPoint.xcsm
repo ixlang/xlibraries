@@ -1,0 +1,27 @@
+//xlang Source, Name:QXPoint.xcsm 
+//Date: Mon Oct 21:43:44 2018 
+package Qt{
+    public class QPoint{
+        public QPoint(int _x, int _y){
+            x = _x;
+            y = _y;
+        }
+        
+        public int x , y;
+        
+        public void offset(int _x,int _y){
+            x += _x;
+            y += _y;
+        }
+        
+        public void offset(@NotNilptr QPoint p){
+            x += p.x;
+            y += p.y;
+        }
+        
+        public QPoint(long v) {
+            x = (v >> 32) & 0xffffffff;
+            y = v & 0xffffffff;
+        }
+    };
+};

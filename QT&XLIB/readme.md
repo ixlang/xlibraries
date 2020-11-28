@@ -160,13 +160,17 @@ LGPL允许商业软件通过类库引用(link)方式使用LGPL类库而不需要
 Qt专业版和企业版是Qt的商业版本。
 本UI库遵循LGPL开源协议. 为X封装了部分常用控件, 使X的UI开发更加便捷.
 
+包名 : Qt
+
 用法示例, 动态创建Widget:
 
-int main(String []args){
-  QXApplication app = new QXApplication();
+using { Qt; };
 
-  if (app.createQXApplication()){
-  	QXWidget w = new QXWidget();
+int main(String []args){
+  QApplication app = new QApplication();
+
+  if (app.createQApplication()){
+  	QWidget w = new QWidget();
   	if (w.create()){
   		w.show();
   		app.run();

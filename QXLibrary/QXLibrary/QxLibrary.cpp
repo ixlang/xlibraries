@@ -341,29 +341,43 @@ void checkMainThread(){
 }
 
 XNLEXPORT xlong  XI_CDECL createQxApplication(XObject * x){
-
+		
         _application = gs_env->referenceObject(x);
 
-        int onNotifyId = gs_env->getMethodId("/bool@/QXApplication/onNotify(/QXObject,/String,/String,/long,/int)");
+        int onNotifyId = gs_env->getMethodId("/bool@/Qt/QApplication/onNotify(/Qt/QObject,/String,/String,/long,/int)");
         onNotify = gs_env->getVirtualMethod(x, onNotifyId);
+		if (onNotify == 0) {
+			QString s;
+			s.sprintf("can not found Method in xlang : %s", "/bool@/Qt/QApplication/onNotify(/Qt/QObject,/String,/String,/long,/int)");
+			gs_env->throwNativeException(ui_thread, s.toUtf8().data());
+		}
 
-        onNotifyId = gs_env->getMethodId("/*@/QXApplication/onCreateXObject(/long,/String)");
+        onNotifyId = gs_env->getMethodId("/*@/Qt/QApplication/onCreateXObject(/long,/String)");
         createObject = gs_env->getVirtualMethod(x, onNotifyId);
-
+		if (createObject == 0) {
+			QString s;
+			s.sprintf("can not found Method in xlang : %s", "/*@/Qt/QApplication/onCreateXObject(/long,/String)");
+			gs_env->throwNativeException(ui_thread, s.toUtf8().data());
+		}
 
         MAX_METHOD = getEventMaxCount();
         methodIdent = new XIDENT[MAX_METHOD];
+		ui_thread = gs_env->getContext(&ui_release);
 
         memset(methodIdent, 0, sizeof(XIDENT) * MAX_METHOD);
         for (size_t i = 0; i < getEventSize(); i++) {
-                XIDENT * pme = &methodIdent[megs[i].id];
-                pme->path = methods[i].path;
-                if (pme->path != NULL) {
-                        pme->methodId = gs_env->getMethodId(pme->path);
-                        assert(pme->methodId != -1);
-                }
+            XIDENT * pme = &methodIdent[megs[i].id];
+            pme->path = methods[i].path;
+            if (pme->path != NULL) {
+                pme->methodId = gs_env->getMethodId(pme->path);
+				if (pme->methodId == -1) {
+					QString s;
+					s.sprintf("can not found Method in xlang : %s", pme->path);
+					gs_env->throwNativeException(ui_thread, s.toUtf8().data());
+				}
+            }
         }
-		ui_thread = gs_env->getContext(&ui_release);
+		
 		ui_thread_id = QThread::currentThreadId();
         if (_xapplication == 0){
             _xapplication = new QXApplication(global_argc, 0);
@@ -680,7 +694,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 		case qtFileWatch:
 		{
 			QFileSystemWatcher * fsw = new QFileSystemWatcher((QWidget*)parent);
-			ar.installFSWEvent(fsw);
+			//ar.installFSWEvent(fsw);
 			qobject = fsw;
 		}
 		break;
@@ -720,7 +734,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 }else {
                         qobject = new QsciScintilla();
                 }
-                ar.installSciAction((QsciScintilla*)qobject);
+                //ar.installSciAction((QsciScintilla*)qobject);
                 ((QsciScintilla*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
                 break;
         case qtPushButton:
@@ -730,7 +744,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 else {
                         qobject = new QPushButton();
                 }
-                ar.installButtonAction(qobject);
+               // ar.installButtonAction(qobject);
                 break;
 
         case qtLineEdit:
@@ -740,8 +754,35 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 else {
                         qobject = new QLineEdit();
                 }
-                ar.installEditAction(qobject);
+               // ar.installEditAction(qobject);
                 break;
+		case qtSlider:
+			if (parent != 0) {
+				qobject = new QSlider((QWidget*)parent);
+			}
+			else {
+				qobject = new QSlider();
+			}
+			//ar.installSliderAction(qobject);
+			break;
+		case qtTabBar:
+			if (parent != 0) {
+				qobject = new QTabBar((QWidget*)parent);
+			}
+			else {
+				qobject = new QTabBar();
+			}
+			//ar.installSliderAction(qobject);
+			break;
+		case qtTabWidget:
+			if (parent != 0) {
+				qobject = new QTabWidget((QWidget*)parent);
+			}
+			else {
+				qobject = new QTabWidget();
+			}
+			//ar.installSliderAction(qobject);
+			break;
 		case qtDockWidget:
 			if (parent != 0) {
 				qobject = new QDockWidget((QWidget*)parent);
@@ -757,7 +798,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			else {
 				qobject = new QTextEdit();
 			}
-			ar.installTextEditAction(qobject);
+			//ar.installTextEditAction(qobject);
 			break;
 		case qtDateEdit:
 			if (parent != 0) {
@@ -766,7 +807,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			else {
 				qobject = new QDateEdit();
 			}
-			ar.installDateTimeEditAction(qobject);
+			//ar.installDateTimeEditAction(qobject);
 			break;
 		case qtDateTimeEdit:
 			if (parent != 0) {
@@ -775,7 +816,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			else {
 				qobject = new QDateTimeEdit();
 			}
-			ar.installDateTimeEditAction(qobject);
+			//ar.installDateTimeEditAction(qobject);
 			break;
 		case qtTimeEdit:
 			if (parent != 0) {
@@ -784,7 +825,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			else {
 				qobject = new QTimeEdit();
 			}
-			ar.installDateTimeEditAction(qobject);
+			//ar.installDateTimeEditAction(qobject);
 			break;
 
         case qtMenuBar:
@@ -810,6 +851,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 else {
                         qobject = new QAction();
                 }
+				//ar.installAction((QAction*)qobject);
                 break;
         case qtMdiSubWnd:
                 qobject = new QMdiSubWindow();
@@ -823,7 +865,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
                 else {
                         qobject = new QTreeWidget();
                 }
-                ar.installTreeAction(qobject);
+                //ar.installTreeAction(qobject);
                 ((QTreeWidget*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
                 break;
         case qtListView:
@@ -842,7 +884,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			else {
 				qobject = new QTableWidget();
 			}
-			ar.installTableCellChange((QTableWidget*)qobject);
+			//ar.installTableCellChange((QTableWidget*)qobject);
 			((QTableWidget*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
 			break;
 		/*case qtStdModel:
@@ -869,7 +911,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QDialog();
             }
-            ar.installDialogAction((QDialog*)qobject);
+            //ar.installDialogAction((QDialog*)qobject);
             ((QDialog*)qobject)->setAttribute(Qt::WA_DeleteOnClose);
             break;
 
@@ -879,7 +921,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QComboBox();
             }
-			ar.installComboBoxAction((QComboBox*)qobject);
+			//ar.installComboBoxAction((QComboBox*)qobject);
             break;
         case qtPropertyBrowser :// 15
             if (parent != 0) {
@@ -895,7 +937,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QtBoolPropertyManager();
             }
-			ar.installBoolPropertyChange((QtBoolPropertyManager*)qobject);
+			//ar.installBoolPropertyChange((QtBoolPropertyManager*)qobject);
             break;
         case qtColorPropertyManager :// 17,
             if (parent != 0) {
@@ -903,7 +945,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QtColorPropertyManager();
             }
-			ar.installColorPropertyChange((QtColorPropertyManager*)qobject);
+			//ar.installColorPropertyChange((QtColorPropertyManager*)qobject);
             break;
         case qtDatePropertyManager :// 18,
             if (parent != 0) {
@@ -911,7 +953,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QtDatePropertyManager();
             }
-			ar.installDatePropertyChange((QtDatePropertyManager*)qobject);
+			//ar.installDatePropertyChange((QtDatePropertyManager*)qobject);
             break;
         case qtDateTimePropertyManager :// 19,
             if (parent != 0) {
@@ -919,7 +961,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QtDateTimePropertyManager();
             }
-			ar.installDateTimePropertyChange((QtDateTimePropertyManager*)qobject);
+			//ar.installDateTimePropertyChange((QtDateTimePropertyManager*)qobject);
             break;
         case qtDoublePropertyManager :// 20,
             if (parent != 0) {
@@ -927,7 +969,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtDoublePropertyManager();
             }
-			ar.installDoublePropertyChange((QtDoublePropertyManager*)qobject);
+			//ar.installDoublePropertyChange((QtDoublePropertyManager*)qobject);
             break;
         case qtEnumPropertyManager :// 21,
             if (parent != 0) {
@@ -935,7 +977,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else{
                qobject = new QtEnumPropertyManager();
             }
-			ar.installEnumPropertyChange((QtEnumPropertyManager*)qobject);
+			//ar.installEnumPropertyChange((QtEnumPropertyManager*)qobject);
             break;
         case qtFlagPropertyManager :// 22,
             if (parent != 0) {
@@ -943,7 +985,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             } else {
                qobject = new QtFlagPropertyManager();
             }
-			ar.installFlagPropertyChange((QtFlagPropertyManager*)qobject);
+			//ar.installFlagPropertyChange((QtFlagPropertyManager*)qobject);
             break;
         case qtFontPropertyManager :// 23,
             if (parent != 0) {
@@ -951,7 +993,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtFontPropertyManager();
             }
-			ar.installFontPropertyChange((QtFontPropertyManager*)qobject);
+			//ar.installFontPropertyChange((QtFontPropertyManager*)qobject);
             break;
         case qtGroupPropertyManager :// 24,
             if (parent != 0) {
@@ -959,7 +1001,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtGroupPropertyManager();
             }
-			ar.installGroupPropertyChange((QtGroupPropertyManager*)qobject);
+			//ar.installGroupPropertyChange((QtGroupPropertyManager*)qobject);
             break;
         case qtIntPropertyManager :// 25,
             if (parent != 0) {
@@ -967,7 +1009,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtIntPropertyManager();
             }
-			ar.installIntPropertyChange((QtIntPropertyManager*)qobject);
+			//ar.installIntPropertyChange((QtIntPropertyManager*)qobject);
             break;
         case qtPointPropertyManager :// 26,
             if (parent != 0) {
@@ -975,7 +1017,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtPointPropertyManager();
             }
-			ar.installPointPropertyChange((QtPointPropertyManager*)qobject);
+			//ar.installPointPropertyChange((QtPointPropertyManager*)qobject);
             break;
         case qtRectPropertyManager :// 27,
             if (parent != 0) {
@@ -983,7 +1025,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtRectPropertyManager();
             }
-			ar.installRectPropertyChange((QtRectPropertyManager*)qobject);
+			//ar.installRectPropertyChange((QtRectPropertyManager*)qobject);
             break;
         case qtSizePropertyManager :// 28,
             if (parent != 0) {
@@ -991,7 +1033,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtSizePropertyManager();
             }
-			ar.installSizePropertyChange((QtSizePropertyManager*)qobject);
+			//ar.installSizePropertyChange((QtSizePropertyManager*)qobject);
             break;
         case qtSizePolicyPropertyManager :// 29,
             if (parent != 0) {
@@ -999,7 +1041,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtSizePolicyPropertyManager();
             }
-			ar.installSizePolicyPropertyChange((QtSizePolicyPropertyManager*)qobject);
+			//ar.installSizePolicyPropertyChange((QtSizePolicyPropertyManager*)qobject);
             break;
         case qtStringPropertyManager :// 30,
             if (parent != 0) {
@@ -1007,7 +1049,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtStringPropertyManager();
             }
-			ar.installStringPropertyChange((QtStringPropertyManager*)qobject);
+			//ar.installStringPropertyChange((QtStringPropertyManager*)qobject);
             break;
         case qtTimePropertyManager :// 31,
             if (parent != 0) {
@@ -1015,7 +1057,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtTimePropertyManager();
             }
-			ar.installTimePropertyChange((QtTimePropertyManager*)qobject);
+			//ar.installTimePropertyChange((QtTimePropertyManager*)qobject);
             break;
         case qtVariantPropertyManager :// 32,
             if (parent != 0) {
@@ -1023,7 +1065,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QtVariantPropertyManager();
             }
-			ar.installVariantPropertyChange((QtVariantPropertyManager*)qobject);
+			//ar.installVariantPropertyChange((QtVariantPropertyManager*)qobject);
             break;
         case qtProperty :// 33,
                 break;
@@ -1042,7 +1084,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
             }else {
                qobject = new QCheckBox();
             }
-            ar.installButtonAction(qobject);
+            //ar.installButtonAction(qobject);
             break;
         case qtLabel:// 34;
             if (parent != 0) {
@@ -1083,7 +1125,7 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
 			}else {
 				qobject = new LimeReport::ReportEngine();
 			}
-			ar.installReportView((LimeReport::ReportEngine*)qobject);
+			//ar.installReportView((LimeReport::ReportEngine*)qobject);
 #endif
 			break;
         default:
@@ -1091,6 +1133,9 @@ XNLEXPORT xlong  XI_CDECL createQObject(xint type, XObject * x, xlong parent) {
         }
 
         if (qobject != NULL) {
+
+			installAction(qobject);
+
             XObjectData * objectData = new XObjectData();
             objectData->setObject(x);
             qobject->setUserData(Qt::UserRole, objectData);
@@ -1139,6 +1184,159 @@ XNLEXPORT void XI_CDECL widget_set_vint_value(xlong h, xint proid, xint value) {
         checkMainThread();
         switch (proid)
         {
+		case BOXSETSPACING:
+			((QBoxLayout*)h)->setSpacing(value);
+			break;
+		case BOXADDSPACING:
+			((QBoxLayout*)h)->addSpacing(value);
+			break;
+		case BOXADDSTRETCH:
+			((QBoxLayout*)h)->addStretch(value);
+			break;
+		case TABWIDGETSETCURRENTINDEX:
+		{
+			QTabWidget * pset = ((QTabWidget*)h);
+			if (pset != 0) {
+				pset->setCurrentIndex(value);
+			}
+		}
+		break;
+		case TABWIDGETSETELIDEMODE:
+		{
+			QTabWidget * pset = ((QTabWidget*)h);
+			if (pset != 0) {
+				pset->setElideMode((Qt::TextElideMode)value);
+			}
+		}
+		break;
+		case TABWIDGETSETTABSHAPE:
+		{
+			QTabWidget * pset = ((QTabWidget*)h);
+			if (pset != 0) {
+				pset->setTabShape((QTabWidget::TabShape)value);
+			}
+		}
+		break;
+		case TABWIDGETSETTABPOSITION:
+		{
+			QTabWidget * pset = ((QTabWidget*)h);
+			if (pset != 0) {
+				pset->setTabPosition((QTabWidget::TabPosition)value);
+			}
+		}
+		break;
+		case TABWIDGETREMOVETAB:
+		{
+			QTabWidget * pset = ((QTabWidget*)h);
+			if (pset != 0) {
+				pset->removeTab(value);
+			}
+		}
+		break;
+		case TABBARSETCURRENTINDEX:
+		{
+			QTabBar * pset = ((QTabBar*)h);
+			if (pset != 0) {
+				pset->setCurrentIndex(value);
+			}
+		}
+		break;
+		case TABBARSETSELECTIONBEHAVIORONREMOVE:
+		{
+			QTabBar * pset = ((QTabBar*)h);
+			if (pset != 0) {
+				pset->setSelectionBehaviorOnRemove((QTabBar::SelectionBehavior)value);
+			}
+		}
+		break;
+		case TABBARSETELIDEMODE:
+		{
+			QTabBar * pset = ((QTabBar*)h);
+			if (pset != 0) {
+				pset->setElideMode((Qt::TextElideMode)value);
+			}
+		}
+		break;
+		case TABBARREMOVETAB:
+		{
+			QTabBar * pset = ((QTabBar*)h);
+			if (pset != 0) {
+				pset->removeTab(value);
+			}
+		}
+		break;
+		case TABBARSETSHAPE:
+		{
+			QTabBar * pset = ((QTabBar*)h);
+			if (pset != 0) {
+				pset->setShape((QTabBar::Shape)value);
+			}
+		}
+		break;
+		case SLD_SETMIN:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setMinimum(value);
+			}
+		}
+		break;
+		case SLD_SETMAX:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setMaximum(value);
+			}
+		}
+		break;
+		case SLD_SETSINGLESTEP:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setSingleStep(value);
+			}
+		}
+		break;
+		case SLD_SETPAGESTEP:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setPageStep(value);
+			}
+		}
+		break;
+		case SLD_SETSLIDPOS:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setSliderPosition(value);
+			}
+		}
+		break;
+		case SLD_SETORIENTATION:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setOrientation((Qt::Orientation)value);
+			}
+		}
+		break;
+		case SLD_SETVALUE:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->setValue(value);
+			}
+		}
+		break;
+		case SLD_TRIGGERACTION:
+		{
+			QAbstractSlider * pset = ((QSlider*)h);
+			if (pset != 0) {
+				pset->triggerAction((QAbstractSlider::SliderAction)value);
+			}
+		}
+		break;
 		case DOCKSETALLOWEDAREAS:
 		{
 			QDockWidget * pset = ((QDockWidget*)h);
@@ -1430,10 +1628,38 @@ XNLEXPORT xint XI_CDECL widget_set_bint_value(xlong h, xint proid, xint value) {
         return 0;
 }
 
+
+XNLEXPORT xlong XI_CDECL native_long2_string(xlong h, xint proid, xlong v0, xlong v, xlong v1, xstring v3) {
+	switch (proid) {
+	case TABWIDGETADDTAB:
+		return ((QTabWidget*)h)->addTab((QWidget*)v0, *(QIcon*)v, QString::fromUtf8(v3));
+		break;
+	case TABWIDGETINSERTTAB:
+		return ((QTabWidget*)h)->insertTab(v0, (QWidget*)v,  QString::fromUtf8(v3));
+		break;
+	case TABWIDGETINSERTTAB2:
+		return ((QTabWidget*)h)->insertTab(v0, (QWidget*)v, *(QIcon*)v1, QString::fromUtf8(v3));
+		break;
+	}
+	return 0;
+}
+
 XNLEXPORT xbool XI_CDECL widget_get_int_bool(xlong h, xint proid, xint v) {
 
         switch (proid)
         {
+		case TABWIDGETISTABENABLED:
+		{
+			QTabWidget * titem = (QTabWidget *)h;
+			return titem->isTabEnabled(v);
+		}
+		break;
+		case TABBARISTABENABLED:
+		{
+			QTabBar * titem = (QTabBar *)h;
+			return titem->isTabEnabled(v);
+		}
+		break;
 		case TREEITEMISEXPAND:
 		{
 			QTreeWidgetItem * titem = (QTreeWidgetItem *)h;
@@ -1465,6 +1691,15 @@ XNLEXPORT xbool XI_CDECL widget_get_int_bool(xlong h, xint proid, xint v) {
 XNLEXPORT void XI_CDECL widget_set_int_bool_value(xlong h, xint proid, xint v, xbool v1) {
         switch (proid)
         {
+		case APPLICATIONATTRIBUTES:
+			QCoreApplication::setAttribute((Qt::ApplicationAttribute)v, v1);
+			break;
+		case TABWIDGETSETTABENABLED:
+			((QTabWidget*)h)->setTabEnabled(v, v1);
+			break;
+		case TABBARSETTABENABLED:
+			((QTabBar*)h)->setTabEnabled(v, v1);
+			break;
 		case PRTDLGSETOPT:
 			((QPrintDialog*)h)->setOption((QPrintDialog::PrintDialogOption)v, v1);
 			break;
@@ -1501,6 +1736,60 @@ XNLEXPORT xbool XI_CDECL widget_get_bool_value(xlong h, xint proid) {
 
         switch (proid)
         {
+		case TABWIDGETAUTOHIDE:
+			return ((QTabWidget*)h)->tabBarAutoHide();
+			break;
+		case TABWIDGETDOCUMENTMODE:
+			return ((QTabWidget*)h)->documentMode();
+			break;
+		case TABWIDGETUSESSCROLLBUTTONS:
+			return ((QTabWidget*)h)->usesScrollButtons();
+			break;
+		case TABWIDGETHASHEIGHTFORWIDTH:
+			return ((QTabWidget*)h)->hasHeightForWidth();
+			break;
+		case TABWIDGETISMOVABLE:
+			return ((QTabWidget*)h)->isMovable();
+			break;
+		case TABWIDGETTABSCLOSABLE:
+			return ((QTabWidget*)h)->tabsClosable();
+			break;
+		case TABBARCHANGECURRENTONDRAG:
+			return ((QTabBar*)h)->changeCurrentOnDrag();
+			break;
+		case TABBARAUTOHIDE:
+			return ((QTabBar*)h)->autoHide();
+			break;
+		case TABBARDOCUMENTMODE:
+			return ((QTabBar*)h)->documentMode();
+			break;
+		case TABBARISMOVABLE:
+			return ((QTabBar*)h)->isMovable();
+			break;
+		case TABBAREXPANDING:
+			return ((QTabBar*)h)->expanding();
+			break;
+		case TABBARTABSCLOSABLE:
+			return ((QTabBar*)h)->tabsClosable();
+			break;
+		case TABBARUSESSCROLLBUTTONS:
+			return ((QTabBar*)h)->usesScrollButtons();
+			break;
+		case TABBARDRAWBASE:
+			return ((QTabBar*)h)->drawBase();
+			break;
+		case SLD_GETTRACKING:
+			return ((QAbstractSlider*)h)->hasTracking();
+			break;
+		case SLD_GETSLIDDOWN:
+			return ((QAbstractSlider*)h)->isSliderDown();
+			break;
+		case SLD_GETINVERTEDAPPEARANCE:
+			return ((QAbstractSlider*)h)->invertedAppearance();
+			break;
+		case SLD_GETINVERTEDCONTROLS:
+			return ((QAbstractSlider*)h)->invertedControls();
+			break;
 		case ISDOCKNESTINGENABLED:
 			return ((QMainWindow*)h)->isDockNestingEnabled();
 			break;
@@ -1590,6 +1879,21 @@ XNLEXPORT XObject * XI_CDECL widget_get_object(xlong h, xint proid) {
         XObject * xobj = 0;
         switch (proid)
         {
+		case TABWIDGETTABBAR:
+			xobj = getObjectControl(((QTabWidget*)h)->tabBar());
+			break;
+		case TABWIDGETCURRENTWIDGET:
+			xobj = getObjectControl(((QTabWidget*)h)->currentWidget());
+			break;
+		case TOOLBARADDSEPAR:
+				xobj = getObjectControl(((QToolBar*)h)->addSeparator());
+			break;
+		case MENUADDSEPAR:
+				xobj = getObjectControl(((QMenu*)h)->addSeparator());
+			break;
+		case MENUBARADDSEPAR:
+				xobj = getObjectControl(((QMenuBar*)h)->addSeparator());
+			break;
         case TITLEBAR:
                 xobj = getObjectControl(((QDockWidget*)h)->titleBarWidget());
                 break;
@@ -1614,6 +1918,9 @@ XNLEXPORT XObject * XI_CDECL widget_get_object(xlong h, xint proid) {
         case CURRENTSUBWIN:
                 xobj = getObjectControl(((QMdiArea*)h)->currentSubWindow());
                 break;
+		case MENUACTION:
+			xobj = getObjectControl(((QMenu*)h)->menuAction());
+			break;
         case GETVIEWPORT:
         {
                 QAbstractScrollArea * qab = qobject_cast<QAbstractScrollArea *>((QObject*)h);
@@ -1783,6 +2090,57 @@ XNLEXPORT void XI_CDECL widget_set_double_value(xlong h, xint proid, double v) {
 XNLEXPORT void XI_CDECL widget_set_bool_value(xlong h, xint proid, xbool v) {
         switch (proid)
         {
+		case TABWIDGETSETTABBARAUTOHIDE:
+			((QTabWidget*)h)->setTabBarAutoHide(v);
+			break;
+		case TABWIDGETSETDOCUMENTMODE:
+			((QTabWidget*)h)->setDocumentMode(v);
+			break;
+		case TABWIDGETSETUSESSCROLLBUTTONS:
+			((QTabWidget*)h)->setUsesScrollButtons(v);
+			break;
+		case TABWIDGETSETMOVABLE:
+			((QTabWidget*)h)->setMovable(v);
+			break;
+		case TABWIDGETSETTABSCLOSABLE:
+			((QTabWidget*)h)->setTabsClosable(v);
+			break;
+		case TABBARSETCHANGECURRENTONDRAG:
+			((QTabBar*)h)->setChangeCurrentOnDrag(v);
+			break;
+		case TABBARSETAUTOHIDE:
+			((QTabBar*)h)->setAutoHide(v);
+			break;
+		case TABBARSETDOCUMENTMODE:
+			((QTabBar*)h)->setDocumentMode(v);
+			break;
+		case TABBARSETMOVABLE:
+			((QTabBar*)h)->setMovable(v);
+			break;
+		case TABBARSETEXPANDING:
+			((QTabBar*)h)->setExpanding(v);
+			break;
+		case TABBARSETTABSCLOSABLE:
+			((QTabBar*)h)->setTabsClosable(v);
+			break;
+		case TABBARUSEBUTTONS:
+			((QTabBar*)h)->setUsesScrollButtons(v);
+			break;
+		case TABBARSETDRAWBASE:
+			((QTabBar*)h)->setDrawBase(v);
+			break;
+		case SLD_SETTRACKING:
+			((QAbstractSlider*)h)->setTracking(v);
+			break;
+		case SLD_SETSLIDDOWN:
+			((QAbstractSlider*)h)->setSliderDown(v);
+			break;
+		case SLD_SETINVERTEDAPPEARANCE:
+			((QAbstractSlider*)h)->setInvertedAppearance(v);
+			break;
+		case SLD_SETINVERTEDCONTROLS:
+			((QAbstractSlider*)h)->setInvertedControls(v);
+			break;
 		case TESETTABCHANGESFOCUS:
 			((QTextEdit*)h)->setTabChangesFocus(v);
 			break;
@@ -1933,7 +2291,54 @@ XNLEXPORT void XI_CDECL widget_set_bkrl(xlong h, xint r) {
 XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
         switch (proid)
         {
-
+		case TABWIDGETELIDEMODE:
+			return ((QTabWidget*)h)->elideMode();
+			break;
+		case TABWIDGETTABSHAPE:
+			return ((QTabWidget*)h)->tabShape();
+			break;
+		case TABWIDGETTABPOSITION:
+			return ((QTabWidget*)h)->tabPosition();
+			break;
+		case TABWIDGETCOUNT:
+			return ((QTabWidget*)h)->count();
+			break;
+		case TABWIDGETCURRENTINDEX:
+			return ((QTabWidget*)h)->currentIndex();
+			break;
+		case TABBARSELECTIONBEHAVIORONREMOVE:
+			return ((QTabBar*)h)->selectionBehaviorOnRemove();
+			break;
+		case TABBARCOUNT:
+			return ((QTabBar*)h)->count();
+			break;
+		case TABBARCURRENTINDEX:
+			return ((QTabBar*)h)->currentIndex();
+			break;
+		case TABBARELIDEMODE:
+			return ((QTabBar*)h)->elideMode();
+			break;
+		case TABBARSHAPE:
+			return ((QTabBar*)h)->shape();
+			break;
+		case SLD_GETMIN:
+			return ((QAbstractSlider*)h)->minimum();
+			break;
+		case SLD_GETMAX:
+			return ((QAbstractSlider*)h)->maximum();
+			break;
+		case SLD_GETSINGLESTEP:
+			return ((QAbstractSlider*)h)->singleStep();
+			break;
+		case SLD_GETPAGESTEP:
+			return ((QAbstractSlider*)h)->pageStep();
+			break;
+		case SLD_GETSLIDPOS:
+			return ((QAbstractSlider*)h)->sliderPosition();
+			break;
+		case SLD_GETVALUE:
+			return ((QAbstractSlider*)h)->value();
+			break;
 		case TEGETAUTOFORMATTING:
 			return ((QTextEdit*)h)->autoFormatting();
 			break;
@@ -2109,6 +2514,9 @@ XNLEXPORT xint XI_CDECL widget_get_int_value(xlong h, xint proid) {
 XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xint yv) {
         switch (proid)
         {
+		case BOXSETSTRETCH:
+			((QBoxLayout*)h)->setStretch(xv, yv);
+			break;
 		case QSCIUPDATESHORTCUT:
 		{
 			QsciCommandSet * pset = ((QsciScintilla*)h)->standardCommands();
@@ -2120,10 +2528,30 @@ XNLEXPORT xint XI_CDECL widget_set_v2int_value(xlong h, xint proid, xint xv, xin
 			}
 		}
 		break;
+		case TABWIDGETSETICONSIZE:
+			((QTabWidget*)h)->setIconSize(QSize(xv, yv));
+			break;
+		case TABWIDGETHEIGHTFORWIDTH:
+			return ((QTabWidget*)h)->heightForWidth(xv);
+			break;
+		case TABBARSETICONSIZE:
+			((QTabBar*)h)->setIconSize(QSize(xv, yv));
+			break;
+		case TABBARTABAT:
+			return ((QTabBar*)h)->tabAt(QPoint(xv, yv));
+			break;
+		case TABBARMOVETAB:
+			((QTabBar*)h)->moveTab(xv, yv);
+			break;
+		case SLD_SETRANGE:
+			((QAbstractSlider*)h)->setRange(xv, yv);
+			break;
         case RESIZE:
                 ((QWidget*)h)->resize(xv, yv);
                 break;
-
+		case SETICONSIZE:
+			((QToolBar*)h)->setIconSize(QSize(xv, yv));
+			break;
         case SCROLL:
                 ((QWidget*)h)->scroll(xv, yv);
                 break;
@@ -2261,6 +2689,33 @@ XNLEXPORT xint XI_CDECL widget_set_v3int_value(xlong h, xint proid, xint v1, xin
 XNLEXPORT xint XI_CDECL widget_set_intstring_value(xlong h, xint proid, xint xv, xstring yv) {
         switch (proid)
         {
+		case TABWIDGETSETTABWHATSTHIS:
+			((QTabWidget*)h)->setTabWhatsThis(xv, yv);
+			break;
+		case TABWIDGETSETTABTOOLTIP:
+			((QTabWidget*)h)->setTabToolTip(xv, yv);
+			break;
+		case TABWIDGETSETTABTEXT:
+			((QTabWidget*)h)->setTabText(xv, yv);
+			break;
+		case TABBARSETACCESSIBLETABNAME:
+			((QTabBar*)h)->setAccessibleTabName(xv, yv);
+			break;
+		case TABBARSETTABWHATSTHIS:
+			((QTabBar*)h)->setTabWhatsThis(xv, yv);
+			break;
+		case TABBARSETTABTOOLTIP:
+			((QTabBar*)h)->setTabToolTip(xv, yv);
+			break;
+		case TABBARSETTABTEXT:
+			((QTabBar*)h)->setTabText(xv, yv);
+			break;
+		case TABBARADDTAB:
+			return ((QTabBar*)h)->addTab(yv);
+			break;
+		case TABBARINSERTTAB:
+			return ((QTabBar*)h)->insertTab(xv, yv);
+			break;
         case SCICMD:
                 return ((QsciScintilla*)h)->SendScintilla(xv, yv);
                 break;
@@ -2309,6 +2764,11 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
 		case TESETCURRENTFONT:
 		{
 			((QTextEdit*)h)->setCurrentFont(*(QFont*)(value));
+		}
+		break;
+		case TABWIDGETSETCURRENTWIDGET:
+		{
+			((QTabWidget*)h)->setCurrentWidget((QWidget*)(value));
 		}
 		break;
 		case SETDATETIME:
@@ -2391,9 +2851,8 @@ XNLEXPORT void XI_CDECL widget_set_native_value(xlong h, xint proid, xlong value
 
         case ADDDEFACTION:
                 ((QWidget*)h)->addAction((QAction*)value);
-                ar.installAction((QAction*)value);
+               // ar.installAction((QAction*)value);
                 break;
-
         case REMOVEWIDGET:
                 ((QStatusBar*)h)->removeWidget((QWidget*)value);
                 break;
@@ -2586,6 +3045,10 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
 XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         switch (proid)
         {
+
+		case TABWIDGETCLEAR:
+			((QTabWidget*)h)->clear();
+			break;
 		case TESELECTALL:
 			((QTextEdit*)h)->selectAll();
 			break;
@@ -2883,6 +3346,8 @@ XNLEXPORT XObject * XI_CDECL findControl(xlong h, xstring name) {
         return gs_env->createObject();
 }
 
+
+
 XNLEXPORT xlong XI_CDECL attachControl(xlong h, XObject * x, xstring name) {
         QObject * obj = (QObject *)h;
 
@@ -2892,34 +3357,7 @@ XNLEXPORT xlong XI_CDECL attachControl(xlong h, XObject * x, xstring name) {
                 if (data == NULL) {
                         data = new XObjectData();
                         child->setUserData(Qt::UserRole, data);
-
-                        const char * type = child->metaObject()->className();
-                        if (strcmp(type, "QMenu") == 0) {
-                                QMenu * pm = (QMenu*)child;
-                                QList<QAction*> acts = pm->actions();
-                                for (QAction* act : acts) {
-                                        getObjectControl(act);
-                                        ar.installAction(act);
-                                }
-                        }
-                        if (strcmp(type, "QTreeWidget") == 0) {
-                            ar.installTreeAction(child);
-                        }
-						if (strcmp(type, "QTableWidget") == 0) {
-							ar.installTableCellChange((QTableWidget*)child);
-						}
-                        if (strcmp(type, "QPushButton") == 0 || strcmp(type, "QCheckBox") == 0) {
-                            ar.installButtonAction(child);
-                        }
-                        if (strcmp(type, "QLineEdit") == 0) {
-                            ar.installEditAction(child);
-                        }
-						if (strcmp(type, "QComboBox") == 0) {
-							ar.installComboBoxAction((QComboBox*)child);
-						}
-						if (strcmp(type, "QFileSystemWatcher") == 0) {
-							ar.installFSWEvent((QFileSystemWatcher*)child);
-						}
+						installAction(child);
                 }
                 data->setObject(x);
                 return (xlong)child;
@@ -2950,14 +3388,19 @@ XNLEXPORT XObject * XI_CDECL object_get_string(xlong h, xint proid, xstring name
 
         QObject * obj = 0;
         switch (proid) {
+		case MAINWNDADDMENU:
+			obj = ((QMainWindow*)h)->menuBar()->addMenu(QString::fromUtf8(name));
+			break;
         case ADDACTION:
             obj = ((QMenuBar*)h)->addAction(QString::fromUtf8(name));
-			ar.installAction((QAction*)obj);
             break;
 		case ADDACT:
 			obj = ((QMenu*)h)->addAction(QString::fromUtf8(name));
-			ar.installAction((QAction*)obj);
 			break;
+		case ADDMENU:
+			obj = ((QMenu*)h)->addMenu(QString::fromUtf8(name));
+			break;
+
         }
 
 		if (obj != 0) {
@@ -3117,7 +3560,6 @@ XNLEXPORT XObject * XI_CDECL object_get_string2(xlong h, xint proid, xstring v1,
 	switch (proid) {
 		case ADDACT:
 			obj = ((QMenu*)h)->addAction(*loadIcon(QString::fromUtf8(v1)), QString::fromUtf8(v2));
-			ar.installAction((QAction*)obj);
 			break;
 	}
 
@@ -3135,6 +3577,22 @@ XNLEXPORT XObject * XI_CDECL object_get_handle(xlong h, xint proid, xlong h1) {
 
         switch (proid)
         {
+		case TABWIDGETCORNERWIDGET:
+		{
+			XObject *  output = getObjectControl(((QTabWidget*)h)->cornerWidget((Qt::Corner)h1));
+			if (output != 0) {
+				return gs_env->referenceObject(output);
+			}
+		}
+			break;
+		case TABWIDGETWIDGET:
+		{
+			XObject *  output = getObjectControl(((QTabWidget*)h)->widget(h1));
+			if (output != 0) {
+				return gs_env->referenceObject(output);
+			}
+		}
+			break;
         case IMGGETDATA:
         {
                 QImage * pImage = (QImage*)h;
@@ -3148,6 +3606,13 @@ XNLEXPORT XObject * XI_CDECL object_get_handle(xlong h, xint proid, xlong h1) {
                 return obj;
         }
                 break;
+		case TABBARACCESSIBLETABNAME:
+		{
+			QTabBar * pImage = (QTabBar*)h;
+			QByteArray qba = pImage->accessibleTabName(h1).toUtf8();
+			return data2String(qba);
+		}
+		break;
         default:
                 break;
         }
@@ -3155,23 +3620,33 @@ XNLEXPORT XObject * XI_CDECL object_get_handle(xlong h, xint proid, xlong h1) {
 }
 
 XNLEXPORT XObject * XI_CDECL object_get_handle2(xlong h, xint proid, xlong hv, xlong h1) {
-
+	QObject * qobj = 0;
 	switch (proid) {
 		case TABLEGETCELLWIDGET:
 		{
 			QTableWidget * qt = (QTableWidget*)h;
-			QWidget * pw = qt->cellWidget(hv, h1);
-			if (pw != 0) {
-				XObject * xobj = getObjectControl(pw);
-				if (xobj != NULL) {
-					return gs_env->referenceObject(xobj);
-				}
-			}
+			qobj = qt->cellWidget(hv, h1);
+
 		}
 		break;
+		case TABBARTABBUTTON:
+			qobj = ((QTabBar*)h)->tabButton(hv, (QTabBar::ButtonPosition)h1);
+			break;
+		case MENUBARINSMENU:
+			qobj = ((QMenuBar*)h)->insertMenu((QAction*)hv, (QMenu*)h1);
+			break;
+		case MENUINSMENU:
+			qobj = ((QMenu*)h)->insertMenu((QAction*)hv, (QMenu*)h1);
+			break;
 	}
 
-        return 0;
+	if (qobj != 0) {
+		XObject * xobj = getObjectControl(qobj);
+		if (xobj != NULL) {
+			return gs_env->referenceObject(xobj);
+		}
+	}
+    return 0;
 }
 
 XNLEXPORT XObject * XI_CDECL object_get_string_handle_string2(xlong h, xint proid, xstring text, xlong handle, xstring v1, xstring v2) {
@@ -3264,6 +3739,18 @@ XNLEXPORT XObject *  XI_CDECL openfile_dlg_string3_obj(xint proid, xstring capti
 XNLEXPORT xlong XI_CDECL long_longstring(xlong handle, xint proid, xlong v1, xstring v2) {
         switch (proid)
         {
+		case TABWIDGETADDTAB:
+		{
+			return ((QTabWidget*)handle)->addTab((QWidget *)v1, v2);
+		}
+		break;
+		case TABBARADDTAB:
+		{
+			QIcon * icon = (QIcon *)v1;
+			return ((QTabBar*)handle)->addTab(*icon, v2);
+		}
+		break;
+
         case TREEWIDGETADD:
         {
                 QTreeWidget * twidget = (QTreeWidget *)handle;
@@ -3562,6 +4049,54 @@ XNLEXPORT xlong XI_CDECL long_long_string2(xlong handle, xint proid, xlong l1, x
 XNLEXPORT xlong XI_CDECL long_get(xlong handle, xint proid) {
         switch (proid)
         {
+		case TABWIDGETICONSIZE:
+		{
+			QTabWidget* twidget = (QTabWidget *)handle;
+			xlong hp = (xlong)twidget->iconSize().width();
+			hp <<= 32;
+			return hp | twidget->iconSize().height();
+		}
+		break;
+		case TABWIDGETMINIMUMSIZEHINT:
+		{
+			QTabBar * twidget = (QTabBar *)handle;
+			xlong hp = (xlong)twidget->minimumSizeHint().width();
+			hp <<= 32;
+			return hp | twidget->minimumSizeHint().height();
+		}
+		break;
+		case TABWIDGETSIZEHINT:
+		{
+			QTabBar * twidget = (QTabBar *)handle;
+			xlong hp = (xlong)twidget->sizeHint().width();
+			hp <<= 32;
+			return hp | twidget->sizeHint().height();
+		}
+		break;
+		case TABBARICONSIZE:
+		{
+			QTabBar * twidget = (QTabBar *)handle;
+			xlong hp = (xlong)twidget->iconSize().width();
+			hp <<= 32;
+			return hp | twidget->iconSize().height();
+		}
+		break;
+		case TABBARMINIMUMSIZEHINT:
+		{
+			QTabBar * twidget = (QTabBar *)handle;
+			xlong hp = (xlong)twidget->minimumSizeHint().width();
+			hp <<= 32;
+			return hp | twidget->minimumSizeHint().height();
+		}
+		break;
+		case TABBARSIZEHINT:
+		{
+			QTabBar * twidget = (QTabBar *)handle;
+			xlong hp = (xlong)twidget->sizeHint().width();
+			hp <<= 32;
+			return hp | twidget->sizeHint().height();
+		}
+		break;
 		case GETDATETIME:
 		{
 			QDateTimeEdit * twidget = (QDateTimeEdit *)handle;
@@ -3674,6 +4209,24 @@ XNLEXPORT XObject * XI_CDECL core_getStringlongint(xlong h, xint proid, xlong v1
 
         switch (proid)
         {
+		case TABWIDGETTABWHATSTHIS:
+			qba = ((QTabWidget *)v1)->tabWhatsThis(v2).toUtf8();
+			break;
+		case TABWIDGETTABTOOLTIP:
+			qba = ((QTabWidget *)v1)->tabToolTip(v2).toUtf8();
+			break;
+		case TABWIDGETTABTEXT:
+			qba = ((QTabBar *)v1)->tabText(v2).toUtf8();
+			break;
+		case TABBARTABWHATSTHIS:
+			qba = ((QTabBar *)v1)->tabWhatsThis(v2).toUtf8();
+			break;
+		case TABBARTABTOOLTIP:
+			qba = ((QTabBar *)v1)->tabToolTip(v2).toUtf8();
+			break;
+		case TABBARTABTEXT:
+			qba = ((QTabBar *)v1)->tabText(v2).toUtf8();
+			break;
         case TRGETITEMTEXT:
             qba = ((QTreeWidgetItem *)v1)->text(v2).toUtf8();
         break;
@@ -3762,6 +4315,27 @@ XNLEXPORT void XI_CDECL widget_set_intlongint_value(xlong h, xint proid, xlong x
 			((QToolBar*)h)->addWidget((QWidget*)xv);
 		}
 			break;
+		case TOOLBARADDACTION:
+		{
+			((QToolBar*)h)->addAction((QAction*)xv);
+		}
+		break;
+		case TOOLBARREMACTION:
+		{
+			((QToolBar*)h)->removeAction((QAction*)xv);
+		}
+		break;
+		case MAINWNDADDTOOLBAR:
+		{
+			((QMainWindow*)h)->addToolBar((QToolBar*)xv);
+		}
+		break;
+		case MAINWNDMENUADD:
+		{
+			//((QMainWindow*)h)->menuBar()->addMenu((QToolBar*)xv);
+			((QMenuBar*)h)->addMenu((QMenu*)xv);
+		}
+		break;
 
 		case LAYTOUADDWIDGET:
 		{
@@ -3967,7 +4541,7 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
 						if (gs_env->getElementValue(value, 0, v, (size_t)size)) {
 							 for (xlong i = 0; i < size; i++) {
                                   actions.push_back((QAction*)v[i]);
-                                  ar.installAction((QAction*)v[i]);
+                                  //ar.installAction((QAction*)v[i]);
                              }
                         }
 						delete[] v;
@@ -4173,6 +4747,24 @@ XNLEXPORT void XI_CDECL widget_set_object_value(xlong h, xint proid, XObject * v
 XNLEXPORT void XI_CDECL object_set_long_int_long(xlong h, xint proid, xlong hv,int iv, xlong h1) {
         switch (proid)
         {
+		case TABWIDGETSETTABICON:
+		{
+			QTabWidget * obj = (QTabWidget*)h;
+			obj->setTabIcon(iv, *((QIcon*)h1));
+		}
+		break;
+		case TABBARSETTABBUTTON:
+		{
+			QTabBar * obj = (QTabBar*)h;
+			obj->setTabButton(hv, (QTabBar::ButtonPosition)iv, ((QWidget*)h1));
+		}
+		break;
+		case TABBARSETTABICON:
+		{
+			QTabBar * obj = (QTabBar*)hv;
+			obj->setTabIcon(iv, *((QIcon*)h1));
+		}
+		break;
         case SETTAG:
         {
                 QTreeWidgetItem * obj = (QTreeWidgetItem*)hv;
@@ -4226,6 +4818,9 @@ XNLEXPORT xlong XI_CDECL long_double2(xlong h, xint proid, double v1, double v2)
 XNLEXPORT xlong XI_CDECL object_get_long_int(xlong h, xint proid, xlong hv, int iv) {
         switch (proid)
         {
+		case TABWIDGETSETCORNERWIDGET:
+			((QTabWidget*)h)->setCornerWidget((QWidget*)hv, (Qt::Corner)iv);
+			break;
 		case QPB_SETEXPAND:
 			((QtTreePropertyBrowser*)h)->setExpanded((QtBrowserItem*)hv, iv != 0);
 			break;
@@ -4375,6 +4970,9 @@ XNLEXPORT xlong XI_CDECL long_intlong(xlong handle, xint proid, xlong value) {
 
         switch (proid)
         {
+		case TABBARTABTEXTCOLOR:
+			return (xlong)((QTabBar*)handle)->tabTextColor(value).value();
+			break;
         case ADDPROPERTY:
                 return (xlong)((QtTreePropertyBrowser*)handle)->addProperty((QtProperty*)value);
                 break;
@@ -4533,6 +5131,9 @@ XNLEXPORT xlong XI_CDECL pointer_intlong2(void* handle, xint proid, xlong value,
 XNLEXPORT void XI_CDECL void_long2(xlong handle, xint proid, xlong value1, xlong v2) {
         switch (proid)
         {
+		case TABBARSETTABTEXTCOLOR:
+			((QTabBar*)handle)->setTabTextColor(value1, (v2));
+			break;
         case SETMGRFACTORY:
                 ((QtTreePropertyBrowser*)handle)->setFactoryForManager((QtAbstractPropertyManager*)value1, (QtAbstractEditorFactory<QtAbstractPropertyManager>*)v2);
                 break;
@@ -4540,7 +5141,13 @@ XNLEXPORT void XI_CDECL void_long2(xlong handle, xint proid, xlong value1, xlong
 		case TOOLBARINSWIDGET:
 				((QToolBar*)handle)->insertWidget((QAction*)value1, (QWidget*)v2);
 			break;
+		case TOOLBARINSACTION:
+			((QToolBar*)handle)->insertAction((QAction*)value1, (QAction*)v2);
+			break;
 
+		case TOOLBARINSSEPAR:
+			((QToolBar*)handle)->insertSeparator((QAction*)value1);
+			break;
         default:
                 break;
         }
@@ -4589,6 +5196,9 @@ XNLEXPORT void XI_CDECL native_double4(double v1, double v2, double v3, double v
 XNLEXPORT xint XI_CDECL int_long_int_long_int_int(xlong h, xint proid, xlong h1, xint v1, xint v2) {
         switch (proid)
         {
+		case TABWIDGETINDEXOF:
+			return ((QTabWidget *)h)->indexOf((QWidget*)h1);
+			break;
         case INSERTWIDGET:
                 return ((QStatusBar *)h)->insertWidget(v2, (QWidget*)h1, v1);
                 break;
@@ -4680,6 +5290,7 @@ void * getFunction(const char * name) {
     if (strcmp(name, "long_longstring") == 0) return (void*)& long_longstring;
     if (strcmp(name, "long_intlong2") == 0) return (void*)& long_intlong2;
     if (strcmp(name, "widget_get_int_bool") == 0) return (void*)& widget_get_int_bool;
+	if (strcmp(name, "native_long2_string") == 0) return (void*)& native_long2_string;
     if (strcmp(name, "widget_set_v2int_double_value") == 0) return (void*)& widget_set_v2int_double_value;
     if (strcmp(name, "native_int4") == 0) return (void*)& native_int4;
     if (strcmp(name, "long_long_int9") == 0) return (void*)& long_long_int9;

@@ -1,0 +1,64 @@
+package Qt{
+    public class QMenu : QWidget{
+        public QMenu(long handle){
+            super(handle);
+        }
+        public QMenu(){
+        }
+        public bool create()override {
+            nativehandle = QtXnl.createQObject(QType.qtMenu, this, 0);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public bool create(@NotNilptr QWidget parent)override {
+            nativehandle = QtXnl.createQObject(QType.qtMenu, this, parent.nativehandle);
+            if (nativehandle == 0){
+                return false;
+            }
+            return true;
+        }
+        
+        public QAction addAction(String text){
+            return (QAction)QtXnl.object_get_string(nativehandle,Constant.ADDACT, text);
+        }
+        
+        public QMenu addMenu(String text){
+            return (QMenu)QtXnl.object_get_string(nativehandle,Constant.ADDMENU, text);
+        }
+
+        public QAction menuAction(){
+            return (QAction)QtXnl.widget_get_object(nativehandle,Constant.MENUACTION);
+        }
+        
+        public QAction insertMenu(@NotNilptr QAction before,@NotNilptr  QMenu menu){
+            return (QAction) QtXnl.object_get_handle2(nativehandle, Constant.MENUINSMENU, before == nilptr ? 0l: before.nativehandle, menu.nativehandle);
+        }
+
+        public QAction addAction(String icon, String text){
+            return (QAction)QtXnl.object_get_string2(nativehandle, Constant.ADDACT, icon, text);
+        }
+        
+        public QAction addAction(String text, @NotNilptr QObject receiver, String member, String key){
+            return (QAction)QtXnl.object_get_string_handle_string2(nativehandle, Constant.ADDACT, text, receiver.nativehandle, member, key);
+        }
+        
+        public QAction addAction(String text, @NotNilptr QObject receiver, String member, int key){
+            return (QAction)QtXnl.object_get_string_handle_string_int(nativehandle, Constant.ADDACT, text, receiver.nativehandle, member, key);
+        }
+        
+        public QAction addAction(String icon, String text, @NotNilptr QObject receiver, String member, String shortcutKey){
+            return (QAction)QtXnl.object_get_string2_handle_string2(nativehandle, Constant.ADDACT, icon, text, receiver.nativehandle, member, shortcutKey);
+        }
+        
+        public QAction addAction(String icon, String text, @NotNilptr QObject receiver, String member, int shortcutKey){
+            return (QAction)QtXnl.object_get_string2_handle_string_int(nativehandle, Constant.ADDACT, icon, text, receiver.nativehandle, member, shortcutKey);
+        }
+
+        public QAction addSeparator(){
+            return (QAction) QtXnl.widget_get_object(nativehandle, Constant.MENUADDSEPAR);
+        }
+    };
+};

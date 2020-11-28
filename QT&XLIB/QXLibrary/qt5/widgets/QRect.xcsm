@@ -1,0 +1,48 @@
+//xlang Source, Name:QRect.xcsm 
+//Date: Mon Oct 21:43:55 2018 
+package Qt{
+    public class QRect{
+        public QRect(){
+        }
+        public QRect(@NotNilptr QRect rc){
+            left = rc.left;
+            top = rc.top;
+            right = rc.right;
+            bottom = rc.bottom;
+        }
+        public QRect(int l, int t,int r,int b){
+            left = l;
+            top = t;
+            right = r;
+            bottom = b;
+        }
+        
+        public int left, top, right, bottom;
+        
+        public QPoint centerPoint(){
+            return new QPoint((left + right) / 2, (top + bottom) / 2);
+        }
+        
+        public int width(){
+            return right - left;
+        }
+        
+        public int height(){
+            return bottom - top;
+        }
+        
+        public void offset(int x, int y){
+            left += x;
+            top += y;
+            right += x;
+            bottom += y;
+        }
+        
+        public void offset(@NotNilptr QPoint pt){
+            left += pt.x;
+            top += pt.y;
+            right += pt.x;
+            bottom += pt.y;
+        }
+    };
+};
