@@ -2,9 +2,14 @@
 //Date: Thu Nov 20:47:52 2020 
 
 package Qt{
-
     public class Constant{
-        
+        public static const int 
+            WindowNoState    = 0x00000000,
+            WindowMinimized  = 0x00000001,
+            WindowMaximized  = 0x00000002,
+            WindowFullScreen = 0x00000004,
+            WindowActive     = 0x00000008;
+            
         public static const int 
             OPACITY = 0,
             VISIBLE = 1,
@@ -159,7 +164,6 @@ package Qt{
             QSCIGETRANGE = 150,
             LBLSETTEXT = 151,
             LBLGETTEXT = 152,
-
             CHKSETCHECK = 153,
             CHKGETCHECK = 154,
             GETVIEWPORT = 155,
@@ -604,7 +608,461 @@ package Qt{
             BOXADDSTRETCH = 594,
             BOXADDSPACING = 595,
             BOXSETSPACING = 596,
-            BOXSETSTRETCH = 597;
+            BOXSETSTRETCH = 597,
+            QCW_SETSELECTEDDATE = 598,
+            QCW_SETGRIDVISIBLE = 599,
+            QCW_SETNAVIGATIONBARVISIBLE = 600,
+            QCW_SETDATERANGE = 601,
+            QCW_SETCURRENTPAGE = 602,
+            QCW_SHOWNEXTMONTH = 603,
+            QCW_SHOWPREVIOUSMONTH = 604,
+            QCW_SHOWNEXTYEAR = 605,
+            QCW_SHOWPREVIOUSYEAR = 606,
+            QCW_SHOWSELECTEDDATE = 607,
+            QCW_SHOWTODAY = 608	,
+            QSTI_VISIBLE = 609,
+            QSTI_SETVISIBLE = 610,
+            QSTI_SETICON = 611,
+            QSTI_GETICON = 612,
+            QSTI_SETCONTEXTMENU = 613,
+            QSTI_GETCONTEXTMENU = 614,
+            QSTI_TOOLTIP = 615,
+            QSTI_SETTOOLTIP = 616,
+            QSTI_ISSYSTEMTRAYAVAILABLE = 617,
+            QSTI_SUPPORTSMESSAGES = 618,
+            QSTI_SHOWMESSAGE = 619,
+            QH_ORIENTATION = 620,
+            QH_GETOFFSET = 621,
+            QH_GETLENGTH = 622,
+            QH_SECTIONSMOVABLE = 623,
+            QH_SECTIONSIZEHINT = 624,
+            QH_VISUALINDEXAT = 625,
+            QH_LOGICALINDEXAT = 626,
+            QH_LOGICALINDEXATXY = 627,
+            QH_SECTIONSIZE = 628,
+            QH_SECTIONPOSITION = 629,
+            QH_SECTIONVIEWPORTPOSITION = 630,
+            QH_MOVESECTION = 631,
+            QH_SWAPSECTIONS = 632,
+            QH_RESIZESECTION = 633,
+            QH_RESIZESECTIONS = 634,
+            QH_ISSECTIONHIDDEN = 635,
+            QH_SETSECTIONHIDDEN = 636,
+            QH_HIDDENSECTIONCOUNT = 637,
+            QH_HIDESECTION = 638,
+            QH_SHOWSECTION = 639,
+            QH_COUNT = 640,
+            QH_VISUALINDEX = 641,
+            QH_LOGICALINDEX = 642,
+            QH_SETSECTIONSMOVABLE = 643,
+            QH_SETSECTIONSCLICKABLE = 644,
+            QH_SECTIONSCLICKABLE = 645,
+            QH_SETHIGHLIGHTSECTIONS = 646,
+            QH_HIGHLIGHTSECTIONS = 647,
+            QH_SECTIONRESIZEMODE = 648,
+            QH_SETSECTIONRESIZEMODE = 649,
+            QH_SETRESIZECONTENTSPRECISION = 650,
+            QH_RESIZECONTENTSPRECISION = 651,
+            QH_STRETCHSECTIONCOUNT = 652,
+            QH_SETSORTINDICATORSHOWN = 653,
+            QH_ISSORTINDICATORSHOWN = 654,
+            QH_SETSORTINDICATOR = 655,
+            QH_SORTINDICATORORDER = 656,
+            QH_STRETCHLASTSECTION = 657,
+            QH_SETSTRETCHLASTSECTION = 658,
+            QH_CASCADINGSECTIONRESIZES = 659,
+            QH_SETCASCADINGSECTIONRESIZES = 660,
+            QH_DEFAULTSECTIONSIZE = 661,
+            QH_SETDEFAULTSECTIONSIZE = 662,
+            QH_RESETDEFAULTSECTIONSIZE = 663,
+            QH_MINIMUMSECTIONSIZE = 664,
+            QH_SETMINIMUMSECTIONSIZE = 665,
+            QH_MAXIMUMSECTIONSIZE = 666,
+            QH_SETMAXIMUMSECTIONSIZE = 667,
+            QH_DEFAULTALIGNMENT = 668,
+            QH_SETDEFAULTALIGNMENT = 669,
+            QH_DOITEMSLAYOUT = 670,
+            QH_SECTIONSMOVED = 671,
+            QH_SECTIONSHIDDEN = 672,
+            QH_SAVESTATE = 673,
+            QH_LOADSTATE = 674,
+            QH_RESET = 675,
+            QH_SORTINDICATORSECTION = 676,
+            QTW_HORIZONTALHEADER = 677,
+            QTW_VERTICALHEADER = 678,
+            QTV_ROWVIEWPORTPOSITION = 679,
+            QTV_ROWAT = 680,
+            QTV_SETROWHEIGHT = 681,
+            QTV_ROWHEIGHT = 682,
+            QTV_COLUMNVIEWPORTPOSITION = 683,
+            QTV_COLUMNAT = 684,
+            QTV_SETCOLUMNWIDTH = 685,
+            QTV_COLUMNWIDTH = 686,
+            QTV_ISROWHIDDEN = 687,
+            QTV_SETROWHIDDEN = 688,
+            QTV_ISCOLUMNHIDDEN = 689,
+            QTV_SETCOLUMNHIDDEN = 690,
+            QTV_SETSORTINGENABLED = 691,
+            QTV_ISSORTINGENABLED = 692,
+            QTV_SHOWGRID = 693,
+            QTV_GRIDSTYLE = 694,
+            QTV_SETGRIDSTYLE = 695,
+            QTV_SETWORDWRAP = 696,
+            QTV_WORDWRAP = 697,
+            QTV_SETCORNERBUTTONENABLED = 698,
+            QTV_ISCORNERBUTTONENABLED = 699,
+            QTV_SETSPAN = 700,
+            QTV_ROWSPAN = 701,
+            QTV_COLUMNSPAN = 702,
+            QTV_CLEARSPANS = 703,
+            QTV_SORTBYCOLUMN = 704,
+            QW_SETICON = 705,
+            QLAYOUT_SETCONTENTSMARGINS = 706,
+            QLAYOUT_SETMARGIN = 707,
+            QLABEL_SETALIGNMENT = 708,
+            QLABEL_GETALIGNMENT = 709,
+            QTNTITLEBAR = 710,
+            QTNTITLEBARWIDGET = 711,
+            QTNMENUBAR = 712,
+            QTNSTATUSBAR = 713,
+            QTNCENTRALWIDGET = 714,
+            QTNDOCKBARMANAGER = 715,
+            QTNDOCKPANELMANAGER = 716,
+            QTNADDTOOLBAR = 717,
+            QTNINSERTDOCKBAR = 718,
+            QTNREMOVEDOCKBAR = 719,
+            QTNMOVEDOCKBAR = 720,
+            QTNCLEARDOCKBARS = 721,
+            QTNADDDOCUMENTPANEL = 722,
+            QTNINSERTDOCUMENTPANEL = 723,
+            QTNREMOVEDOCKPANEL = 724,
+            QTNCLEARDOCKPANELS = 725,
+			QTNADDDOCKWINDOW = 726,
+            QTNADDDOCKPANEL = 727,
+            QTNADDDOCKPANELS = 728,
+            QTNWT_SETVISIBLE = 729,
+			QTNWT_SETQWIZARDSUPPORTS = 730,
+			QTNWT_SETSYSMENUBUTTONVISIBLE = 731,
+			QTNWT_SETEXTENDVIEWINTOTITLEBAR = 732,
+			QTNWT_SETBLURBEHINDWINDOWENABLED = 733,
+			QTNWT_SETSTYLEDFRAME = 734,
+			QTNWT_ISQWIZARDSUPPORTS = 735,
+			QTNWT_ISSYSMENUBUTTONVISIBLE = 736,
+			QTNWT_EXTENDVIEWINTOTITLEBAR = 737,
+			QTNWT_BLURBEHINDWINDOWENABLED = 738,
+			QTNWT_STYLEDFRAME = 739,
+			QTNWT_ISVISIBLE = 740,
+			QTNWT_SHOWHELP = 741,
+			QTNWT_BACKREQUESTED = 742,
+			QTNWT_REMOVEANDDELETE = 743,
+			QTNWT_SHOW = 744,
+			QTNWT_HIDE = 745,
+			QTNWT_UPDATE = 746,
+			QTNWT_SETWIDGET = 747,
+			QTNWT_SETBACKGROUNDCOLOR = 748,
+			QTNWT_SETBORDERTHICKNESS = 749,
+			QTNWT_SETSYSBUTTONKIND = 750,
+			QTNWT_SETTITLEHEIGHT = 751,
+			QTNWT_WIDGET = 752,
+			QTNWT_FRAMECOLOR = 753,
+			QTNWT_BACKGROUNDCOLOR = 754,
+			QTNWT_SYSBUTTONKIND = 755,
+			QTNWT_BORDERTHICKNESS = 756,
+			QTNWT_TITLEHEIGHT = 757,
+            QTNDB_CENTRALWIDGET = 758,
+            QTNDB_MANAGEDWIDGET = 759,
+            QTNDB_DOCKBARCOUNT = 760,
+            QTNDB_SETCENTRALWIDGET = 761,
+            QTNDB_REMOVEDOCKBAR = 762,
+            QTNDB_CLEARDOCKBARS = 763,
+            QTNDB_ADDTOOLBAR = 764,
+            QTNDB_INSERTDOCKBAR = 765,
+            QTNDB_MOVEDOCKBAR = 766,
+            QTNQPM_MANAGEDWIDGET = 767,
+            QTNQPM_LAYOUTPANEL = 768,
+            QTNQPM_CENTRALLAYOUTPANEL = 769,
+            QTNQPM_ACTIVEDOCKPANEL = 770,
+            QTNQPM_CENTRALWIDGET = 771,
+			QTNQPM_ADDDOCKWINDOW = 772,
+			QTNQPM_ADDDOCUMENTPANEL = 773,
+			QTNQPM_INSERTDOCUMENTPANEL = 774,
+			QTNQPM_ADDDOCKPANEL = 775,
+			QTNQPM_ADDDOCKPANELS = 776,
+			QTNQPM_REMOVEDOCKPANEL = 777,
+			QTNQPM_CLEARDOCKPANELS = 778,
+			QTNQPM_ISDOCKPANELFLOAT = 779,
+			QTNQPM_SETDOCKPANELFLOAT = 780,
+			QTNQPM_SHOWDOCKPANEL = 781,
+			QTNQPM_SETDOCKPANELAUTOHIDE = 782,
+			QTNQPM_ISDOCKPANELCLOSED = 783,
+			QTNQPM_ISDOCKPANELAUTOHIDE = 784,
+			QTNQPM_CLOSEDOCKPANEL = 785,
+			QTNQPM_SETCENTRALWIDGET = 786,
+			QTNQPM_MARGIN = 787,
+			QTNQPM_DEFAULTPANEFEATURES = 788,
+			QTNQPM_SETMARGIN = 789,
+			QTNQPM_DOCKWINDOWTITLE = 790,
+			QTNQPM_SETDOCKWINDOWTITLE = 791,
+			QTNQPM_ISDOCKPANELFULLCONTENTSWHILEDRAGGINGSHOWN = 792,
+			QTNQPM_ISDOCKPANELTRANSPARENTWHILEDRAGGING = 793,
+			QTNQPM_ISARROWMARKERSSHOWN = 794,
+			QTNQPM_ENDUPDATE = 795,
+			QTNQPM_BEGINUPDATE = 796,
+			QTNQPM_BESTFIT = 797,
+            QTNQPM_SETARROWMARKERSSHOWN = 798,
+			QTNQPM_SETDOCKPANELTRANSPARENTWHILEDRAGGING = 799,
+			QTNQPM_SETDOCKPANELFULLCONTENTSWHILEDRAGGINGSHOWN = 800,
+            QTNQPM_SETDEFAULTPANEFEATURES = 801,
+            QTNDW_FINALIZATIONWINDOW = 802,
+			QTNDW_LAYOUTPANEL = 803,
+			QTNDW_DOCKMANAGER = 804,
+			QTNDW_INITIALIZATIONWINDOW = 805,
+            QTNDPB_DOCKMANAGER = 806,
+			QTNDPB_PARENTPANEL = 807,
+			QTNDPB_TOPDOCKWINDOW = 808,
+			QTNDPB_DOCKWINDOW = 809,
+            QTNDPB_SETDOCKWINDOW = 810,
+			QTNDPB_SETPARENTPANEL = 811,
+            QTNDWP_SETFEATURES = 812,
+			QTNDWP_SETALLOWEDAREAS = 813,
+			QTNDWP_ISAREAALLOWED = 814,
+			QTNDWP_ISVALID = 815,
+			QTNDWP_SHOWPANEL = 816,
+			QTNDWP_ISCLOSED = 817,
+			QTNDWP_CLOSEPANEL = 818,
+			QTNDWP_ISAUTOHIDE = 819,
+			QTNDWP_ISACTIVE = 820,
+			QTNDWP_ACTIVATE = 821,
+			QTNDWP_DEACTIVATE = 822,
+			QTNDWP_ISFLOAT = 823,
+			QTNDWP_WIDGET = 824,
+			QTNDWP_MENUBUTTON = 825,
+			QTNDWP_VISIBLEACTION = 826,
+			QTNDWP_TITLEBAR = 827,
+			QTNDWP_SETAUTOHIDE = 828,
+			QTNDWP_SETFLOAT = 829,
+			QTNDWP_FEATURES = 830,
+			QTNDWP_ALLOWEDAREAS = 831,
+			QTNDWP_SETWIDGET = 832,
+			QTNDWP_SETICON = 833,
+			QTNDWP_SETMENUBUTTON = 834,
+			QTNDWP_SETTITLEBAR = 835,
+			QTNDWP_SETPARENTPANEL = 836,
+			QTNDWP_SETCAPTION = 837,
+			QTNDWP_CAPTION = 838,
+            QTNDDP_SETPARENTPANEL = 839,
+            QTNDLP_ISEMPTY = 840,
+			QTNDLP_CHILDCOUNT = 841,
+			QTNDLP_LAYOUTTYPE = 842,
+            QTNDPM_INSERTDOCKPANEL = 843,
+            QTNDMW_INSERTDOCKPANEL = 844,
+            QTAPP_SETSTYLE = 845,
+            QTNDS_THEME = 846,
+			QTNDS_SETTHEME = 847,
+            QTNWTB_GET = 848,
+            QTNWTB_FIND = 849,
+			QSCI_ENABLESCROLLBARMARKER = 850,
+			QSCI_SETSCROLLBARMARKER = 851,
+            QTMW_SETCENTRALWIDGET = 852,
+			DBMSAVESTATE = 853,
+			DPMSAVESTATE = 854,
+			DBMLOADSTATE = 855,
+			DPMLOADSTATE = 856,
+			DMLOADSTATE = 857,
+			DMSAVESTATE = 858,
+            QMEDIAOBJECT_SETNOTIFYINTERVAL = 859,
+			QMEDIAOBJECT_ISMETADATAAVAILABLE = 860,
+			QMEDIAOBJECT_ISAVAILABLE = 861,
+			QMEDIAOBJECT_SERVICE = 862,
+			QMEDIAOBJECT_NOTIFYINTERVAL = 863,
+			QMEDIAOBJECT_AVAILABILITY = 864,
+			QMEDIAOBJECT_UNBIND = 865,
+			QMEDIAOBJECT_BIND = 866,
+            QMEDIAPLAYER_SETVOLUME = 867,
+			QMEDIAPLAYER_SETAUDIOROLE = 868,
+			QMEDIAPLAYER_ISVIDEOAVAILABLE = 869,
+			QMEDIAPLAYER_ISAUDIOAVAILABLE = 870,
+			QMEDIAPLAYER_ISMUTED = 871,
+			QMEDIAPLAYER_SUPPORTEDAUDIOROLES = 872,
+			QMEDIAPLAYER_PLAYBACKRATE = 873,
+			QMEDIAPLAYER_SETPLAYBACKRATE = 874,
+			QMEDIAPLAYER_SETMUTED = 875,
+			QMEDIAPLAYER_AUDIOROLE = 876,
+			QMEDIAPLAYER_AVAILABILITY = 877,
+			QMEDIAPLAYER_ERROR = 878,
+			QMEDIAPLAYER_ISSEEKABLE = 879,
+			QMEDIAPLAYER_BUFFERSTATUS = 880,
+			QMEDIAPLAYER_VOLUME = 881,
+			QMEDIAPLAYER_MEDIASTATUS = 882,
+			QMEDIAPLAYER_STATE = 883,
+			QMEDIAPLAYER_SETPOSITION = 884,
+			QMEDIAPLAYER_STOP = 885,
+			QMEDIAPLAYER_PAUSE = 886,
+			QMEDIAPLAYER_PLAY = 887,
+			QMEDIAPLAYER_SETVIDEOOUTPUT = 888,
+			QMEDIAPLAYER_ERRORSTRING = 889,
+			QMEDIAPLAYER_SUPPORTEDMIMETYPES = 890,
+			QMEDIAPLAYER_HASSUPPORT = 891,
+			QMEDIAPLAYER_POSITION = 892,
+			QMEDIAPLAYER_DURATION = 893,
+            QMEDIAPLAYER_SETMEDIA = 894,
+            QVIDEOWIDGET_SETSATURATION = 895,
+            QVIDEOWIDGET_SETHUE = 896,
+            QVIDEOWIDGET_SETCONTRAST = 897,
+            QVIDEOWIDGET_SETBRIGHTNESS = 898,
+            QVIDEOWIDGET_SETASPECTRATIOMODE = 899,
+            QVIDEOWIDGET_MEDIAOBJECT = 900,
+            QVIDEOWIDGET_SETFULLSCREEN = 901,
+            QVIDEOWIDGET_SATURATION = 902,
+            QVIDEOWIDGET_HUE = 903,
+            QVIDEOWIDGET_CONTRAST = 904,
+            QVIDEOWIDGET_BRIGHTNESS = 905,
+            QVIDEOWIDGET_ASPECTRATIOMODE = 906,
+            QVIDEOWIDGET_SIZEHINT = 907,
+			QAUDIOFORMAT_SETSAMPLETYPE = 908,
+			QAUDIOFORMAT_SETBYTEORDER = 909,
+			QAUDIOFORMAT_SETSAMPLESIZE = 910,
+			QAUDIOFORMAT_SETCHANNELCOUNT = 911,
+			QAUDIOFORMAT_SETSAMPLERATE = 912,
+            QAUDIOFORMAT_FRAMESFORBYTES = 913,
+            QAUDIOFORMAT_BYTESFORFRAMES = 914,
+            QAUDIOFORMAT_ISVALID = 915,
+            QAUDIOFORMAT_BYTESPERFRAME = 916,
+            QAUDIOFORMAT_SAMPLETYPE = 917,
+            QAUDIOFORMAT_BYTEORDER = 918,
+            QAUDIOFORMAT_SAMPLESIZE = 919,
+            QAUDIOFORMAT_CHANNELCOUNT = 920,
+            QAUDIOFORMAT_SAMPLERATE = 921,
+            QAUDIOFORMAT_SETCODEC = 922,
+            QAUDIOFORMAT_FRAMESFORDURATION = 923,
+            QAUDIOFORMAT_BYTESFORDURATION = 924,
+            QAUDIOFORMAT_CODEC = 925,
+            QAUDIOFORMAT_DURATIONFORFRAMES = 926,
+            QAUDIOFORMAT_DURATIONFORBYTES = 927,
+            QAUDIOOUTPUT_SETNOTIFYINTERVAL = 928,
+            QAUDIOOUTPUT_SETBUFFERSIZE = 929,
+            QAUDIOOUTPUT_VOLUME = 930,
+            QAUDIOOUTPUT_SETVOLUME = 931,
+            QAUDIOOUTPUT_STATE = 932,
+            QAUDIOOUTPUT_ERROR = 933,
+            QAUDIOOUTPUT_NOTIFYINTERVAL = 934,
+            QAUDIOOUTPUT_PERIODSIZE = 935,
+            QAUDIOOUTPUT_BYTESFREE = 936,
+            QAUDIOOUTPUT_BUFFERSIZE = 937,
+            QAUDIOOUTPUT_RESUME = 938,
+            QAUDIOOUTPUT_SUSPEND = 939,
+            QAUDIOOUTPUT_RESET = 940,
+            QAUDIOOUTPUT_STOP = 941,
+            QAUDIOOUTPUT_START = 942,
+            QAUDIOOUTPUT_ELAPSEDUSECS = 943,
+            QAUDIOOUTPUT_PROCESSEDUSECS = 944,
+            QAUDIOOUTPUT_FORMAT = 945,
+            QAUDIOOUTPUT_WRITE = 946,
+            QAUDIOINPUT_SETNOTIFYINTERVAL = 947,
+			QAUDIOINPUT_SETBUFFERSIZE = 948,
+			QAUDIOINPUT_VOLUME = 949,
+			QAUDIOINPUT_SETVOLUME = 950,
+			QAUDIOINPUT_STATE = 951,
+			QAUDIOINPUT_ERROR = 952,
+			QAUDIOINPUT_NOTIFYINTERVAL = 953,
+			QAUDIOINPUT_PERIODSIZE = 954,
+			QAUDIOINPUT_BYTESFREE = 955,
+			QAUDIOINPUT_BUFFERSIZE = 956,
+			QAUDIOINPUT_RESUME = 957,
+			QAUDIOINPUT_SUSPEND = 958,
+			QAUDIOINPUT_RESET = 959,
+			QAUDIOINPUT_STOP = 960,
+			QAUDIOINPUT_START = 961,
+			QAUDIOINPUT_ELAPSEDUSECS = 962,
+			QAUDIOINPUT_PROCESSEDUSECS = 963,
+			QAUDIOINPUT_FORMAT = 964,
+			QAUDIOINPUT_READ = 965,
+            QAUDIODEVICEINFO_ISNULL = 966,
+            QAUDIODEVICEINFO_SUPPORTEDBYTEORDERS = 967,
+            QAUDIODEVICEINFO_FINALIZE = 968,
+            QAUDIOFORMAT_FINALIZE = 969,
+            QAUDIODEVICEINFO_ISFORMATSUPPORTED = 970,
+            QAUDIODEVICEINFO_SUPPORTEDSAMPLETYPES = 971,
+            QAUDIODEVICEINFO_SUPPORTEDSAMPLESIZES = 972,
+            QAUDIODEVICEINFO_SUPPORTEDCHANNELCOUNTS = 973,
+            QAUDIODEVICEINFO_SUPPORTEDSAMPLERATES = 974,
+            QAUDIODEVICEINFO_SUPPORTEDCODECS = 975,
+            QAUDIODEVICEINFO_NAME = 976,
+            QAUDIODEVICEINFO_AVAILABLEDEVICES = 977,
+            QAUDIODEVICEINFO_DEFAULTOUTPUTDEVICE = 978,
+            QAUDIODEVICEINFO_DEFAULTINPUTDEVICE = 979,
+            QAUDIODEVICEINFO_PREFERREDFORMAT = 980,
+            QAUDIODEVICEINFO_NEARESTFORMAT = 981,
+            QOPENGLWIDGET_SETUPDATEBEHAVIOR = 982,
+			QOPENGLWIDGET_ISVALID = 983,
+			QOPENGLWIDGET_CONTEXT = 984,
+			QOPENGLWIDGET_DEFAULTFRAMEBUFFEROBJECT = 985,
+			QOPENGLWIDGET_UPDATEBEHAVIOR = 986,
+			QOPENGLWIDGET_SETFORMAT = 987,
+			QOPENGLWIDGET_DONECURRENT = 988,
+			QOPENGLWIDGET_MAKECURRENT = 989,
+			QOPENGLWIDGET_GRABFRAMEBUFFER = 990,
+			QOPENGLWIDGET_FORMAT = 991,
+            QOPENGLCONTEXT_GLOBALSHARECONTEXT = 992,
+			QOPENGLCONTEXT_ISOPENGLES = 993,
+			QOPENGLCONTEXT_ISVALID = 994,
+			QOPENGLCONTEXT_CREATE = 995,
+			QOPENGLCONTEXT_SUPPORTSTHREADEDOPENGL = 996,
+			QOPENGLCONTEXT_CURRENTCONTEXT = 997,
+			QOPENGLCONTEXT_SHARECONTEXT = 998,
+			QOPENGLCONTEXT_OPENGLMODULETYPE = 999,
+			QOPENGLCONTEXT_DEFAULTFRAMEBUFFEROBJECT = 1000,
+			QOPENGLCONTEXT_SETSHARECONTEXT = 1001,
+			QOPENGLCONTEXT_SETFORMAT = 1002,
+			QOPENGLCONTEXT_DONECURRENT = 1003,
+			QOPENGLCONTEXT_EXTRAFUNCTIONS = 1004,
+			QOPENGLCONTEXT_FUNCTIONS = 1005,
+			QOPENGLCONTEXT_FORMAT = 1006,
+			QOPENGLCONTEXT_ARESHARING = 1007,
+            QSURFACEFORMAT_SETSWAPINTERVAL = 1008,
+			QSURFACEFORMAT_SETOPTIONS = 1009,
+			QSURFACEFORMAT_SETMINORVERSION = 1010,
+			QSURFACEFORMAT_SETMAJORVERSION = 1011,
+			QSURFACEFORMAT_SETRENDERABLETYPE = 1012,
+			QSURFACEFORMAT_SETSWAPBEHAVIOR = 1013,
+			QSURFACEFORMAT_SETSAMPLES = 1014,
+			QSURFACEFORMAT_SETALPHABUFFERSIZE = 1015,
+			QSURFACEFORMAT_SETBLUEBUFFERSIZE = 1016,
+			QSURFACEFORMAT_SETGREENBUFFERSIZE = 1017,
+			QSURFACEFORMAT_SETREDBUFFERSIZE = 1018,
+			QSURFACEFORMAT_SETSTENCILBUFFERSIZE = 1019,
+			QSURFACEFORMAT_SETDEPTHBUFFERSIZE = 1020,
+			QSURFACEFORMAT_TESTOPTION = 1021,
+			QSURFACEFORMAT_SETOPTION = 1022,
+			QSURFACEFORMAT_STEREO = 1023,
+			QSURFACEFORMAT_HASALPHA = 1024,
+			QSURFACEFORMAT_SETSTEREO = 1025,
+			QSURFACEFORMAT_DEPTHBUFFERSIZE = 1026,
+			QSURFACEFORMAT_STENCILBUFFERSIZE = 1027,
+			QSURFACEFORMAT_REDBUFFERSIZE = 1028,
+			QSURFACEFORMAT_GREENBUFFERSIZE = 1029,
+			QSURFACEFORMAT_BLUEBUFFERSIZE = 1030,
+			QSURFACEFORMAT_ALPHABUFFERSIZE = 1031,
+			QSURFACEFORMAT_SAMPLES = 1032,
+			QSURFACEFORMAT_SWAPBEHAVIOR = 1033,
+			QSURFACEFORMAT_RENDERABLETYPE = 1034,
+			QSURFACEFORMAT_MAJORVERSION = 1035,
+			QSURFACEFORMAT_MINORVERSION = 1036,
+			QSURFACEFORMAT_OPTIONS = 1037,
+			QSURFACEFORMAT_SWAPINTERVAL = 1038,
+			QSURFACEFORMAT_SETVERSION = 1039,
+			QSURFACEFORMAT_SETDEFAULTFORMAT = 1040,
+			QSURFACEFORMAT_DEFAULTFORMAT = 1041,
+            QOPENGLFUNCTIONS_HASOPENGLFEATURE = 1042,
+			QOPENGLFUNCTIONS_OPENGLFEATURES = 1043,
+			QOPENGLFUNCTIONS_INITIALIZEOPENGLFUNCTIONS = 1044,
+            QSURFACEFORMAT = 1045,
+            QOPENGLFUNCTIONS_1_0_INITIALIZEOPENGLFUNCTIONS = 1046,
+            QOPENGLCONTEXT_FUNCTIONS_1_0 = 1047,
+            QOPENGLFUNCTIONS_ES2_INITIALIZEOPENGLFUNCTIONS = 1048,
+			QOPENGLFUNCTIONS_1_1_INITIALIZEOPENGLFUNCTIONS = 1049,
+            QOPENGLCONTEXT_FUNCTIONS_1_1 = 1050,
+			QOPENGLCONTEXT_FUNCTIONS_ES2 = 1051;
         
         public static const int
             ElideLeft = 0,
@@ -1442,8 +1900,89 @@ package Qt{
             WheelFocus = StrongFocus | 0x4;
     };
     
+    public enum AspectRatioMode {
+        IgnoreAspectRatio,
+        KeepAspectRatio,
+        KeepAspectRatioByExpanding
+    };
     
+    public enum SortOrder {
+        AscendingOrder,
+        DescendingOrder
+    };
     
+    public enum ResizeMode
+    {
+        Interactive,
+        Stretch,
+        Fixed,
+        ResizeToContents,
+        Custom = Fixed
+    };
+    public enum ItemDataRole {
+        DisplayRole = 0,
+        DecorationRole = 1,
+        EditRole = 2,
+        ToolTipRole = 3,
+        StatusTipRole = 4,
+        WhatsThisRole = 5,
+        // Metadata
+        FontRole = 6,
+        TextAlignmentRole = 7,
+        BackgroundColorRole = 8,
+        BackgroundRole = 8,
+        TextColorRole = 9,
+        ForegroundRole = 9,
+        CheckStateRole = 10,
+        // Accessibility
+        AccessibleTextRole = 11,
+        AccessibleDescriptionRole = 12,
+        // More general purpose
+        SizeHintRole = 13,
+        InitialSortOrderRole = 14,
+        // Internal UiLib roles. Start worrying when public roles go that high.
+        DisplayPropertyRole = 27,
+        DecorationPropertyRole = 28,
+        ToolTipPropertyRole = 29,
+        StatusTipPropertyRole = 30,
+        WhatsThisPropertyRole = 31,
+        // Reserved
+        UserRole = 0x0100
+    };
+    
+    public enum SupportEstimate
+    {
+        NotSupported,
+        MaybeSupported,
+        ProbablySupported,
+        PreferredService
+    };
+
+    public enum EncodingQuality
+    {
+        VeryLowQuality,
+        LowQuality,
+        NormalQuality,
+        HighQuality,
+        VeryHighQuality
+    };
+
+    public enum EncodingMode
+    {
+        ConstantQualityEncoding,
+        ConstantBitRateEncoding,
+        AverageBitRateEncoding,
+        TwoPassEncoding
+    };
+
+    public enum AvailabilityStatus
+    {
+        Available,
+        ServiceMissing,
+        Busy,
+        ResourceError
+    };
+        
     public enum ApplicationAttribute
     {
         AA_ImmediateWidgetCreation = 0,
@@ -1478,7 +2017,126 @@ package Qt{
         // Add new attributes before this line
         AA_AttributeCount
     };
-     
+    /*  Painter */
+    public static class RenderHint {
+        public static const int
+        Antialiasing = 0x01,
+        TextAntialiasing = 0x02,
+        SmoothPixmapTransform = 0x04,
+        HighQualityAntialiasing = 0x08,
+        NonCosmeticDefaultPen = 0x10,
+        Qt4CompatiblePainting = 0x20;
+    };
+
+    public enum CompositionMode {
+        CompositionMode_SourceOver,
+        CompositionMode_DestinationOver,
+        CompositionMode_Clear,
+        CompositionMode_Source,
+        CompositionMode_Destination,
+        CompositionMode_SourceIn,
+        CompositionMode_DestinationIn,
+        CompositionMode_SourceOut,
+        CompositionMode_DestinationOut,
+        CompositionMode_SourceAtop,
+        CompositionMode_DestinationAtop,
+        CompositionMode_Xor,
+
+        //svg 1.2 blend modes
+        CompositionMode_Plus,
+        CompositionMode_Multiply,
+        CompositionMode_Screen,
+        CompositionMode_Overlay,
+        CompositionMode_Darken,
+        CompositionMode_Lighten,
+        CompositionMode_ColorDodge,
+        CompositionMode_ColorBurn,
+        CompositionMode_HardLight,
+        CompositionMode_SoftLight,
+        CompositionMode_Difference,
+        CompositionMode_Exclusion,
+
+        // ROPs
+        RasterOp_SourceOrDestination,
+        RasterOp_SourceAndDestination,
+        RasterOp_SourceXorDestination,
+        RasterOp_NotSourceAndNotDestination,
+        RasterOp_NotSourceOrNotDestination,
+        RasterOp_NotSourceXorDestination,
+        RasterOp_NotSource,
+        RasterOp_NotSourceAndDestination,
+        RasterOp_SourceAndNotDestination,
+        RasterOp_NotSourceOrDestination,
+        RasterOp_SourceOrNotDestination,
+        RasterOp_ClearDestination,
+        RasterOp_SetDestination,
+        RasterOp_NotDestination
+    };
+    public enum PenStyle {
+        /** @pen style
+
+        */
+        NoPen,
+        SolidLine,
+        DashLine,
+        DotLine,
+        DashDotLine,
+        DashDotDotLine,
+        CustomDashLine,
+        MPenStyle
+    };
+    
+    
+    /** @bgm mode
+
+    */
+    public static class BackgroundMode {
+        static const int
+        TransparentMode = 0,
+        OpaqueMode = 1;
+    };
+
+
+    /** @ImageConversionFlag
+    */
+    public static class ImageConversionFlag {
+
+        static const int
+        ColorMode_Mask          = 0x00000003,
+        AutoColor               = 0x00000000,
+        ColorOnly               = 0x00000003,
+        MonoOnly                = 0x00000002,
+        // Reserved             = 0x00000001,
+
+        AlphaDither_Mask        = 0x0000000c,
+        ThresholdAlphaDither    = 0x00000000,
+        OrderedAlphaDither      = 0x00000004,
+        DiffuseAlphaDither      = 0x00000008,
+        NoAlpha                 = 0x0000000c, // Not supported
+
+        Dither_Mask             = 0x00000030,
+        DiffuseDither           = 0x00000000,
+        OrderedDither           = 0x00000010,
+        ThresholdDither         = 0x00000020,
+        // ReservedDither       = 0x00000030,
+
+        DitherMode_Mask         = 0x000000c0,
+        AutoDither              = 0x00000000,
+        PreferDither            = 0x00000040,
+        AvoidDither             = 0x00000080,
+
+        NoOpaqueDetection       = 0x00000100,
+        NoFormatConversion      = 0x00000200;
+    };
+    
+    public enum MessageIcon { NoIcon, Information, Warning, Critical };
+    public enum ActivationReason {
+        Unknown,
+        Context,
+        DoubleClick,
+        Trigger,
+        MiddleClick
+    };
     public enum RenderFlag {
         DrawWindowBackground = 0x1,
         DrawChildren = 0x2,
@@ -1503,6 +2161,146 @@ package Qt{
         ElideNone
     };
         
+    public static class onAudioOutputListener{
+        public void stateChanged(QAudioOutput, QAudio.State){
+        }
+        public void notify(QAudioOutput){
+        }
+    };
+    
+    public static class onOpenGLEventListener{
+        public void aboutToCompose(QOpenGLWidget w){}
+        public void frameSwapped(QOpenGLWidget w){ }
+        public void aboutToResize(QOpenGLWidget w){ }
+        public void resized(QOpenGLWidget w){ }
+        public void initializeGL(QOpenGLWidget w){ }
+        public void resizeGL(QOpenGLWidget widget, int w, int h){ }
+        public void paintGL(QOpenGLWidget w){ }
+    };
+        
+    public static class onAudioInputListener{
+        public void stateChanged(QAudioInput, QAudio.State){
+        }
+        public void notify(QAudioInput){
+        }
+    };
+    
+    public static class onVideoWidgetListener{
+        public void fullScreenChanged(QVideoWidget, bool fullScreen){
+            
+        }
+        public void brightnessChanged(QVideoWidget, int brightness){
+            
+        }
+        public void contrastChanged(QVideoWidget, int contrast){
+            
+        }
+        public void hueChanged(QVideoWidget, int hue){
+            
+        }
+        public void saturationChanged(QVideoWidget, int saturation){
+            
+        }
+    };
+    
+    public static class onHeaderEventListener{
+        public void sectionMoved(QHeaderView header, int logicalIndex, int oldVisualIndex, int newVisualIndex){
+            
+        }
+        public void sectionResized(QHeaderView header,int logicalIndex, int oldSize, int newSize){
+            
+        }
+        public void sectionPressed(QHeaderView header,int logicalIndex){
+            
+        }
+        public void sectionClicked(QHeaderView header,int logicalIndex){
+            
+        }
+        public void sectionEntered(QHeaderView header,int logicalIndex){
+            
+        }
+        public void sectionDoubleClicked(QHeaderView header,int logicalIndex){
+            
+        }
+        public void sectionCountChanged(QHeaderView header,int oldCount, int newCount){
+            
+        }
+        public void sectionHandleDoubleClicked(QHeaderView header,int logicalIndex){
+            
+        }
+        public void geometriesChanged(QHeaderView header){
+            
+        }
+        public void sortIndicatorChanged(QHeaderView header,int logicalIndex, Qt.SortOrder order){
+            
+        }
+    };
+        
+        
+    public static class onMediaObjectCallback{
+        public void notifyIntervalChanged(QMediaObject, int milliSeconds){}
+        public void metaDataAvailableChanged(QMediaObject, bool available){}
+        public void metaDataChanged(QMediaObject){}
+        public void availabilityChanged(QMediaObject, bool available){}
+        public void availabilityChanged(QMediaObject, AvailabilityStatus availability){}  
+    };
+    
+    public static class onMediaPlayerListener{
+        public void mediaChanged(QMediaPlayer, String uri){
+            
+        }
+        public void currentMediaChanged(QMediaPlayer, String uri){
+            
+        }
+        public void stateChanged(QMediaPlayer, QMediaPlayer.State newState){
+            
+        }
+        public void mediaStatusChanged(QMediaPlayer, QMediaPlayer.MediaStatus status){
+            
+        }
+        public void durationChanged(QMediaPlayer, long duration){
+            
+        }
+        public void positionChanged(QMediaPlayer, long position){
+            
+        }
+        public void volumeChanged(QMediaPlayer, int volume){
+            
+        }
+        public void mutedChanged(QMediaPlayer, bool muted){
+            
+        }
+        public void audioAvailableChanged(QMediaPlayer, bool available){
+            
+        }
+        public void videoAvailableChanged(QMediaPlayer, bool videoAvailable){
+            
+        }
+        public void bufferStatusChanged(QMediaPlayer, int percentFilled){
+            
+        }
+        public void seekableChanged(QMediaPlayer, bool seekable){
+            
+        }
+        public void playbackRateChanged(QMediaPlayer, double rate){
+            
+        }
+        public void audioRoleChanged(QMediaPlayer, QAudio.Role role){
+            
+        }
+        public void error(QMediaPlayer, QMediaPlayer.Error error){
+            
+        }
+    };
+    
+    public static class onSystemTrayListener{
+        public void activated(QSystemTrayIcon, ActivationReason reason){
+        }
+        
+        public void messageClicked(QSystemTrayIcon){
+        }
+    };
+    
     public static class onMouseEventListener {
         public void onMouseButtonPress(QObject obj, int Button, int x, int y, int flags, int source) {
         }
@@ -1640,7 +2438,7 @@ package Qt{
         }
         public void onParentChange(QObject obj) {
         }
-        public void onWindowStateChange(QObject obj, int state, int oldState) {}
+        public void onWindowStateChange(QObject obj, int oldstate, int State) {}
     };
 
     public static class TableWidgetEventListener {

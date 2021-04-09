@@ -26,7 +26,12 @@ package Qt{
         public void setText(String text){
             QtXnl.widget_slot_string(nativehandle, Constant.LBLSETTEXT, text);
         }
-        
+        public int alignment() {
+            return QtXnl.widget_get_int_value(nativehandle, Constant.QLABEL_GETALIGNMENT);
+        }
+        public void setAlignment(int a){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QLABEL_SETALIGNMENT, a);
+        }
         public @NotNilptr String getText(){
             String __txt = (String)QtXnl.core_getString(nativehandle, Constant.LBLGETTEXT);
             __nilptr_safe(__txt);

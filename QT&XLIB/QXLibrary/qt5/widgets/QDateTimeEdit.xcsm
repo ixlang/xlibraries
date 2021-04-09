@@ -2,29 +2,29 @@
 //Date: Thu Sep 20:14:47 2019 
 
 package Qt{
+    public class QTime{
+        public  int hour,  min,  sec,  msec;
+        public QTime(int h, int m, int s,int ms){
+            hour = h;
+            min = m;
+            sec = s; 
+            msec = ms;
+        }
+    };
+    
+    public class QDate{
+        public int year,  mon,  day;
+        public QDate(int y, int m, int d){
+            year = y;
+            mon = m;
+            day = d; 
+        }
+    };
+    
     public class QDateTimeEdit : QWidget{
 
         private onDateTimeChangeListener lis = nilptr;
-        
-        public static class QTime{
-            public  int hour,  min,  sec,  msec;
-            public QTime(int h, int m, int s,int ms){
-                hour = h;
-                min = m;
-                sec = s; 
-                msec = ms;
-            }
-        };
-        
-        public static class QDate{
-            public int year,  mon,  day;
-            public QDate(int y, int m, int d){
-                year = y;
-                mon = m;
-                day = d; 
-            }
-        };
-        
+                
         public QDateTimeEdit() {//构造
             //TODO:	
         }

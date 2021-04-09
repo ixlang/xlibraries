@@ -162,5 +162,95 @@ package Qt{
         public QWidget getCellWidget(int x,int y){
             return (QWidget)QtXnl.object_get_handle2(nativehandle, Constant.TABLEGETCELLWIDGET, x, y);
         }
+        
+        public QHeaderView verticalHeader(){
+            return (QHeaderView)QtXnl.widget_get_object(nativehandle, Constant.QTW_VERTICALHEADER);
+        }
+        
+        public QHeaderView horizontalHeader(){
+            return (QHeaderView)QtXnl.widget_get_object(nativehandle, Constant.QTW_HORIZONTALHEADER);
+        }
+        
+        
+        /**  override ***/
+        
+        public int rowViewportPosition(int row) {
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_ROWVIEWPORTPOSITION, row, 0);
+        }
+        public int rowAt(int y) {
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_ROWAT, y, 0);
+        }
+        public void setRowHeight(int row, int height){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_SETROWHEIGHT, row, height);
+        }
+        public int rowHeight(int row) {
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_ROWHEIGHT, row, 0);
+        }
+        public int columnViewportPosition(int column) {
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_COLUMNVIEWPORTPOSITION, column, 0);
+        }
+        public int columnAt(int x) {
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_COLUMNAT, x, 0);
+        }
+        public void setColumnWidth(int column, int width){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_SETCOLUMNWIDTH, column, width);
+        }
+        public int columnWidth(int column){
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_COLUMNWIDTH, column, 0);
+        }
+        public bool isRowHidden(int row) {
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_ISROWHIDDEN, row, 0) != 0;
+        }
+        public void setRowHidden(int row, bool hide){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_SETROWHIDDEN, row, hide ? 1 : 0);
+        }
+        public bool isColumnHidden(int column){
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_ISCOLUMNHIDDEN, column, 0) != 0;
+        }
+        public void setColumnHidden(int column, bool hide){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_SETCOLUMNHIDDEN, column, hide ? 1 : 0);
+        }
+        public void setSortingEnabled(bool enable){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.QTV_SETSORTINGENABLED, enable);
+        }
+        public bool isSortingEnabled() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.QTV_ISSORTINGENABLED);
+        }
+        public bool showGrid() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.QTV_SHOWGRID);
+        }
+        public PenStyle gridStyle() {
+            return (PenStyle)QtXnl.widget_get_int_value(nativehandle, Constant.QTV_GRIDSTYLE);
+        }
+        public void setGridStyle(PenStyle style){
+            QtXnl.widget_set_vint_value(nativehandle, Constant.QTV_SETGRIDSTYLE, style);
+        }
+        public void setWordWrap(bool on){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.QTV_SETWORDWRAP, on);
+        }
+        public bool wordWrap(){
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.QTV_WORDWRAP);
+        }
+        public void setCornerButtonEnabled(bool enable){
+            QtXnl.widget_set_bool_value(nativehandle, Constant.QTV_SETCORNERBUTTONENABLED, enable);
+        }
+        public bool isCornerButtonEnabled() {
+            return QtXnl.widget_get_bool_value(nativehandle, Constant.QTV_ISCORNERBUTTONENABLED);
+        }
+        public void setSpan(int row, int column, int rowSpan, int columnSpan){
+             QtXnl.native_int4(nativehandle, Constant.QTV_SETSPAN, row, column, rowSpan, columnSpan);
+        }
+        public int rowSpan(int row, int column){
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_ROWSPAN, row, column);
+        }
+        public int columnSpan(int row, int column){
+            return QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_COLUMNSPAN, row, column);
+        }
+        public void clearSpans(){
+            QtXnl.widget_slot(nativehandle, Constant.QTV_CLEARSPANS);
+        }
+        public void sortByColumn(int column, Qt.SortOrder order){
+            QtXnl.widget_set_v2int_value(nativehandle, Constant.QTV_SORTBYCOLUMN, column, order);
+        }
     };
 };

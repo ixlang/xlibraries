@@ -1,6 +1,6 @@
 .SUFFIXES:.cpp .o
 
-CC=g++
+CC=clang++
 CPPFLAGS= -std=c++11 -I ./zxing_cpp/core/src
 $(warning,  $(CPPFLAGS))
 SRCS=./zxing_cpp/core/src/forxlang.cpp

@@ -23,6 +23,10 @@ public class QMainWindow : QWidget{
         return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.WINDOW);
     }
     
+    public void setCentralWidget(QWidget widget){
+        Qt.QtXnl.widget_set_native_value(nativehandle, Qt.Constant.QTMW_SETCENTRALWIDGET, widget.nativehandle);
+    }
+        
     public QWidget getCentralWindow(){
         return (QWidget)QtXnl.widget_get_object(nativehandle, Constant.CENTRALWIDGET);
     }

@@ -12,19 +12,19 @@
 		},
 		"1":	{
 			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/QXLibrary/Win32/Release/QXLibrary.dll"],
-			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Linux/i686/libQXLibrary.so"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/linuxi686_public/library/libQXLibrary.so"],
 			"2":	[],
 			"3":	[]
 		},
 		"2":	{
 			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/QXLibrary/x64/Release/QXLibrary.dll"],
-			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Linux/x86_64/libQXLibrary.so"],
-			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Darwin/i386/libQXLibrary.dylib"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/linux_public/library/libQXLibrary.so"],
+			"2":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/macos_public/library/libQXLibrary.dylib"],
 			"3":	[]
 		},
 		"3":	{
 			"0":	[],
-			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/Binary/Linux/arm-linux-gnueabihf/libQXLibrary.so"],
+			"1":	[],
 			"2":	[],
 			"3":	[]
 		},
@@ -35,8 +35,8 @@
 			"3":	[]
 		}
 	},
-	"package":	"Qt5.9.1",
-	"version":	"5.9.1.17",
+	"package":	"Qt",
+	"version":	"5.15.2.1",
 	"descr":	"优秀的跨平台界面库",
 	"author":	"https://github.com/ixlang/xlibraries"
 }

@@ -1,10 +1,10 @@
 package Qt{
-    protected class QtXnl{
+    public class QtXnl{
         public import "libQXLibrary"{
             void cdecl widget_set_vint_value(long h, int proid, int value);
             void cdecl widget_set_object_value(long h, int proid, Object value);
             void cdecl widget_set_long_object_value(long h, int proid,long i, Object value);
-            void cdecl widget_set_int2_object_value(long h, int proid,int i,int iv, Object value);
+            long cdecl widget_set_int2_object_value(long h, int proid,int i,int iv, Object value);
             bool cdecl widget_get_bool_value(long h, int proid);
             Object cdecl widget_get_object(long h, int proid);
             
@@ -34,6 +34,7 @@ package Qt{
             Object cdecl core_getStringlongint(long h, int proid, long v1, int v2);
             int cdecl core_getintlong(long h, int proid, long v);
             long cdecl createQObject(int type, Object xobj, long parent);
+            long cdecl createQSObject(int type, Object xobj, long parent, String param);
             long cdecl createQPObject(int type, Object xobj, long parent, long param1, long param2, long param3, long param4);
             int cdecl widget_set_intstring_value(long h, int proid, int xv, String yv);
             long cdecl createNObject(int type, long param);
@@ -56,14 +57,15 @@ package Qt{
             long cdecl attachControl(long handle, Object _this, String name);
             long cdecl native_long2_string(long h, int proid, long v0, long v, long v1, String v3);
             Object cdecl openfile_dlg_string3_obj(int proid,String caption,String defaultPath, String pattern, long parent);
+            Object cdecl long_int4(long h, int proid, long v0,int i1,int i2,int i3,int i4);
             long cdecl long_string2(long handle,int proid, String v1, String v2);
             long cdecl long_object_string(long handle,int proid, Object v1, String v2);
+            long cdecl long_object_string_int(long handle,int proid, Object v1, String v2, int v3);
             long cdecl long_longstring(long handle,int proid, long v1, String v2);
             long cdecl long_long_string2(long handle,int proid, long l1, String v1, String v2);
             long cdecl long_get(long handle,int proid);
             long cdecl core_attach(long h, Object x);
             int cdecl long_string2_int2(long handle, int proid, String v1, String v2, int flags, int v3);
-            
             bool cdecl string_bool5_int2_bool2(long handle,int proid,String text, bool regex, bool bCase, bool bWholeWord, bool warp, bool forward, int startLine, int startIndex,bool show, bool posix);
             long cdecl long_intstring(long handle,int proid,int type, String v1);
             long cdecl long_intlong(long handle,int proid, long value);

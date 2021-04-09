@@ -2,13 +2,13 @@
 //Date: Thu Sep 23:13:45 2018 
 package Qt{
     public class QByteArray : QCore{
-        QByteArray(byte [] data, int position, int length) throws IllegalArgumentException{
+        public QByteArray(byte [] data, int position, int length) throws IllegalArgumentException{
             nativehandle = QtXnl.create_array_int2(0, Constant.BUFFERSETDATA, data, position, length);
             if (nativehandle == 0){
                 throw new IllegalArgumentException("can not create QByteArray");
             }
         }
-        
+                
         void finalize(){
             if (nativehandle != 0){
                 QtXnl.widget_slot(nativehandle, Constant.DELLOCBYTEARRAY);

@@ -42,11 +42,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_ICC|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -113,8 +114,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -125,12 +126,12 @@
       <OutputFile>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\test\tttqt\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>E:\qt591\5.9.1\Qt5.9.1_win32_static\lib;$(QTDIR)\plugins\platforms;E:\qt591\5.9.1\Qt5.9.1_win32_static\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5d.lib;QtSolutions_PropertyBrowser-headd.lib;UxTheme.lib;qtlibpngd.lib;version.lib;qtpcre2d.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzzd.lib;qwindowsd.lib;qtfreetyped.lib;Qt5ThemeSupportd.lib;Qt5EventDispatcherSupportd.lib;Qt5AccessibilitySupportd.lib;Imm32.lib;Qt5FontDatabaseSupportd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;Qt5PrintSupportd.lib;Qt5Qmld.lib;Qt5Sqld.lib;Qt5Networkd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5d.lib;QtSolutions_PropertyBrowser-headd.lib;UxTheme.lib;qtlibpngd.lib;version.lib;qtpcre2d.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzzd.lib;qwindowsd.lib;qtfreetyped.lib;Qt5ThemeSupportd.lib;Qt5EventDispatcherSupportd.lib;Qt5AccessibilitySupportd.lib;Imm32.lib;Qt5FontDatabaseSupportd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5MultimediaWidgetsd.lib;Qt5OpenGLd.lib;Qt5PrintSupportd.lib;Qt5Qmld.lib;Qt5Sqld.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
     </Link>
     <QtMoc>
-      <Define>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
-      <IncludePath>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
     </QtMoc>
@@ -138,8 +139,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -147,15 +148,15 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide\debug\$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5d.lib;QtSolutions_PropertyBrowser-headd.lib;UxTheme.lib;qtlibpngd.lib;version.lib;qtpcre2d.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzzd.lib;qwindowsd.lib;qtfreetyped.lib;Qt5ThemeSupportd.lib;Qt5EventDispatcherSupportd.lib;Qt5AccessibilitySupportd.lib;Imm32.lib;Qt5FontDatabaseSupportd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;Qt5PrintSupportd.lib;Qt5Qmld.lib;Qt5Sqld.lib;Qt5Networkd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;qscintilla2_qt5d.lib;QtSolutions_PropertyBrowser-headd.lib;UxTheme.lib;qtlibpngd.lib;version.lib;qtpcre2d.lib;ws2_32.lib;winmm.lib;qgifd.lib;qicnsd.lib;qjpegd.lib;qtgad.lib;qtiffd.lib;qwbmpd.lib;qwebpd.lib;qicod.lib;windowsprintersupportd.lib;QtitanBased1_static.lib;QtitanDockingd3_static.lib;Dwmapi.lib;opengl32.lib;qtharfbuzzd.lib;qwindowsd.lib;qtfreetyped.lib;Qt5ThemeSupportd.lib;Qt5EventDispatcherSupportd.lib;Qt5AccessibilitySupportd.lib;Imm32.lib;Qt5FontDatabaseSupportd.lib;wmfengined.lib;dsengined.lib;qtmedia_audioengined.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;limereportd.lib;QtZintd.lib;Iphlpapi.lib;qtaudio_wasapid.lib;qtaudio_windowsd.lib;qtmultimedia_m3ud.lib;qgenericbearerd.lib;qnativewifibearerd.lib;runtimeobject.lib;Mmdevapi.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5MultimediaWidgetsd.lib;Qt5OpenGLd.lib;Qt5PrintSupportd.lib;Qt5Qmld.lib;Qt5Sqld.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
     </Link>
     <QtMoc>
-      <Define>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
     </QtMoc>
@@ -163,8 +164,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -178,17 +179,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;$(QTDIR)\plugins\printsupport;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;Qt5PrintSupport.lib;windowsprintersupport.lib;Qt5Qml.lib;limereport.lib;QtZint.lib;Qt5Sql.lib;Qt5Network.lib;Qt5Xml.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;windowsprintersupport.lib;limereport.lib;QtZint.lib;QtitanBase1_static.lib;QtitanDocking3_static.lib;Iphlpapi.lib;wmfengine.lib;dsengine.lib;qtmedia_audioengine.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;qtaudio_wasapi.lib;qtaudio_windows.lib;qtmultimedia_m3u.lib;qgenericbearer.lib;runtimeobject.lib;Mmdevapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;$(QTDIR)\plugins\platforms\qwindows.lib;winspool.lib;imm32.lib;oleaut32.lib;shlwapi.lib;rpcrt4.lib;$(QTDIR)\lib\Qt5EventDispatcherSupport.lib;$(QTDIR)\lib\Qt5AccessibilitySupport.lib;$(QTDIR)\lib\Qt5FontDatabaseSupport.lib;ole32.lib;gdi32.lib;user32.lib;advapi32.lib;$(QTDIR)\lib\qtfreetype.lib;$(QTDIR)\lib\Qt5ThemeSupport.lib;$(QTDIR)\plugins\imageformats\qgif.lib;$(QTDIR)\plugins\imageformats\qicns.lib;$(QTDIR)\plugins\imageformats\qico.lib;$(QTDIR)\plugins\imageformats\qjpeg.lib;$(QTDIR)\plugins\imageformats\qtga.lib;$(QTDIR)\plugins\imageformats\qtiff.lib;$(QTDIR)\plugins\imageformats\qwbmp.lib;$(QTDIR)\plugins\imageformats\qwebp.lib;shell32.lib;uxtheme.lib;dwmapi.lib;comdlg32.lib;glu32.lib;$(QTDIR)\lib\qtlibpng.lib;$(QTDIR)\lib\qtharfbuzz.lib;kernel32.lib;uuid.lib;mpr.lib;$(QTDIR)\lib\qtpcre2.lib;qwindowsuiawrapper.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <QtMoc>
-      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
     </QtMoc>
@@ -196,14 +197,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtitanDocking\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <Optimization>MinSpace</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -211,28 +212,30 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;$(QTDIR)\plugins\printsupport;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;Qt5PrintSupport.lib;windowsprintersupport.lib;Qt5Qml.lib;limereport.lib;QtZint.lib;Qt5Sql.lib;Qt5Network.lib;Qt5Xml.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;windowsprintersupport.lib;limereport.lib;QtZint.lib;QtitanBase1_static.lib;QtitanDocking3_static.lib;Iphlpapi.lib;wmfengine.lib;dsengine.lib;qtmedia_audioengine.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;qtaudio_wasapi.lib;qtaudio_windows.lib;qtmultimedia_m3u.lib;qgenericbearer.lib;runtimeobject.lib;Mmdevapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;$(QTDIR)\plugins\platforms\qwindows.lib;winspool.lib;imm32.lib;oleaut32.lib;shlwapi.lib;rpcrt4.lib;$(QTDIR)\lib\Qt5EventDispatcherSupport.lib;$(QTDIR)\lib\Qt5AccessibilitySupport.lib;$(QTDIR)\lib\Qt5FontDatabaseSupport.lib;ole32.lib;gdi32.lib;user32.lib;advapi32.lib;$(QTDIR)\lib\qtfreetype.lib;$(QTDIR)\lib\Qt5ThemeSupport.lib;$(QTDIR)\plugins\imageformats\qgif.lib;$(QTDIR)\plugins\imageformats\qicns.lib;$(QTDIR)\plugins\imageformats\qico.lib;$(QTDIR)\plugins\imageformats\qjpeg.lib;$(QTDIR)\plugins\imageformats\qtga.lib;$(QTDIR)\plugins\imageformats\qtiff.lib;$(QTDIR)\plugins\imageformats\qwbmp.lib;$(QTDIR)\plugins\imageformats\qwebp.lib;shell32.lib;uxtheme.lib;dwmapi.lib;comdlg32.lib;glu32.lib;$(QTDIR)\lib\qtlibpng.lib;$(QTDIR)\lib\qtharfbuzz.lib;kernel32.lib;uuid.lib;mpr.lib;$(QTDIR)\lib\qtpcre2.lib;qwindowsuiawrapper.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <ShowProgress>NotSet</ShowProgress>
     </Link>
     <QtMoc>
-      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\Qt4Qt5;$(QTDIR)\include\QtitanDocking\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
       <Include>
       </Include>
+      <CompilerFlavor>msvc</CompilerFlavor>
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_ICC|Win32'">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -247,12 +250,12 @@
       <OutputFile>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide\release\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>E:\qt591\5.9.1\Qt5.9.1_win32_static\lib;$(QTDIR)\plugins\platforms;E:\qt591\5.9.1\Qt5.9.1_win32_static\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5Network.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
     </Link>
     <QtMoc>
-      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
-      <IncludePath>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
     </QtMoc>
@@ -260,8 +263,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_ICC|x64'">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -276,12 +279,12 @@
       <OutputFile>E:\Developments\Cadaqs\caNamespace\castudio\xcross\xlang\xlang\example\xide\release\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>E:\qt591\5.9.1\Qt5.9.1_win32_static\lib;$(QTDIR)\plugins\platforms;E:\qt591\5.9.1\Qt5.9.1_win32_static\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Qt5Core.lib;Qt5Gui.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5Network.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
     </Link>
     <QtMoc>
-      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
-      <IncludePath>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;E:\qt591\5.9.1\Qt5.9.1_win32_static\include;.\GeneratedFiles\$(ConfigurationName);E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtCore;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtGui;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtANGLE;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\QtWidgets;E:\qt591\5.9.1\Qt5.9.1_win32_static\include\Qt4Qt5;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
     </QtMoc>
@@ -307,7 +310,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="win32_static_5.9.1" Qt5Version_x0020_x64="win64_static_5.9.1" MocOptions="" />
+      <UserProperties lreleaseOptions="" lupdateOnBuild="0" lupdateOptions="" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" Qt5Version_x0020_Win32="5.15.2_win32_static" Qt5Version_x0020_x64="5.15.2_win64_static" RccDir=".\GeneratedFiles" UicDir=".\GeneratedFiles" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

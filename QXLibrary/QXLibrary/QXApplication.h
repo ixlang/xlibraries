@@ -1,9 +1,135 @@
 #pragma once
+#include <QObject>
 #include "qxlibrary_global.h"
 
 
 extern XIDENT * methodIdent;
 
+class XUILoader :public  QUiLoader {
+	Q_OBJECT
+public:
+	explicit XUILoader(QObject *parent = Q_NULLPTR) 
+		:QUiLoader(parent){
+
+	}
+
+	virtual ~XUILoader() {
+
+	}
+
+	virtual QWidget *createWidget(const QString &className, QWidget *parent = Q_NULLPTR, const QString &name = QString());
+};
+
+#if !defined(QT_NO_OPENGL)
+class XOpenGLWidget :
+	public QOpenGLWidget {
+	Q_OBJECT
+public:
+	explicit XOpenGLWidget(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags()) :
+		QOpenGLWidget(parent, f){
+
+	}
+
+	virtual void initializeGL() Q_DECL_OVERRIDE {
+		XMetaPtr objectData = (this->property(XHANDLE).GETPROPERTY_VALUE);
+		if (objectData != NULL) {
+			if (objectData->getObject() != 0) {
+				XThread thread;
+				gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_initializeGL].methodId);
+			}
+		}
+	}
+
+	virtual void resizeGL(int w, int h) Q_DECL_OVERRIDE {
+		XMetaPtr objectData = (this->property(XHANDLE).GETPROPERTY_VALUE);
+		if (objectData != NULL) {
+			if (objectData->getObject() != 0) {
+				XThread thread;
+				gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_resizeGL].methodId, w, h);
+			}
+		}
+	}
+
+	virtual void paintGL() Q_DECL_OVERRIDE {
+		XMetaPtr objectData = (this->property(XHANDLE).GETPROPERTY_VALUE);
+		if (objectData != NULL) {
+			if (objectData->getObject() != 0) {
+				XThread thread;
+				gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_paintGL].methodId);
+			}
+		}
+	}
+
+};
+#endif
+
+class XAudioOutput : 
+	public QAudioOutput {
+	QIODevice * outputdevice = 0;
+
+public:
+	XAudioOutput(const QAudioFormat &format = QAudioFormat(), QObject *parent = Q_NULLPTR)
+	:QAudioOutput(format, parent){
+
+	}
+
+	bool start() {
+		outputdevice = QAudioOutput::start();
+		if (outputdevice != 0) {
+			outputdevice->open(QIODevice::WriteOnly);
+		}
+		return outputdevice != 0;
+	}
+
+	xlong write(const char * data, int len) {
+		if (outputdevice != 0) {
+			return outputdevice->write(data, len);
+		}
+		return 0;
+	}
+
+	void stop() {
+		if (outputdevice != 0) {
+			QAudioOutput::stop();
+			outputdevice = 0;
+		}
+	}
+
+};
+
+class XAudioInput :
+	public QAudioInput {
+	QIODevice * outputdevice = 0;
+
+public:
+	XAudioInput(const QAudioFormat &format = QAudioFormat(), QObject *parent = Q_NULLPTR)
+		:QAudioInput(format, parent) {
+
+	}
+
+	bool start() {
+		outputdevice = QAudioInput::start();
+		if (outputdevice != 0) {
+			outputdevice->open(QIODevice::ReadOnly);
+		}
+		return outputdevice != 0;
+	}
+
+	xlong read(char * data, int len) {
+		if (outputdevice != 0) {
+			return outputdevice->read(data, len);
+		}
+		return 0;
+	}
+
+	void stop() {
+		if (outputdevice != 0) {
+			QAudioInput::stop();
+			outputdevice = 0;
+		}
+	}
+
+};
 
 class NotifyEvent : public QEvent
 {
@@ -47,7 +173,7 @@ public:
 private slots:
 	bool ActionTriggered(QObject * act) {
 
-		XObjectData * objectData = (XObjectData *)act->userData(Qt::UserRole);
+        XMetaPtr objectData =(act->property(XHANDLE).GETPROPERTY_VALUE);
 		QString st = act->objectName();
 		if (objectData != NULL) {
 			if (objectData->getObject() != 0) {
@@ -59,11 +185,481 @@ private slots:
 		return true;
 	}
 
-	void tritemPressed(QTreeWidgetItem *item, int column) {
-		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
+	void on_windowStateChanged(Qt::WindowStates oldState, Qt::WindowStates newState) {
+		QMdiSubWindow * obj = qobject_cast <QMdiSubWindow*>(sender());
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[105].methodId, (xint)oldState, (xint)newState);
+				}
+			}
+		}
+
+
+	}
+
+	void qmp_notifyIntervalChanged(int milliSeconds) {
+		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaObject_notifyIntervalChanged].methodId, milliSeconds);
+				}
+			}
+		}
+	}
+
+	void qmp_metaDataAvailableChanged(bool available){
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaObject_metaDataAvailableChanged].methodId, available);
+				}
+			}
+		}
+	}
+
+	void qmp_metaDataChanged() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaObject_metaDataChanged].methodId);
+				}
+			}
+		}
+	}
+
+	void qmp_availabilityChanged(bool available) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaObject_availabilityChanged].methodId, available);
+				}
+			}
+		}
+	}
+
+	void qmp_availabilityChanged(QMultimedia::AvailabilityStatus availability) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaObject_availabilityChanged1].methodId, (xint)availability);
+				}
+			}
+		}
+	}
+
+	void qvw_fullScreenChanged(bool fullScreen) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QVideoWidget_fullScreenChanged].methodId, fullScreen);
+				}
+			}
+		}
+	}
+
+	void qao_stateChanged(QAudio::State s) {
+		QAudioOutput * obj = qobject_cast <QAudioOutput*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QAudioOutput_stateChanged].methodId, (xint)s);
+				}
+			}
+		}
+	}
+
+	void qao_notify() {
+		QAudioOutput * obj = qobject_cast <QAudioOutput*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QAudioOutput_notify].methodId);
+				}
+			}
+		}
+	}
+	
+	void qow_aboutToCompose() {
+#if !defined(QT_NO_OPENGL)
+		QOpenGLWidget * obj = qobject_cast <QOpenGLWidget*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_aboutToCompose].methodId);
+				}
+			}
+		}
+#endif
+	}
+
+	void qow_frameSwapped() {
+#if !defined(QT_NO_OPENGL)
+		QOpenGLWidget * obj = qobject_cast <QOpenGLWidget*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_frameSwapped].methodId);
+				}
+			}
+		}
+#endif
+	}
+
+	void qow_aboutToResize() {
+#if !defined(QT_NO_OPENGL)
+		QOpenGLWidget * obj = qobject_cast <QOpenGLWidget*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_aboutToResize].methodId);
+				}
+			}
+		}
+#endif
+	}
+
+	void qow_resized() {
+#if !defined(QT_NO_OPENGL)
+		QOpenGLWidget * obj = qobject_cast <QOpenGLWidget*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QOpenGLWidget_resized].methodId);
+				}
+			}
+		}
+#endif
+	}
+
+	void qio_stateChanged(QAudio::State s) {
+		QAudioInput * obj = qobject_cast <QAudioInput*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QAudioInput_stateChanged].methodId, (xint)s);
+				}
+			}
+		}
+	}
+
+	void qio_notify() {
+		QAudioInput * obj = qobject_cast <QAudioInput*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[QAudioInput_notify].methodId);
+				}
+			}
+		}
+	}
+
+	void qvw_brightnessChanged(int brightness) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QVideoWidget_brightnessChanged].methodId, brightness);
+				}
+			}
+		}
+	}
+
+	void qvw_contrastChanged(int contrast) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QVideoWidget_contrastChanged].methodId, contrast);
+				}
+			}
+		}
+	}
+
+	void qvw_hueChanged(int hue) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QVideoWidget_hueChanged].methodId, hue);
+				}
+			}
+		}
+	}
+
+	void qvw_saturationChanged(int saturation) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[QVideoWidget_saturationChanged].methodId, saturation);
+				}
+			}
+		}
+	}
+	
+
+	void qmp_mediaChanged(const QMediaContent &media) {
+		QUrl uri = media.canonicalUrl();
+		QObject * obj = qobject_cast <QObject*>(sender());
+		QByteArray data = uri.toString().toUtf8();
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_mediaChanged].methodId, (xstring)data.data());
+				}
+			}
+		}
+	}
+
+	void qmp_currentMediaChanged(const QMediaContent &media) {
+		QUrl uri = media.canonicalUrl();
+		QObject * obj = qobject_cast <QObject*>(sender());
+		QByteArray data = uri.toString().toUtf8();
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_currentMediaChanged].methodId, (xstring)data.data());
+				}
+			}
+		}
+	}
+
+	void qmp_stateChanged(QMediaPlayer::State newState) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_stateChanged].methodId, (xint)newState);
+				}
+			}
+		}
+	}
+
+	void qmp_mediaStatusChanged(QMediaPlayer::MediaStatus status) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_mediaStatusChanged].methodId, (xint)status);
+				}
+			}
+		}
+	}
+
+	void qmp_durationChanged(qint64 duration) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_durationChanged].methodId, (xlong)duration);
+				}
+			}
+		}
+	}
+
+	void qmp_positionChanged(qint64 position) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_positionChanged].methodId, (xlong)position);
+				}
+			}
+		}
+	}
+
+	void qmp_volumeChanged(int volume) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_volumeChanged].methodId, volume);
+				}
+			}
+		}
+	}
+
+	void qmp_mutedChanged(bool muted) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_mutedChanged].methodId, muted);
+				}
+			}
+		}
+	}
+
+	void qmp_audioAvailableChanged(bool available) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_audioAvailableChanged].methodId, available);
+				}
+			}
+		}
+	}
+
+	void qmp_videoAvailableChanged(bool videoAvailable) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_videoAvailableChanged].methodId, videoAvailable);
+				}
+			}
+		}
+	}
+
+	void qmp_bufferStatusChanged(int percentFilled) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_bufferStatusChanged].methodId, percentFilled);
+				}
+			}
+		}
+	}
+
+	void qmp_seekableChanged(bool seekable) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_seekableChanged].methodId, seekable);
+				}
+			}
+		}
+	}
+
+	void qmp_playbackRateChanged(qreal rate) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_playbackRateChanged].methodId, (double)rate);
+				}
+			}
+		}
+	}
+
+	void qmp_audioRoleChanged(QAudio::Role role) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_audioRoleChanged].methodId, (xint)role);
+				}
+			}
+		}
+	}
+
+	void qmp_error(QMediaPlayer::Error error) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+		if (obj != 0) {
+			XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QMediaPlayer_error].methodId, (xint)error);
+				}
+			}
+		}
+	}
+
+	void tritemPressed(QTreeWidgetItem *item, int column) {
+		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -81,11 +677,12 @@ private slots:
 			}
 		}
 	}
+
 	void tritemClicked(QTreeWidgetItem *item, int column) {
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -103,11 +700,12 @@ private slots:
 			}
 		}
 	}
+
 	void tritemDoubleClicked(QTreeWidgetItem *item, int column) {
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -125,11 +723,72 @@ private slots:
 			}
 		}
 	}
+
+	void qcw_selectionChanged() {
+		QCalendarWidget * obj = qobject_cast <QCalendarWidget*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QCW_SELECTIONCHANGED].methodId);
+				}
+			}
+		}
+	}
+
+	void qcw_clicked(const QDate &date) {
+		QCalendarWidget * obj = qobject_cast <QCalendarWidget*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QCW_CLICKED].methodId, (xint)date.year(), (xint)date.month(), (xint)date.day());
+				}
+			}
+		}
+	}
+
+	void qcw_activated(const QDate &date) {
+		QCalendarWidget * obj = qobject_cast <QCalendarWidget*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QCW_ACTIVATED].methodId, (xint)date.year(), (xint)date.month(), (xint)date.day());
+				}
+			}
+		}
+	}
+
+	void qcw_currentPageChanged(int year, int month) {
+		QCalendarWidget * obj = qobject_cast <QCalendarWidget*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QCW_CURRENTPAGECHANGED].methodId, (xint)year, (xint)month);
+				}
+			}
+		}
+	}
+
 	void tritemActivated(QTreeWidgetItem *item, int column) {
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -151,7 +810,7 @@ private slots:
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -169,11 +828,76 @@ private slots:
 			}
 		}
 	}
+
+	void qsti_activated(QSystemTrayIcon::ActivationReason reason) {
+		QSystemTrayIcon * obj = qobject_cast <QSystemTrayIcon*>(sender());
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					XObject * bc = gs_env->createObject();
+					gs_env->setValue(bc, (xint)reason);
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QSTI_ACTIVATED].methodId, bc);
+					gs_env->dereferenceObject(bc);
+				}
+			}
+		}
+	}
+
+	void qtnwt_backRequested() {
+#ifndef MOBILE_APP
+		WindowTitleBar * obj = qobject_cast <WindowTitleBar*>(sender());
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QWT_BACKREQUESTED].methodId);
+				}
+			}
+		}
+#endif
+	}
+
+	void qtnwt_showHelp() { 
+#ifndef MOBILE_APP
+		WindowTitleBar * obj = qobject_cast <WindowTitleBar*>(sender());
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QWT_SHOWHELP].methodId);
+				}
+			}
+		}
+#endif
+	}
+
+	
+	void qsti_messageClicked() {
+		QSystemTrayIcon * obj = qobject_cast <QSystemTrayIcon*>(sender());
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QSTI_CLICKED].methodId);
+				}
+			}
+		}
+	}
+
 	void tritemChanged(QTreeWidgetItem *item, int column) {
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -195,7 +919,7 @@ private slots:
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -215,7 +939,7 @@ private slots:
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -235,7 +959,7 @@ private slots:
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -257,7 +981,7 @@ private slots:
 		QTreeWidget * obj = qobject_cast <QTreeWidget*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -272,7 +996,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -291,7 +1015,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -309,7 +1033,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -324,7 +1048,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -339,7 +1063,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -357,7 +1081,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -376,7 +1100,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -394,7 +1118,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -413,7 +1137,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -432,7 +1156,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -451,7 +1175,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -466,7 +1190,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -482,7 +1206,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -500,7 +1224,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -590,7 +1314,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -605,7 +1329,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -620,7 +1344,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -643,7 +1367,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -666,7 +1390,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -681,7 +1405,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -699,7 +1423,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -717,7 +1441,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -741,7 +1465,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -765,7 +1489,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -789,7 +1513,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -804,7 +1528,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -819,7 +1543,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -840,7 +1564,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -861,7 +1585,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -882,7 +1606,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -903,7 +1627,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -924,7 +1648,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -948,7 +1672,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -972,7 +1696,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -996,7 +1720,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1050,7 +1774,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1065,7 +1789,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1086,7 +1810,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1101,7 +1825,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1116,7 +1840,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1131,7 +1855,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1149,7 +1873,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1167,11 +1891,13 @@ private slots:
 
 	}
 
+
+
 	void SCN_USERLISTSELECTION(const char * text, int length) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1194,7 +1920,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1209,7 +1935,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1222,7 +1948,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1231,10 +1957,151 @@ private slots:
 			}
 		}
 	}
+
+	void qh_sectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONMOVED].methodId, logicalIndex, oldVisualIndex, newVisualIndex);
+				}
+			}
+		}
+	}
+
+	void qh_sectionResized(int logicalIndex, int oldSize, int newSize) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONRESIZED].methodId, logicalIndex, oldSize, newSize);
+				}
+			}
+		}
+	}
+
+	void qh_sectionPressed(int logicalIndex) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONPRESSED].methodId, logicalIndex);
+				}
+			}
+		}
+	}
+
+	void qh_sectionClicked(int logicalIndex) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONCLICKED].methodId, logicalIndex);
+				}
+			}
+		}
+	}
+
+	void qh_sectionEntered(int logicalIndex) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONENTERED].methodId, logicalIndex);
+				}
+			}
+		}
+	}
+
+	void qh_sectionDoubleClicked(int logicalIndex) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONDOUBLECLICKED].methodId, logicalIndex);
+				}
+			}
+		}
+	}
+
+	void qh_sectionCountChanged(int oldCount, int newCount) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONCOUNTCHANGED].methodId, oldCount, newCount);
+				}
+			}
+		}
+	}
+
+	void qh_sectionHandleDoubleClicked(int logicalIndex) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SECTIONHANDLEDOUBLECLICKED].methodId, logicalIndex);
+				}
+			}
+		}
+	}
+
+	void qh_geometriesChanged() {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_GEOMETRIESCHANGED].methodId);
+				}
+			}
+		}
+	}
+
+	void qh_sortIndicatorChanged(int logicalIndex, Qt::SortOrder order) {
+		QObject * obj = qobject_cast <QObject*>(sender());
+
+		if (obj != 0) {
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
+			if (objectData != NULL) {
+				if (objectData->getObject() != 0) {
+					XThread thread;
+					gs_env->void_Invoke(thread.getThread(), objectData->getObject(), methodIdent[ON_QH_SORTINDICATORCHANGED].methodId, logicalIndex, order);
+				}
+			}
+		}
+	}
+
 	void teselectionChanged() {
 		QObject * obj = qobject_cast <QObject*>(sender());
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1248,7 +2115,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1266,7 +2133,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1284,7 +2151,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1305,7 +2172,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1319,7 +2186,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1333,7 +2200,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1355,7 +2222,7 @@ private slots:
 	void onPreviewRequested(QPrinter *printer) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1372,7 +2239,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1391,7 +2258,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1413,7 +2280,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1430,7 +2297,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1452,7 +2319,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1470,7 +2337,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1492,7 +2359,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1509,7 +2376,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1531,7 +2398,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1548,7 +2415,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1570,7 +2437,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1583,11 +2450,14 @@ private slots:
 			}
 		}
 	}
+
+
+
 	void eselectionChanged() {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1597,12 +2467,12 @@ private slots:
 			}
 		}
 	}
-
+#ifndef MOBILE_APP
 	void onValueChanged(QtProperty *property, int val) {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
@@ -1625,7 +2495,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1655,7 +2525,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1687,12 +2557,12 @@ private slots:
 			}
 		}
 	}
-
+#endif
 	void renderStarted() {
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1705,7 +2575,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1721,7 +2591,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1736,7 +2606,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1750,7 +2620,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1764,7 +2634,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1778,7 +2648,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1793,7 +2663,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1807,7 +2677,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1821,7 +2691,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1835,7 +2705,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1849,7 +2719,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1863,7 +2733,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1877,7 +2747,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1891,7 +2761,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1905,7 +2775,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1919,7 +2789,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1933,7 +2803,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1947,7 +2817,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1961,7 +2831,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 		
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1975,7 +2845,7 @@ private slots:
 		QObject * obj = qobject_cast <QObject*>(sender());
 		
 		if (obj != 0) {
-			XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+            XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 			if (objectData != NULL) {
 				if (objectData->getObject() != 0) {
 					XThread thread;
@@ -1995,6 +2865,66 @@ public:
 		return connect(sender, signal, receiver, member, t);
 	}
 
+
+	void installMediaObjectAction(QObject * p) {
+		QMediaObject * act = (QMediaObject *)p;
+		XLINK(act, SIGNAL(notifyIntervalChanged(int)), this, SLOT(qmp_notifyIntervalChanged(int)));
+		XLINK(act, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(qmp_metaDataAvailableChanged(bool)));
+		XLINK(act, SIGNAL(metaDataChanged()), this, SLOT(qmp_metaDataChanged(int)));
+		XLINK(act, SIGNAL(availabilityChanged(bool)), this, SLOT(qmp_availabilityChanged(bool)));
+		XLINK(act, SIGNAL(availabilityChanged(QMultimedia::AvailabilityStatus)), this, SLOT(qmp_availabilityChanged(QMultimedia::AvailabilityStatus)));
+	}
+
+	void installQAudioOutputAction(QObject * p) {
+		QAudioOutput * qwt = (QAudioOutput*)p;
+		XLINK(qwt, SIGNAL(stateChanged(QAudio::State)), this, SLOT(qao_stateChanged(QAudio::State)));
+		XLINK(qwt, SIGNAL(notify()), this, SLOT(qao_notify()));
+	}
+
+	void installQOpenGLWidgetAction(QObject * p) {
+#if !defined(QT_NO_OPENGL)
+		QOpenGLWidget * qow = (QOpenGLWidget*)p;
+		XLINK(qow, SIGNAL(aboutToCompose()), this, SLOT(qow_aboutToCompose()));
+		XLINK(qow, SIGNAL(frameSwapped()), this, SLOT(qow_frameSwapped()));
+		XLINK(qow, SIGNAL(aboutToResize()), this, SLOT(qow_aboutToResize()));
+		XLINK(qow, SIGNAL(resized()), this, SLOT(qow_resized()));
+#endif
+	}
+
+	void installQAudioInputAction(QObject * p) {
+		QAudioInput * qwt = (QAudioInput*)p;
+		XLINK(qwt, SIGNAL(stateChanged(QAudio::State)), this, SLOT(qio_stateChanged(QAudio::State)));
+		XLINK(qwt, SIGNAL(notify()), this, SLOT(qio_notify()));
+	}
+
+	void installVideoWidgetAction(QObject * p) {
+		QVideoWidget * qwt = (QVideoWidget*)p;
+		XLINK(qwt, SIGNAL(fullScreenChanged(bool)), this, SLOT(qvw_fullScreenChanged(bool)));
+		XLINK(qwt, SIGNAL(brightnessChanged(int)), this, SLOT(qvw_brightnessChanged(int)));
+		XLINK(qwt, SIGNAL(contrastChanged(int)), this, SLOT(qvw_contrastChanged(int)));
+		XLINK(qwt, SIGNAL(hueChanged(int)), this, SLOT(qvw_hueChanged(int)));
+		XLINK(qwt, SIGNAL(saturationChanged(int)), this, SLOT(qvw_saturationChanged(int)));
+	}
+
+	void installMediaPlayerAction(QObject * p) {
+		QMediaPlayer * act = (QMediaPlayer *)p;
+		XLINK(act, SIGNAL(mediaChanged(const QMediaContent &)), this, SLOT(qmp_mediaChanged(const QMediaContent &)));
+		XLINK(act, SIGNAL(currentMediaChanged(const QMediaContent &)), this, SLOT(qmp_currentMediaChanged(const QMediaContent &)));
+		XLINK(act, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(qmp_stateChanged(QMediaPlayer::State)));
+		XLINK(act, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(qmp_mediaStatusChanged(QMediaPlayer::MediaStatus)));
+		XLINK(act, SIGNAL(durationChanged(qint64)), this, SLOT(qmp_durationChanged(qint64)));
+		XLINK(act, SIGNAL(positionChanged(qint64)), this, SLOT(qmp_positionChanged(qint64)));
+		XLINK(act, SIGNAL(volumeChanged(int)), this, SLOT(qmp_volumeChanged(int)));
+		XLINK(act, SIGNAL(mutedChanged(bool)), this, SLOT(qmp_mutedChanged(bool)));
+		XLINK(act, SIGNAL(audioAvailableChanged(bool)), this, SLOT(qmp_audioAvailableChanged(bool)));
+		XLINK(act, SIGNAL(videoAvailableChanged(bool)), this, SLOT(qmp_videoAvailableChanged(bool)));
+		XLINK(act, SIGNAL(bufferStatusChanged(int)), this, SLOT(qmp_bufferStatusChanged(int)));
+		XLINK(act, SIGNAL(seekableChanged(bool)), this, SLOT(qmp_seekableChanged(bool)));
+		XLINK(act, SIGNAL(playbackRateChanged(qreal)), this, SLOT(qmp_playbackRateChanged(qreal)));
+		XLINK(act, SIGNAL(audioRoleChanged(QAudio::Role)), this, SLOT(qmp_audioRoleChanged(QAudio::Role)));
+		XLINK(act, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(qmp_error(QMediaPlayer::Error)));
+	}
+
 	void installAction(QObject * act) {
 
 		XLINK(act, SIGNAL(triggered()), signalMapper, SLOT(map()));
@@ -2004,6 +2934,10 @@ public:
 			XLINK(signalMapper, SIGNAL(mapped(QObject*)), this, SLOT(ActionTriggered(QObject*)));
 			setup = true;
 		}
+	}
+
+	void installMdiSubWindowEvent(QObject * mds) {
+		XLINK(mds, SIGNAL(windowStateChanged(Qt::WindowStates, Qt::WindowStates)), this, SLOT(on_windowStateChanged(Qt::WindowStates, Qt::WindowStates)));
 	}
 
 	void installTreeAction(QObject * act) {
@@ -2019,6 +2953,23 @@ public:
 		XLINK(act, SIGNAL(itemSelectionChanged()), this, SLOT(tritemSelectionChanged()));
 	}
 
+	void installSystemTrayIconEvent(QObject * act) {
+		XLINK(act, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(qsti_activated(QSystemTrayIcon::ActivationReason)));
+		XLINK(act, SIGNAL(messageClicked()), this, SLOT(qsti_messageClicked()));
+	}
+
+	void installWindowTitleEvent(QObject * act) {
+		XLINK(act, SIGNAL(backRequested()), this, SLOT(qtnwt_backRequested()));
+		XLINK(act, SIGNAL(showHelp()), this, SLOT(qtnwt_showHelp()));
+	}
+
+	void installCalendarEvent(QObject * btn) {
+		XLINK(btn, SIGNAL(selectionChanged()), this, SLOT(qcw_selectionChanged()));
+		XLINK(btn, SIGNAL(clicked(const QDate &)), this, SLOT(qcw_clicked(const QDate &)));
+		XLINK(btn, SIGNAL(activated(const QDate &)), this, SLOT(qcw_activated(const QDate &)));
+		XLINK(btn, SIGNAL(currentPageChanged(int, int)), this, SLOT(qcw_currentPageChanged(int, int)));
+	}
+
 	void installButtonAction(QObject * btn) {
 		XLINK(btn, SIGNAL(clicked(bool)), this, SLOT(btnclicked(bool)));
 		XLINK(btn, SIGNAL(toggled(bool)), this, SLOT(btntoggled(bool)));
@@ -2027,9 +2978,9 @@ public:
 	}
 
 	void installDateTimeEditAction(QObject * edit) {
-		XLINK(edit, SIGNAL(ondateTimeChanged(const QDateTime &)), this, SLOT(dateTimeChanged(const QDateTime &)));
-		XLINK(edit, SIGNAL(ontimeChanged(const QTime &)), this, SLOT(timeChanged(const QTime &)));
-		XLINK(edit, SIGNAL(ondateChanged(const QDate &)), this, SLOT(dateChanged(const QDate &)));
+		XLINK(edit, SIGNAL(dateTimeChanged(const QDateTime &)), this, SLOT(ondateTimeChanged(const QDateTime &)));
+		XLINK(edit, SIGNAL(timeChanged(const QTime &)), this, SLOT(ontimeChanged(const QTime &)));
+		XLINK(edit, SIGNAL(dateChanged(const QDate &)), this, SLOT(ondateChanged(const QDate &)));
 	}
 
 
@@ -2070,6 +3021,19 @@ public:
 		XLINK(edit, SIGNAL(textChanged()), this, SLOT(tetextChanged()));
 		XLINK(edit, SIGNAL(cursorPositionChanged()), this, SLOT(tecursorPositionChanged()));
 		XLINK(edit, SIGNAL(selectionChanged()), this, SLOT(teselectionChanged()));
+	}
+
+	void installHeaderViewAction(QObject * qh) {
+		XLINK(qh, SIGNAL(sectionMoved(int, int, int)), this, SLOT(qh_sectionMoved(int, int, int)));
+		XLINK(qh, SIGNAL(sectionResized(int, int, int)), this, SLOT(qh_sectionResized(int, int, int)));
+		XLINK(qh, SIGNAL(sectionPressed(int)), this, SLOT(qh_sectionPressed(int)));
+		XLINK(qh, SIGNAL(sectionClicked(int)), this, SLOT(qh_sectionClicked(int)));
+		XLINK(qh, SIGNAL(sectionEntered(int)), this, SLOT(qh_sectionEntered(int)));
+		XLINK(qh, SIGNAL(sectionDoubleClicked(int)), this, SLOT(qh_sectionDoubleClicked(int)));
+		XLINK(qh, SIGNAL(sectionCountChanged(int, int)), this, SLOT(qh_sectionCountChanged(int, int)));
+		XLINK(qh, SIGNAL(sectionHandleDoubleClicked(int)), this, SLOT(qh_sectionHandleDoubleClicked(int)));
+		XLINK(qh, SIGNAL(geometriesChanged()), this, SLOT(qh_geometriesChanged()));
+		XLINK(qh, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SLOT(qh_sortIndicatorChanged(int, Qt::SortOrder)));
 	}
 
 	void installTableCellChange(QTableWidget * t) {
@@ -2113,7 +3077,7 @@ public:
 		XLINK(cmb, SIGNAL(activated(int)), this, SLOT(onActivated(int)));
 	}
 
-
+#ifndef MOBILE_APP
 	void installColorPropertyChange(QtColorPropertyManager * p) {
 
 	}
@@ -2177,18 +3141,18 @@ public:
 	void installTimePropertyChange(QtTimePropertyManager*qobject) {
 
 	}
-#ifndef MOBILE_APP
+
 	void installReportView(LimeReport::ReportEngine * qobject) {
 		XLINK(qobject, SIGNAL(renderStarted()), this, SLOT(renderStarted()));
 		XLINK(qobject, SIGNAL(renderPageFinished(int)),this, SLOT(renderPageFinished(int)));
 		XLINK(qobject, SIGNAL(renderFinished()), this, SLOT(renderFinished()));
 	}
-#endif
+
 	void installVariantPropertyChange(QtVariantPropertyManager*qobject) {
 		XLINK(qobject, SIGNAL(valueChanged(QtProperty *, const QVariant &)), this, SLOT(onValueChanged(QtProperty *, const QVariant &)));
 		XLINK(qobject, SIGNAL(attributeChanged(QtProperty *,const QString &, const QVariant &)), this, SLOT(onAttributeChanged(QtProperty *,const QString &, const QVariant &)));
 	}
-
+#endif
 	void installFSWEvent(QFileSystemWatcher * fsw) {
 		XLINK(fsw, SIGNAL(fileChanged(QString )), this, SLOT(onfswFileChanged(QString )));
 		XLINK(fsw, SIGNAL(directoryChanged(QString )), this, SLOT(onfswDirectoryChanged(QString )));

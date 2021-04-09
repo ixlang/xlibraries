@@ -434,6 +434,28 @@ package Sql{
                 throw new SqlException(-1, "sql " +textSql + " dont need value:" + value);
             }  
         }
+        
+        public void setValues(Object [] args){
+            for (int i = 0; i < args.length; i++){
+                if (args[i].instanceOf(String)){
+                    setValue((String)args[i]);
+                }else
+                if (args[i].instanceOf(int)){
+                    setValue((int)args[i]);
+                }else
+                if (args[i].instanceOf(long)){
+                    setValue((long)args[i]);
+                }else
+                if (args[i].instanceOf(byte)){
+                    setValue((byte)args[i]);
+                }else
+                if (args[i].instanceOf(double)){
+                    setValue((double)args[i]);
+                }else{
+                    throw new SqlException(-1, "sql " +textSql + " dont accept type:" + i);
+                }
+            }
+        }
     };
 };
 

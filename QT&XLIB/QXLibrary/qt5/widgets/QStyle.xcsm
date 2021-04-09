@@ -1,4 +1,9 @@
 package Qt{
-    public class QStyle : QNative{
+    public class QStyle : QObject{
+        public QStyle(){
+        }
+        public QStyle(long handle){
+            super(handle);
+        }
     };
 };

@@ -1,5 +1,5 @@
 
-require("widgets/QEvent.xcsm", 
+/*require("widgets/QEvent.xcsm", 
 "widgets/QObject.xcsm", 
 "widgets/QCore.xcsm", 
 "widgets/QWidget.xcsm", 
@@ -73,3 +73,4 @@ require("widgets/QEvent.xcsm",
 "uicomponent/ProgressView.xcsm",
 "uicomponent/Switche.xcsm"
 )
+*/

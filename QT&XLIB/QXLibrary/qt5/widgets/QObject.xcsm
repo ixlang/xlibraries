@@ -335,9 +335,9 @@ package Qt{
         public void onWindowBlocked() {}
         public void onWindowUnblocked() {}
 
-        public void onWindowStateChange(int state, int oldState) {
+        public void onWindowStateChange(int oldstate, int state) {
             if (_statusEvent != nilptr) {
-                _statusEvent.onWindowStateChange(this, state, oldState);
+                _statusEvent.onWindowStateChange(this, oldstate, state);
             }
         }
 

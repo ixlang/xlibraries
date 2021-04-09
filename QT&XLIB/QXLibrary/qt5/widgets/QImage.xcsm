@@ -3,7 +3,9 @@
 package Qt{
     public class QImage{
         public long himage;
-                
+        public QImage(long h){
+            himage = h;
+        }
         public static const int         
             Format_Invalid = 0,
             Format_Mono = 1,

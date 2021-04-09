@@ -5,12 +5,10 @@ package Logcat{
     };
     
 	public class Log{
-    
 		static Vector<LogcatListener> logcallback = new Vector<LogcatListener>();
-        
-        static bool onLogcat(int level, String tag, String log){
+        public static bool onLogcat(int level, String tag, String log){
 			synchronized(logcallback){
-				for (int x =0, c = logcallback.size(); x < c; x++){
+				for (int x = 0, c = logcallback.size(); x < c; x++){
 					if (false == logcallback.get(x).onLogcatOuput(level, tag, log)){
 						return false;
                     }
@@ -61,6 +59,5 @@ package Logcat{
             }
 		}
 	};
-	
 };
 

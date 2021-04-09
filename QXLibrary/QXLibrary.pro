@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui uitools printsupport network qml xml sql designer
+QT       += core gui uitools printsupport network qml xml sql designer opengl multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QTDIR = /Users/cadaqs/qt512/macos_x64_static
@@ -22,6 +22,9 @@ QMAKE_LFLAGS += -shared
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 QMAKE_LFLAGS += -shared
+DEFINES += QXLIBRARY_LIBRARY
+DEFINES += QTITAN_LIBRARY_STATIC
+DEFINES += QTN_NAMESPACE
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -41,6 +44,8 @@ macx {
 }
 
 INCLUDEPATH += $$QTDIR/include/Qt4Qt5
+INCLUDEPATH += $$QTDIR/include/QtitanDocking
+INCLUDEPATH += $$QTDIR/include/QtitanDocking/include
 
 macx: LIBS += -L$$QTDIR/lib/ -lqscintilla2_qt5
 macx: PRE_TARGETDEPS += $$QTDIR/lib/libqscintilla2_qt5.a
@@ -64,5 +69,23 @@ macx: PRE_TARGETDEPS += $$QTDIR/lib/libQtZint.a
 #macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5DesignerComponents.a
 
 macx: LIBS += -L$$QTDIR/lib/ -lQt5MacExtras
-
 macx: PRE_TARGETDEPS += $$QTDIR/lib/libQt5MacExtras.a
+
+macx: LIBS += -L$$QTDIR/lib/ -lQtitanBase1_static
+macx: PRE_TARGETDEPS += $$QTDIR/lib/libQtitanBase1_static.a
+
+macx: LIBS += -L$$QTDIR/lib/ -lQtitanDocking3_static
+macx: PRE_TARGETDEPS += $$QTDIR/lib/libQtitanDocking3_static.a
+
+macx: LIBS += -L$$QTDIR/plugins/audio -lqtaudio_coreaudio
+macx: PRE_TARGETDEPS += $$QTDIR/plugins/audio/libqtaudio_coreaudio.a
+
+macx: LIBS += -L$$QTDIR/plugins/mediaservice -lqavfmediaplayer
+macx: PRE_TARGETDEPS += $$QTDIR/plugins/mediaservice/libqavfmediaplayer.a
+
+macx: LIBS += -L$$QTDIR/plugins/mediaservice -lqtmedia_audioengine
+macx: PRE_TARGETDEPS += $$QTDIR/plugins/mediaservice/libqtmedia_audioengine.a
+
+macx: LIBS += -L$$QTDIR/plugins/mediaservice -lqavfcamera
+macx: PRE_TARGETDEPS += $$QTDIR/plugins/mediaservice/libqavfcamera.a
+

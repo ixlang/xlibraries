@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport qml xml network sql uitools androidextras
+QT       += core gui printsupport qml xml network sql uitools androidextras multimedia opengl multimediawidgets
 
 TARGET = QXLibrary
 TEMPLATE = app
@@ -13,7 +13,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QXLIBRARY_LIBRARY
 
 unix {
-    QTDIR = E:\Qt512\Qt5.12.0\5.12.0\android_arm64_v8a
+    QTDIR = E:\Qt610\5.15.2\android
 }
 
 QMAKE_CXXFLAGS_RELEASE += -Os
@@ -25,7 +25,8 @@ QMAKE_CFLAGS += -fPIC
 
 INCLUDEPATH += $$QTDIR/include
 INCLUDEPATH += $$QTDIR/include/Qt4Qt5
-
+INCLUDEPATH += $$QTDIR/include/QtMultimediaWidgets
+INCLUDEPATH += $$QTDIR/include/QtOpenGL
 SOURCES += QxLibrary.cpp\
         QXApplication.cpp\
         xid.cpp
@@ -39,12 +40,13 @@ DEPENDPATH += $$QTDIR/include
 
 DEFINES += MOBILE_APP=1
 
-LIBS += -L$$QTDIR/lib/ -lqscintilla2_qt5
-PRE_TARGETDEPS += $$QTDIR/lib/libqscintilla2_qt5.a
 
-LIBS += -L$$QTDIR/lib/ -lQtSolutions_PropertyBrowser-head
-PRE_TARGETDEPS += $$QTDIR/lib/libQtSolutions_PropertyBrowser-head.a
-
-
+for (abi, ANDROID_ABIS):{
+    LIBS += -L$$QTDIR/lib/ -lqscintilla2_qt5_$${abi}
+    PRE_TARGETDEPS += $$QTDIR/lib/libqscintilla2_qt5_$${abi}.a
+    LIBS += -L$$QTDIR/lib/ -lQtSolutions_PropertyBrowser-head_$${abi}
+    PRE_TARGETDEPS += $$QTDIR/lib/libQtSolutions_PropertyBrowser-head_$${abi}.a
+}
 CONFIG += mobility
+MOBILITY += multimedia
 MOBILITY =

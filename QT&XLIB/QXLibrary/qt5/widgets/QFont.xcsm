@@ -3,7 +3,7 @@ package Qt{
        public  QFont(String fontName) throws IllegalArgumentException{
             nativehandle = QtXnl.createNObject(QType.qtFont, 0);
             if (nativehandle == 0){
-                throw new IllegalArgumentException("can not new QPath");
+                throw new IllegalArgumentException("can not new QFont");
             }
             QtXnl.widget_slot_string(nativehandle, Constant.FONTSETFAMILY, fontName);
         }

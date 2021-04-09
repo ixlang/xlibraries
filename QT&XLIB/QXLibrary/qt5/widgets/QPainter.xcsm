@@ -7,60 +7,7 @@ package Qt{
         public long hpaint;
         bool bneed_delloc = false;
 
-        public static class RenderHint {
-            public static const int
-            Antialiasing = 0x01,
-            TextAntialiasing = 0x02,
-            SmoothPixmapTransform = 0x04,
-            HighQualityAntialiasing = 0x08,
-            NonCosmeticDefaultPen = 0x10,
-            Qt4CompatiblePainting = 0x20;
-        };
-
-        public enum CompositionMode {
-            CompositionMode_SourceOver,
-            CompositionMode_DestinationOver,
-            CompositionMode_Clear,
-            CompositionMode_Source,
-            CompositionMode_Destination,
-            CompositionMode_SourceIn,
-            CompositionMode_DestinationIn,
-            CompositionMode_SourceOut,
-            CompositionMode_DestinationOut,
-            CompositionMode_SourceAtop,
-            CompositionMode_DestinationAtop,
-            CompositionMode_Xor,
-
-            //svg 1.2 blend modes
-            CompositionMode_Plus,
-            CompositionMode_Multiply,
-            CompositionMode_Screen,
-            CompositionMode_Overlay,
-            CompositionMode_Darken,
-            CompositionMode_Lighten,
-            CompositionMode_ColorDodge,
-            CompositionMode_ColorBurn,
-            CompositionMode_HardLight,
-            CompositionMode_SoftLight,
-            CompositionMode_Difference,
-            CompositionMode_Exclusion,
-
-            // ROPs
-            RasterOp_SourceOrDestination,
-            RasterOp_SourceAndDestination,
-            RasterOp_SourceXorDestination,
-            RasterOp_NotSourceAndNotDestination,
-            RasterOp_NotSourceOrNotDestination,
-            RasterOp_NotSourceXorDestination,
-            RasterOp_NotSource,
-            RasterOp_NotSourceAndDestination,
-            RasterOp_SourceAndNotDestination,
-            RasterOp_NotSourceOrDestination,
-            RasterOp_SourceOrNotDestination,
-            RasterOp_ClearDestination,
-            RasterOp_SetDestination,
-            RasterOp_NotDestination
-        };
+        
 
         public static class Paint {
             public static const int
@@ -93,60 +40,8 @@ package Qt{
             }
         };
 
-        public enum PenStyle {
-            /** @pen style
 
-            */
-            NoPen,
-            SolidLine,
-            DashLine,
-            DotLine,
-            DashDotLine,
-            DashDotDotLine,
-            CustomDashLine,
-            MPenStyle
-        };
-        /** @bgm mode
-
-        */
-        public static class BackgroundMode {
-            static const int
-            TransparentMode = 0,
-            OpaqueMode = 1;
-        };
-
-
-        /** @ImageConversionFlag
-        */
-        public static class ImageConversionFlag {
-
-            static const int
-            ColorMode_Mask          = 0x00000003,
-            AutoColor               = 0x00000000,
-            ColorOnly               = 0x00000003,
-            MonoOnly                = 0x00000002,
-            // Reserved             = 0x00000001,
-
-            AlphaDither_Mask        = 0x0000000c,
-            ThresholdAlphaDither    = 0x00000000,
-            OrderedAlphaDither      = 0x00000004,
-            DiffuseAlphaDither      = 0x00000008,
-            NoAlpha                 = 0x0000000c, // Not supported
-
-            Dither_Mask             = 0x00000030,
-            DiffuseDither           = 0x00000000,
-            OrderedDither           = 0x00000010,
-            ThresholdDither         = 0x00000020,
-            // ReservedDither       = 0x00000030,
-
-            DitherMode_Mask         = 0x000000c0,
-            AutoDither              = 0x00000000,
-            PreferDither            = 0x00000040,
-            AvoidDither             = 0x00000080,
-
-            NoOpaqueDetection       = 0x00000100,
-            NoFormatConversion      = 0x00000200;
-        };
+        
 
         public QPainter(long handle) {
             hpaint = handle;

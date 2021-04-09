@@ -2,7 +2,7 @@
 	"QXLibrary":	{
 		"version":	"1.2",
 		"language":	"xlang",
-		"sources":	["QXLibrary.xcs", ".\\qt5\\qt5.xcsm", ".\\qt5\\Constant.x"],
+		"sources":	["QXLibrary.xcs", ".\\qt5\\qt5.xcsm", ".\\qt5\\Constant.x", ".\\qt5\\widgets\\ColorRole.xcsm", ".\\qt5\\widgets\\QAbstractPrintDialog.xcsm", ".\\qt5\\widgets\\QAbstractSlider.x", ".\\qt5\\widgets\\QAction.xcsm", ".\\qt5\\widgets\\QApplication.xcsm", ".\\qt5\\widgets\\QBoxLayout.x", ".\\qt5\\widgets\\QBrush.xcsm", ".\\qt5\\widgets\\QBuffer.xcsm", ".\\qt5\\widgets\\QByteArray.xcsm", ".\\qt5\\widgets\\QCalendarWidget.x", ".\\qt5\\widgets\\QCheckBox.xcsm", ".\\qt5\\widgets\\QComboBox.xcsm", ".\\qt5\\widgets\\QCore.xcsm", ".\\qt5\\widgets\\QDateEdit.xcsm", ".\\qt5\\widgets\\QDateTimeEdit.xcsm", ".\\qt5\\widgets\\QDialog.xcsm", ".\\qt5\\widgets\\QDockWidget.xcsm", ".\\qt5\\widgets\\QEvent.xcsm", ".\\qt5\\widgets\\QFileDialog.xcsm", ".\\qt5\\widgets\\QFileSystemWatcher.xcsm", ".\\qt5\\widgets\\QFont.xcsm", ".\\qt5\\widgets\\QHBoxLayout.x", ".\\qt5\\widgets\\QIcon.xcsm", ".\\qt5\\widgets\\QImage.xcsm", ".\\qt5\\widgets\\QLabel.xcsm", ".\\qt5\\widgets\\QLayout.x", ".\\qt5\\widgets\\QLineEdit.xcsm", ".\\qt5\\widgets\\QListView.xcsm", ".\\qt5\\widgets\\QMainWindow.xcsm", ".\\qt5\\widgets\\QMatrix.xcsm", ".\\qt5\\widgets\\QMdiArea.xcsm", ".\\qt5\\widgets\\QMdiSubWindow.xcsm", ".\\qt5\\widgets\\QMenu.xcsm", ".\\qt5\\widgets\\QMenuBar.xcsm", ".\\qt5\\widgets\\QMessageBox.xcsm", ".\\qt5\\widgets\\QNative.xcsm", ".\\qt5\\widgets\\QObject.xcsm", ".\\qt5\\widgets\\QPagedPaintDevice.xcsm", ".\\qt5\\widgets\\QPaintDevice.xcsm", ".\\qt5\\widgets\\QPainter.xcsm", ".\\qt5\\widgets\\QPalette.xcsm", ".\\qt5\\widgets\\QPath.xcsm", ".\\qt5\\widgets\\QPoint.xcsm", ".\\qt5\\widgets\\QPrintDialog.xcsm", ".\\qt5\\widgets\\QPrinter.xcsm", ".\\qt5\\widgets\\QPrintPreviewDialog.xcsm", ".\\qt5\\widgets\\QProgressBar.xcs", ".\\qt5\\widgets\\QPropertyBrowser.xcsm", ".\\qt5\\widgets\\QPushButton.xcsm", ".\\qt5\\widgets\\QRect.xcsm", ".\\qt5\\widgets\\QSci.xcsm", ".\\qt5\\widgets\\QSize.x", ".\\qt5\\widgets\\QSlider.x", ".\\qt5\\widgets\\QStatusBar.xcs", ".\\qt5\\widgets\\QStyle.xcsm", ".\\qt5\\widgets\\QTabBar.x", ".\\qt5\\widgets\\QTableWidget.xcsm", ".\\qt5\\widgets\\QTabWidget.x", ".\\qt5\\widgets\\QTextEdit.xcsm", ".\\qt5\\widgets\\QTimeEdit.xcsm", ".\\qt5\\widgets\\QToolBar.xcsm", ".\\qt5\\widgets\\QTreeWidget.xcsm", ".\\qt5\\widgets\\QTypes.xcsm", ".\\qt5\\widgets\\QVariant.xcsm", ".\\qt5\\widgets\\QVBoxLayout.x", ".\\qt5\\widgets\\QWidget.xcsm", ".\\qt5\\widgets\\ReportEngine.xcsm", ".\\qt5\\uicomponent\\ProgressView.xcsm", ".\\qt5\\uicomponent\\Switche.xcsm", ".\\qt5\\widgets\\QSystemTrayIcon.x", ".\\qt5\\widgets\\QHeaderView.x", ".\\qt5\\titan\\DockMainWindow.x", ".\\qt5\\titan\\QtitanDef.x", ".\\qt5\\titan\\WindowTitleBar.x", ".\\qt5\\titan\\DockBarManager.x", ".\\qt5\\titan\\DockPanelManager.x", ".\\qt5\\titan\\DockToolBar.x", ".\\qt5\\titan\\DockWindow.x", ".\\qt5\\titan\\DockPanelBase.x", ".\\qt5\\titan\\DockWidgetPanel.x", ".\\qt5\\titan\\DockDocumentPanel.x", ".\\qt5\\titan\\DockLayoutPanel.x", ".\\qt5\\titan\\DockWindowBase.x", ".\\qt5\\titan\\DockStyle.x", ".\\qt5\\multimedia\\QMediaObject.x", ".\\qt5\\multimedia\\QMediaService.x", ".\\qt5\\multimedia\\QMediaPlayer.x", ".\\qt5\\multimedia\\QAudio.x", ".\\qt5\\widgets\\QVideoWidget.x", ".\\qt5\\multimedia\\QAudioOutput.x", ".\\qt5\\multimedia\\QAudioFormat.x", ".\\qt5\\multimedia\\QAudioInput.x", ".\\qt5\\multimedia\\QAudioDeviceInfo.x", ".\\qt5\\widgets\\QOpenGLWidget.x", ".\\qt5\\widgets\\QOpenGLFunctions.x", ".\\qt5\\widgets\\QOpenGLContext.x", ".\\qt5\\widgets\\QSurfaceFormat.x", ".\\qt5\\widgets\\QOpenGLExtraFunctions.x", ".\\qt5\\widgets\\QOpenGL.x", ".\\qt5\\widgets\\QAbstractOpenGLFunctions.x", ".\\qt5\\widgets\\QOpenGLFunctions_1_0.x", ".\\qt5\\widgets\\QOpenGLFunctions_1_1.x", ".\\qt5\\widgets\\QOpenGLFunctions_ES2.x"],
 		"configures":	{
 			"debug":	{
 				"path":	{
@@ -10,6 +10,12 @@
 					"libpath":	[]
 				},
 				"options":	"",
+				"prebuild":	"",
+				"preclean":	"",
+				"makebuild":	"",
+				"makeclean":	"",
+				"afterbuild":	"",
+				"afterclean":	"",
 				"libs":	[],
 				"links":	[],
 				"depends":	[],
@@ -17,10 +23,15 @@
 				"args":	"",
 				"workdir":	"$(ProjectDir)",
 				"ignorewarning":	"",
+				"warexcp":	"",
 				"compdest":	"",
 				"ignorewl":	"324;204;298",
 				"debugable":	"-dbg",
 				"debugdatabase":	"",
+				"warnilptr":	"",
+				"strlistfile":	"",
+				"languagefile":	"",
+				"stringoutput":	"",
 				"wtype":	"",
 				"ostype":	"",
 				"sstype":	"",

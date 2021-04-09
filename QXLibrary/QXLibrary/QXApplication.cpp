@@ -20,7 +20,6 @@ ActionReceiver ar;
 
 
 
-
 QXApplication::QXApplication(int &argc, char **argv)
 	:QApplication(argc, argv)
 {
@@ -31,18 +30,42 @@ QXApplication::QXApplication(int &argc, char **argv)
 
 QXApplication::~QXApplication()
 {
+
 }
 
 
 
 void installAction(QObject * obj) {
 	const char * type = obj->metaObject()->className();
-
+	if (strcmp(type, "QOpenGLWidget") == 0) {
+		ar.installQOpenGLWidgetAction(obj);
+	}
+	if (strcmp(type, "QAudioInput") == 0) {
+		ar.installQAudioInputAction(obj);
+	}
+	if (strcmp(type, "QAudioOutput") == 0) {
+		ar.installQAudioOutputAction(obj);
+	}
+	if (strcmp(type, "QVideoWidget") == 0){
+		ar.installVideoWidgetAction(obj);
+	}
+	if (strcmp(type, "QMediaPlayer") == 0) {
+		ar.installMediaPlayerAction(obj);
+	}
 	if (strcmp(type, "QAction") == 0) {
 		ar.installAction(obj);
 	}
 	if ((strcmp(type, "QDateTimeEdit") == 0) || (strcmp(type, "QTimeEdit") == 0) || (strcmp(type, "QDateEdit") == 0)) {
 		ar.installDateTimeEditAction(obj);
+	}
+	if (strcmp(type, "QSystemTrayIcon") == 0){
+		ar.installSystemTrayIconEvent(obj);
+	}
+	if (strcmp(type, "WindowTitleBar") == 0) {
+		ar.installWindowTitleEvent(obj);
+	}
+	if (strcmp(type, "QCalendarWidget") == 0) {
+		ar.installCalendarEvent(obj);
 	}
 	if (strcmp(type, "QPushButton") == 0 || strcmp(type, "QCheckBox") == 0) {
 		ar.installButtonAction(obj);
@@ -52,6 +75,9 @@ void installAction(QObject * obj) {
 	}
 	if (strcmp(type, "QTextEdit") == 0) {
 		ar.installTextEditAction(obj);
+	}
+	if (strcmp(type, "QHeaderView") == 0) {
+		ar.installHeaderViewAction(obj);
 	}
 	if (strcmp(type, "QTableWidget") == 0) {
 		ar.installTableCellChange((QTableWidget*)obj);
@@ -77,9 +103,13 @@ void installAction(QObject * obj) {
 	if (strcmp(type, "QTreeWidget") == 0) {
 		ar.installTreeAction(obj);
 	}
+	if (strcmp(type, "QMdiSubWindow") == 0) {
+		ar.installMdiSubWindowEvent(obj);
+	}
 	if (strcmp(type, "QDialog") == 0) {
 		ar.installDialogAction((QDialog*)obj);
 	}
+#ifndef MOBILE_APP
 	if (strcmp(type, "QtBoolPropertyManager") == 0) {
 		ar.installBoolPropertyChange((QtBoolPropertyManager*)obj);
 	}
@@ -131,7 +161,6 @@ void installAction(QObject * obj) {
 	if (strcmp(type, "QtVariantPropertyManager") == 0) {
 		ar.installVariantPropertyChange((QtVariantPropertyManager*)obj);
 	}
-#ifndef MOBILE_APP
 	if (strcmp(type, "ReportEngine") == 0) {
 		ar.installReportView((LimeReport::ReportEngine*)obj);
 	}
@@ -142,7 +171,7 @@ void installAction(QObject * obj) {
 	if (obj == 0) {
 		return 0;
 	}
-	XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+    XMetaPtr objectData = (obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 	if (objectData == NULL) {
 		objectData = new XObjectData();
@@ -171,21 +200,30 @@ void installAction(QObject * obj) {
 		else {
 			objectData->setObject(NULL);
 		}
-		obj->setUserData(Qt::UserRole, objectData);
+        obj->setProperty(XHANDLE, MAKEPROPERTY(objectData));
 		gs_env->dereferenceObject(object_type);
 		gs_env->dereferenceObject(objectvalue);
 	}
 	return objectData->getObject();
 }
 
-
+ QWidget * XUILoader::createWidget(const QString &className, QWidget *parent , const QString &name ) {
+#if !defined(QT_NO_OPENGL)
+	 if (className == "QOpenGLWidget") {
+		 QWidget * w = new XOpenGLWidget(parent);
+		 w->setObjectName(name);
+		 return w;
+	 }
+#endif
+	 return QUiLoader::createWidget(className, parent , name);
+ }
 
 XNLEXPORT  XObject * getObjectXControl(QObject * obj) {
 	if (obj == NULL) {
 		return NULL;
 	}
 
-	XObjectData * objectData = (XObjectData *)obj->userData(Qt::UserRole);
+    XMetaPtr objectData =(obj->property(XHANDLE).GETPROPERTY_VALUE);
 
 	if (objectData == NULL) {
 		return NULL;
@@ -201,10 +239,9 @@ XNLEXPORT  XObject * getObjectXControl(QObject * obj) {
 int serial = 0;
 
 bool QXApplication::notify(QObject * obj, QEvent * evn){
-
-		//cprintf("%d = %s [%s:%s] \n", evn->type(), msgMap[evn->type()], obj->metaObject()->className(), obj->objectName().toLatin1().data());
-    
-
+	//cprintf("%d = %s [%s:%s] \n", evn->type(), msgMap[evn->type()], obj->metaObject()->className(), obj->objectName().toLatin1().data());
+	QString kl;
+	
     QStringList pargs = QCoreApplication::arguments();
 	XObject * xobj = getObjectXControl(obj);
 	if (xobj == NULL) {
@@ -213,12 +250,11 @@ bool QXApplication::notify(QObject * obj, QEvent * evn){
 	
 	XThread thread;
 
-	if (xobj != NULL) {
-		int tp = gs_env->getObjectType(xobj);
-		if (tp == XNLEnv::XDataType::t_object) {
-			if (false == TranslateEvent(obj, xobj, evn, thread.getThread())) {
-				return true;
-			}
+
+	int tp = gs_env->getObjectType(xobj);
+	if (tp == XNLEnv::XDataType::t_object) {
+		if (false == TranslateEvent(obj, xobj, evn, thread.getThread())) {
+			return true;
 		}
 	}
 	
@@ -596,14 +632,12 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 	case QEvent::Wheel:
 	{
 		XObject * button = createXObject((int)((QWheelEvent*)evn)->buttons());
-		XObject * x = createXObject(((QWheelEvent*)evn)->x());
+        XObject * x = createXObject(((QWheelEvent*)evn)->x());
 		XObject * y = createXObject(((QWheelEvent*)evn)->y());
 		XObject * Orientation = createXObject((int)((QWheelEvent*)evn)->orientation());
 		XObject * delta = createXObject(((QWheelEvent*)evn)->delta());
 		XObject * inverted = createXObject(((QWheelEvent*)evn)->inverted());
-
 		gs_env->void_invoke(context, xobj, method, button, x, y, Orientation, delta, inverted);
-		
 		gs_env->dereferenceObject(button);
 		gs_env->dereferenceObject(x);
 		gs_env->dereferenceObject(y);
@@ -1157,11 +1191,9 @@ bool QXApplication::TranslateEvent(QObject * obj,XObject * xobj ,QEvent * evn, X
 	case QEvent::UngrabKeyboard:
 		//	Item loses keyboard grab (QGraphicsItem only).
 		break;
-
 	case QEvent::MacGLClearDrawable:
 
 		break;
-
 	case QEvent::StateMachineSignal:
 		//	A signal delivered to a state machine (QStateMachine::SignalEvent).
 		break;

@@ -2,14 +2,23 @@
 //Date: Thu Sep 23:07:39 2018 
 package Qt{
     public class QIcon : QCore{
-
-        QIcon(@NotNilptr QByteArray array) throws IllegalArgumentException{
+        public QIcon(long h){
+            super(h);
+        }
+        public QIcon(@NotNilptr QByteArray array) throws IllegalArgumentException{
             nativehandle = QtXnl.createNObject(QType.qtIcon, array.nativehandle);
             if (nativehandle == 0){
                 throw new IllegalArgumentException("can not create QIcon");
             }
         }
-        QIcon(String file) throws IllegalArgumentException{
+        public QIcon(@NotNilptr byte [] data, int pos, int length) throws IllegalArgumentException{
+            QByteArray array = new QByteArray(data, pos, length);
+            nativehandle = QtXnl.createNObject(QType.qtIcon, array.nativehandle);
+            if (nativehandle == 0){
+                throw new IllegalArgumentException("can not create QIcon");
+            }
+        }
+        public QIcon(String file) throws IllegalArgumentException{
             nativehandle = QtXnl.createSObject(QType.qtIcon, file);
             if (nativehandle == 0){
                 throw new IllegalArgumentException("can not create QIcon");

@@ -41,7 +41,7 @@ package Qt{
 
         public void onDrawBackground(@NotNilptr QPainter canvas, double padding, @NotNilptr QPainter.Paint paint) {
             QRect rect = new QRect();
-            canvas.setRenderHint(QPainter.RenderHint.Antialiasing, true);
+            canvas.setRenderHint(RenderHint.Antialiasing, true);
             rect.left = rect.top = padding;
             rect.right = width() - padding;
             rect.bottom = height() - padding;
@@ -186,7 +186,7 @@ package Qt{
 
         public void onDraw(@NotNilptr QPainter canvas) {
 
-            canvas.setPen(0, QPainter.PenStyle.NoPen, 0);
+            canvas.setPen(0, PenStyle.NoPen, 0);
 
             double padding = dip2px(5);
             QPainter.Paint paint = new QPainter.Paint();

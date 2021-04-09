@@ -35,6 +35,9 @@ package Qt{
         
         public Object onCreateXObject(long object,@NotNilptr  String objectClass){
             switch(objectClass){
+                case "QHeaderView":
+                return new QHeaderView(object);
+                break;
                 case "QMdiArea":
                 return new QMdiArea(object);
                 break;
@@ -55,6 +58,9 @@ package Qt{
                 break;
                 case "QAction":
                 return new QAction(object);
+                break;
+                case "QCalendarWidget":
+                return new QCalendarWidget(object);
                 break;
                 case "QMenu":
                 return new QMenu(object);
@@ -131,12 +137,73 @@ package Qt{
                 case "QMdiSubWindow":
                 return new QMdiSubWindow(object);
                 break;
+                case "QMediaObject":
+                return new QMediaObject(object);
+                break;
+                case "QMediaPlayer":
+                return new QMediaPlayer(object);
+                break;
+                case "QMediaService":
+                return new QMediaService(object);
+                break;
+                case "QVideoWidget":
+                return new QVideoWidget(object);
+                break;
+                case "QOpenGLWidget":
+                return new QOpenGLWidget(object);
+                break;
+                case "QOpenGLContext":
+                return new QOpenGLContext(object);
+                break;
+                case "Qtitan::DockMainWindow":
+                return new Qtitan.DockMainWindow(object);
+                break;
+                case "Qtitan::WindowTitleBar":
+                return new Qtitan.WindowTitleBar(object);
+                break;
+                case "Qtitan::DockBarManager":
+                return new Qtitan.DockBarManager(object);
+                break;
+                case "Qtitan::DockPanelManager":
+                return new Qtitan.DockPanelManager(object);
+                break;
+                case "Qtitan::DockToolBar":
+                return new Qtitan.DockToolBar(object);
+                break;
+                case "Qtitan::DockWindow":
+                return new Qtitan.DockWindow(object);
+                break;
+                case "Qtitan::DockPanelBase":
+                return new Qtitan.DockPanelBase(object);
+                break;
+                case "Qtitan::DockWidgetPanel":
+                return new Qtitan.DockWidgetPanel(object);
+                break;
+                case "Qtitan::DockDocumentPanel":
+                return new Qtitan.DockDocumentPanel(object);
+                break;
+                case "Qtitan::DockLayoutPanel":
+                return new Qtitan.DockLayoutPanel(object);
+                break;
+                case "Qtitan::DockWindowBase":
+                return new Qtitan.DockWindowBase(object);
+                break;
+                case "Qtitan::VisualStudio2019Style":
+                return new Qtitan.DockStyle(object);
+                break;
             }
             return nilptr;
         }
         
         public static void setAttribute(ApplicationAttribute attr, bool bOn){
             QtXnl.widget_set_int_bool_value(0, Constant.APPLICATIONATTRIBUTES, attr, bOn);
+        }
+        
+        public void setStyle(String style){
+            QtXnl.widget_slot_string(nativehandle, Constant.QTAPP_SETSTYLE, style);
+        }
+        public void setStyle(QStyle style){
+            QtXnl.widget_set_native_value(nativehandle, Constant.QTAPP_SETSTYLE, style.nativehandle);
         }
     };
 };

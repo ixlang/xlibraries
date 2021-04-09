@@ -39,7 +39,7 @@ package Qt{
             /*canvas.setCompositionMode(QPainter.CompositionMode.CompositionMode_Source);
             canvas.fillRect(0, 0, width(), height(), 0, QPainter.BrushStyle.SolidPattern);*/
 
-            canvas.setRenderHint(QPainter.RenderHint.Antialiasing, true);
+            canvas.setRenderHint(RenderHint.Antialiasing, true);
 
             bool bReCreateCached = false;
             if (_cachedBitmap == nilptr ) {
@@ -57,9 +57,9 @@ package Qt{
                 if (_bForceRedraw) {
                     _bForceRedraw = false;
                     QPainter _canvas = new QPainter(_cachedBitmap);
-                    _canvas.setCompositionMode(QPainter.CompositionMode.CompositionMode_Source);
+                    _canvas.setCompositionMode(CompositionMode.CompositionMode_Source);
                     _canvas.fillRect(0, 0, width(), height(), 0, QBrush.Style.SolidPattern);
-                    _canvas.setRenderHint(QPainter.RenderHint.Antialiasing, true);
+                    _canvas.setRenderHint(RenderHint.Antialiasing, true);
 
 
                     double padding = dip2px(3.f);

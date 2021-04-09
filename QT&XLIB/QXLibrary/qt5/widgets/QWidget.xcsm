@@ -265,7 +265,9 @@ package Qt{
             }
             QtXnl.widget_set_object_value(nativehandle, Constant.ADDDEFACTION, al);
         }
-
+        public void setWindowIcon(QIcon icon) {
+            QtXnl.widget_set_native_value(nativehandle, Constant.QW_SETICON, icon.nativehandle);
+        }
         public void setWindowIcon(String icon) {
             QtXnl.widget_slot_string(nativehandle, Constant.WINDOWICON, icon);
         }
