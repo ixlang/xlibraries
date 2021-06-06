@@ -1,0 +1,42 @@
+{
+	"lib":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/AVCodec/x64/debug/AVCodec.lix",
+	"md":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/AVCodec/readme.md",
+	"icon":	"E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/xlibrarys/AVCodec/ffmpeg3d_white_20.png",
+	"comment":	"",
+	"archs":	{
+		"0":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"1":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/avcodec-58.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/avdevice-58.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/avfilter-7.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/avformat-58.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/avutil-56.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/ffmpeghelper.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/postproc-55.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/swresample-3.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x86/debug/swscale-5.dll"],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"2":	{
+			"0":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/avcodec-58.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/avdevice-58.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/avfilter-7.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/avformat-58.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/avutil-56.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/ffmpeghelper.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/postproc-55.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/swresample-3.dll", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/x64/debug/swscale-5.dll"],
+			"1":	["E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavcodec.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavcodec.so.58", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavcodec.so.58.46.100", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavdevice.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavdevice.so.58", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavdevice.so.58.6.101", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavfilter.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavfilter.so.7", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavfilter.so.7.48.100", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavformat.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavformat.so.58", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavformat.so.58.26.100", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavutil.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavutil.so.56", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libavutil.so.56.26.100", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libswresample.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libswresample.so.3", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libswresample.so.3.4.100", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libswscale.so", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libswscale.so.5", "E:/Developments/Cadaqs/caNamespace/castudio/xcross/xlang/xlang/XPlayer/XPlayer/xnl/ffmpeghelper/ffmpeghelper/Linux/x86_64/lib/lib/libswscale.so.5.4.100"],
+			"2":	[],
+			"3":	[]
+		},
+		"3":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		},
+		"4":	{
+			"0":	[],
+			"1":	[],
+			"2":	[],
+			"3":	[]
+		}
+	},
+	"package":	"ffmpeg",
+	"version":	"1.0.0.0",
+	"descr":	"多媒体编解码库",
+	"author":	"https://github.com/ixlang/xlibraries"
+}

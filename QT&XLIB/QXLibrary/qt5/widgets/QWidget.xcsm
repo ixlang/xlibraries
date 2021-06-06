@@ -466,7 +466,9 @@ package Qt{
         public void setUpdateEnabled(bool be) {
             QtXnl.widget_set_bool_value(nativehandle, Constant.UPDATEENABLE, be);
         }
-
+        public void adjustSize(){
+            QtXnl.widget_slot(nativehandle, Constant.QWIDGET_ADJUSTSIZE);
+        }
         public bool isUpdateEnabled() {
             return QtXnl.widget_get_bool_value(nativehandle,Constant.UPDATEENABLE );
         }
@@ -482,7 +484,10 @@ package Qt{
         public void render(@NotNilptr QPainter painter, int x,int y, int sx,int sy,int sw,int sh,RegionType sflags, RenderFlag flags){
             QtXnl.long_long_int9(nativehandle, Constant.WIDGETRENDER1, painter.hpaint, x, y, sx, sy, sw, sh, sflags, flags, 0);
         }
-        
+        public void setContentsMargins(int l,int t,int r, int b){
+            long x = l << 32 | t, y = r << 32 |b;
+            QtXnl.void_long2(nativehandle, Constant.QWIDGET_SETCONTENTSMARGINS, x, y);
+        }
         public @NotNilptr String getWindowTitle(){
             return (String)QtXnl.core_getString(nativehandle, Constant.WIDGETGETTITLE);
         }

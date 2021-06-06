@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -43,6 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -71,6 +72,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <GenerateManifest>false</GenerateManifest>
     <EmbedManifest>false</EmbedManifest>
+    <CopyCppRuntimeToOutputDir>false</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
@@ -175,17 +177,20 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;$(QTDIR)\plugins\printsupport;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;$(QTDIR)\plugins\printsupport;$(QTDIR)\plugins\styles;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;windowsprintersupport.lib;limereport.lib;QtZint.lib;QtitanBase1_static.lib;QtitanDocking3_static.lib;Iphlpapi.lib;wmfengine.lib;dsengine.lib;qtmedia_audioengine.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;qtaudio_wasapi.lib;qtaudio_windows.lib;qtmultimedia_m3u.lib;qgenericbearer.lib;runtimeobject.lib;Mmdevapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;$(QTDIR)\plugins\platforms\qwindows.lib;winspool.lib;imm32.lib;oleaut32.lib;shlwapi.lib;rpcrt4.lib;$(QTDIR)\lib\Qt5EventDispatcherSupport.lib;$(QTDIR)\lib\Qt5AccessibilitySupport.lib;$(QTDIR)\lib\Qt5FontDatabaseSupport.lib;ole32.lib;gdi32.lib;user32.lib;advapi32.lib;$(QTDIR)\lib\qtfreetype.lib;$(QTDIR)\lib\Qt5ThemeSupport.lib;$(QTDIR)\plugins\imageformats\qgif.lib;$(QTDIR)\plugins\imageformats\qicns.lib;$(QTDIR)\plugins\imageformats\qico.lib;$(QTDIR)\plugins\imageformats\qjpeg.lib;$(QTDIR)\plugins\imageformats\qtga.lib;$(QTDIR)\plugins\imageformats\qtiff.lib;$(QTDIR)\plugins\imageformats\qwbmp.lib;$(QTDIR)\plugins\imageformats\qwebp.lib;shell32.lib;uxtheme.lib;dwmapi.lib;comdlg32.lib;glu32.lib;$(QTDIR)\lib\qtlibpng.lib;$(QTDIR)\lib\qtharfbuzz.lib;kernel32.lib;uuid.lib;mpr.lib;$(QTDIR)\lib\qtpcre2.lib;qwindowsuiawrapper.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;windowsprintersupport.lib;limereport.lib;QtZint.lib;QtitanBase1_static.lib;QtitanDocking3_static.lib;Iphlpapi.lib;wmfengine.lib;dsengine.lib;qtmedia_audioengine.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;qtaudio_wasapi.lib;qtaudio_windows.lib;qtmultimedia_m3u.lib;qgenericbearer.lib;Mmdevapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;$(QTDIR)\plugins\platforms\qwindows.lib;winspool.lib;imm32.lib;oleaut32.lib;shlwapi.lib;rpcrt4.lib;$(QTDIR)\lib\Qt5EventDispatcherSupport.lib;$(QTDIR)\lib\Qt5AccessibilitySupport.lib;$(QTDIR)\lib\Qt5FontDatabaseSupport.lib;ole32.lib;gdi32.lib;user32.lib;advapi32.lib;$(QTDIR)\lib\qtfreetype.lib;$(QTDIR)\lib\Qt5ThemeSupport.lib;$(QTDIR)\plugins\imageformats\qgif.lib;$(QTDIR)\plugins\imageformats\qicns.lib;$(QTDIR)\plugins\imageformats\qico.lib;$(QTDIR)\plugins\imageformats\qjpeg.lib;$(QTDIR)\plugins\imageformats\qtga.lib;$(QTDIR)\plugins\imageformats\qtiff.lib;$(QTDIR)\plugins\imageformats\qwbmp.lib;$(QTDIR)\plugins\imageformats\qwebp.lib;shell32.lib;uxtheme.lib;dwmapi.lib;comdlg32.lib;glu32.lib;$(QTDIR)\lib\qtlibpng.lib;$(QTDIR)\lib\qtharfbuzz.lib;kernel32.lib;uuid.lib;mpr.lib;$(QTDIR)\lib\qtpcre2.lib;qwindowsuiawrapper.obj;qwindowsvistastyle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <ForceSymbolReferences>
+      </ForceSymbolReferences>
     </Link>
     <QtMoc>
       <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QXLIBRARY_LIB;QTN_NAMESPACE;QTITAN_LIBRARY_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_QML_LIB;QT_SQL_LIB;QT_UITOOLS_LIB;QT_WIDGETS_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
@@ -212,9 +217,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;$(QTDIR)\plugins\printsupport;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\plugins\platforms;$(QTDIR)\plugins\imageformats;$(QTDIR)\plugins\mediaservice;$(QTDIR)\plugins\audio;$(QTDIR)\plugins\playlistformats;$(QTDIR)\plugins\bearer;$(QTDIR)\plugins\printsupport;$(QTDIR)\plugins\styles;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;windowsprintersupport.lib;limereport.lib;QtZint.lib;QtitanBase1_static.lib;QtitanDocking3_static.lib;Iphlpapi.lib;wmfengine.lib;dsengine.lib;qtmedia_audioengine.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;qtaudio_wasapi.lib;qtaudio_windows.lib;qtmultimedia_m3u.lib;qgenericbearer.lib;runtimeobject.lib;Mmdevapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;$(QTDIR)\plugins\platforms\qwindows.lib;winspool.lib;imm32.lib;oleaut32.lib;shlwapi.lib;rpcrt4.lib;$(QTDIR)\lib\Qt5EventDispatcherSupport.lib;$(QTDIR)\lib\Qt5AccessibilitySupport.lib;$(QTDIR)\lib\Qt5FontDatabaseSupport.lib;ole32.lib;gdi32.lib;user32.lib;advapi32.lib;$(QTDIR)\lib\qtfreetype.lib;$(QTDIR)\lib\Qt5ThemeSupport.lib;$(QTDIR)\plugins\imageformats\qgif.lib;$(QTDIR)\plugins\imageformats\qicns.lib;$(QTDIR)\plugins\imageformats\qico.lib;$(QTDIR)\plugins\imageformats\qjpeg.lib;$(QTDIR)\plugins\imageformats\qtga.lib;$(QTDIR)\plugins\imageformats\qtiff.lib;$(QTDIR)\plugins\imageformats\qwbmp.lib;$(QTDIR)\plugins\imageformats\qwebp.lib;shell32.lib;uxtheme.lib;dwmapi.lib;comdlg32.lib;glu32.lib;$(QTDIR)\lib\qtlibpng.lib;$(QTDIR)\lib\qtharfbuzz.lib;kernel32.lib;uuid.lib;mpr.lib;$(QTDIR)\lib\qtpcre2.lib;qwindowsuiawrapper.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;qscintilla2_qt5.lib;QtSolutions_PropertyBrowser-head.lib;UxTheme.lib;qtlibpng.lib;version.lib;qtpcre2.lib;ws2_32.lib;winmm.lib;Dwmapi.lib;opengl32.lib;qtharfbuzz.lib;qwindows.lib;qtfreetype.lib;Qt5ThemeSupport.lib;Qt5EventDispatcherSupport.lib;Qt5AccessibilitySupport.lib;Imm32.lib;Qt5FontDatabaseSupport.lib;Wtsapi32.lib;Netapi32.lib;Userenv.lib;qgif.lib;qicns.lib;qjpeg.lib;qtga.lib;qtiff.lib;qwbmp.lib;qwebp.lib;qico.lib;windowsprintersupport.lib;limereport.lib;QtZint.lib;QtitanBase1_static.lib;QtitanDocking3_static.lib;Iphlpapi.lib;wmfengine.lib;dsengine.lib;qtmedia_audioengine.lib;Mfplat.lib;wmcodecdspuuid.lib;mfreadwrite.lib;mfuuid.lib;D3d9.lib;Mf.lib;Dxva2.lib;evr.lib;qtaudio_wasapi.lib;qtaudio_windows.lib;qtmultimedia_m3u.lib;qgenericbearer.lib;Mmdevapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5MultimediaWidgets.lib;Qt5OpenGL.lib;Qt5PrintSupport.lib;Qt5Qml.lib;Qt5Sql.lib;Qt5UiTools.lib;Qt5Widgets.lib;Qt5Network.lib;Qt5Xml.lib;$(QTDIR)\plugins\platforms\qwindows.lib;winspool.lib;imm32.lib;oleaut32.lib;shlwapi.lib;rpcrt4.lib;$(QTDIR)\lib\Qt5EventDispatcherSupport.lib;$(QTDIR)\lib\Qt5AccessibilitySupport.lib;$(QTDIR)\lib\Qt5FontDatabaseSupport.lib;ole32.lib;gdi32.lib;user32.lib;advapi32.lib;$(QTDIR)\lib\qtfreetype.lib;$(QTDIR)\lib\Qt5ThemeSupport.lib;$(QTDIR)\plugins\imageformats\qgif.lib;$(QTDIR)\plugins\imageformats\qicns.lib;$(QTDIR)\plugins\imageformats\qico.lib;$(QTDIR)\plugins\imageformats\qjpeg.lib;$(QTDIR)\plugins\imageformats\qtga.lib;$(QTDIR)\plugins\imageformats\qtiff.lib;$(QTDIR)\plugins\imageformats\qwbmp.lib;$(QTDIR)\plugins\imageformats\qwebp.lib;shell32.lib;uxtheme.lib;dwmapi.lib;comdlg32.lib;glu32.lib;$(QTDIR)\lib\qtlibpng.lib;$(QTDIR)\lib\qtharfbuzz.lib;kernel32.lib;uuid.lib;mpr.lib;$(QTDIR)\lib\qtpcre2.lib;qwindowsuiawrapper.obj;qwindowsvistastyle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>qxlibrary.def</ModuleDefinitionFile>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

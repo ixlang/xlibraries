@@ -3313,5 +3313,12 @@ package Qt{
         public void enableScrollBarMarker(bool b){
             QtXnl.widget_set_bool_value(nativehandle, Constant.QSCI_ENABLESCROLLBARMARKER, b);
         }
+        
+        public QPoint positionToPoint(int position){
+            QPoint pt = new QPoint();
+            pt.x = sendEditor(SCI_POINTXFROMPOSITION, 0, position);
+            pt.y = sendEditor(SCI_POINTYFROMPOSITION, 0, position);
+            return pt;
+        }
     };
 };

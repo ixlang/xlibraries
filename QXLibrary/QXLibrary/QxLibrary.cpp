@@ -54,7 +54,9 @@ Q_IMPORT_PLUGIN(QM3uPlaylistPlugin)
 
 #ifdef WIN32
 Q_IMPORT_PLUGIN(AudioCaptureServicePlugin) //for releas
-Q_IMPORT_PLUGIN(QWasapiPlugin)
+Q_IMPORT_PLUGIN(QWindowsVistaStylePlugin) //for releas
+
+//Q_IMPORT_PLUGIN(QWasapiPlugin) //会导入win10新函数  导致在win17上无法运行
 Q_IMPORT_PLUGIN(DSServicePlugin)
 Q_IMPORT_PLUGIN(QWindowsAudioPlugin)
 Q_IMPORT_PLUGIN(WMFServicePlugin) //for releas
@@ -4565,6 +4567,9 @@ XNLEXPORT void XI_CDECL widget_slot_string(xlong h, xint proid, xstring value) {
 XNLEXPORT void XI_CDECL widget_slot(xlong h, xint proid) {
         switch (proid)
         {
+		case QWIDGET_ADJUSTSIZE:
+			((QWidget*)h)->adjustSize();
+			break;
 		case QOPENGLFUNCTIONS_INITIALIZEOPENGLFUNCTIONS:
 #if !defined(QT_NO_OPENGL)
 			return ((QOpenGLFunctions*)h)->initializeOpenGLFunctions();
@@ -7420,7 +7425,9 @@ XNLEXPORT void XI_CDECL void_long2(xlong handle, xint proid, xlong value1, xlong
 		case QLAYOUT_SETCONTENTSMARGINS:
 			((QLayout*)handle)->setContentsMargins(value1 >> 32 & 0xffffffff, value1 & 0xffffffff, v2 >> 32 & 0xffffffff, v2 & 0xffffffff);
 			break;
-
+		case QWIDGET_SETCONTENTSMARGINS:
+			((QWidget*)handle)->setContentsMargins(value1 >> 32 & 0xffffffff, value1 & 0xffffffff, v2 >> 32 & 0xffffffff, v2 & 0xffffffff);
+			break;
 		case TABBARSETTABTEXTCOLOR:
 			((QTabBar*)handle)->setTabTextColor(value1, (v2));
 			break;

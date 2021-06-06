@@ -2,6 +2,9 @@
 //Date: Mon Oct 21:43:44 2018 
 package Qt{
     public class QPoint{
+        public QPoint(){
+            
+        }
         public QPoint(int _x, int _y){
             x = _x;
             y = _y;
